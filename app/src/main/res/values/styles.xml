@@ -6,6 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- default color of ANY text (menu items, labels, etc. ) unless color attribute is overridden -->
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+
+        <!-- color of the default background -->
+        <item name="android:windowBackground">@color/backgroundDarkColor</item>
+
+    </style>
+
+    <style name="DisplayNumber" parent="TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="NumberRegular" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
 </resources>

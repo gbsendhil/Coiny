@@ -1,6 +1,6 @@
 package com.rmnivnv.cryptomoon.model.network
 
-import com.google.gson.JsonObject
+import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,7 +22,7 @@ interface CryptoCompareAPI {
                                 @Query("fsym") fromCurrencySymbol: String?,
                                 @Query("tsym") toCurrencySymbol: String?,
                                 @Query("limit") limit: Int,
-                                @Query("aggregate") aggregate: Int): Single<JsonObject>
+                                @Query("aggregate") aggregate: Int): Single<CryptoCompareHistoricalResponse>
 
 //    @GET("top/pairs")
 //    fun getPairs(@Query("fsym") from: String): Single<JsonObject>

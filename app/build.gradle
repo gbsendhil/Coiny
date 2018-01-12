@@ -69,4 +69,5 @@ dependencies {
     // other dependencies
     implementation "com.jakewharton.timber:timber:4.5.1"
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.robinhood.spark:spark:1.2.0'
 }

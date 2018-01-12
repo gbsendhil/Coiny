@@ -1,8 +1,10 @@
 package com.binarybricks.coinhood.stories.sparkchart
 
 import com.binarybricks.coinhood.network.*
+import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.rmnivnv.cryptomoon.model.network.CryptoCompareAPI
+import io.reactivex.Single
 import timber.log.Timber
 
 /**
@@ -17,7 +19,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
      * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.[toCurrencySymbol]
      * is which currency you want data in for like USD
      */
-    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?) {
+    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?): Single<List<CryptoCompareHistoricalResponse.Data>> {
 
         val histoPeriod: String
         var limit = 30
@@ -28,45 +30,39 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
                 limit = 60
                 aggregate = 2 // this pulls for 2 hours
             }
-            HOURS12 -> {
-                histoPeriod = HISTO_HOUR
-                limit = 12
-            }
             HOURS24 -> {
                 histoPeriod = HISTO_HOUR
-                limit = 24
-            }
-            DAYS3 -> {
-                histoPeriod = HISTO_HOUR
-                aggregate = 2
+                limit = 24 // 1 day
             }
             WEEK -> {
                 histoPeriod = HISTO_HOUR
-                aggregate = 6
+                aggregate = 6 //1 week limit is 128 hours default that is
             }
             MONTH -> {
                 histoPeriod = HISTO_DAY
+                limit = 30 // 30 days
             }
-            MONTHS3 -> {
+            YEAR -> {
                 histoPeriod = HISTO_DAY
-                aggregate = 3
+                aggregate = 13 // default limit is 30 so 30*12 365 days
             }
-            MONTHS6 -> {
+            ALL -> {
                 histoPeriod = HISTO_DAY
-                aggregate = 6
+                aggregate = 30 // default limit is 30 so 30*12 365 days
             }
             else -> {
-                histoPeriod = HISTO_DAY
-                aggregate = 12
+                histoPeriod = HISTO_HOUR
+                limit = 24 // 1 day
             }
         }
 
-        cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
                 .getCryptoHistoricalData(histoPeriod, fromCurrencySymbol, toCurrencySymbol, limit, aggregate)
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
-                    Timber.d("Size of response " + it.size())
-                }.observeOn(baseSchedulerProvider.ui()).subscribe()
+                    Timber.d("Size of response " + it.data.size)
+                    it.data
+                }
     }
 
 }
