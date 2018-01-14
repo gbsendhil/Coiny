@@ -1,8 +1,6 @@
 package com.binarybricks.coinhood.network
 
 import com.binarybricks.coinhood.BuildConfig
-import com.binarybricks.coinhood.CoinHoodApplication
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,12 +23,7 @@ val cryptoCompareRetrofit: Retrofit by lazy {
 }
 
 val okHttpClient: OkHttpClient by lazy {
-    val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
-    val cache = Cache(CoinHoodApplication.getGlobalAppContext().cacheDir, cacheSize)
-
     val builder = OkHttpClient.Builder()
-    builder.cache(cache)
-
     if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
