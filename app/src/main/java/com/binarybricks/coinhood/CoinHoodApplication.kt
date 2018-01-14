@@ -1,6 +1,7 @@
 package com.binarybricks.coinhood
 
 import android.app.Application
+import android.content.Context
 import android.support.annotation.NonNull
 import android.util.Log
 import timber.log.Timber
@@ -13,8 +14,19 @@ import timber.log.Timber.DebugTree
 
 class CoinHoodApplication : Application() {
 
+    companion object {
+        private lateinit var appContext: Context
+
+        @JvmStatic
+        fun getGlobalAppContext(): Context {
+            return appContext
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        appContext = applicationContext
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())

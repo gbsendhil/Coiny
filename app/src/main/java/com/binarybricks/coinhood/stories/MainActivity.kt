@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,5 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val schedulerProvider = SchedulerProvider.getInstance()
+
+        historicalChartModule.init(schedulerProvider, "BTC", "USD")
     }
 }

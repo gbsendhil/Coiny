@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/backgroundColor">
 
     <TextView
@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic16dp"
+        android:text="$40.90"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="$40.90" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic4dp"
         android:paddingEnd="@dimen/generic4dp"
+        android:paddingStart="@dimen/generic4dp"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@+id/tvChartPeriod"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,24 +47,28 @@
 
 
     <com.robinhood.spark.SparkView
-        android:id="@+id/sparkview"
+        android:id="@+id/historicalChartView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="@dimen/generic8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChartPercentageChange" />
+        app:layout_constraintTop_toBottomOf="@+id/tvChartPercentageChange"
+        app:spark_animateChanges="true"
+        app:spark_lineColor="@color/colorPrimary"
+        app:spark_scrubEnabled="true" />
 
     <RadioGroup
         android:id="@+id/rgPeriodSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/generic8dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingBottom="@dimen/generic8dp"
+        android:paddingTop="@dimen/generic8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sparkview">
+        app:layout_constraintTop_toBottomOf="@+id/historicalChartView">
 
         <RadioButton
             android:id="@+id/rbPeriod1H"
@@ -75,7 +80,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_1h"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rbPeriod1D"
@@ -86,7 +92,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_1day"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rbPeriod1W"
@@ -97,7 +104,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_1week"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rbPeriod1M"
@@ -108,7 +116,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_1month"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rbPeriod1Y"
@@ -119,7 +128,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_1year"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rbPeriodAll"
@@ -130,7 +140,8 @@
             android:gravity="center"
             android:padding="@dimen/generic4dp"
             android:text="@string/period_all"
-            android:textColor="@drawable/range_radio_btn_selector" />
+            android:textColor="@drawable/range_radio_btn_selector"
+            android:textSize="16sp" />
 
     </RadioGroup>
 

@@ -1,11 +1,19 @@
 package com.binarybricks.coinhood.network.models
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by pairan on 1/10/18.
  */
 
-data class CryptoCompareHistoricalResponse(val firstValueInArray: String, val data: List<Data>, val timeFrom: String, val type: String,
-                                           val response: String, val conversionType: ConversionType, val timeTo: String, val aggregated: String) {
+data class CryptoCompareHistoricalResponse(@SerializedName("FirstValueInArray") val firstValueInArray: String,
+                                           @SerializedName("Data") val data: List<Data>,
+                                           @SerializedName("TimeFrom") val timeFrom: String,
+                                           @SerializedName("Type") val type: String,
+                                           @SerializedName("Response") val response: String,
+                                           @SerializedName("ConversionType") val conversionType: ConversionType,
+                                           @SerializedName("TimeTo") val timeTo: String,
+                                           @SerializedName("Aggregated") val aggregated: String) {
 
     data class ConversionType(val conversionSymbol: String, val type: String)
 
