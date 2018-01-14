@@ -28,7 +28,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             HOUR -> {
                 histoPeriod = HISTO_MINUTE
                 limit = 60
-                aggregate = 2 // this pulls for 2 hours
+                aggregate = 1 // this pulls for 1 hour
             }
             HOURS24 -> {
                 histoPeriod = HISTO_HOUR

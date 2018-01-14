@@ -23,4 +23,8 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <style name="NumberRegularSecondary" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/mainTextColor</item>
+    </style>
+
 </resources>

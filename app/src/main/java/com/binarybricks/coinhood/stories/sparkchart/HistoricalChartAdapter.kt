@@ -21,4 +21,12 @@ class HistoricalChartAdapter(private val historicalData: List<CryptoCompareHisto
         return historicalData.size
     }
 
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
+
+    override fun getBaseLine(): Float {
+        val maxBy = historicalData.maxBy { it.close }
+        return maxBy?.close?.toFloat() ?: super.getBaseLine()
+    }
 }
