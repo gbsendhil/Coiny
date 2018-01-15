@@ -13,11 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic16dp"
-        android:tag="40.98"
-        android:text="$40.90"
+        android:tag="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="$40.90" />
 
 
     <TextView
@@ -63,13 +63,16 @@
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/pbChartLoading"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/historicalChartView"
         app:layout_constraintEnd_toEndOf="@id/historicalChartView"
         app:layout_constraintStart_toStartOf="@id/historicalChartView"
-        app:layout_constraintTop_toTopOf="@id/historicalChartView" />
+        app:layout_constraintTop_toTopOf="@id/historicalChartView"
+        tools:visibility="gone" />
 
     <RadioGroup
         android:id="@+id/rgPeriodSelector"

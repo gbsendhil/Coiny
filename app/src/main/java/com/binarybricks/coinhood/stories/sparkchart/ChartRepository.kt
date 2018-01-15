@@ -48,7 +48,8 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             }
             ALL -> {
                 histoPeriod = HISTO_DAY
-                aggregate = 30 // default limit is 30 so 30*12 365 days
+                aggregate = 30
+                limit = 2000
             }
             else -> {
                 histoPeriod = HISTO_HOUR
