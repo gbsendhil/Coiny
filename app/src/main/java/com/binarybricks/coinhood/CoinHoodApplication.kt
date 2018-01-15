@@ -9,7 +9,7 @@ import timber.log.Timber.DebugTree
 
 
 /**
- * Created by pairan on 1/8/18.
+ * Created by pranay airan on 1/8/18.
  */
 
 class CoinHoodApplication : Application() {

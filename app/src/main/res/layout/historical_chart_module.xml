@@ -61,6 +61,16 @@
         app:spark_lineColor="@color/colorPrimary"
         app:spark_scrubEnabled="true" />
 
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/pbChartLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@id/historicalChartView"
+        app:layout_constraintEnd_toEndOf="@id/historicalChartView"
+        app:layout_constraintStart_toStartOf="@id/historicalChartView"
+        app:layout_constraintTop_toTopOf="@id/historicalChartView" />
+
     <RadioGroup
         android:id="@+id/rgPeriodSelector"
         android:layout_width="match_parent"

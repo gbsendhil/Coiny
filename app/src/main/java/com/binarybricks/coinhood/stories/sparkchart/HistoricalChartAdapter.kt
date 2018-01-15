@@ -4,7 +4,7 @@ import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.robinhood.spark.SparkAdapter
 
 /**
- * Created by pairan on 1/13/18.
+ * Created by pranay airan on 1/13/18.
  */
 
 class HistoricalChartAdapter(private val historicalData: List<CryptoCompareHistoricalResponse.Data>) : SparkAdapter() {

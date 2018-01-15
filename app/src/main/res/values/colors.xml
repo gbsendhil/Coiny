@@ -5,9 +5,9 @@
     <color name="colorAccent">#69ffca</color>
     <color name="colorPrimaryDark">#009c6b</color>
 
-    <color name="colorSecondary">#e07851</color>
-    <color name="colorSecondaryAccent">#ffa87e</color>
-    <color name="colorSecondaryDark">#aa4a27</color>
+    <color name="colorSecondary">#f45531</color>
+    <color name="colorSecondaryAccent">#ff885d</color>
+    <color name="colorSecondaryDark">#ba1c03</color>
 
     <color name="backgroundColor">#303032</color>
     <color name="backgroundLightColor">#59595b</color>
@@ -15,7 +15,7 @@
 
     <color name="primaryTextColor">#ffffff</color>
 
-    <color name="mainTextColor">#777777</color>
+    <color name="mainTextColor">#757577</color>
 
 
 </resources>

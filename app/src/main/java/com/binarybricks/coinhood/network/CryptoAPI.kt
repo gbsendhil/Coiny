@@ -8,7 +8,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * Created by pairan on 1/8/18.
+ * Created by pranay airan on 1/8/18.
  * api provider for crypto compare and others.
  */
 
