@@ -19,7 +19,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
      * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.[toCurrencySymbol]
      * is which currency you want data in for like USD
      */
-    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?): Single<List<CryptoCompareHistoricalResponse.Data>> {
+    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?): Single<Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>> {
 
         val histoPeriod: String
         var limit = 30
@@ -62,7 +62,8 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
                     Timber.d("Size of response " + it.data.size)
-                    it.data
+                    val maxClosingValueFromHistoricalData = it.data.maxBy { it.close.toFloat() }
+                    Pair(it.data, maxClosingValueFromHistoricalData)
                 }
     }
 

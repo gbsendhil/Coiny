@@ -1,11 +1,12 @@
 package com.binarybricks.coinhood.stories.sparkchart
 
 import android.animation.ValueAnimator
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat
-import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RadioButton
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.*
@@ -14,6 +15,7 @@ import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.stories.CoinRepository
 import com.binarybricks.coinhood.utils.Formatters
+import com.binarybricks.coinhood.utils.ResourceProvider
 import com.binarybricks.coinhood.utils.changeChildrenColor
 import com.binarybricks.coinhood.utils.chartAnimationDuration
 import io.reactivex.disposables.CompositeDisposable
@@ -26,27 +28,19 @@ import java.util.*
  * Created by pranay airan on 1/10/18.
  * A compound layout to see historical charts.
  */
-// TODO change this to card view and make it as component without extending constrain layout
-// TODO make it lifecycle aware once you make it as component and dispose the stream
-// TODO try to move it from late init
-// TODO lot more things happening on UI thread, let's fix that.
 
-class HistoricalChartModule : ConstraintLayout {
+// TODO change this to MVP
+class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
+                            private val resourceProvider: ResourceProvider,
+                            private val fromCurrency: String,
+                            private val toCurrency: String) : LifecycleObserver {
 
-    private lateinit var schedulerProvider: BaseSchedulerProvider
-    private lateinit var fromCurrency: String
-    private lateinit var toCurrency: String
+    private lateinit var inflatedView: View
 
     private var historicalData: List<CryptoCompareHistoricalResponse.Data>? = null
     private var coin: Coin? = null
 
     private var selectedPeriod = HOUR
-
-    constructor(context: android.content.Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     private val chatRepo by lazy {
         ChartRepository(schedulerProvider)
@@ -57,7 +51,7 @@ class HistoricalChartModule : ConstraintLayout {
     }
 
     private val currency by lazy {
-        Currency.getInstance("USD")
+        Currency.getInstance(toCurrency)
     }
 
     private val formatter by lazy {
@@ -68,52 +62,49 @@ class HistoricalChartModule : ConstraintLayout {
         CompositeDisposable()
     }
 
-    fun init(schedulerProvider: BaseSchedulerProvider, fromCurrency: String, toCurrency: String) {
-
-        this.schedulerProvider = schedulerProvider
+    fun init(context: Context): View {
 
         val layoutInflater = LayoutInflater.from(context)
-        layoutInflater.inflate(R.layout.historical_chart_module, this)
-
-        this.fromCurrency = fromCurrency
-        this.toCurrency = toCurrency
+        inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, null)
 
         loadCurrentCoinPrice(fromCurrency, toCurrency)
         loadHistoricalData(HOUR, fromCurrency, toCurrency)
         addChartScrubListener()
         addRangeSelectorListener()
+
+        return inflatedView
     }
 
     private fun loadCurrentCoinPrice(fromCurrency: String, toCurrency: String) {
         coinRepo.getSingleCoinPrice(fromCurrency, toCurrency)
+                .filter { it.size > 0 }
                 .observeOn(schedulerProvider.ui())
                 .subscribe({
-                    if (it.size > 0) coin = it[0]
+                    coin = it[0]
                     animateCoinPrice(coin?.price)
-                }, {
-
-                })
+                }, { Timber.e(it.localizedMessage) })
     }
 
     private fun loadHistoricalData(period: String, fromCurrency: String, toCurrency: String) {
-        pbChartLoading.show()
+
+        inflatedView.pbChartLoading.show()
+
         compositeDisposable.add(chatRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
+                .filter { it.first.isNotEmpty() }
                 .observeOn(schedulerProvider.ui())
-                .doFinally({ pbChartLoading.hide() })
-                .subscribe({ dataList ->
-                    if (dataList.isNotEmpty()) {
-                        Timber.d("Data fetched with size ${dataList.size}")
-                        historicalData = dataList
-                        val maxClosingValueFromHistoricalData = dataList.maxBy { it.close.toFloat() }
-                        historicalChartView.adapter = HistoricalChartAdapter(dataList, maxClosingValueFromHistoricalData?.close)
-                        if (period != ALL) {
-                            showPercentageGainOrLoss(dataList)
-                        } else {
-                            tvChartPercentageChange.text = ""
-                            showPositiveGainColor()
-                        }
-                        showChartPeriodText(period)
+                .doFinally({ inflatedView.pbChartLoading.hide() })
+                .subscribe({ dataListPair ->
+                    historicalData = dataListPair.first
+
+                    inflatedView.historicalChartView.adapter = HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
+
+                    if (period != ALL) {
+                        showPercentageGainOrLoss(dataListPair.first)
+                    } else {
+                        inflatedView.tvChartPercentageChange.text = ""
+                        showPositiveGainColor()
                     }
+                    showChartPeriodText(period)
                 }, {
                     Timber.e(it.localizedMessage)
                 }))
@@ -125,7 +116,7 @@ class HistoricalChartModule : ConstraintLayout {
             val currentClosingPrice = historicalData.last().close.toFloat()
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
-            tvChartPercentageChange.text = context.getString(R.string.gain, percentageChange, formatter.formatAmount(gain.toString(), currency))
+            inflatedView.tvChartPercentageChange.text = resourceProvider.getString(R.string.gain, percentageChange, formatter.formatAmount(gain.toString(), currency))
             if (gain > 0) {
                 showPositiveGainColor()
             } else {
@@ -135,32 +126,32 @@ class HistoricalChartModule : ConstraintLayout {
     }
 
     private fun showPositiveGainColor() {
-        tvChartPercentageChange.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-        historicalChartView.lineColor = ContextCompat.getColor(context, R.color.colorPrimary)
-        rgPeriodSelector.changeChildrenColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        inflatedView.tvChartPercentageChange.setTextColor(resourceProvider.getColor(R.color.colorPrimary))
+        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorPrimary)
+        inflatedView.rgPeriodSelector.changeChildrenColor(resourceProvider.getColor(R.color.colorPrimary))
     }
 
     private fun showNegativeGainColor() {
-        tvChartPercentageChange.setTextColor(ContextCompat.getColor(context, R.color.colorSecondary))
-        historicalChartView.lineColor = ContextCompat.getColor(context, R.color.colorSecondary)
-        rgPeriodSelector.changeChildrenColor(ContextCompat.getColor(context, R.color.colorSecondary))
+        inflatedView.tvChartPercentageChange.setTextColor(resourceProvider.getColor(R.color.colorSecondary))
+        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorSecondary)
+        inflatedView.rgPeriodSelector.changeChildrenColor(resourceProvider.getColor(R.color.colorSecondary))
     }
 
     private fun showChartPeriodText(period: String) {
         val periodText = when (period) {
-            HOUR -> context.getString(R.string.past_hour)
-            HOURS24 -> context.getString(R.string.past_day)
-            WEEK -> context.getString(R.string.past_week)
-            MONTH -> context.getString(R.string.past_month)
-            YEAR -> context.getString(R.string.past_year)
-            ALL -> context.getString(R.string.all_time)
-            else -> context.getString(R.string.past_hour)
+            HOUR -> resourceProvider.getString(R.string.past_hour)
+            HOURS24 -> resourceProvider.getString(R.string.past_day)
+            WEEK -> resourceProvider.getString(R.string.past_week)
+            MONTH -> resourceProvider.getString(R.string.past_month)
+            YEAR -> resourceProvider.getString(R.string.past_year)
+            ALL -> resourceProvider.getString(R.string.all_time)
+            else -> resourceProvider.getString(R.string.past_hour)
         }
-        tvChartPeriod.text = periodText
+        inflatedView.tvChartPeriod.text = periodText
     }
 
     private fun addChartScrubListener() {
-        historicalChartView.setScrubListener { value ->
+        inflatedView.historicalChartView.setScrubListener { value ->
             if (value == null) {
                 // reset the amount
                 animateCoinPrice(coin?.price)
@@ -168,8 +159,8 @@ class HistoricalChartModule : ConstraintLayout {
                 showChartPeriodText(selectedPeriod)
             } else {
                 val historicalData = value as CryptoCompareHistoricalResponse.Data
-                tvChartPercentageChange.text = ""
-                tvChartPeriod.text = formatter.formatDate(historicalData.time, 1000)
+                inflatedView.tvChartPercentageChange.text = ""
+                inflatedView.tvChartPeriod.text = formatter.formatDate(historicalData.time, 1000)
                 animateCoinPrice(historicalData.close)
             }
         }
@@ -177,12 +168,12 @@ class HistoricalChartModule : ConstraintLayout {
 
     private fun animateCoinPrice(amount: String?) {
         if (amount != null) {
-            val chartCoinPriceAnimation = ValueAnimator.ofFloat(tvChartCoinPrice.tag.toString().toFloat(), amount.toFloat())
+            val chartCoinPriceAnimation = ValueAnimator.ofFloat(inflatedView.tvChartCoinPrice.tag.toString().toFloat(), amount.toFloat())
             chartCoinPriceAnimation.duration = chartAnimationDuration
             chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
-                tvChartCoinPrice.text = formatter.formatAmount(animatedValue.toString(), currency)
-                tvChartCoinPrice.tag = animatedValue
+                inflatedView.tvChartCoinPrice.text = formatter.formatAmount(animatedValue.toString(), currency)
+                inflatedView.tvChartCoinPrice.tag = animatedValue
             })
             chartCoinPriceAnimation.start()
         }
@@ -190,7 +181,7 @@ class HistoricalChartModule : ConstraintLayout {
 
 
     private fun addRangeSelectorListener() {
-        rgPeriodSelector.setOnCheckedChangeListener({ _, id ->
+        inflatedView.rgPeriodSelector.setOnCheckedChangeListener({ _, id ->
             val period = when (id) {
                 R.id.rbPeriod1H -> HOUR
                 R.id.rbPeriod1D -> HOURS24
@@ -200,9 +191,16 @@ class HistoricalChartModule : ConstraintLayout {
                 R.id.rbPeriodAll -> ALL
                 else -> HOUR
             }
-            findViewById<RadioButton>(id).setTextColor(ContextCompat.getColor(context, R.color.primaryTextColor))
+            inflatedView.findViewById<RadioButton>(id).setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
             selectedPeriod = period
             loadHistoricalData(period, fromCurrency, toCurrency)
         })
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    private fun cleanYourSelf() {
+        compositeDisposable.dispose()
+        historicalData = null
+        coin = null
     }
 }
