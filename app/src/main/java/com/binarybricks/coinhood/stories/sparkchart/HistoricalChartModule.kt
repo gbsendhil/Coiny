@@ -1,10 +1,12 @@
 package com.binarybricks.coinhood.stories.sparkchart
 
+import HistoricalChartContract
 import android.animation.ValueAnimator
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioButton
@@ -13,14 +15,11 @@ import com.binarybricks.coinhood.network.*
 import com.binarybricks.coinhood.network.models.Coin
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coinhood.stories.CoinRepository
 import com.binarybricks.coinhood.utils.Formatters
 import com.binarybricks.coinhood.utils.ResourceProvider
 import com.binarybricks.coinhood.utils.changeChildrenColor
 import com.binarybricks.coinhood.utils.chartAnimationDuration
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.historical_chart_module.view.*
-import timber.log.Timber
 import java.util.*
 
 
@@ -28,12 +27,10 @@ import java.util.*
  * Created by pranay airan on 1/10/18.
  * A compound layout to see historical charts.
  */
-
-// TODO change this to MVP
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
                             private val resourceProvider: ResourceProvider,
                             private val fromCurrency: String,
-                            private val toCurrency: String) : LifecycleObserver {
+                            private val toCurrency: String) : LifecycleObserver, HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
 
@@ -41,14 +38,6 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     private var coin: Coin? = null
 
     private var selectedPeriod = HOUR
-
-    private val chatRepo by lazy {
-        ChartRepository(schedulerProvider)
-    }
-
-    private val coinRepo by lazy {
-        CoinRepository(schedulerProvider)
-    }
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)
@@ -58,8 +47,8 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Formatters()
     }
 
-    private val compositeDisposable: CompositeDisposable by lazy {
-        CompositeDisposable()
+    private val historicalChatPresenter: HistoricalChartPresenter by lazy {
+        HistoricalChartPresenter(schedulerProvider)
     }
 
     fun init(context: Context): View {
@@ -67,47 +56,39 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         val layoutInflater = LayoutInflater.from(context)
         inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, null)
 
-        loadCurrentCoinPrice(fromCurrency, toCurrency)
-        loadHistoricalData(HOUR, fromCurrency, toCurrency)
+        historicalChatPresenter.attachView(this)
+
+        historicalChatPresenter.loadCurrentCoinPrice(fromCurrency, toCurrency)
+        historicalChatPresenter.loadHistoricalData(HOUR, fromCurrency, toCurrency)
+
         addChartScrubListener()
         addRangeSelectorListener()
 
         return inflatedView
     }
 
-    private fun loadCurrentCoinPrice(fromCurrency: String, toCurrency: String) {
-        coinRepo.getSingleCoinPrice(fromCurrency, toCurrency)
-                .filter { it.size > 0 }
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    coin = it[0]
-                    animateCoinPrice(coin?.price)
-                }, { Timber.e(it.localizedMessage) })
+    override fun addCoinAndAnimateCoinPrice(coin: Coin?) {
+        this.coin = coin
+        animateCoinPrice(coin?.price)
     }
 
-    private fun loadHistoricalData(period: String, fromCurrency: String, toCurrency: String) {
+    override fun showOrHideChartLoadingIndicator(showLoading: Boolean) {
+        if (showLoading) inflatedView.pbChartLoading.show() else inflatedView.pbChartLoading.hide()
+    }
 
-        inflatedView.pbChartLoading.show()
+    override fun onHistoricalDataLoaded(period: String, dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>) {
 
-        compositeDisposable.add(chatRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
-                .filter { it.first.isNotEmpty() }
-                .observeOn(schedulerProvider.ui())
-                .doFinally({ inflatedView.pbChartLoading.hide() })
-                .subscribe({ dataListPair ->
-                    historicalData = dataListPair.first
+        historicalData = dataListPair.first
 
-                    inflatedView.historicalChartView.adapter = HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
+        inflatedView.historicalChartView.adapter = HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
 
-                    if (period != ALL) {
-                        showPercentageGainOrLoss(dataListPair.first)
-                    } else {
-                        inflatedView.tvChartPercentageChange.text = ""
-                        showPositiveGainColor()
-                    }
-                    showChartPeriodText(period)
-                }, {
-                    Timber.e(it.localizedMessage)
-                }))
+        if (period != ALL) {
+            showPercentageGainOrLoss(dataListPair.first)
+        } else {
+            inflatedView.tvChartPercentageChange.text = ""
+            showPositiveGainColor()
+        }
+        showChartPeriodText(period)
     }
 
     private fun showPercentageGainOrLoss(historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
@@ -193,14 +174,20 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             }
             inflatedView.findViewById<RadioButton>(id).setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
             selectedPeriod = period
-            loadHistoricalData(period, fromCurrency, toCurrency)
+
+            historicalChatPresenter.loadHistoricalData(period, fromCurrency, toCurrency)
         })
     }
 
+    // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun cleanYourSelf() {
-        compositeDisposable.dispose()
+        historicalChatPresenter.detachView()
         historicalData = null
         coin = null
+    }
+
+    override fun onNetworkError(errorMessage: String) {
+        Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 }
