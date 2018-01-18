@@ -8,7 +8,7 @@ import io.reactivex.Single
 import timber.log.Timber
 
 /**
- * Created by pairan on 1/8/18.
+ * Created by pranay airan on 1/8/18.
  * Repository that interact with crypto api to get charts.
  */
 
@@ -19,7 +19,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
      * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.[toCurrencySymbol]
      * is which currency you want data in for like USD
      */
-    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?): Single<List<CryptoCompareHistoricalResponse.Data>> {
+    fun getCryptoHistoricalData(period: String, fromCurrencySymbol: String?, toCurrencySymbol: String?): Single<Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>> {
 
         val histoPeriod: String
         var limit = 30
@@ -28,7 +28,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             HOUR -> {
                 histoPeriod = HISTO_MINUTE
                 limit = 60
-                aggregate = 2 // this pulls for 2 hours
+                aggregate = 1 // this pulls for 1 hour
             }
             HOURS24 -> {
                 histoPeriod = HISTO_HOUR
@@ -48,7 +48,8 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             }
             ALL -> {
                 histoPeriod = HISTO_DAY
-                aggregate = 30 // default limit is 30 so 30*12 365 days
+                aggregate = 30
+                limit = 2000
             }
             else -> {
                 histoPeriod = HISTO_HOUR
@@ -61,7 +62,8 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
                     Timber.d("Size of response " + it.data.size)
-                    it.data
+                    val maxClosingValueFromHistoricalData = it.data.maxBy { it.close.toFloat() }
+                    Pair(it.data, maxClosingValueFromHistoricalData)
                 }
     }
 

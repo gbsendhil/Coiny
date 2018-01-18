@@ -54,6 +54,7 @@ dependencies {
     // Room
     implementation "android.arch.persistence.room:runtime:${archComponentVersion}"
     annotationProcessor "android.arch.persistence.room:compiler:${archComponentVersion}"
+    annotationProcessor "android.arch.lifecycle:compiler:${archComponentVersion}"
 
     // networking
     implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
