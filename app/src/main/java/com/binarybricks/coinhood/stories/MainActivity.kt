@@ -15,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val schedulerProvider = SchedulerProvider.getInstance()
+        val resourceProvider = ResourceProviderImpl(applicationContext)
 
-        val historicalChartModule = HistoricalChartModule(schedulerProvider, ResourceProviderImpl(applicationContext), "BTC", "USD")
+        val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, "BTC", "USD")
 
         lifecycle.addObserver(historicalChartModule)
 
