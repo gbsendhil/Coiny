@@ -15,8 +15,6 @@ interface HistoricalChartContract {
     }
 
     interface Presenter {
-
-        fun loadCurrentCoinPrice(fromCurrency: String, toCurrency: String)
         fun loadHistoricalData(period: String, fromCurrency: String, toCurrency: String)
     }
 }

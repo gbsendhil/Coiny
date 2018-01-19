@@ -4,9 +4,10 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.binarybricks.coinhood.network.models.Coin
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.stories.sparkchart.HistoricalChartModule
+import com.binarybricks.coinhood.stories.sparkchart.HistoricalChartModuleData
 import com.binarybricks.coinhood.utils.ResourceProvider
 
 
@@ -23,27 +24,26 @@ class CoinDetailsAdapter(private val context: Context,
     private val BUY_SELL = 1
 
     override fun getItemViewType(position: Int): Int {
-//        if (items.get(position) instanceof User) {
-//            return USER
-//        } else if (items.get(position) instanceof String) {
+        if (coinDetailList[position] is HistoricalChartModuleData) {
+            return HISTORICAL_CHART
+        }
+        //else if (items.get(position) instanceof String) {
 //            return IMAGE
 //        }
-//        return -1
-        return HISTORICAL_CHART
+        return -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val viewHolder: RecyclerView.ViewHolder
 
         viewHolder = when (viewType) {
             HISTORICAL_CHART -> {
                 val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, "BTC", "USD")
-                val historicalChartModuleView = historicalChartModule.init(context)
-                HistoricalChartViewHolder(historicalChartModuleView)
+                val historicalChartModuleView = historicalChartModule.init(context, parent)
+                HistoricalChartViewHolder(historicalChartModuleView, historicalChartModule)
             }
             else -> {
-                HistoricalChartViewHolder(TextView(context))
+                throw IllegalAccessException("Undefined view type")
             }
         }
 
@@ -53,8 +53,12 @@ class CoinDetailsAdapter(private val context: Context,
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder.itemViewType) {
             HISTORICAL_CHART -> {
-                // ideally here we pass a content to the view if there is anything in chart case
-                // we can pass the other data to it that is loaded from outside
+                // load data
+                val historicalChartViewHolder = viewHolder as HistoricalChartViewHolder
+                val historicalChartModuleData = coinDetailList[position] as HistoricalChartModuleData
+
+                historicalChartViewHolder.loadHistoricalChartData()
+                historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinWithCurrentPrice)
             }
         }
     }
@@ -63,5 +67,17 @@ class CoinDetailsAdapter(private val context: Context,
         return coinDetailList.size
     }
 
-    class HistoricalChartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class NormalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    }
+
+    class HistoricalChartViewHolder(itemView: View, private val historicalChartModule: HistoricalChartModule) : RecyclerView.ViewHolder(itemView) {
+        fun loadHistoricalChartData() {
+            historicalChartModule.loadData()
+        }
+
+        fun addCoinAndAnimateCoinPrice(coin: Coin?) {
+            historicalChartModule.addCoinAndAnimateCoinPrice(coin)
+        }
+    }
 }

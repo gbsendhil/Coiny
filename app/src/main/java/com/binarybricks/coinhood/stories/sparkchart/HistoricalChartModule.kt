@@ -9,6 +9,7 @@ import android.content.Context
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RadioButton
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.*
@@ -51,20 +52,21 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         HistoricalChartPresenter(schedulerProvider)
     }
 
-    fun init(context: Context): View {
+    fun init(context: Context, parent: ViewGroup?): View {
 
         val layoutInflater = LayoutInflater.from(context)
-        inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, null)
+        inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, parent, false)
 
         historicalChatPresenter.attachView(this)
 
-        historicalChatPresenter.loadCurrentCoinPrice(fromCurrency, toCurrency)
-        historicalChatPresenter.loadHistoricalData(HOUR, fromCurrency, toCurrency)
+        return inflatedView
+    }
 
+    fun loadData() {
+
+        historicalChatPresenter.loadHistoricalData(HOUR, fromCurrency, toCurrency)
         addChartScrubListener()
         addRangeSelectorListener()
-
-        return inflatedView
     }
 
     override fun addCoinAndAnimateCoinPrice(coin: Coin?) {
@@ -191,3 +193,5 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 }
+
+data class HistoricalChartModuleData(val coinWithCurrentPrice: Coin?)

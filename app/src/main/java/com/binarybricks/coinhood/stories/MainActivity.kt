@@ -21,8 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         lifecycle.addObserver(historicalChartModule)
 
-        val historicalChartModuleView = historicalChartModule.init(this)
+        val historicalChartModuleView = historicalChartModule.init(this, null)
 
         llContainer.addView(historicalChartModuleView)
+
+        historicalChartModule.loadData()
     }
 }
