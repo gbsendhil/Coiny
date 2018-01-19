@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.stories.sparkchart
+package com.binarybricks.coinhood.components.sparkchart
 
 import HistoricalChartContract
 import android.animation.ValueAnimator
@@ -192,6 +192,6 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     override fun onNetworkError(errorMessage: String) {
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
-}
 
-data class HistoricalChartModuleData(val coinWithCurrentPrice: Coin?)
+    data class HistoricalChartModuleData(val coinWithCurrentPrice: Coin?)
+}

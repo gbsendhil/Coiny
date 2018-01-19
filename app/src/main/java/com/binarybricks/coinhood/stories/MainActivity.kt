@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
-import com.binarybricks.coinhood.stories.sparkchart.HistoricalChartModule
+import com.binarybricks.coinhood.components.sparkchart.HistoricalChartModule
 import com.binarybricks.coinhood.utils.ResourceProviderImpl
 import kotlinx.android.synthetic.main.activity_main.*
 

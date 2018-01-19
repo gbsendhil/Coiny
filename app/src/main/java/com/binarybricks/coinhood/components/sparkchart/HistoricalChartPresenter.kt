@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.stories.sparkchart
+package com.binarybricks.coinhood.components.sparkchart
 
 import HistoricalChartContract
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
