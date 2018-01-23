@@ -7,8 +7,8 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.AboutCoinModule
-import com.binarybricks.coinhood.components.sparkchart.CoinDetailPresenter
-import com.binarybricks.coinhood.components.sparkchart.HistoricalChartModule
+import com.binarybricks.coinhood.components.historicalchart.CoinDetailPresenter
+import com.binarybricks.coinhood.components.historicalchart.HistoricalChartModule
 import com.binarybricks.coinhood.network.models.Coin
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProviderImpl
@@ -34,7 +34,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
         val resourceProvider = ResourceProviderImpl(applicationContext)
 
         val coin = "BTC"
-        val currency = "BTC"
+        val currency = "USD"
 
         coinDetailPresenter.attachView(this)
 

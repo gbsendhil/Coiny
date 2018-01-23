@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.components.sparkchart
+package com.binarybricks.coinhood.components.historicalchart
 
 import CoinDetailContract
 import android.arch.lifecycle.Lifecycle
