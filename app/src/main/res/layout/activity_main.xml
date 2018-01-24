@@ -7,4 +7,40 @@
     android:orientation="vertical"
     tools:context="com.binarybricks.coinhood.stories.MainActivity">
 
+    <Button
+        android:id="@+id/btc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:text="BTC"
+        android:textColor="@color/secondaryTextColor" />
+
+    <Button
+        android:id="@+id/eth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:text="ETH"
+        android:textColor="@color/secondaryTextColor" />
+
+    <Button
+        android:id="@+id/ltc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:text="LTC"
+        android:textColor="@color/secondaryTextColor" />
+
+    <Button
+        android:id="@+id/xrp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:text="XRP"
+        android:textColor="@color/secondaryTextColor" />
+
 </LinearLayout>

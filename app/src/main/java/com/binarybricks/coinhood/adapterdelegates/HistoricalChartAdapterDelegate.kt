@@ -1,5 +1,6 @@
 package com.binarybricks.coinhood.adapterdelegates
 
+import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
  * Created by pranay airan on 1/23/18.
  */
 
-class HistoricalChartAdapterDelegate(private val schedulerProvider: BaseSchedulerProvider,
+class HistoricalChartAdapterDelegate(private val fromCurrency: String,
+                                     private val toCurrency: String,
+                                     private val schedulerProvider: BaseSchedulerProvider,
+                                     private val lifecycle: Lifecycle,
                                      private val resourceProvider: ResourceProvider) : AdapterDelegate<List<Any>>() {
 
     override fun isForViewType(items: List<Any>, position: Int): Boolean {
@@ -22,7 +26,9 @@ class HistoricalChartAdapterDelegate(private val schedulerProvider: BaseSchedule
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, "BTC", "USD")
+        val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
+        lifecycle.addObserver(historicalChartModule)
+
         val historicalChartModuleView = historicalChartModule.init(parent.context, parent)
         return HistoricalChartViewHolder(historicalChartModuleView, historicalChartModule)
     }
