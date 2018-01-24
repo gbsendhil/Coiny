@@ -1,24 +1,30 @@
 package com.binarybricks.coinhood.components
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.binarybricks.coinhood.R
+import kotlinx.android.synthetic.main.coin_position_card_component.view.*
 
 /**
  * @author Pragya Agrawal on January 13, 2018
- *         Copyright (C) 2018 Ebates. All rights reserved.
  */
 
-class CoinPositionCard : ConstraintLayout {
+class CoinPositionCard {
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    private lateinit var inflatedView: View
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    fun init() {
+    fun init(context: Context, parent: ViewGroup): View {
         val layoutInflater = LayoutInflater.from(context)
-        layoutInflater.inflate(R.layout.coin_position_card_component, this)
+        inflatedView = layoutInflater.inflate(R.layout.coin_position_card_component, parent, false)
+
+        return inflatedView
     }
+
+    fun showNoOfCoinsView(coins: String) {
+        inflatedView.noOfCoins.text = coins
+    }
+
+    data class CoinPositionCardModuleData(val noOfCoins: String)
 }
