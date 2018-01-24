@@ -9,7 +9,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:background="@color/backgroundColor">
 
         <TextView
@@ -27,7 +26,7 @@
 
         <TextView
             android:id="@+id/tvChartPercentageChange"
-            style="@style/NumberRegular"
+            style="@style/TextRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -43,7 +42,7 @@
 
         <TextView
             android:id="@+id/tvChartPeriod"
-            style="@style/NumberRegularSecondary"
+            style="@style/TextSubHeadSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/tvChartPercentageChange"

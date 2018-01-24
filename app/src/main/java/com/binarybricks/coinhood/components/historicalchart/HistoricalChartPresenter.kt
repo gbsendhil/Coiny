@@ -1,9 +1,8 @@
-package com.binarybricks.coinhood.stories.sparkchart
+package com.binarybricks.coinhood.components.historicalchart
 
 import HistoricalChartContract
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.stories.BasePresenter
-import com.binarybricks.coinhood.stories.CoinRepository
 import timber.log.Timber
 
 /**
@@ -14,22 +13,6 @@ class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvi
 
     private val chatRepo by lazy {
         ChartRepository(schedulerProvider)
-    }
-
-    private val coinRepo by lazy {
-        CoinRepository(schedulerProvider)
-    }
-
-    /**
-     * Get the current price of a coin say btc or eth
-     */
-    override fun loadCurrentCoinPrice(fromCurrency: String, toCurrency: String) {
-        compositeDisposable.add(coinRepo.getSingleCoinPrice(fromCurrency, toCurrency)
-                .filter { it.size > 0 }
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    currentView?.addCoinAndAnimateCoinPrice(it[0])
-                }, { Timber.e(it.localizedMessage) }))
     }
 
     /**

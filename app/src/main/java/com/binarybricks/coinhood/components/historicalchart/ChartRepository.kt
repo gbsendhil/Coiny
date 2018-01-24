@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.stories.sparkchart
+package com.binarybricks.coinhood.components.historicalchart
 
 import com.binarybricks.coinhood.network.*
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse

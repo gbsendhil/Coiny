@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".stories.MainActivity">
-
-        </activity>
-        <activity android:name=".stories.coindetails.CoinDetails">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +29,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+        <activity android:name=".stories.coindetails.CoinDetailsActivity"></activity>
     </application>
 
 </manifest>

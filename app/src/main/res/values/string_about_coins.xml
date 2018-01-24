@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="unavailable">Sorry this currency info is not available</string>
+
+    <string name="btc">Bitcoin (Symbol: BTC) is a global digital currency and peer-to-peer payment system designed by an unknown programmer,
+        or a group of programmers called Satoshi Nakamoto. It was issued as open-source software network in 2009.
+        The interface is a digital system and transactions which are verified by network nodes and recorded in a peer-to-peer blockchain network,
+        occur between customers directly without an intermediary.</string>
+</resources>

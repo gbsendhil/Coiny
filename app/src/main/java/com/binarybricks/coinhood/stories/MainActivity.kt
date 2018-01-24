@@ -3,9 +3,7 @@ package com.binarybricks.coinhood.stories
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coinhood.R
-import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
-import com.binarybricks.coinhood.stories.sparkchart.HistoricalChartModule
-import com.binarybricks.coinhood.utils.ResourceProviderImpl
+import com.binarybricks.coinhood.stories.coindetails.CoinDetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,15 +12,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val schedulerProvider = SchedulerProvider.getInstance()
-        val resourceProvider = ResourceProviderImpl(applicationContext)
+        btc.setOnClickListener {
+            startActivity(CoinDetailsActivity.buildLaunchIntent(this, btc.text.toString()))
+        }
 
-        val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, "BTC", "USD")
+        eth.setOnClickListener {
+            startActivity(CoinDetailsActivity.buildLaunchIntent(this, eth.text.toString()))
+        }
 
-        lifecycle.addObserver(historicalChartModule)
+        ltc.setOnClickListener {
+            startActivity(CoinDetailsActivity.buildLaunchIntent(this, ltc.text.toString()))
+        }
 
-        val historicalChartModuleView = historicalChartModule.init(this)
-
-        llContainer.addView(historicalChartModuleView)
+        xrp.setOnClickListener {
+            startActivity(CoinDetailsActivity.buildLaunchIntent(this, xrp.text.toString()))
+        }
     }
 }
