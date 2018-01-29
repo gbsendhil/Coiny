@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llContainer"
     android:layout_width="match_parent"
@@ -7,10 +8,34 @@
     android:orientation="vertical"
     tools:context="com.binarybricks.coinhood.stories.MainActivity">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_transparant" />
+
+        <com.lapism.searchview.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:search_background_color="@color/backgroundColor"
+            app:search_icon_color="@color/backgroundLightColor"
+            app:search_shadow="true"
+            app:search_text_color="@color/primaryTextColor"
+            app:search_text_highlight_color="@color/primaryTextColor" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_margin="12dp"
         android:text="BTC"
@@ -20,6 +45,8 @@
         android:id="@+id/eth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btc"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_margin="12dp"
         android:text="ETH"
@@ -29,6 +56,8 @@
         android:id="@+id/ltc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/eth"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_margin="12dp"
         android:text="LTC"
@@ -38,7 +67,8 @@
         android:id="@+id/xrp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/ltc"
+        android:layout_centerHorizontal="true"
         android:layout_margin="12dp"
         android:text="XRP"
         android:textColor="@color/secondaryTextColor" />

@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
+import android.view.View
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.AboutCoinModule
 import com.binarybricks.coinhood.components.historicalchart.CoinDetailPresenter
@@ -33,6 +35,9 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_details)
+
+        val toolbar = findViewById<View>(R.id.toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
 
         val resourceProvider = ResourceProviderImpl(applicationContext)
 
