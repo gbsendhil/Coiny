@@ -3,21 +3,21 @@
     package="com.binarybricks.coinhood">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".CoinHoodApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".stories.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <data
                     android:host="open"
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".stories.coindetails.CoinDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColor">
+
+        <TextView
+            android:id="@+id/tvChartCoinPrice"
+            style="@style/DisplayNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic16dp"
+            android:tag="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$40.90" />
+
+
+        <TextView
+            android:id="@+id/tvChartPercentageChange"
+            style="@style/TextRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic4dp"
+            android:paddingEnd="@dimen/generic4dp"
+            android:paddingStart="@dimen/generic4dp"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/tvChartPeriod"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChartCoinPrice"
+            tools:text="-$0.04 (0.1%)" />
+
+        <TextView
+            android:id="@+id/tvChartPeriod"
+            style="@style/TextSubHeadSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tvChartPercentageChange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvChartPercentageChange"
+            app:layout_constraintTop_toTopOf="@+id/tvChartPercentageChange"
+            tools:text="today" />
+
+
+        <com.robinhood.spark.SparkView
+            android:id="@+id/historicalChartView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/generic16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChartPercentageChange"
+            app:spark_animateChanges="true"
+            app:spark_lineColor="@color/colorPrimary"
+            app:spark_scrubEnabled="true" />
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/pbChartLoading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@id/historicalChartView"
+            app:layout_constraintEnd_toEndOf="@id/historicalChartView"
+            app:layout_constraintStart_toStartOf="@id/historicalChartView"
+            app:layout_constraintTop_toTopOf="@id/historicalChartView" />
+
+        <RadioGroup
+            android:id="@+id/rgPeriodSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/generic8dp"
+            android:paddingTop="@dimen/generic8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/historicalChartView">
+
+            <RadioButton
+                android:id="@+id/rbPeriod1H"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_1h"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPeriod1D"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_1day"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPeriod1W"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_1week"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPeriod1M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_1month"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPeriod1Y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_1year"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbPeriodAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="@dimen/generic4dp"
+                android:text="@string/period_all"
+                android:textColor="@drawable/range_radio_btn_selector"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
