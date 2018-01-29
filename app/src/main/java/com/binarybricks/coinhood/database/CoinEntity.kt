@@ -8,7 +8,8 @@ import android.arch.persistence.room.PrimaryKey
  * @author Pragya Agrawal on January 27, 2018
  */
 @Entity(tableName = "coin")
-data class CoinEntity(@ColumnInfo(name = "url") var url: String,
+data class CoinEntity(@ColumnInfo(name = "coinId") var id: String,
+                      @ColumnInfo(name = "url") var url: String,
                       @ColumnInfo(name = "imageUrl") var imageUrl: String,
                       @ColumnInfo(name = "name") var name: String,
                       @ColumnInfo(name = "symbol") var symbol: String,
@@ -20,9 +21,11 @@ data class CoinEntity(@ColumnInfo(name = "url") var url: String,
                       @ColumnInfo(name = "preMinedValue") var preMinedValue: String,
                       @ColumnInfo(name = "totalCoinsFreeFloat") var totalCoinsFreeFloat: String,
                       @ColumnInfo(name = "sortOrder") var sortOrder: String,
-                      @ColumnInfo(name = "sponsored") var sponsored: Boolean = false) {
+                      @ColumnInfo(name = "sponsored") var sponsored: Boolean = false,
+                      @ColumnInfo(name = "watched") var watched: Boolean = false,
+                      @ColumnInfo(name = "purchased") var purchased: Boolean = false) {
 
-    @ColumnInfo(name = "coinId")
+    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
+    var idKey: Long = 0
 }
