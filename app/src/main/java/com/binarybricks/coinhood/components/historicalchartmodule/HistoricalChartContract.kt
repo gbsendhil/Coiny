@@ -1,4 +1,4 @@
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.intuit.qbse.components.mvp.BaseView
 
@@ -10,7 +10,7 @@ interface HistoricalChartContract {
 
     interface View : BaseView {
         fun showOrHideChartLoadingIndicator(showLoading: Boolean = true)
-        fun addCoinAndAnimateCoinPrice(coin: Coin?)
+        fun addCoinAndAnimateCoinPrice(coinPrice: CoinPrice?)
         fun onHistoricalDataLoaded(period: String, historicalDataPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>)
     }
 

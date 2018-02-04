@@ -1,4 +1,4 @@
-package com.rmnivnv.cryptomoon.model.network
+package com.binarybricks.coinhood.network.api
 
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.google.gson.JsonObject
@@ -12,9 +12,9 @@ import retrofit2.http.Query
  */
 interface CryptoCompareAPI {
 
-    //    @GET
-//    fun getCoinsList(@Url url: String): Single<AllCoinsResponse>
-//
+    @GET("all/coinlist")
+    fun getCoinList(): Single<JsonObject>
+
     @GET("pricemultifull")
     fun getPrices(@Query("fsyms") fromSymbol: String, @Query("tsyms") toSymbol: String): Single<JsonObject>
 
@@ -27,4 +27,7 @@ interface CryptoCompareAPI {
 
 //    @GET("top/pairs")
 //    fun getPairs(@Query("fsym") from: String): Single<JsonObject>
+
+    @GET("all/exchanges")
+    fun getExchangeList(): Single<JsonObject>
 }

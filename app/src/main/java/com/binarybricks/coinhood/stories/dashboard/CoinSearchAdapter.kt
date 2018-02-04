@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.stories.home
+package com.binarybricks.coinhood.stories.dashboard
 
 /**
  * Created by pranay airan on 1/26/18.

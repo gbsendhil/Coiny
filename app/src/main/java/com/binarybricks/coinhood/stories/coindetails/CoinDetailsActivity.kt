@@ -12,9 +12,9 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.AboutCoinModule
-import com.binarybricks.coinhood.components.historicalchart.CoinDetailPresenter
-import com.binarybricks.coinhood.components.historicalchart.HistoricalChartModule
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.components.historicalchartmodule.CoinDetailPresenter
+import com.binarybricks.coinhood.components.historicalchartmodule.HistoricalChartModule
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProviderImpl
 import com.binarybricks.coinhood.utils.getAboutStringForCoin
@@ -74,8 +74,8 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
     }
 
-    override fun onCoinDataLoaded(coin: Coin?) {
-        coinDetailList.add(0, HistoricalChartModule.HistoricalChartModuleData(coin))
+    override fun onCoinDataLoaded(coinPrice: CoinPrice?) {
+        coinDetailList.add(0, HistoricalChartModule.HistoricalChartModuleData(coinPrice))
         coinDetailsAdapter?.notifyDataSetChanged()
     }
 

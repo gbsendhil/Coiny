@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.components.historicalchart
+package com.binarybricks.coinhood.components.historicalchartmodule
 
 import HistoricalChartContract
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider

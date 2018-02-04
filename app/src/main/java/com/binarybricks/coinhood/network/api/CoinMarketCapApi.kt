@@ -1,4 +1,4 @@
-package com.rmnivnv.cryptomoon.model.network
+package com.binarybricks.coinhood.network.api
 
 /**
  * Created by rmnivnv on 31/08/2017.

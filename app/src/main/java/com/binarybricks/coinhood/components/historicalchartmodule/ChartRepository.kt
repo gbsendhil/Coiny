@@ -1,9 +1,10 @@
-package com.binarybricks.coinhood.components.historicalchart
+package com.binarybricks.coinhood.components.historicalchartmodule
 
 import com.binarybricks.coinhood.network.*
+import com.binarybricks.coinhood.network.api.CryptoCompareAPI
+import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
-import com.rmnivnv.cryptomoon.model.network.CryptoCompareAPI
 import io.reactivex.Single
 import timber.log.Timber
 

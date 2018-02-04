@@ -1,4 +1,4 @@
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.intuit.qbse.components.mvp.BaseView
 
 /**
@@ -9,7 +9,7 @@ interface CoinDetailContract {
 
     interface View : BaseView {
         fun showOrHideLoadingIndicator(showLoading: Boolean = true)
-        fun onCoinDataLoaded(coin: Coin?)
+        fun onCoinDataLoaded(coinPrice: CoinPrice?)
     }
 
     interface Presenter {

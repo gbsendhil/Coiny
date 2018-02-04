@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by pranay airan on 1/15/18.
  */
-data class Coin(
+data class CoinPrice(
 
         @field:SerializedName("LASTTRADEID")
         val lastTradedID: String? = null,

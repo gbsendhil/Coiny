@@ -1,6 +1,7 @@
-package com.binarybricks.coinhood.network
+package com.binarybricks.coinhood.network.api
 
 import com.binarybricks.coinhood.BuildConfig
+import com.binarybricks.coinhood.network.BASE_CRYPTOCOMPARE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.components.historicalchart
+package com.binarybricks.coinhood.components.historicalchartmodule
 
 import HistoricalChartContract
 import android.animation.ValueAnimator
@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.*
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.utils.Formatters
@@ -36,7 +36,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     private lateinit var inflatedView: View
 
     private var historicalData: List<CryptoCompareHistoricalResponse.Data>? = null
-    private var coin: Coin? = null
+    private var coinPrice: CoinPrice? = null
 
     private var selectedPeriod = HOUR
 
@@ -69,9 +69,9 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         addRangeSelectorListener()
     }
 
-    override fun addCoinAndAnimateCoinPrice(coin: Coin?) {
-        this.coin = coin
-        animateCoinPrice(coin?.price)
+    override fun addCoinAndAnimateCoinPrice(coinPrice: CoinPrice?) {
+        this.coinPrice = coinPrice
+        animateCoinPrice(coinPrice?.price)
     }
 
     override fun showOrHideChartLoadingIndicator(showLoading: Boolean) {
@@ -137,7 +137,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         inflatedView.historicalChartView.setScrubListener { value ->
             if (value == null) {
                 // reset the amount
-                animateCoinPrice(coin?.price)
+                animateCoinPrice(coinPrice?.price)
                 showPercentageGainOrLoss(historicalData)
                 showChartPeriodText(selectedPeriod)
             } else {
@@ -183,15 +183,15 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
 
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    private fun cleanYourSelf() {
+    fun cleanYourSelf() {
         historicalChatPresenter.detachView()
         historicalData = null
-        coin = null
+        coinPrice = null
     }
 
     override fun onNetworkError(errorMessage: String) {
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    data class HistoricalChartModuleData(val coinWithCurrentPrice: Coin?)
+    data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?)
 }

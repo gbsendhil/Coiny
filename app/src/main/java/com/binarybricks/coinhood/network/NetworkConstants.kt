@@ -10,6 +10,8 @@ val DATABASE_NAME = "cryptoMoonDb"
 val TABLE_DISPLAY_COINS = "displayCoins"
 
 val RAW = "RAW"
+val Data = "Data"
+
 val DISPLAY = "DISPLAY"
 val FSYMS = "fsyms"
 val TSYMS = "tsyms"

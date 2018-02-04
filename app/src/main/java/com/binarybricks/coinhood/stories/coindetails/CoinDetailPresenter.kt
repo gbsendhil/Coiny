@@ -1,4 +1,4 @@
-package com.binarybricks.coinhood.components.historicalchart
+package com.binarybricks.coinhood.components.historicalchartmodule
 
 import CoinDetailContract
 import android.arch.lifecycle.Lifecycle
@@ -6,7 +6,7 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.stories.BasePresenter
-import com.binarybricks.coinhood.stories.CoinRepository
+import com.binarybricks.coinhood.stories.CryptoCompareRepository
 import timber.log.Timber
 
 /**
@@ -17,7 +17,7 @@ class CoinDetailPresenter(private val schedulerProvider: BaseSchedulerProvider) 
         , CoinDetailContract.Presenter, LifecycleObserver {
 
     private val coinRepo by lazy {
-        CoinRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider)
     }
 
     /**
@@ -35,7 +35,7 @@ class CoinDetailPresenter(private val schedulerProvider: BaseSchedulerProvider) 
 
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    private fun cleanYourSelf() {
+    fun cleanYourSelf() {
         detachView()
     }
 }

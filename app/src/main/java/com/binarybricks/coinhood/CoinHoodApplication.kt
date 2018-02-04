@@ -1,12 +1,14 @@
 package com.binarybricks.coinhood
 
 import android.app.Application
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.support.annotation.NonNull
 import android.util.Log
+import com.binarybricks.coinhood.data.database.CoinHoodDatabase
+import com.facebook.stetho.Stetho
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-
 
 /**
  * Created by pranay airan on 1/8/18.
@@ -14,8 +16,12 @@ import timber.log.Timber.DebugTree
 
 class CoinHoodApplication : Application() {
 
+    private val DATABASE_NAME = "coinhood.db"
+
     companion object {
         private lateinit var appContext: Context
+
+        var database: CoinHoodDatabase? = null
 
         @JvmStatic
         fun getGlobalAppContext(): Context {
@@ -30,9 +36,12 @@ class CoinHoodApplication : Application() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
+            Stetho.initializeWithDefaults(this)
         } else {
             Timber.plant(CrashReportingTree())
         }
+
+        database = Room.databaseBuilder(this, CoinHoodDatabase::class.java, DATABASE_NAME).build()
     }
 
     /** A tree which logs important information for crash reporting.  */

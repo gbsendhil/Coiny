@@ -1,5 +1,7 @@
-package com.binarybricks.coinhood.stories
+package com.binarybricks.coinhood.stories.dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -14,7 +16,14 @@ import com.lapism.searchview.SearchView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class CoinDashboardActivity : AppCompatActivity() {
+
+    companion object {
+        @JvmStatic
+        fun buildLaunchIntent(context: Context): Intent {
+            return Intent(context, CoinDashboardActivity::class.java)
+        }
+    }
 
     private var nextMenuItem: MenuItem? = null
 
