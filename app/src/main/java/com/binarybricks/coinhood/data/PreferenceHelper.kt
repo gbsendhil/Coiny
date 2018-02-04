@@ -12,10 +12,10 @@ import java.lang.Exception
  * A Util that wraps all Shared Preference logic into 1 single place.
  */
 
-
 object PreferenceHelper {
 
     const val IS_LAUNCH_FTU_SHOWN = "LaunchFtuShown"
+    const val DEFAULT_CURRENCY = "DefaultCurrency"
 
     /**
      * Helper method to retrieve a preference value from [SharedPreferences].
@@ -27,14 +27,28 @@ object PreferenceHelper {
      */
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
-    fun <T : Any> getPreference(context: Context, key: String, defaultValue: T): T {
+    fun <T : Any> getPreference(
+        context: Context,
+        key: String,
+        defaultValue: T
+    ): T {
         return try {
             when (defaultValue::class) {
-                String::class -> PreferenceManager.getDefaultSharedPreferences(context).getString(key, defaultValue as String) as T
-                Float::class -> PreferenceManager.getDefaultSharedPreferences(context).getFloat(key, defaultValue as Float) as T
-                Long::class -> PreferenceManager.getDefaultSharedPreferences(context).getLong(key, defaultValue as Long) as T
-                Int::class -> PreferenceManager.getDefaultSharedPreferences(context).getInt(key, defaultValue as Int) as T
-                Boolean::class -> PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, defaultValue as Boolean) as T
+                String::class -> PreferenceManager.getDefaultSharedPreferences(context).getString(
+                    key, defaultValue as String
+                ) as T
+                Float::class -> PreferenceManager.getDefaultSharedPreferences(context).getFloat(
+                    key, defaultValue as Float
+                ) as T
+                Long::class -> PreferenceManager.getDefaultSharedPreferences(context).getLong(
+                    key, defaultValue as Long
+                ) as T
+                Int::class -> PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                    key, defaultValue as Int
+                ) as T
+                Boolean::class -> PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                    key, defaultValue as Boolean
+                ) as T
                 else -> throw UnsupportedOperationException("This Preference Type is not supported")
             }
         } catch (e: Exception) {
@@ -51,7 +65,11 @@ object PreferenceHelper {
      * @param value value to write in preference
      */
     @JvmStatic
-    fun setPreference(context: Context, key: String, value: Any?) {
+    fun setPreference(
+        context: Context,
+        key: String,
+        value: Any?
+    ) {
 
         if (value == null) {
             edit(context, { it.remove(key) })
@@ -68,8 +86,12 @@ object PreferenceHelper {
     }
 
     // https://stackoverflow.com/questions/44471284/when-to-use-an-inline-function-in-kotlin
-    private inline fun edit(context: Context, operation: (SharedPreferences.Editor) -> Unit) {
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+    private inline fun edit(
+        context: Context,
+        operation: (SharedPreferences.Editor) -> Unit
+    ) {
+        val editor = PreferenceManager.getDefaultSharedPreferences(context)
+            .edit()
         operation(editor)
         editor.apply()
     }

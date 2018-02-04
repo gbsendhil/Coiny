@@ -1,3 +1,5 @@
+@file:JvmName("ConstantsKt")
+
 package com.binarybricks.coinhood.network
 
 val BASE_CRYPTOCOMPARE_URL = "https://min-api.cryptocompare.com/data/"
@@ -10,7 +12,6 @@ val DATABASE_NAME = "cryptoMoonDb"
 val TABLE_DISPLAY_COINS = "displayCoins"
 
 val RAW = "RAW"
-val Data = "Data"
 
 val DISPLAY = "DISPLAY"
 val FSYMS = "fsyms"

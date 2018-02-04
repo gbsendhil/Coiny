@@ -1,10 +1,18 @@
 package com.binarybricks.coinhood.components.historicalchartmodule
 
-import com.binarybricks.coinhood.network.*
 import com.binarybricks.coinhood.network.api.CryptoCompareAPI
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coinhood.network.ALL
+import com.binarybricks.coinhood.network.HISTO_DAY
+import com.binarybricks.coinhood.network.HISTO_HOUR
+import com.binarybricks.coinhood.network.HISTO_MINUTE
+import com.binarybricks.coinhood.network.HOUR
+import com.binarybricks.coinhood.network.HOURS24
+import com.binarybricks.coinhood.network.MONTH
+import com.binarybricks.coinhood.network.WEEK
+import com.binarybricks.coinhood.network.YEAR
 import io.reactivex.Single
 import timber.log.Timber
 
