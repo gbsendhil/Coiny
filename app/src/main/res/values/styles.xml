@@ -1,57 +1,73 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-    <!-- default color of ANY text (menu items, labels, etc. ) unless color attribute is overridden -->
-    <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <!-- default color of ANY text (menu items, labels, etc. ) unless color attribute is overridden -->
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
 
-    <!-- color of the default background -->
-    <item name="android:windowBackground">@color/backgroundDarkColor</item>
+        <!-- color of the default background -->
+        <item name="android:windowBackground">@color/backgroundDarkColor</item>
 
-  </style>
+    </style>
 
-  <style name="ButtonRegular" parent="TextAppearance.AppCompat.Subhead">
-    <item name="android:textColor">@color/primaryTextColor</item>
-    <item name="android:background">@color/colorPrimary</item>
-  </style>
-
-
-  <style name="DisplayNumber" parent="TextAppearance.AppCompat.Display1">
-    <item name="android:textColor">@color/primaryTextColor</item>
-  </style>
-
-  <style name="TextRegular" parent="TextAppearance.AppCompat.Subhead">
-    <item name="android:textColor">@color/primaryTextColor</item>
-  </style>
-
-  <style name="TextRegularSecondary" parent="TextAppearance.AppCompat.Subhead">
-    <item name="android:textColor">@color/secondaryTextColor</item>
-  </style>
-
-  <style name="TextTitle" parent="TextAppearance.AppCompat.Medium">
-    <item name="android:textColor">@color/primaryTextColor</item>
-  </style>
-
-  <style name="TextTitleSecondary" parent="TextAppearance.AppCompat.Medium">
-    <item name="android:textColor">@color/secondaryTextColor</item>
-  </style>
+    <style name="ButtonRegular" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 
 
-  <style name="TextSubHead" parent="TextAppearance.AppCompat.Subhead">
-    <item name="android:textColor">@color/primaryTextColor</item>
-  </style>
+    <style name="DisplayNumberHuge" parent="TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
 
-  <style name="TextSubHeadSecondary" parent="TextAppearance.AppCompat.Subhead">
-    <item name="android:textColor">@color/secondaryTextColor</item>
-  </style>
+    <style name="DisplayNumberLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
 
-  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="DisplayNumberMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
 
-  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="TextRegular" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TextRegularSecondary" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="TextTitle" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TextTitleSecondary" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+
+    <style name="TextSubHead" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TextSubHeadSecondary" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TextSmallSecondary" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

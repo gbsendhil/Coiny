@@ -52,6 +52,7 @@ dependencies {
     // architecture components
     // Room
     implementation "android.arch.persistence.room:runtime:${archComponentVersion}"
+    implementation "android.arch.persistence.room:rxjava2:${archComponentVersion}"
     kapt "android.arch.persistence.room:compiler:${archComponentVersion}"
     kapt "android.arch.lifecycle:compiler:${archComponentVersion}"
 
@@ -76,6 +77,11 @@ dependencies {
     implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     implementation 'com.github.midorikocak:currency-picker-android:1.1.9'
+    implementation 'com.airbnb.android:lottie:2.5.0-rc1'
+
+    // image loading
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.0'
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
     debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'

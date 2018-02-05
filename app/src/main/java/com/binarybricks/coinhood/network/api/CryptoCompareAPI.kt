@@ -16,7 +16,7 @@ interface CryptoCompareAPI {
     fun getCoinList(): Single<JsonObject>
 
     @GET("pricemultifull")
-    fun getPrices(@Query("fsyms") fromSymbol: String, @Query("tsyms") toSymbol: String): Single<JsonObject>
+    fun getPricesFull(@Query("fsyms") fromSymbol: String, @Query("tsyms") toSymbol: String): Single<JsonObject>
 
     @GET("{period}")
     fun getCryptoHistoricalData(@Path("period") period: String,

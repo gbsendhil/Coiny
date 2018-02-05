@@ -5,37 +5,29 @@ import android.animation.ValueAnimator
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import android.content.Context
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.binarybricks.coinhood.R
+import com.binarybricks.coinhood.network.*
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coinhood.network.ALL
 import com.binarybricks.coinhood.utils.Formatters
-import com.binarybricks.coinhood.network.HOUR
-import com.binarybricks.coinhood.network.HOURS24
-import com.binarybricks.coinhood.network.MONTH
 import com.binarybricks.coinhood.utils.ResourceProvider
-import com.binarybricks.coinhood.network.WEEK
-import com.binarybricks.coinhood.network.YEAR
 import com.binarybricks.coinhood.utils.changeChildrenColor
 import com.binarybricks.coinhood.utils.chartAnimationDuration
 import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
-
 
 /**
  * Created by pranay airan on 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
-                            private val resourceProvider: ResourceProvider,
-                            private val fromCurrency: String,
+                            private val resourceProvider: ResourceProvider, private val fromCurrency: String,
                             private val toCurrency: String) : LifecycleObserver, HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
@@ -57,18 +49,17 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         HistoricalChartPresenter(schedulerProvider)
     }
 
-    fun init(context: Context, parent: ViewGroup?): View {
+    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
-        val layoutInflater = LayoutInflater.from(context)
-        inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, parent, false)
+        val inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, parent, false)
 
         historicalChatPresenter.attachView(this)
 
         return inflatedView
     }
 
-    fun loadData() {
-
+    fun loadData(inflatedView: View) {
+        this.inflatedView = inflatedView
         historicalChatPresenter.loadHistoricalData(HOUR, fromCurrency, toCurrency)
         addChartScrubListener()
         addRangeSelectorListener()
@@ -83,11 +74,13 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         if (showLoading) inflatedView.pbChartLoading.show() else inflatedView.pbChartLoading.hide()
     }
 
-    override fun onHistoricalDataLoaded(period: String, dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>) {
+    override fun onHistoricalDataLoaded(period: String,
+                                        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>) {
 
         historicalData = dataListPair.first
 
-        inflatedView.historicalChartView.adapter = HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
+        inflatedView.historicalChartView.adapter =
+                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
 
         if (period != ALL) {
             showPercentageGainOrLoss(dataListPair.first)
@@ -98,13 +91,17 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         showChartPeriodText(period)
     }
 
-    private fun showPercentageGainOrLoss(historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
+    private fun showPercentageGainOrLoss(
+        historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
         if (historicalData != null) {
-            val lastClosingPrice = historicalData.first().close.toFloat() // we always get's oldest first in api
+            val lastClosingPrice =
+                historicalData.first().close.toFloat() // we always get's oldest first in api
             val currentClosingPrice = historicalData.last().close.toFloat()
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
-            inflatedView.tvChartPercentageChange.text = resourceProvider.getString(R.string.gain, percentageChange, formatter.formatAmount(gain.toString(), currency))
+            inflatedView.tvChartPercentageChange.text =
+                    resourceProvider.getString(R.string.gain, percentageChange,
+                        formatter.formatAmount(gain.toString(), currency))
             if (gain > 0) {
                 showPositiveGainColor()
             } else {
@@ -114,15 +111,20 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     }
 
     private fun showPositiveGainColor() {
-        inflatedView.tvChartPercentageChange.setTextColor(resourceProvider.getColor(R.color.colorPrimary))
+        inflatedView.tvChartPercentageChange.setTextColor(
+            resourceProvider.getColor(R.color.colorPrimary))
         inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorPrimary)
-        inflatedView.rgPeriodSelector.changeChildrenColor(resourceProvider.getColor(R.color.colorPrimary))
+        inflatedView.rgPeriodSelector.changeChildrenColor(
+            resourceProvider.getColor(R.color.colorPrimary))
     }
 
     private fun showNegativeGainColor() {
-        inflatedView.tvChartPercentageChange.setTextColor(resourceProvider.getColor(R.color.colorSecondary))
-        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorSecondary)
-        inflatedView.rgPeriodSelector.changeChildrenColor(resourceProvider.getColor(R.color.colorSecondary))
+        inflatedView.tvChartPercentageChange.setTextColor(
+            resourceProvider.getColor(R.color.colorSecondary))
+        inflatedView.historicalChartView.lineColor =
+                resourceProvider.getColor(R.color.colorSecondary)
+        inflatedView.rgPeriodSelector.changeChildrenColor(
+            resourceProvider.getColor(R.color.colorSecondary))
     }
 
     private fun showChartPeriodText(period: String) {
@@ -140,8 +142,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
 
     private fun addChartScrubListener() {
         inflatedView.historicalChartView.setScrubListener { value ->
-            if (value == null) {
-                // reset the amount
+            if (value == null) { // reset the amount
                 animateCoinPrice(coinPrice?.price)
                 showPercentageGainOrLoss(historicalData)
                 showChartPeriodText(selectedPeriod)
@@ -160,13 +161,13 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             chartCoinPriceAnimation.duration = chartAnimationDuration
             chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
-                inflatedView.tvChartCoinPrice.text = formatter.formatAmount(animatedValue.toString(), currency)
+                inflatedView.tvChartCoinPrice.text =
+                        formatter.formatAmount(animatedValue.toString(), currency)
                 inflatedView.tvChartCoinPrice.tag = animatedValue
             })
             chartCoinPriceAnimation.start()
         }
     }
-
 
     private fun addRangeSelectorListener() {
         inflatedView.rgPeriodSelector.setOnCheckedChangeListener({ _, id ->
@@ -179,7 +180,8 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
                 R.id.rbPeriodAll -> ALL
                 else -> HOUR
             }
-            inflatedView.findViewById<RadioButton>(id).setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
+            inflatedView.findViewById<RadioButton>(id)
+                .setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
             selectedPeriod = period
 
             historicalChatPresenter.loadHistoricalData(period, fromCurrency, toCurrency)

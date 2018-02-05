@@ -17,6 +17,11 @@ object PreferenceHelper {
     const val IS_LAUNCH_FTU_SHOWN = "LaunchFtuShown"
     const val DEFAULT_CURRENCY = "DefaultCurrency"
 
+
+    fun getDefaultCurrency(context: Context): String {
+        return getPreference(context, DEFAULT_CURRENCY, "USD")
+    }
+
     /**
      * Helper method to retrieve a preference value from [SharedPreferences].
      *

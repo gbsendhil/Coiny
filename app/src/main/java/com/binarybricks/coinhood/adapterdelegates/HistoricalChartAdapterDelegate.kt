@@ -2,6 +2,7 @@ package com.binarybricks.coinhood.adapterdelegates
 
 import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.components.historicalchartmodule.HistoricalChartModule
@@ -29,7 +30,7 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
         val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
         lifecycle.addObserver(historicalChartModule)
 
-        val historicalChartModuleView = historicalChartModule.init(parent.context, parent)
+        val historicalChartModuleView = historicalChartModule.init(LayoutInflater.from(parent.context), parent)
         return HistoricalChartViewHolder(historicalChartModuleView, historicalChartModule)
     }
 
@@ -44,7 +45,7 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
 
     class HistoricalChartViewHolder(itemView: View, private val historicalChartModule: HistoricalChartModule) : RecyclerView.ViewHolder(itemView) {
         fun loadHistoricalChartData() {
-            historicalChartModule.loadData()
+            historicalChartModule.loadData(itemView)
         }
 
         fun addCoinAndAnimateCoinPrice(coinPrice: CoinPrice?) {

@@ -1,6 +1,7 @@
 package com.binarybricks.coinhood.adapterdelegates
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.components.AboutCoinModule
@@ -19,7 +20,7 @@ class AboutCoinAdapterDelegate : AdapterDelegate<List<Any>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val aboutCoinModule = AboutCoinModule()
-        val aboutCardModuleView = aboutCoinModule.init(parent.context, parent)
+        val aboutCardModuleView = aboutCoinModule.init(LayoutInflater.from(parent.context), parent)
         return AboutCoinViewHolder(aboutCardModuleView, aboutCoinModule)
     }
 
@@ -30,7 +31,7 @@ class AboutCoinAdapterDelegate : AdapterDelegate<List<Any>>() {
 
     class AboutCoinViewHolder(itemView: View, private val aboutCoinModule: AboutCoinModule) : RecyclerView.ViewHolder(itemView) {
         fun showAboutCoinText(aboutCoin: String) {
-            aboutCoinModule.showAboutCoinText(aboutCoin)
+            aboutCoinModule.showAboutCoinText(itemView, aboutCoin)
         }
     }
 }

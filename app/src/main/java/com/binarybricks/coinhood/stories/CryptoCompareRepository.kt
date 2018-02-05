@@ -37,10 +37,10 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
      * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.[toCurrencySymbol]
      * is which currency you want data in for like USD
      */
-    fun getSingleCoinPrice(fromCurrencySymbol: String, toCurrencySymbol: String): Single<ArrayList<CoinPrice>> {
+    fun getCoinPriceFull(fromCurrencySymbol: String, toCurrencySymbol: String): Single<ArrayList<CoinPrice>> {
 
         return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
-                .getPrices(fromCurrencySymbol, toCurrencySymbol)
+                .getPricesFull(fromCurrencySymbol, toCurrencySymbol)
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
                     Timber.d("Coin price fetched, parsing response")
