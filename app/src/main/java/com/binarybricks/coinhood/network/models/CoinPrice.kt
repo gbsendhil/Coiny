@@ -1,10 +1,13 @@
 package com.binarybricks.coinhood.network.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by pranay airan on 1/15/18.
  */
+@Parcelize
 data class CoinPrice(
 
         @field:SerializedName("LASTTRADEID")
@@ -94,4 +97,4 @@ data class CoinPrice(
 
         @field:SerializedName("LOWDAY")
         val lowDay: String? = null
-)
+) : Parcelable

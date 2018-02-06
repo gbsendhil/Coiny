@@ -4,11 +4,14 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author Pragya Agrawal on January 27, 2018
  */
 @Entity(indices = [(Index("coinId", unique = true))])
+@Parcelize
 data class Coin(
     @ColumnInfo(name = "coinId") var id: String,
     @ColumnInfo(name = "url") var url: String,
@@ -26,7 +29,7 @@ data class Coin(
     @ColumnInfo(name = "sortOrder") var sortOrder: String,
     @ColumnInfo(name = "sponsored") var sponsored: Boolean = false,
     @ColumnInfo(name = "watched") var watched: Boolean = false
-) {
+) : Parcelable {
 
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)

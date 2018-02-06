@@ -21,6 +21,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 ext {
     // constant versions to use for common packages like support libs
     supportLibVersion = '27.0.2'

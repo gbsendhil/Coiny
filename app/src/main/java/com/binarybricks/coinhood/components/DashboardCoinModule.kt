@@ -49,7 +49,7 @@ class DashboardCoinModule(private val toCurrency: String) {
 
     fun showCoinInfo(inflatedView: View, watchedCoin: WatchedCoin, coinPrice: CoinPrice) {
 
-        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${watchedCoin.coin.imageUrl}?width=30"
+        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${watchedCoin.coin.imageUrl}?width=60"
 
         picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
@@ -71,7 +71,7 @@ class DashboardCoinModule(private val toCurrency: String) {
         // adjust color logic here for text
 
         inflatedView.coinCard.setOnClickListener {
-            inflatedView.context.startActivity(CoinDetailsActivity.buildLaunchIntent(inflatedView.context, watchedCoin.coin.symbol))
+            inflatedView.context.startActivity(CoinDetailsActivity.buildLaunchIntent(inflatedView.context, watchedCoin, coinPrice))
         }
     }
 
