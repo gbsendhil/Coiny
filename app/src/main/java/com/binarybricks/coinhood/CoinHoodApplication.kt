@@ -42,6 +42,7 @@ class CoinHoodApplication : Application() {
                 return
             }
 
+            //TODO remove or enable this.
 //            FakeCrashLibrary.log(priority, tag, message)
 //
 //            if (t != null) {
