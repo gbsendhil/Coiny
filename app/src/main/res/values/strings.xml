@@ -16,4 +16,13 @@
     <string name="all_time">all time</string>
     <string name="about">About</string>
     <string name="cd_coin_image">Coin Image</string>
+    <string name="statistics">Statistics</string>
+    <string name="open">Open</string>
+    <string name="today_s_high">Today\'s High</string>
+    <string name="today_s_low">Today\'s Low</string>
+    <string name="change_today">Change today\'s</string>
+    <string name="volume">Volume</string>
+    <string name="average_volume">Average Volume</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="supply">Supply</string>
 </resources>
