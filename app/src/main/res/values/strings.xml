@@ -25,4 +25,9 @@
     <string name="average_volume">Average Volume</string>
     <string name="market_cap">Market Cap</string>
     <string name="supply">Supply</string>
+    <string name="coin_info">Coin Info</string>
+    <string name="exchange">Exchange</string>
+    <string name="algorithm">Algorithm</string>
+    <string name="proof_type">Proof Type</string>
+    <string name="global_avg">Global average</string>
 </resources>

@@ -3,10 +3,7 @@ package com.binarybricks.coinhood.stories.coindetails
 import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.binarybricks.coinhood.adapterdelegates.AboutCoinAdapterDelegate
-import com.binarybricks.coinhood.adapterdelegates.CoinPositionAdapterDelegate
-import com.binarybricks.coinhood.adapterdelegates.CoinStatsAdapterDelegate
-import com.binarybricks.coinhood.adapterdelegates.HistoricalChartAdapterDelegate
+import com.binarybricks.coinhood.adapterdelegates.*
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
@@ -26,16 +23,18 @@ class CoinDetailsAdapter(fromCurrency: String,
                          resourceProvider: ResourceProvider) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
-    private val COIN_STATS = 1
-    private val COIN_POSITION = 2
-    private val ABOUT_COIN = 3
+    private val COIN_POSITION = 1
+    private val COIN_INFO = 2
+    private val COIN_STATS = 3
+    private val ABOUT_COIN = 4
 
     val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
 
     init {
         delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, lifecycle, resourceProvider))
-        delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
+        delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
+        delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
     }
 

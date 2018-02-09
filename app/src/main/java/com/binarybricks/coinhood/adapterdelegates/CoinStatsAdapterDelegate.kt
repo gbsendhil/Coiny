@@ -10,7 +10,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 
 /**
- * @author Pragya Agrawal on February 7, 2018
+ * @author Pragya Agrawal on February 1, 2018
  */
 
 class CoinStatsAdapterDelegate : AdapterDelegate<List<Any>>() {

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.AboutCoinModule
+import com.binarybricks.coinhood.components.CoinInfoModule
 import com.binarybricks.coinhood.components.CoinStatsticsModule
 import com.binarybricks.coinhood.components.historicalchartmodule.CoinDetailPresenter
 import com.binarybricks.coinhood.components.historicalchartmodule.HistoricalChartModule
@@ -20,6 +21,7 @@ import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProviderImpl
+import com.binarybricks.coinhood.utils.defaultExchange
 import com.binarybricks.coinhood.utils.getAboutStringForCoin
 import kotlinx.android.synthetic.main.activity_coin_details.*
 
@@ -72,6 +74,9 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
         rvCoinDetails.layoutManager = LinearLayoutManager(this)
         rvCoinDetails.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice.market
+                ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
 
         coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
         coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, applicationContext)))

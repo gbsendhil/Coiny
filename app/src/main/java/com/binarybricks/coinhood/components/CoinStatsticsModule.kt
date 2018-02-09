@@ -1,6 +1,5 @@
 package com.binarybricks.coinhood.components
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +7,11 @@ import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.data.PreferenceHelper
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.utils.Formatters
-import kotlinx.android.synthetic.main.statistic_module.view.*
+import kotlinx.android.synthetic.main.coin_statistic_module.view.*
 import java.util.*
 
 /**
- * @author Pragya Agrawal on February 7, 2018
+ * @author Pragya Agrawal on February 1, 2018
  *
  * Simple class that wraps all logic related to Coin stats
  */
@@ -24,10 +23,9 @@ class CoinStatsticsModule {
     }
 
     fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
-        return layoutInflater.inflate(R.layout.statistic_module, parent, false)
+        return layoutInflater.inflate(R.layout.coin_statistic_module, parent, false)
     }
 
-    @SuppressLint("SetTextI18n")
     fun showCoinStats(inflatedView: View, coinPrice: CoinPrice) {
         val currency = Currency.getInstance(PreferenceHelper.getDefaultCurrency(inflatedView.context))
 

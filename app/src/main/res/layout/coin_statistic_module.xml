@@ -20,7 +20,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/generic16dp"
+        android:layout_marginTop="@dimen/generic12dp"
         app:cardBackgroundColor="@color/backgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -53,7 +53,7 @@
                 android:id="@+id/tvTodaysHighAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 tools:text="$172.30"
                 style="@style/TextRegular"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                 android:id="@+id/tvTodayLowAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 tools:text="$169.20"
                 style="@style/TextRegular"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
                 android:id="@+id/tvChangeTodayAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 tools:text="$177.32"
                 style="@style/TextRegular"
                 app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 tools:text="27M"
                 style="@style/TextRegular"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tvVolumeLabel" />
 
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 tools:text="$867.34B"
                 style="@style/TextRegular"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tvAvgVolumeLabel" />
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 tools:text="18.433"
                 style="@style/TextRegular"
-                android:layout_marginTop="@dimen/generic24dp"
+                android:layout_marginTop="@dimen/generic16dp"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/tvAvgMarketCapLabel" />
 
