@@ -1,6 +1,6 @@
 package com.binarybricks.coinhood.components.historicalchartmodule
 
-import com.binarybricks.coinhood.network.api.CryptoCompareAPI
+import com.binarybricks.coinhood.network.api.API
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
@@ -66,7 +66,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             }
         }
 
-        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(API::class.java)
                 .getCryptoHistoricalData(histoPeriod, fromCurrencySymbol, toCurrencySymbol, limit, aggregate)
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {

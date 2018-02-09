@@ -10,10 +10,10 @@ import com.binarybricks.coinhood.data.database.entities.Exchange
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 
 /**
- * @author Pragya Agrawal on January 27, 2018
+ * Created by Pragya Agrawal
  */
 @Database(
-    entities = [Coin::class, Exchange::class, WatchedCoin::class], version = 1, exportSchema = false
+        entities = [Coin::class, Exchange::class, WatchedCoin::class], version = 1, exportSchema = false
 )
 abstract class CoinHoodDatabase : RoomDatabase() {
 

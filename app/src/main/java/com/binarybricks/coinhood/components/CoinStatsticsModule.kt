@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.coin_statistic_module.view.*
 import java.util.*
 
 /**
- * @author Pragya Agrawal on February 1, 2018
+ * Created by Pragya Agrawal
  *
  * Simple class that wraps all logic related to Coin stats
  */

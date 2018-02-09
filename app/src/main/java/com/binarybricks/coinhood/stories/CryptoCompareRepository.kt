@@ -1,6 +1,6 @@
 package com.binarybricks.coinhood.stories
 
-import com.binarybricks.coinhood.network.api.CryptoCompareAPI
+import com.binarybricks.coinhood.network.api.API
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CCCoin
 import com.binarybricks.coinhood.network.models.CoinPrice
@@ -23,7 +23,7 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
      * Get list of all supported coins
      */
     fun getAllCoins(): Single<ArrayList<CCCoin>> {
-        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(API::class.java)
                 .getCoinList()
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
@@ -39,7 +39,7 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
      */
     fun getCoinPriceFull(fromCurrencySymbol: String, toCurrencySymbol: String): Single<ArrayList<CoinPrice>> {
 
-        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(API::class.java)
                 .getPricesFull(fromCurrencySymbol, toCurrencySymbol)
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {
@@ -53,7 +53,7 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
      * Get list of all supported exchanges
      */
     fun getAllSupportedExchanges(): Single<ArrayList<String>> {
-        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(API::class.java)
                 .getExchangeList()
                 .subscribeOn(baseSchedulerProvider.io())
                 .map {

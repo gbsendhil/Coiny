@@ -1,6 +1,6 @@
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.models.CoinPrice
-import com.intuit.qbse.components.mvp.BaseView
+import com.binarybricks.coinhood.stories.BaseView
 import java.util.*
 
 /**

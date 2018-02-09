@@ -1,5 +1,5 @@
 import com.binarybricks.coinhood.network.models.CoinPrice
-import com.intuit.qbse.components.mvp.BaseView
+import com.binarybricks.coinhood.stories.BaseView
 
 /**
  * Created by pranay airan on 1/17/18.

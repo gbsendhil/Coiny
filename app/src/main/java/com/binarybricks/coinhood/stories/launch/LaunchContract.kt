@@ -1,4 +1,4 @@
-import com.intuit.qbse.components.mvp.BaseView
+import com.binarybricks.coinhood.stories.BaseView
 
 /**
  * Created by pranay airan on 2/3/18.

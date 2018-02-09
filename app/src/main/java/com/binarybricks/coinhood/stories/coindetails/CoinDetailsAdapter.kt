@@ -23,17 +23,21 @@ class CoinDetailsAdapter(fromCurrency: String,
                          resourceProvider: ResourceProvider) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
-    private val COIN_POSITION = 1
-    private val COIN_INFO = 2
-    private val COIN_STATS = 3
-    private val ABOUT_COIN = 4
+    private val ADD_COIN = 1
+    private val COIN_POSITION = 2
+    private val COIN_INFO = 3
+    private val COIN_NEWS = 4
+    private val COIN_STATS = 5
+    private val ABOUT_COIN = 6
 
-    val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
+    private val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
 
     init {
         delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, lifecycle, resourceProvider))
+        delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
+        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, schedulerProvider, lifecycle))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
     }

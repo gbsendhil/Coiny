@@ -8,7 +8,7 @@ import com.binarybricks.coinhood.R
 import kotlinx.android.synthetic.main.coin_position_card_module.view.*
 
 /**
- * @author Pragya Agrawal on January 13, 2018
+ * Created by Pragya Agrawal
  */
 
 class CoinPositionCard {

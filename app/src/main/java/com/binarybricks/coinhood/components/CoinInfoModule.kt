@@ -8,7 +8,7 @@ import com.binarybricks.coinhood.utils.defaultExchange
 import kotlinx.android.synthetic.main.coin_info_module.view.*
 
 /**
- * @author Pragya Agrawal on February 1, 2018
+ * Created by Pragya Agrawal
  *
  * Simple class that wraps all logic related to Coin info
  */

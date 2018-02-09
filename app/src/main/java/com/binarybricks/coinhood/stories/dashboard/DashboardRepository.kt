@@ -2,7 +2,7 @@ package com.binarybricks.coinhood.stories.dashboard
 
 import com.binarybricks.coinhood.data.database.CoinHoodDatabase
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
-import com.binarybricks.coinhood.network.api.CryptoCompareAPI
+import com.binarybricks.coinhood.network.api.API
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
@@ -39,7 +39,7 @@ class DashboardRepository(private val baseSchedulerProvider: BaseSchedulerProvid
      */
     fun getCoinPriceFull(fromCurrencySymbol: String, toCurrencySymbol: String): Single<ArrayList<CoinPrice>> {
 
-        return cryptoCompareRetrofit.create(CryptoCompareAPI::class.java)
+        return cryptoCompareRetrofit.create(API::class.java)
             .getPricesFull(fromCurrencySymbol, toCurrencySymbol)
             .subscribeOn(baseSchedulerProvider.io())
             .map {

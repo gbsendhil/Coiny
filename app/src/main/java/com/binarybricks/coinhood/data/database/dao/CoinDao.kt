@@ -8,7 +8,7 @@ import com.binarybricks.coinhood.data.database.entities.Coin
 
 
 /**
- * @author Pragya Agrawal on January 27, 2018
+ * Created by Pragya Agrawal
  *
  * Add queries to read/update coin data from database.
  */

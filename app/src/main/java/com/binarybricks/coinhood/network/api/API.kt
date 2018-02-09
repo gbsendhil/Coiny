@@ -1,16 +1,14 @@
 package com.binarybricks.coinhood.network.api
 
 import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
+import com.binarybricks.coinhood.network.models.CryptoPanicNews
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-/**
- * Created by rmnivnv on 11/07/2017.
- */
-interface CryptoCompareAPI {
+interface API {
 
     @GET("all/coinlist")
     fun getCoinList(): Single<JsonObject>
@@ -31,5 +29,9 @@ interface CryptoCompareAPI {
     @GET("all/exchanges")
     fun getExchangeList(): Single<JsonObject>
 
-    //https://cryptopanic.com/api/posts/?auth_token=cd529bae09d5c505248fe05618da96ffb35ecffc&currencies=BTC&filter=important
+
+    @GET("https://cryptopanic.com/api/posts/?auth_token=cd529bae09d5c505248fe05618da96ffb35ecffc")
+    fun getCryptoNewsForCurrency(@Query("currencies") coinSymbol: String,
+                                 @Query("filter") filter: String): Single<CryptoPanicNews>
+
 }

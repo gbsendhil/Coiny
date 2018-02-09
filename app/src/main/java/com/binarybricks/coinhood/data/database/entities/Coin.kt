@@ -8,7 +8,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * @author Pragya Agrawal on January 27, 2018
+ * Created by Pragya Agrawal
  */
 @Entity(indices = [(Index("coinId", unique = true))])
 @Parcelize
