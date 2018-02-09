@@ -30,4 +30,6 @@ interface CryptoCompareAPI {
 
     @GET("all/exchanges")
     fun getExchangeList(): Single<JsonObject>
+
+    //https://cryptopanic.com/api/posts/?auth_token=cd529bae09d5c505248fe05618da96ffb35ecffc&currencies=BTC&filter=important
 }
