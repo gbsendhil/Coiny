@@ -59,6 +59,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
         val toolbar = findViewById<View>(R.id.toolbar)
         setSupportActionBar(toolbar as Toolbar?)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val resourceProvider = ResourceProviderImpl(applicationContext)
 
@@ -68,7 +69,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
         val toCurrency = PreferenceHelper.getDefaultCurrency(this)
 
-        supportActionBar?.title = " ${watchedCoin.coin.fullName}"
+        supportActionBar?.title = "${watchedCoin.coin.fullName.trim()}"
 
         coinDetailPresenter.attachView(this)
 
@@ -85,7 +86,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
         coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
         coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, applicationContext)))
 
-        coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, lifecycle, coinDetailList, schedulerProvider, resourceProvider)
+        coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, lifecycle, coinDetailList, schedulerProvider, resourceProvider)
         rvCoinDetails.adapter = coinDetailsAdapter
 
         // load data

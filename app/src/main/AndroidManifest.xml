@@ -31,9 +31,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".stories.dashboard.CoinDashboardActivity" />
-        <activity android:name=".stories.coindetails.CoinDetailsActivity" />
+        <activity
+            android:name=".stories.dashboard.CoinDashboardActivity"
+            android:launchMode="singleTop" />
 
+        <activity
+            android:name=".stories.coindetails.CoinDetailsActivity"
+            android:parentActivityName=".stories.dashboard.CoinDashboardActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".stories.newslist.NewsListActivity"
+            android:parentActivityName=".stories.coindetails.CoinDetailsActivity" />
     </application>
 
 </manifest>

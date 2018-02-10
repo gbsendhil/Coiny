@@ -1,7 +1,10 @@
 package com.binarybricks.coinhood.utils
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.binarybricks.coinhood.R
+
 
 /**
  * Created by pranay airan on 1/15/18.
@@ -17,4 +20,13 @@ fun getAboutStringForCoin(coinSymbol: String, context: Context): String {
 
         else -> context.getString(R.string.unavailable)
     }
+}
+
+/**
+ * Get's the browser intent to open a webpage.
+ */
+fun getBrowserIntent(url: String): Intent {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    return intent
 }

@@ -37,8 +37,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
-                android:layout_marginStart="@dimen/generic16dp"
-                android:layout_marginEnd="@dimen/generic16dp">
+                android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp">
 
                 <TextView
                     android:id="@+id/tvFirstArticleTitle"
@@ -66,8 +66,8 @@
                 android:id="@+id/clSecondArticle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/generic16dp"
-                android:layout_marginEnd="@dimen/generic16dp"
+                android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
@@ -100,8 +100,8 @@
                 android:id="@+id/clThirdArticle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/generic16dp"
-                android:layout_marginEnd="@dimen/generic16dp"
+                android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 android:layout_marginTop="@dimen/generic16dp"
                 android:clickable="true"
                 android:focusable="true"

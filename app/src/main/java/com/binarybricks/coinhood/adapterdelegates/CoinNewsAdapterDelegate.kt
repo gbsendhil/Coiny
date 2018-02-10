@@ -15,6 +15,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
  */
 
 class CoinNewsAdapterDelegate(private val coinSymbol: String,
+                              private val coinName: String,
                               private val schedulerProvider: BaseSchedulerProvider,
                               private val lifecycle: Lifecycle) : AdapterDelegate<List<Any>>() {
 
@@ -23,7 +24,7 @@ class CoinNewsAdapterDelegate(private val coinSymbol: String,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val coinNewsModule = CoinNewsModule(schedulerProvider, coinSymbol)
+        val coinNewsModule = CoinNewsModule(schedulerProvider, coinSymbol, coinName)
         lifecycle.addObserver(coinNewsModule)
         val coinNewsModuleView = coinNewsModule.init(LayoutInflater.from(parent.context), parent)
         return CoinNewsViewHolder(coinNewsModuleView, coinNewsModule)

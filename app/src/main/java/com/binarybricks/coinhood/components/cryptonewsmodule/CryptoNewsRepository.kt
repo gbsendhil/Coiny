@@ -1,5 +1,6 @@
 package com.binarybricks.coinhood.components.cryptonewsmodule
 
+import com.binarybricks.coinhood.data.CoinHoodCache
 import com.binarybricks.coinhood.network.api.API
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
 import com.binarybricks.coinhood.network.models.CryptoPanicNews
@@ -17,8 +18,17 @@ class CryptoNewsRepository(private val baseSchedulerProvider: BaseSchedulerProvi
      * Get the top news for specific coin from cryptopanic
      */
     fun getCryptoPanicNews(coinSymbol: String): Single<CryptoPanicNews> {
-        return cryptoCompareRetrofit.create(API::class.java)
-                .getCryptoNewsForCurrency(coinSymbol, "important")
-                .subscribeOn(baseSchedulerProvider.io())
+
+        return if (CoinHoodCache.newsMap.containsKey(coinSymbol)) {
+            Single.just(CoinHoodCache.newsMap[coinSymbol])
+        } else {
+
+            cryptoCompareRetrofit.create(API::class.java)
+                    .getCryptoNewsForCurrency(coinSymbol, "important")
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .doOnSuccess {
+                        CoinHoodCache.newsMap[coinSymbol] = it
+                    }
+        }
     }
 }

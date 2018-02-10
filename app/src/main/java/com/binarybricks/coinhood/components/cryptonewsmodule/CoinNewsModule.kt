@@ -11,13 +11,16 @@ import android.view.ViewGroup
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.network.models.CryptoPanicNews
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coinhood.stories.newslist.NewsListActivity
+import com.binarybricks.coinhood.utils.Formatters
+import com.binarybricks.coinhood.utils.getBrowserIntent
 import kotlinx.android.synthetic.main.coin_news_module.view.*
 
 /**
  * Created by Pragya Agrawal
  * A compound layout to see coin news
  */
-class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String) : LifecycleObserver, CryptoNewsContract.View {
+class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String, private val coinName: String) : LifecycleObserver, CryptoNewsContract.View {
 
     private lateinit var inflatedView: View
 
@@ -25,6 +28,10 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
 
     private val cryptoNewsPresenter: CryptoNewsPresenter by lazy {
         CryptoNewsPresenter(schedulerProvider)
+    }
+
+    private val formatters: Formatters by lazy {
+        Formatters()
     }
 
     fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
@@ -63,16 +70,29 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
         val newsResult = cryptoPanicNews.results
         if (newsResult != null && newsResult.isNotEmpty()) {
             inflatedView.tvFirstArticleTitle.text = newsResult[0].title
-            inflatedView.tvFirstArticleTime.text = newsResult[0].created_at
+            inflatedView.tvFirstArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[0].created_at, true)
+            inflatedView.clFirstArticle.setOnClickListener {
+                inflatedView.context.startActivity(getBrowserIntent(newsResult[0].url))
+            }
 
             if (newsResult.size > 1) {
                 inflatedView.tvSecondArticleTitle.text = newsResult[1].title
-                inflatedView.tvSecondArticleTime.text = newsResult[1].created_at
+                inflatedView.tvSecondArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[1].created_at, true)
+                inflatedView.clSecondArticle.setOnClickListener {
+                    inflatedView.context.startActivity(getBrowserIntent(newsResult[1].url))
+                }
             }
 
             if (newsResult.size > 2) {
                 inflatedView.tvThirdArticleTitle.text = newsResult[2].title
-                inflatedView.tvThirdArticleTime.text = newsResult[2].created_at
+                inflatedView.tvThirdArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[2].created_at, true)
+                inflatedView.clThirdArticle.setOnClickListener {
+                    inflatedView.context.startActivity(getBrowserIntent(newsResult[2].url))
+                }
+            }
+
+            inflatedView.tvMore.setOnClickListener {
+                inflatedView.context.startActivity(NewsListActivity.buildLaunchIntent(inflatedView.context, coinName, cryptoPanicNews))
             }
         }
     }

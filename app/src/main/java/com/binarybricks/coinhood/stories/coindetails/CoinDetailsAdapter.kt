@@ -17,6 +17,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 class CoinDetailsAdapter(fromCurrency: String,
                          toCurrency: String,
+                         coinName: String,
                          lifecycle: Lifecycle,
                          private val coinDetailList: List<Any>,
                          schedulerProvider: BaseSchedulerProvider,
@@ -37,7 +38,7 @@ class CoinDetailsAdapter(fromCurrency: String,
         delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
-        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, schedulerProvider, lifecycle))
+        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider, lifecycle))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
     }
