@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.R
-import kotlinx.android.synthetic.main.coin_position_card_component.view.*
+import kotlinx.android.synthetic.main.coin_position_card_module.view.*
 
 /**
- * @author Pragya Agrawal on January 13, 2018
+ * Created by Pragya Agrawal
  */
 
 class CoinPositionCard {
@@ -17,7 +17,7 @@ class CoinPositionCard {
 
     fun init(context: Context, parent: ViewGroup): View {
         val layoutInflater = LayoutInflater.from(context)
-        inflatedView = layoutInflater.inflate(R.layout.coin_position_card_component, parent, false)
+        inflatedView = layoutInflater.inflate(R.layout.coin_position_card_module, parent, false)
 
         return inflatedView
     }

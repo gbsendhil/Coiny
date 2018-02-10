@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/tvChartCoinPrice"
-            style="@style/DisplayNumber"
+            style="@style/DisplayNumberHuge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"

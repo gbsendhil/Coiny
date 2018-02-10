@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/backgroundColor">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/coinCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/generic16dp">
+
+
+        <ImageView
+            android:id="@+id/ivCoin"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/cd_coin_image"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCoinName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvCoinName"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvCoinName"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/ivCoin"
+            app:layout_constraintStart_toEndOf="@+id/ivCoin"
+            tools:text="BitCoin" />
+
+        <TextView
+            android:id="@+id/tvExchangeName"
+            style="@style/TextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic4dp"
+            android:paddingEnd="@dimen/generic8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivCoin"
+            tools:text="CCAG" />
+
+        <TextView
+            android:id="@+id/tvCoinPair"
+            style="@style/TextSmallSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic4dp"
+            app:layout_constraintStart_toEndOf="@+id/tvExchangeName"
+            app:layout_constraintTop_toBottomOf="@+id/ivCoin"
+            tools:text="today" />
+
+        <TextView
+            android:id="@+id/tvCoinPrice"
+            style="@style/DisplayNumberLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$100" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

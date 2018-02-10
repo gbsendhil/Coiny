@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.binarybricks.coinhood.stories.dashboard.CoinDashboardActivity"
+    >
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <include
+        layout="@layout/toolbar_transparant"
+        android:id="@+id/toolbar"
+        />
+
+    <com.lapism.searchview.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:search_background_color="@color/backgroundColor"
+        app:search_icon_color="@color/backgroundLightColor"
+        app:search_shadow="true"
+        app:search_text_color="@color/primaryTextColor"
+        app:search_text_highlight_color="@color/primaryTextColor"
+        />
+  </RelativeLayout>
+
+  <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/loadingAnimation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      app:lottie_autoPlay="true"
+      app:lottie_fileName="hourglass.json"
+      app:lottie_loop="true"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rvDashboard"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/generic8dp"
+      />
+
+</LinearLayout>

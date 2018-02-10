@@ -1,28 +1,24 @@
 package com.binarybricks.coinhood.components
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.R
-import kotlinx.android.synthetic.main.about_coin_module.view.*
+import kotlinx.android.synthetic.main.coin_about_module.view.*
 
 /**
  * Created by pranay airan on 1/19/18.
+ *
+ * Simple class that wraps all logic related to showing about us section
  */
 
 class AboutCoinModule {
 
-    private lateinit var inflatedView: View
-
-    fun init(context: Context, parent: ViewGroup?): View {
-
-        val layoutInflater = LayoutInflater.from(context)
-        inflatedView = layoutInflater.inflate(R.layout.about_coin_module, parent, false)
-        return inflatedView
+    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+        return layoutInflater.inflate(R.layout.coin_about_module, parent, false)
     }
 
-    fun showAboutCoinText(coinText: String) {
+    fun showAboutCoinText(inflatedView: View, coinText: String) {
         inflatedView.tvAboutCoin.text = coinText
     }
 

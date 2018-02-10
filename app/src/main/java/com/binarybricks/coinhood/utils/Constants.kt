@@ -5,3 +5,6 @@ package com.binarybricks.coinhood.utils
  */
 
 val chartAnimationDuration: Long = 250
+
+val defaultExchange: String = "CCCAGG"
+val defaultCurrency: String = "USD"

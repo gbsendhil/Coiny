@@ -2,10 +2,11 @@ package com.binarybricks.coinhood.adapterdelegates
 
 import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.binarybricks.coinhood.components.historicalchart.HistoricalChartModule
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.components.historicalchartmodule.HistoricalChartModule
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -29,7 +30,7 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
         val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
         lifecycle.addObserver(historicalChartModule)
 
-        val historicalChartModuleView = historicalChartModule.init(parent.context, parent)
+        val historicalChartModuleView = historicalChartModule.init(LayoutInflater.from(parent.context), parent)
         return HistoricalChartViewHolder(historicalChartModuleView, historicalChartModule)
     }
 
@@ -39,16 +40,16 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
         val historicalChartModuleData = items[position] as HistoricalChartModule.HistoricalChartModuleData
 
         historicalChartViewHolder.loadHistoricalChartData()
-        historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinWithCurrentPrice)
+        historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinPriceWithCurrentPrice)
     }
 
     class HistoricalChartViewHolder(itemView: View, private val historicalChartModule: HistoricalChartModule) : RecyclerView.ViewHolder(itemView) {
         fun loadHistoricalChartData() {
-            historicalChartModule.loadData()
+            historicalChartModule.loadData(itemView)
         }
 
-        fun addCoinAndAnimateCoinPrice(coin: Coin?) {
-            historicalChartModule.addCoinAndAnimateCoinPrice(coin)
+        fun addCoinAndAnimateCoinPrice(coinPrice: CoinPrice?) {
+            historicalChartModule.addCoinAndAnimateCoinPrice(coinPrice)
         }
     }
 }

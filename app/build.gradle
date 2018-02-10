@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.binarybricks.coinhood"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -22,9 +21,13 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 ext {
     // constant versions to use for common packages like support libs
-    supportLibVersion = '26.1.0'
+    supportLibVersion = '27.0.2'
     playServicesVersion = '11.8.0'
     archComponentVersion = '1.0.0'
     okHttpVersion = '3.8.1'
@@ -53,8 +56,9 @@ dependencies {
     // architecture components
     // Room
     implementation "android.arch.persistence.room:runtime:${archComponentVersion}"
-    annotationProcessor "android.arch.persistence.room:compiler:${archComponentVersion}"
-    annotationProcessor "android.arch.lifecycle:compiler:${archComponentVersion}"
+    implementation "android.arch.persistence.room:rxjava2:${archComponentVersion}"
+    kapt "android.arch.persistence.room:compiler:${archComponentVersion}"
+    kapt "android.arch.lifecycle:compiler:${archComponentVersion}"
 
     // networking
     implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
@@ -67,9 +71,22 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.1.4"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
 
+    // search view
+    implementation 'com.lapism:searchview:5.0.0-alpha7'
+    implementation 'com.google.android:flexbox:0.3.1'
+
     // other dependencies
     implementation "com.jakewharton.timber:timber:4.5.1"
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
+    implementation 'com.github.midorikocak:currency-picker-android:1.1.9'
+    implementation 'com.airbnb.android:lottie:2.5.0-rc1'
+
+    // image loading
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.0'
+
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

@@ -1,0 +1,55 @@
+package com.binarybricks.coinhood.components.historicalchartmodule
+
+import CoinDashboardContract
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
+import com.binarybricks.coinhood.data.database.CoinHoodDatabase
+import com.binarybricks.coinhood.network.models.CoinPrice
+import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coinhood.stories.BasePresenter
+import com.binarybricks.coinhood.stories.dashboard.DashboardRepository
+import timber.log.Timber
+
+/**
+ * Created by pranay airan on 1/17/18.
+ */
+
+class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinHoodDatabase: CoinHoodDatabase?) :
+    BasePresenter<CoinDashboardContract.View>(), CoinDashboardContract.Presenter,
+    LifecycleObserver {
+
+    private val dashboardRepository by lazy {
+        DashboardRepository(schedulerProvider, coinHoodDatabase)
+    }
+
+    override fun loadWatchedCoins() {
+        dashboardRepository.loadWatchedCoins()?.let {
+            compositeDisposable.add(
+                it.filter { it.isNotEmpty() }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({ currentView?.onWatchedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
+            )
+        }
+    }
+
+    override fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String) {
+        compositeDisposable.add(dashboardRepository.getCoinPriceFull(fromCurrencySymbol, toCurrencySymbol)
+            .filter { it.size > 0 }
+            .map { coinPriceList ->
+                val coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
+                coinPriceList.forEach { coinPrice ->
+                    coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
+                }
+                coinPriceMap
+            }
+            .observeOn(schedulerProvider.ui())
+            .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
+    }
+
+    // cleanup
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun cleanYourSelf() {
+        detachView()
+    }
+}

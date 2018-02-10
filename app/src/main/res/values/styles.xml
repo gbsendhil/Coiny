@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -15,7 +15,25 @@
 
     </style>
 
-    <style name="DisplayNumber" parent="TextAppearance.AppCompat.Display1">
+    <style name="ButtonRegular" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="DisplayNumberHuge" parent="TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="DisplayNumberLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="DisplayNumberMedium" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
@@ -43,5 +61,17 @@
     <style name="TextSubHeadSecondary" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
+
+    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TextSmallSecondary" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

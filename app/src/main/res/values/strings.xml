@@ -15,4 +15,22 @@
     <string name="past_year">past year</string>
     <string name="all_time">all time</string>
     <string name="about">About</string>
+    <string name="cd_coin_image">Coin Image</string>
+    <string name="statistics">Statistics</string>
+    <string name="open">Open</string>
+    <string name="today_s_high">Today\'s High</string>
+    <string name="today_s_low">Today\'s Low</string>
+    <string name="change_today">Change today\'s</string>
+    <string name="volume">Volume</string>
+    <string name="average_volume">Average Volume</string>
+    <string name="market_cap">Market Cap</string>
+    <string name="supply">Supply</string>
+    <string name="coin_info">Coin Info</string>
+    <string name="exchange">Exchange</string>
+    <string name="algorithm">Algorithm</string>
+    <string name="proof_type">Proof Type</string>
+    <string name="global_avg">Global average</string>
+    <string name="recent_news">Recent News</string>
+    <string name="more">More</string>
+    <string name="add_transaction">Add Transaction</string>
 </resources>

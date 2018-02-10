@@ -8,15 +8,25 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
+import android.view.View
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.AboutCoinModule
-import com.binarybricks.coinhood.components.historicalchart.CoinDetailPresenter
-import com.binarybricks.coinhood.components.historicalchart.HistoricalChartModule
-import com.binarybricks.coinhood.network.models.Coin
+import com.binarybricks.coinhood.components.AddCoinModule
+import com.binarybricks.coinhood.components.CoinInfoModule
+import com.binarybricks.coinhood.components.CoinStatsticsModule
+import com.binarybricks.coinhood.components.cryptonewsmodule.CoinNewsModule
+import com.binarybricks.coinhood.components.historicalchartmodule.CoinDetailPresenter
+import com.binarybricks.coinhood.components.historicalchartmodule.HistoricalChartModule
+import com.binarybricks.coinhood.data.PreferenceHelper
+import com.binarybricks.coinhood.data.database.entities.WatchedCoin
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProviderImpl
+import com.binarybricks.coinhood.utils.defaultExchange
 import com.binarybricks.coinhood.utils.getAboutStringForCoin
 import kotlinx.android.synthetic.main.activity_coin_details.*
+
 
 class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
@@ -30,20 +40,36 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
         CoinDetailPresenter(schedulerProvider)
     }
 
+    companion object {
+        private const val WATCHED_COIN = "WATCHED_COIN"
+        private const val COIN_PRICE = "COIN_PRICE"
+
+        @JvmStatic
+        fun buildLaunchIntent(context: Context, watchedCoin: WatchedCoin, coinPrice: CoinPrice): Intent {
+            val intent = Intent(context, CoinDetailsActivity::class.java)
+            intent.putExtra(WATCHED_COIN, watchedCoin)
+            intent.putExtra(COIN_PRICE, coinPrice)
+            return intent
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_details)
 
+        val toolbar = findViewById<View>(R.id.toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val resourceProvider = ResourceProviderImpl(applicationContext)
 
-        val fromCoin = intent.getStringExtra(FROM_COIN)
+        val watchedCoin = intent.getParcelableExtra<WatchedCoin>(WATCHED_COIN)
+        val coinPrice = intent.getParcelableExtra<CoinPrice>(COIN_PRICE)
 
-        // precondition to make sure this code is not executed
-        requireNotNull(fromCoin)
 
-        val toCurrency = "USD"
+        val toCurrency = PreferenceHelper.getDefaultCurrency(this)
 
-        supportActionBar?.title = fromCoin
+        supportActionBar?.title = "${watchedCoin.coin.fullName.trim()}"
 
         coinDetailPresenter.attachView(this)
 
@@ -52,13 +78,19 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
         rvCoinDetails.layoutManager = LinearLayoutManager(this)
         rvCoinDetails.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(fromCoin, applicationContext)))
+        coinDetailList.add(AddCoinModule.AddCoinModuleData())
+        coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice.market
+                ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
 
-        coinDetailsAdapter = CoinDetailsAdapter(fromCoin, toCurrency, lifecycle, coinDetailList, schedulerProvider, resourceProvider)
+        coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
+        coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
+        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, applicationContext)))
+
+        coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, lifecycle, coinDetailList, schedulerProvider, resourceProvider)
         rvCoinDetails.adapter = coinDetailsAdapter
 
         // load data
-        coinDetailPresenter.loadCurrentCoinPrice(fromCoin, toCurrency)
+        onCoinDataLoaded(coinPrice)
     }
 
     override fun onNetworkError(errorMessage: String) {
@@ -69,19 +101,8 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailContract.View {
 
     }
 
-    override fun onCoinDataLoaded(coin: Coin?) {
-        coinDetailList.add(0, HistoricalChartModule.HistoricalChartModuleData(coin))
+    override fun onCoinDataLoaded(coinPrice: CoinPrice?) {
+        coinDetailList.add(0, HistoricalChartModule.HistoricalChartModuleData(coinPrice))
         coinDetailsAdapter?.notifyDataSetChanged()
-    }
-
-    companion object {
-        private const val FROM_COIN = "FROM_COIN"
-
-        @JvmStatic
-        fun buildLaunchIntent(context: Context, fromCoinSymbol: String): Intent {
-            val intent = Intent(context, CoinDetailsActivity::class.java)
-            intent.putExtra(FROM_COIN, fromCoinSymbol.toUpperCase())
-            return intent
-        }
     }
 }

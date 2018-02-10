@@ -3,9 +3,7 @@ package com.binarybricks.coinhood.stories.coindetails
 import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.binarybricks.coinhood.adapterdelegates.AboutCoinAdapterDelegate
-import com.binarybricks.coinhood.adapterdelegates.CoinPositionAdapterDelegate
-import com.binarybricks.coinhood.adapterdelegates.HistoricalChartAdapterDelegate
+import com.binarybricks.coinhood.adapterdelegates.*
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coinhood.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
@@ -19,20 +17,29 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 class CoinDetailsAdapter(fromCurrency: String,
                          toCurrency: String,
+                         coinName: String,
                          lifecycle: Lifecycle,
                          private val coinDetailList: List<Any>,
                          schedulerProvider: BaseSchedulerProvider,
                          resourceProvider: ResourceProvider) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
-    private val COIN_POSITION = 1
-    private val ABOUT_COIN = 2
+    private val ADD_COIN = 1
+    private val COIN_POSITION = 2
+    private val COIN_INFO = 3
+    private val COIN_NEWS = 4
+    private val COIN_STATS = 5
+    private val ABOUT_COIN = 6
 
-    val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
+    private val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
 
     init {
         delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, lifecycle, resourceProvider))
+        delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
+        delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
+        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider, lifecycle))
+        delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
     }
 
