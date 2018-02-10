@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.R
-import kotlinx.android.synthetic.main.about_coin_module.view.*
+import kotlinx.android.synthetic.main.coin_about_module.view.*
 
 /**
  * Created by pranay airan on 1/19/18.
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.about_coin_module.view.*
 class AboutCoinModule {
 
     fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
-        return layoutInflater.inflate(R.layout.about_coin_module, parent, false)
+        return layoutInflater.inflate(R.layout.coin_about_module, parent, false)
     }
 
     fun showAboutCoinText(inflatedView: View, coinText: String) {

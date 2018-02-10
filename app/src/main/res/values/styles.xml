@@ -20,6 +20,10 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
 
     <style name="DisplayNumberHuge" parent="TextAppearance.AppCompat.Display1">
         <item name="android:textColor">@color/primaryTextColor</item>

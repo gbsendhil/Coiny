@@ -1,4 +1,4 @@
-package com.intuit.qbse.components.mvp
+package com.binarybricks.coinhood.stories
 
 /**
  * A base view interface used for all views,

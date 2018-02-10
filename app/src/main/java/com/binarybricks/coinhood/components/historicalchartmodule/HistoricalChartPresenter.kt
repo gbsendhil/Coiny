@@ -24,7 +24,7 @@ class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvi
         compositeDisposable.add(chatRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
                 .filter { it.first.isNotEmpty() }
                 .observeOn(schedulerProvider.ui())
-                .doFinally({ currentView?.showOrHideChartLoadingIndicator(false) })
+                .doAfterTerminate({ currentView?.showOrHideChartLoadingIndicator(false) })
                 .subscribe({
                     currentView?.onHistoricalDataLoaded(period, it)
                 }, {

@@ -6,7 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 /**
- * @author Pragya Agrawal on January 27, 2018
+ * Created by Pragya Agrawal
  */
 @Entity(indices = [(Index("exchange_name", unique = true))])
 data class Exchange(@ColumnInfo(name = "exchange_name") var name: String) {

@@ -1,7 +1,6 @@
 package com.binarybricks.coinhood.stories
 
 
-import com.intuit.qbse.components.mvp.BaseView
 import io.reactivex.disposables.CompositeDisposable
 
 /**
