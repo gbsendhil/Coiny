@@ -3,6 +3,7 @@ package com.binarybricks.coinhood.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.TypedValue
 import com.binarybricks.coinhood.R
 
 
@@ -29,4 +30,9 @@ fun getBrowserIntent(url: String): Intent {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
     return intent
+}
+
+fun dpToPx(context: Context, dp: Int): Int {
+    val r = context.resources
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics).toInt()
 }

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,12 +20,12 @@ import com.binarybricks.coinhood.data.PreferenceHelper
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
-import com.lapism.searchview.SearchAdapter
-import com.lapism.searchview.SearchItem
-import com.lapism.searchview.SearchView
+import com.binarybricks.coinhood.utils.OnVerticalScrollListener
+import com.binarybricks.coinhood.utils.dpToPx
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.HashMap
 import kotlin.collections.ArrayList
+
 
 class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
@@ -54,10 +53,8 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val toolbar = findViewById<View>(R.id.toolbar)
-        setSupportActionBar(toolbar as Toolbar?)
 
-        supportActionBar?.title = ""
+        val toolBarDefaultElevation = dpToPx(this, 8) // default elevation of toolbar
 
         setupSearchView()
 
@@ -70,6 +67,14 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList)
         rvDashboard.adapter = coinDashboardAdapter
+
+        rvDashboard.addOnScrollListener(object : OnVerticalScrollListener() {
+            override fun onScrolled(offset: Int) {
+                super.onScrolled(offset)
+                toolbar.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                toolbarTitle.alpha = Math.min(1.0f, offset / 60f) // approx height of header module
+            }
+        })
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -86,7 +91,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         when (item?.itemId) {
             R.id.action_search -> {
-                searchView.open(true) // enable or disable animation
+                //searchView.open(true) // enable or disable animation
                 return true
             }
         }
@@ -128,6 +133,9 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         // empty existing list
         coinDashboardList = ArrayList()
 
+        // pass this text view in future to dashboard header
+        toolbarTitle.text = "$10.00"
+
         coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData())
 
         val coinWatchList: MutableList<Any> = ArrayList()
@@ -166,46 +174,46 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     }
 
     private fun setupSearchView() {
-        searchView.version = SearchView.Version.MENU_ITEM
-        searchView.versionMargins = SearchView.VersionMargins.MENU_ITEM
-        searchView.theme = SearchView.Theme.DARK
-
-        searchView.hint = "Search Coin"
-        searchView.setVoice(false)
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        searchView.setNavigationIconClickListener({
-            searchView.close(true)
-        })
-
-        searchView.setOnOpenCloseListener(object : SearchView.OnOpenCloseListener {
-            override fun onOpen(): Boolean {
-                nextMenuItem?.isVisible = false
-                return true
-            }
-
-            override fun onClose(): Boolean {
-                nextMenuItem?.isVisible = true
-                return true
-            }
-        })
-
-        val suggestionsList = ArrayList<SearchItem>()
-        suggestionsList.add(SearchItem("Bitcoin"))
-        suggestionsList.add(SearchItem("Bitcoin Cash"))
-        suggestionsList.add(SearchItem("Litcoin"))
-
-        val searchAdapter = SearchAdapter(this, suggestionsList)
-        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
-        searchView.adapter = searchAdapter
+//        searchView.version = SearchView.Version.MENU_ITEM
+//        searchView.versionMargins = SearchView.VersionMargins.MENU_ITEM
+//        searchView.theme = SearchView.Theme.DARK
+//
+//        searchView.hint = "Search Coin"
+//        searchView.setVoice(false)
+//
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return false
+//            }
+//        })
+//
+//        searchView.setNavigationIconClickListener({
+//            searchView.close(true)
+//        })
+//
+//        searchView.setOnOpenCloseListener(object : SearchView.OnOpenCloseListener {
+//            override fun onOpen(): Boolean {
+//                nextMenuItem?.isVisible = false
+//                return true
+//            }
+//
+//            override fun onClose(): Boolean {
+//                nextMenuItem?.isVisible = true
+//                return true
+//            }
+//        })
+//
+//        val suggestionsList = ArrayList<SearchItem>()
+//        suggestionsList.add(SearchItem("Bitcoin"))
+//        suggestionsList.add(SearchItem("Bitcoin Cash"))
+//        suggestionsList.add(SearchItem("Litcoin"))
+//
+//        val searchAdapter = SearchAdapter(this, suggestionsList)
+//        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
+//        searchView.adapter = searchAdapter
     }
 }

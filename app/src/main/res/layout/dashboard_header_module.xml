@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    android:paddingBottom="@dimen/generic16dp"
-    android:paddingTop="@dimen/generic16dp">
+    android:paddingBottom="@dimen/generic16dp">
 
     <TextView
         android:id="@+id/tvPortfolioValue"
