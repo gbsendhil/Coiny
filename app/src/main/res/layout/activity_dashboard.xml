@@ -13,19 +13,6 @@
         android:orientation="vertical">
 
 
-        <com.lapism.searchview.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:search_background_color="@color/backgroundColor"
-            app:search_icon_color="@color/backgroundLightColor"
-            app:search_shadow="true"
-            app:search_text_color="@color/primaryTextColor"
-            app:search_text_highlight_color="@color/primaryTextColor" />
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -72,8 +59,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-
     </android.support.constraint.ConstraintLayout>
+
+    <com.lapism.searchview.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/generic8dp"
+        android:layout_marginStart="@dimen/generic8dp"
+        app:search_background_color="@color/backgroundColor"
+        app:search_icon_color="@color/backgroundLightColor"
+        app:search_shadow="true"
+        app:search_text_color="@color/primaryTextColor"
+        app:search_text_highlight_color="@color/primaryTextColor" />
 
 </android.support.design.widget.CoordinatorLayout>
