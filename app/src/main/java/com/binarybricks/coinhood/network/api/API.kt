@@ -32,6 +32,7 @@ interface API {
 
     @GET("https://cryptopanic.com/api/posts/?auth_token=cd529bae09d5c505248fe05618da96ffb35ecffc")
     fun getCryptoNewsForCurrency(@Query("currencies") coinSymbol: String,
-                                 @Query("filter") filter: String): Single<CryptoPanicNews>
+                                 @Query("filter") filter: String,
+                                 @Query("public") public: Boolean): Single<CryptoPanicNews>
 
 }
