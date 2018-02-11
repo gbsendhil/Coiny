@@ -17,4 +17,5 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#757577</color>
 
+    <color name="tabTextColor">#c2c2c3</color>
 </resources>

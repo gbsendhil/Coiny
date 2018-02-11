@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.binarybricks.coinhood.data.database.entities.Coin
+import io.reactivex.Flowable
 
 
 /**
@@ -16,7 +17,7 @@ import com.binarybricks.coinhood.data.database.entities.Coin
 interface CoinDao {
 
     @Query("select * from coin")
-    fun getAllCoins(): List<Coin>
+    fun getAllCoins(): Flowable<List<Coin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoins(list: List<Coin>)

@@ -6,7 +6,7 @@ import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
 import io.reactivex.Single
 
 /**
- * Created by pranay airan on 2/3/18.
+ Created by Pranay Airan 2/3/18.
  */
 
 class DbController(private val coinHoodDatabase: CoinHoodDatabase?) {

@@ -8,19 +8,23 @@ import com.binarybricks.coinhood.R
 
 
 /**
- * Created by pranay airan on 1/15/18.
+Created by Pranay Airan 1/15/18.
  */
 
 
-fun getAboutStringForCoin(coinSymbol: String, context: Context): String {
-    return when (coinSymbol.toUpperCase()) {
-        "BTC" -> context.getString(R.string.btc)
-        "ETH" -> context.getString(R.string.eth)
-        "LTC" -> context.getString(R.string.ltc)
-        "XRP" -> context.getString(R.string.xrp)
+fun getAboutStringForCoin(coinSymbol: String, context: Context?): String {
+    if (context != null) {
+        return when (coinSymbol.toUpperCase()) {
+            "BTC" -> context.getString(R.string.btc)
+            "ETH" -> context.getString(R.string.eth)
+            "LTC" -> context.getString(R.string.ltc)
+            "XRP" -> context.getString(R.string.xrp)
 
-        else -> context.getString(R.string.unavailable)
+            else -> context.getString(R.string.unavailable)
+        }
     }
+
+    return "N/A"
 }
 
 /**

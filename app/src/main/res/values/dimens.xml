@@ -6,4 +6,7 @@
     <dimen name="generic16dp">16dp</dimen>
     <dimen name="generic20dp">20dp</dimen>
     <dimen name="generic24dp">24dp</dimen>
+
+    <dimen name="tab_height">48dp</dimen>
+    <dimen name="tab_width">300dp</dimen>
 </resources>

@@ -9,7 +9,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 
 /**
- * Created by pranay airan on 1/16/18.
+ Created by Pranay Airan 1/16/18.
  */
 public class ResourceProviderImpl implements ResourceProvider {
     private Context appContext;

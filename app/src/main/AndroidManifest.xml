@@ -36,13 +36,13 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".stories.coindetails.CoinDetailsActivity"
-            android:parentActivityName=".stories.dashboard.CoinDashboardActivity"
-            android:launchMode="singleTop" />
+            android:name=".stories.coindetails.CoinDetailsPagerActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".stories.dashboard.CoinDashboardActivity" />
 
         <activity
             android:name=".stories.newslist.NewsListActivity"
-            android:parentActivityName=".stories.coindetails.CoinDetailsActivity" />
+            android:parentActivityName=".stories.coindetails.CoinDetailsFragment" />
     </application>
 
 </manifest>

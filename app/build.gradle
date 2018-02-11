@@ -82,6 +82,7 @@ dependencies {
     implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     implementation 'com.github.midorikocak:currency-picker-android:1.1.9'
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
+    compile 'com.nshmura:recyclertablayout:1.5.0'
 
     // image loading
     implementation 'com.squareup.picasso:picasso:2.5.2'

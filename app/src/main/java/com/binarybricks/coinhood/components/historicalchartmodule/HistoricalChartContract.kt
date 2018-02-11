@@ -3,7 +3,7 @@ import com.binarybricks.coinhood.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coinhood.stories.BaseView
 
 /**
- * Created by pranay airan on 1/17/18.
+Created by Pranay Airan
  */
 
 interface HistoricalChartContract {

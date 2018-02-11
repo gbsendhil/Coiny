@@ -1,7 +1,7 @@
 package com.binarybricks.coinhood.stories.dashboard
 
 /**
- * Created by pranay airan on 1/26/18.
+ Created by Pranay Airan 1/26/18.
  */
 
 
@@ -196,20 +196,17 @@ class CoinSearchAdapter : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolde
     }
 
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val icon: ImageView
-        val text: TextView
+        val icon: ImageView = view.findViewById(R.id.search_icon)
+        val text: TextView = view.findViewById(R.id.search_text)
 
         init {
-            icon = view.findViewById(R.id.search_icon)
-            text = view.findViewById(R.id.search_text)
             // add second text
-            view.setOnClickListener { view ->
+            view.setOnClickListener {
                 if (mListener != null) {
-                    mListener!!.onSearchItemClick(view, layoutPosition, text.text.toString())
+                    mListener!!.onSearchItemClick(it, layoutPosition, text.text.toString())
                 }
             }
         }
-
     }
 
 }

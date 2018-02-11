@@ -8,7 +8,7 @@ import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
 
 /**
- * Created by pranay airan on 1/16/18.
+ Created by Pranay Airan 1/16/18.
  */
 public interface ResourceProvider {
     @NonNull

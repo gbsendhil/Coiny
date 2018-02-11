@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
 /**
- * Created by pranay airan on 1/10/18.
+ Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,

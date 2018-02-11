@@ -1,6 +1,7 @@
 package com.binarybricks.coinhood.stories.dashboard
 
 import com.binarybricks.coinhood.data.database.CoinHoodDatabase
+import com.binarybricks.coinhood.data.database.entities.Coin
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.api.API
 import com.binarybricks.coinhood.network.api.cryptoCompareRetrofit
@@ -13,7 +14,7 @@ import timber.log.Timber
 import java.util.*
 
 /**
- * Created by pranay airan on 1/8/18.
+ Created by Pranay Airan 1/8/18.
  * Repository that interact with crypto api and database for getting data.
  */
 
@@ -21,7 +22,7 @@ class DashboardRepository(private val baseSchedulerProvider: BaseSchedulerProvid
                           private val coinHoodDatabase: CoinHoodDatabase?) {
 
     /**
-     * Get list of all supported coins
+     * Get list of all coins that is added in watch list
      */
     fun loadWatchedCoins(): Flowable<List<WatchedCoin>>? {
 
@@ -46,5 +47,15 @@ class DashboardRepository(private val baseSchedulerProvider: BaseSchedulerProvid
                 Timber.d("Coin prices fetched, parsing response")
                 getCoinPricesFromJson(it)
             }
+    }
+
+    /**
+     * Get list of all supported coins
+     */
+    fun loadSupportedCoins(): Flowable<List<Coin>>? {
+        coinHoodDatabase?.let {
+            return it.coinDao().getAllCoins().subscribeOn(baseSchedulerProvider.io())
+        }
+        return null
     }
 }

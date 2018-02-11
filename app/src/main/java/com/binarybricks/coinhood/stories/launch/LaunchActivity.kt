@@ -16,9 +16,7 @@ import com.binarybricks.coinhood.stories.dashboard.CoinDashboardActivity
 import com.binarybricks.coinhood.utils.defaultCurrency
 import com.binarybricks.coinhood.utils.defaultExchange
 import com.mynameismidori.currencypicker.CurrencyPicker
-import kotlinx.android.synthetic.main.activity_launch.btnChooseCurrency
-import kotlinx.android.synthetic.main.activity_launch.continueButton
-import kotlinx.android.synthetic.main.activity_launch.toolbar
+import kotlinx.android.synthetic.main.activity_launch.*
 import timber.log.Timber
 
 class LaunchActivity : AppCompatActivity(), LaunchContract.View {
@@ -78,9 +76,10 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     private fun openCurrencyPicker() {
         val picker = CurrencyPicker.newInstance("Select Currency")  // dialog title
 
-        picker.setListener { name, code, symbol, flagDrawableResID ->
+        picker.setListener { name, code, _, _ ->
             Timber.d("Currency code selected $name,$code")
             PreferenceHelper.setPreference(this, PreferenceHelper.DEFAULT_CURRENCY, code)
+
             continueButton.visibility = View.VISIBLE
             picker.dismiss() // Show currency that is picked.
 

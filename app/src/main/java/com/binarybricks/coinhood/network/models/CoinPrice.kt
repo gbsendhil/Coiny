@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
- * Created by pranay airan on 1/15/18.
+ Created by Pranay Airan 1/15/18.
  */
 @Parcelize
 data class CoinPrice(

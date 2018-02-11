@@ -16,11 +16,6 @@ data class WatchedCoin(
     var exchange: String,
     var fromCurrency: String,
     var purchased: Boolean = false,
-    var purchaseQuantity: String
-
-) : Parcelable {
-
-    @ColumnInfo(name = "watched_id")
-    @PrimaryKey(autoGenerate = true)
-    var idKey: Long = 0
-}
+    var purchaseQuantity: String,
+    @ColumnInfo(name = "watched_id") @PrimaryKey(autoGenerate = true) var idKey: Long = 0
+) : Parcelable
