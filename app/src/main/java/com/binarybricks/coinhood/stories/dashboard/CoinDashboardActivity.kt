@@ -12,9 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coinhood.CoinHoodApplication
 import com.binarybricks.coinhood.R
-import com.binarybricks.coinhood.components.DashboardCoinHeaderModule
+import com.binarybricks.coinhood.components.DashboardCoinListHeaderModule
 import com.binarybricks.coinhood.components.DashboardCoinModule
 import com.binarybricks.coinhood.components.DashboardEmptyCardModule
+import com.binarybricks.coinhood.components.DashboardHeaderModule
 import com.binarybricks.coinhood.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coinhood.data.PreferenceHelper
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
@@ -38,7 +39,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
     private var nextMenuItem: MenuItem? = null
 
-    private var watchedAndPurchasedCoinsList: MutableList<Any> = ArrayList()
+    private var coinDashboardList: MutableList<Any> = ArrayList()
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
     private var watchedCoinList: List<WatchedCoin> = emptyList()
 
@@ -67,7 +68,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         rvDashboard.layoutManager = LinearLayoutManager(this)
 
-        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), watchedAndPurchasedCoinsList)
+        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList)
         rvDashboard.adapter = coinDashboardAdapter
     }
 
@@ -125,13 +126,15 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
 
         // empty existing list
-        watchedAndPurchasedCoinsList = ArrayList()
+        coinDashboardList = ArrayList()
+
+        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData())
 
         val coinWatchList: MutableList<Any> = ArrayList()
-        coinWatchList.add(DashboardCoinHeaderModule.DashboardCoinHeaderModuleData("Watchlist"))
+        coinWatchList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Watchlist"))
 
         val coinPurchasesList: MutableList<Any> = ArrayList()
-        coinPurchasesList.add(DashboardCoinHeaderModule.DashboardCoinHeaderModuleData("Crypto Currencies"))
+        coinPurchasesList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Crypto Currencies"))
 
         watchedCoinList.forEach { watchedCoin ->
             if (watchedCoin.purchased && coinPriceListMap.contains(watchedCoin.coin.symbol.toUpperCase())) {
@@ -153,12 +156,12 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
             coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coin prices. Search and click + to get started."))
         }
 
-        watchedAndPurchasedCoinsList.addAll(coinPurchasesList)
-        watchedAndPurchasedCoinsList.addAll(coinWatchList)
+        coinDashboardList.addAll(coinPurchasesList)
+        coinDashboardList.addAll(coinWatchList)
 
         showOrHideLoadingIndicator(false)
 
-        coinDashboardAdapter?.watchedAndPurchasedCoinsList = watchedAndPurchasedCoinsList
+        coinDashboardAdapter?.coinDashboardList = coinDashboardList
         coinDashboardAdapter?.notifyDataSetChanged()
     }
 

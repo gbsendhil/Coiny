@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:paddingBottom="@dimen/generic16dp"
+    android:paddingTop="@dimen/generic16dp">
+
+    <TextView
+        android:id="@+id/tvPortfolioValue"
+        style="@style/DisplayNumberHuge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="0"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="$17,400.92" />
+
+    <TextView
+        android:id="@+id/tvPortfolioChangedValue"
+        style="@style/DisplayNumberMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/generic4dp"
+        android:paddingEnd="@dimen/generic8dp"
+        android:paddingStart="@dimen/generic8dp"
+        android:textColor="@color/textColorBlack"
+        app:layout_constraintEnd_toStartOf="@+id/tvPortfolioChangedPercentage"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPortfolioValue"
+        tools:text="-$0.04" />
+
+    <TextView
+        android:id="@+id/tvPortfolioChangedPercentage"
+        style="@style/TextRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/portfolio_changed_percentage"
+        android:textColor="@color/textColorBlack"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPortfolioChangedValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvPortfolioChangedValue"
+        app:layout_constraintTop_toTopOf="@+id/tvPortfolioChangedValue" />
+
+
+    <Button
+        android:id="@+id/btnAllTime"
+        style="@style/ButtonRegularNoBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/generic4dp"
+        android:text="All Time"
+        android:textAllCaps="false"
+        android:textColor="@color/secondaryTextColor"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPortfolioChangedValue" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/generic4dp"
+        android:paddingStart="@dimen/generic4dp"
+        android:tint="@color/primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="@id/btnAllTime"
+        app:layout_constraintEnd_toStartOf="@+id/btnLast24Hr"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnAllTime"
+        app:layout_constraintTop_toTopOf="@id/btnAllTime"
+        app:srcCompat="@drawable/ic_compare_arrows_black_24dp" />
+
+    <Button
+        android:id="@+id/btnLast24Hr"
+        style="@style/ButtonRegularNoBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last 24H"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAllTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/btnAllTime" />
+
+
+</android.support.constraint.ConstraintLayout>

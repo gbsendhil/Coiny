@@ -25,7 +25,7 @@
 
 
         <TextView
-            android:id="@+id/tvChartPercentageChange"
+            android:id="@+id/tvPortfolioChangedValue"
             style="@style/TextRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:paddingEnd="@dimen/generic4dp"
             android:paddingStart="@dimen/generic4dp"
             android:textColor="@color/colorPrimary"
-            app:layout_constraintEnd_toStartOf="@+id/tvChartPeriod"
+            app:layout_constraintEnd_toStartOf="@+id/tvPortfolioChangedPercentage"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,15 +41,15 @@
             tools:text="-$0.04 (0.1%)" />
 
         <TextView
-            android:id="@+id/tvChartPeriod"
+            android:id="@+id/tvPortfolioChangedPercentage"
             style="@style/TextSubHeadSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/tvChartPercentageChange"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPortfolioChangedValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvChartPercentageChange"
-            app:layout_constraintTop_toTopOf="@+id/tvChartPercentageChange"
+            app:layout_constraintStart_toEndOf="@+id/tvPortfolioChangedValue"
+            app:layout_constraintTop_toTopOf="@+id/tvPortfolioChangedValue"
             tools:text="today" />
 
 
@@ -60,7 +60,7 @@
             android:layout_marginTop="@dimen/generic16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvChartPercentageChange"
+            app:layout_constraintTop_toBottomOf="@+id/tvPortfolioChangedValue"
             app:spark_animateChanges="true"
             app:spark_lineColor="@color/colorPrimary"
             app:spark_scrubEnabled="true" />

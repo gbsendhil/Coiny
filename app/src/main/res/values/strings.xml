@@ -33,4 +33,5 @@
     <string name="recent_news">Recent News</string>
     <string name="more">More</string>
     <string name="add_transaction">Add Transaction</string>
+    <string name="portfolio_changed_percentage">(0%)</string>
 </resources>
