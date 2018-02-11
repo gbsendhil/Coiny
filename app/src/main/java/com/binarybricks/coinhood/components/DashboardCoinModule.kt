@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
 import java.util.*
 
 /**
- * Created by pranay airan on 1/19/18.
+ * Created by Pranay Airan
  */
 
 class DashboardCoinModule(private val toCurrency: String) {

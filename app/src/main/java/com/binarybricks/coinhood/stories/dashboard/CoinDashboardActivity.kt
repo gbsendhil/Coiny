@@ -14,6 +14,7 @@ import com.binarybricks.coinhood.CoinHoodApplication
 import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.components.DashboardCoinHeaderModule
 import com.binarybricks.coinhood.components.DashboardCoinModule
+import com.binarybricks.coinhood.components.DashboardEmptyCardModule
 import com.binarybricks.coinhood.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coinhood.data.PreferenceHelper
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
@@ -68,11 +69,6 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), watchedAndPurchasedCoinsList)
         rvDashboard.adapter = coinDashboardAdapter
-
-        //        btc.setOnClickListener {
-        //            startActivity(CoinDetailsActivity.buildLaunchIntent(this, btc.text.toString()))
-        //        }
-        //
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -135,7 +131,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         coinWatchList.add(DashboardCoinHeaderModule.DashboardCoinHeaderModuleData("Watchlist"))
 
         val coinPurchasesList: MutableList<Any> = ArrayList()
-        coinPurchasesList.add(DashboardCoinHeaderModule.DashboardCoinHeaderModuleData("CryptoCurrencies"))
+        coinPurchasesList.add(DashboardCoinHeaderModule.DashboardCoinHeaderModuleData("Crypto Currencies"))
 
         watchedCoinList.forEach { watchedCoin ->
             if (watchedCoin.purchased && coinPriceListMap.contains(watchedCoin.coin.symbol.toUpperCase())) {
@@ -149,13 +145,16 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
             }
         }
 
-        if (coinPurchasesList.size > 1) {
-            watchedAndPurchasedCoinsList.addAll(coinPurchasesList)
+        if (coinPurchasesList.size == 1) {
+            coinPurchasesList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Track & monitor your holding. Add your first Transaction"))
         }
 
-        if (coinWatchList.size > 1) {
-            watchedAndPurchasedCoinsList.addAll(coinWatchList)
+        if (coinWatchList.size == 1) {
+            coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coin prices. Search and click + to get started."))
         }
+
+        watchedAndPurchasedCoinsList.addAll(coinPurchasesList)
+        watchedAndPurchasedCoinsList.addAll(coinWatchList)
 
         showOrHideLoadingIndicator(false)
 

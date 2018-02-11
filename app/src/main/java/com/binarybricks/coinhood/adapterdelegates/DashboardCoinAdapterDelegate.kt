@@ -11,7 +11,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 
 /**
- * Created by pranay airan on 1/23/18.
+ * Created by Pranay Airan
  * Adapter delegate that takes care of coin row in dashboard.
  */
 

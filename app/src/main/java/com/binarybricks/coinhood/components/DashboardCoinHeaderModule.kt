@@ -7,7 +7,7 @@ import com.binarybricks.coinhood.R
 import kotlinx.android.synthetic.main.dashboard_coin_header_module.view.*
 
 /**
- * Created by pranay airan on 1/19/18.
+ * Created by Pranay Airan
  */
 
 class DashboardCoinHeaderModule {

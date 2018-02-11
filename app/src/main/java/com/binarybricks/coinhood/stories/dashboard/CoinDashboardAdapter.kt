@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.binarybricks.coinhood.adapterdelegates.DashboardCoinAdapterDelegate
 import com.binarybricks.coinhood.adapterdelegates.DashboardCoinHeaderAdapterDelegate
+import com.binarybricks.coinhood.adapterdelegates.DashboardEmptyCardAdapterDelegate
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 
@@ -18,12 +19,14 @@ class CoinDashboardAdapter(toCurrency: String,
 
     private val DASHBOARD_COIN_HEADER = 0
     private val DASHBOARD_COIN = 1
+    private val DASHBOARD_EMPTY_CARD = 2
 
     val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
 
     init {
         delegates.addDelegate(DASHBOARD_COIN_HEADER, DashboardCoinHeaderAdapterDelegate())
         delegates.addDelegate(DASHBOARD_COIN, DashboardCoinAdapterDelegate(toCurrency))
+        delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
     }
 
     override fun getItemViewType(position: Int): Int {
