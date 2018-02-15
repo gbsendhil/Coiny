@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
 /**
- Created by Pranay Airan 1/10/18.
+Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
@@ -80,7 +80,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         historicalData = dataListPair.first
 
         inflatedView.historicalChartView.adapter =
-                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
+                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.open)
 
         if (period != ALL) {
             showPercentageGainOrLoss(dataListPair.first)

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.R
-import com.binarybricks.coinhood.utils.defaultExchange
+import com.binarybricks.coinhood.utils.getDefaultExchangeText
 import kotlinx.android.synthetic.main.coin_info_module.view.*
 
 /**
@@ -22,10 +22,7 @@ class CoinInfoModule {
     fun showCoinInfo(inflatedView: View, coinInfoModuleData: CoinInfoModuleData) {
 
         var exchange = coinInfoModuleData.exchange
-        if (exchange.equals(defaultExchange, true)) {
-            exchange = inflatedView.context.getString(R.string.global_avg)
-        }
-
+        exchange = getDefaultExchangeText(exchange, inflatedView.context)
         inflatedView.tvExchangeName.text = exchange
         inflatedView.tvAlgorithmName.text = coinInfoModuleData.algorithm
         inflatedView.tvProofTypeName.text = coinInfoModuleData.proofType

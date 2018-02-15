@@ -7,7 +7,7 @@ import com.robinhood.spark.SparkAdapter
  Created by Pranay Airan 1/13/18.
  */
 
-class HistoricalChartAdapter(private val historicalData: List<CryptoCompareHistoricalResponse.Data>, private val maxBy: String?) : SparkAdapter() {
+class HistoricalChartAdapter(private val historicalData: List<CryptoCompareHistoricalResponse.Data>, private val baseLineValue: String?) : SparkAdapter() {
 
     override fun getY(index: Int): Float {
         return historicalData[index].close.toFloat()
@@ -26,6 +26,6 @@ class HistoricalChartAdapter(private val historicalData: List<CryptoCompareHisto
     }
 
     override fun getBaseLine(): Float {
-        return maxBy?.toFloat() ?: super.getBaseLine()
+        return baseLineValue?.toFloat() ?: super.getBaseLine()
     }
 }

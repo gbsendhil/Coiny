@@ -36,7 +36,19 @@ fun getBrowserIntent(url: String): Intent {
     return intent
 }
 
-fun dpToPx(context: Context, dp: Int): Int {
-    val r = context.resources
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics).toInt()
+fun dpToPx(context: Context?, dp: Int): Int {
+
+    if (context != null) {
+        val r = context.resources
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics).toInt()
+    }
+    return dp
+}
+
+fun getDefaultExchangeText(exchangeName: String, context: Context): String {
+    if (exchangeName.equals(defaultExchange, true)) {
+        return context.getString(R.string.global_avg)
+    }
+
+    return exchangeName
 }

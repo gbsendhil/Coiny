@@ -11,6 +11,7 @@ import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coinhood.utils.Formatters
 import com.binarybricks.coinhood.utils.chartAnimationDuration
+import com.binarybricks.coinhood.utils.getDefaultExchangeText
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -66,8 +67,7 @@ class DashboardCoinModule(private val toCurrency: String) {
             inflatedView.tvExchangeName.visibility = View.GONE
         } else {
             inflatedView.tvExchangeName.visibility = View.VISIBLE
-            inflatedView.tvExchangeName.text = dashboardCoinModuleData.watchedCoin.exchange
-            //inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+            inflatedView.tvExchangeName.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
         }
 
         if (coinPrice != null) {

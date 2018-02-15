@@ -44,7 +44,7 @@ class CoinStatsticsModule {
                 ?: "0", currency, true)
 
         inflatedView.tvAvgMarketCapAmount.text = formatter.formatAmount(coinPrice.marketCap
-                ?: "0", currency, true)
+                ?: "0", currency, false)
 
         inflatedView.tvSupplyNumber.text = "${formatter.formatNumber(coinPrice.supply
                 ?: 0)} ${coinPrice.fromSymbol}"

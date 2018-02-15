@@ -21,10 +21,8 @@ import com.binarybricks.coinhood.data.PreferenceHelper
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.SchedulerProvider
-import com.binarybricks.coinhood.utils.ResourceProvider
-import com.binarybricks.coinhood.utils.ResourceProviderImpl
-import com.binarybricks.coinhood.utils.defaultExchange
-import com.binarybricks.coinhood.utils.getAboutStringForCoin
+import com.binarybricks.coinhood.utils.*
+import kotlinx.android.synthetic.main.activity_all_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.view.*
 
@@ -73,6 +71,16 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             inflate.rvCoinDetails.layoutManager = LinearLayoutManager(context)
             inflate.rvCoinDetails.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
+            val toolBarDefaultElevation = dpToPx(context, 12) // default elevation of toolbar
+
+            inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
+                override fun onScrolled(offset: Int) {
+                    super.onScrolled(offset)
+                    (activity as CoinDetailsPagerActivity).toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                    (activity as CoinDetailsPagerActivity).toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                }
+            })
+
             showOrHideLoadingIndicator(true)
 
             // load data
@@ -94,13 +102,15 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
         coinDetailList.add(HistoricalChartModule.HistoricalChartModuleData(coinPrice))
 
         coinDetailList.add(AddCoinModule.AddCoinModuleData())
+
+        if (coinPrice != null) {
+            coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
+        }
+
         coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice?.market
                 ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
 
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
-        if (coinPrice != null) {
-            coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
-        }
 
         coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, context?.applicationContext)))
         coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, lifecycle, coinDetailList, schedulerProvider, resourceProvider)

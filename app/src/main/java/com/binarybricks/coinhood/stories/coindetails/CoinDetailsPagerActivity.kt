@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_coin_details.*
 
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
 
+    var toolBarTab: View? = null
+
     private var watchedCoin: WatchedCoin? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
@@ -49,7 +51,9 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         toolbar.elevation = 0f
 
-        watchedCoin = intent.getParcelableExtra<WatchedCoin>(WATCHED_COIN)
+        toolBarTab = findViewById(R.id.rtTab)
+
+        watchedCoin = intent.getParcelableExtra(WATCHED_COIN)
 
         coinDetailPagerPresenter.attachView(this)
 
