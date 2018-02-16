@@ -17,9 +17,14 @@ object PreferenceHelper {
     const val IS_LAUNCH_FTU_SHOWN = "LaunchFtuShown"
     const val DEFAULT_CURRENCY = "DefaultCurrency"
 
+    const val DEFAULT_CURRENC_VALUE = "USD"
 
-    fun getDefaultCurrency(context: Context): String {
-        return getPreference(context, DEFAULT_CURRENCY, "USD")
+    fun getDefaultCurrency(context: Context?): String {
+        if (context != null) {
+            return getPreference(context.applicationContext, DEFAULT_CURRENCY, DEFAULT_CURRENC_VALUE)
+        }
+
+        return DEFAULT_CURRENC_VALUE
     }
 
     /**
@@ -39,19 +44,19 @@ object PreferenceHelper {
     ): T {
         return try {
             when (defaultValue::class) {
-                String::class -> PreferenceManager.getDefaultSharedPreferences(context).getString(
+                String::class -> PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getString(
                     key, defaultValue as String
                 ) as T
-                Float::class -> PreferenceManager.getDefaultSharedPreferences(context).getFloat(
+                Float::class -> PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getFloat(
                     key, defaultValue as Float
                 ) as T
-                Long::class -> PreferenceManager.getDefaultSharedPreferences(context).getLong(
+                Long::class -> PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getLong(
                     key, defaultValue as Long
                 ) as T
-                Int::class -> PreferenceManager.getDefaultSharedPreferences(context).getInt(
+                Int::class -> PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getInt(
                     key, defaultValue as Int
                 ) as T
-                Boolean::class -> PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                Boolean::class -> PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getBoolean(
                     key, defaultValue as Boolean
                 ) as T
                 else -> throw UnsupportedOperationException("This Preference Type is not supported")
@@ -77,7 +82,7 @@ object PreferenceHelper {
     ) {
 
         if (value == null) {
-            edit(context, { it.remove(key) })
+            edit(context.applicationContext, { it.remove(key) })
         } else {
             when (value) {
                 is String -> edit(context, { it.putString(key, value) })

@@ -5,7 +5,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 
 /**
- * Created by pranay airan on 1/14/18.
+ Created by Pranay Airan 1/14/18.
  */
 
 fun RadioGroup.changeChildrenColor(@ColorInt color: Int) {

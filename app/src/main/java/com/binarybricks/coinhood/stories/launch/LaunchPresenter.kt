@@ -14,7 +14,7 @@ import com.binarybricks.coinhood.stories.CryptoCompareRepository
 import timber.log.Timber
 
 /**
- * Created by pranay airan on 1/17/18.
+ Created by Pranay Airan
  */
 
 class LaunchPresenter(

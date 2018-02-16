@@ -17,7 +17,7 @@
 
     <style name="ButtonRegular" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/button_back</item>
     </style>
 
     <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
@@ -73,5 +73,11 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="rtl_RecyclerTabLayout.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/tabTextColor</item>
+        <item name="textAllCaps">true</item>
+    </style>
 
 </resources>

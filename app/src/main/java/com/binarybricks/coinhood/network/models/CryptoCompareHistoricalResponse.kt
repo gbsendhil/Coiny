@@ -3,7 +3,7 @@ package com.binarybricks.coinhood.network.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * Created by pranay airan on 1/10/18.
+ Created by Pranay Airan 1/10/18.
  */
 
 data class CryptoCompareHistoricalResponse(@SerializedName("FirstValueInArray") val firstValueInArray: String,

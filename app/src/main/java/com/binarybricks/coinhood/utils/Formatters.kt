@@ -12,7 +12,7 @@ import java.util.*
 
 
 /**
- * Created by pranay airan on 1/13/18.
+Created by Pranay Airan 1/13/18.
  */
 
 /**
@@ -73,15 +73,27 @@ class Formatters {
         } else {
             val remainder = amountNumber.divide(million, mathContext) // divide this number by million
             if (remainder <= thousand) {
-                "${formatter.format(remainder.toInt())} Million"
+                "${formatter.format(remainder)} Million"
             } else {
-                "${formatter.format(remainder.divide(thousand, mathContext).toInt())} Billion"
+                "${formatter.format(remainder.divide(thousand, mathContext))} Billion"
             }
         }
     }
 
     fun formatNumber(number: Int): String? {
-        return formatterNumber.format(number)
+
+        val number = BigDecimal(number)
+
+        return if (number < million) {
+            formatterNumber.format(number)
+        } else {
+            val remainder = number.divide(million, mathContext) // divide this number by million
+            if (remainder <= thousand) {
+                "${formatterNumber.format(remainder)} Million"
+            } else {
+                "${formatterNumber.format(remainder.divide(thousand, mathContext))} Billion"
+            }
+        }
     }
 
     fun formatDate(timestamp: String, multiplier: Int): String {

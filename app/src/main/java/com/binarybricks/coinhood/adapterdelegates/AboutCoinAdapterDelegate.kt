@@ -9,7 +9,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 
 /**
- * Created by pranay airan on 1/23/18.
+ * Created by Pranay Airan
  */
 
 class AboutCoinAdapterDelegate : AdapterDelegate<List<Any>>() {

@@ -7,7 +7,7 @@ import com.binarybricks.coinhood.R
 import kotlinx.android.synthetic.main.coin_about_module.view.*
 
 /**
- * Created by pranay airan on 1/19/18.
+ * Created by Pranay Airan
  *
  * Simple class that wraps all logic related to showing about us section
  */

@@ -1,7 +1,7 @@
 import com.binarybricks.coinhood.stories.BaseView
 
 /**
- * Created by pranay airan on 2/3/18.
+ Created by Pranay Airan 2/3/18.
  */
 
 interface LaunchContract {

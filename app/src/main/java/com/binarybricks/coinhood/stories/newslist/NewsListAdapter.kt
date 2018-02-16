@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.news_item.view.*
 
 
 /**
- * Created by pranay airan on 1/18/18.
+ Created by Pranay Airan 1/18/18.
  *
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */

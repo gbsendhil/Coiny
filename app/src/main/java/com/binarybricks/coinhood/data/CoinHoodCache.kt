@@ -1,5 +1,6 @@
 package com.binarybricks.coinhood.data
 
+import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.models.CryptoPanicNews
 
 /**
@@ -12,4 +13,6 @@ object CoinHoodCache {
 
     // cache the news since we don't want to overload the server. 
     var newsMap: MutableMap<String, CryptoPanicNews> = hashMapOf()
+
+    var coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
 }

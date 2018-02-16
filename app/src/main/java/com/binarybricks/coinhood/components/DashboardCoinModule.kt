@@ -8,9 +8,10 @@ import com.binarybricks.coinhood.R
 import com.binarybricks.coinhood.data.database.entities.WatchedCoin
 import com.binarybricks.coinhood.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coinhood.network.models.CoinPrice
-import com.binarybricks.coinhood.stories.coindetails.CoinDetailsActivity
+import com.binarybricks.coinhood.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coinhood.utils.Formatters
 import com.binarybricks.coinhood.utils.chartAnimationDuration
+import com.binarybricks.coinhood.utils.getDefaultExchangeText
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
 import java.util.*
 
 /**
- * Created by pranay airan on 1/19/18.
+ * Created by Pranay Airan
  */
 
 class DashboardCoinModule(private val toCurrency: String) {
@@ -47,35 +48,44 @@ class DashboardCoinModule(private val toCurrency: String) {
         return inflatedView
     }
 
-    fun showCoinInfo(inflatedView: View, watchedCoin: WatchedCoin, coinPrice: CoinPrice) {
+    fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData) {
 
-        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${watchedCoin.coin.imageUrl}?width=60"
+        val coin = dashboardCoinModuleData.watchedCoin.coin
+        val coinPrice = dashboardCoinModuleData.coinPrice
+
+        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=60"
 
         picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
             .transform(grayscaleTransformation)
             .into(inflatedView.ivCoin)
 
-        inflatedView.tvCoinName.text = watchedCoin.coin.coinName
-        animateCoinPrice(inflatedView, coinPrice.price)
+        inflatedView.tvCoinName.text = coin.coinName
 
-        if (watchedCoin.purchased) {
+        if (dashboardCoinModuleData.watchedCoin.purchased) {
             // do a different flow
             inflatedView.tvExchangeName.visibility = View.GONE
         } else {
             inflatedView.tvExchangeName.visibility = View.VISIBLE
-            inflatedView.tvExchangeName.text = coinPrice.market
-            inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+            inflatedView.tvExchangeName.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
         }
 
-        // adjust color logic here for text
+        if (coinPrice != null) {
+            inflatedView.pbLoading.hide()
 
-        inflatedView.coinCard.setOnClickListener {
-            inflatedView.context.startActivity(CoinDetailsActivity.buildLaunchIntent(inflatedView.context, watchedCoin, coinPrice))
+            animateCoinPrice(inflatedView, coinPrice.price)
+
+            inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+
+            // adjust color logic here for text
+
+            inflatedView.coinCard.setOnClickListener {
+                inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
+            }
         }
     }
 
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, val coinPrice: CoinPrice)
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?)
 
 
     private fun animateCoinPrice(inflatedView: View, amount: String?) {

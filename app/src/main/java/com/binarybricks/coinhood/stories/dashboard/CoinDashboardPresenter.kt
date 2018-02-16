@@ -4,6 +4,7 @@ import CoinDashboardContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
+import com.binarybricks.coinhood.data.CoinHoodCache
 import com.binarybricks.coinhood.data.database.CoinHoodDatabase
 import com.binarybricks.coinhood.network.models.CoinPrice
 import com.binarybricks.coinhood.network.schedulers.BaseSchedulerProvider
@@ -12,7 +13,7 @@ import com.binarybricks.coinhood.stories.dashboard.DashboardRepository
 import timber.log.Timber
 
 /**
- * Created by pranay airan on 1/17/18.
+Created by Pranay Airan
  */
 
 class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinHoodDatabase: CoinHoodDatabase?) :
@@ -41,10 +42,21 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
                 coinPriceList.forEach { coinPrice ->
                     coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
                 }
+                CoinHoodCache.coinPriceMap.putAll(coinPriceMap)
                 coinPriceMap
             }
             .observeOn(schedulerProvider.ui())
             .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
+    }
+
+    override fun loadAllSupportedCoins() {
+        dashboardRepository.loadSupportedCoins()?.let {
+            compositeDisposable.add(
+                it.filter { it.isNotEmpty() }
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({ currentView?.onSupportedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
+            )
+        }
     }
 
     // cleanup

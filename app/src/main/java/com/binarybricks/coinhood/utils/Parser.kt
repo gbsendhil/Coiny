@@ -9,7 +9,7 @@ import com.google.gson.JsonObject
 import java.util.*
 
 /**
- * Created by pranay airan on 1/15/18.
+ Created by Pranay Airan 1/15/18.
  */
 fun getCoinPricesFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
     val coinPriceList: ArrayList<CoinPrice> = ArrayList()

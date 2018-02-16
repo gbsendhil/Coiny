@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
 /**
- * Created by pranay airan on 1/10/18.
+Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
@@ -80,12 +80,12 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         historicalData = dataListPair.first
 
         inflatedView.historicalChartView.adapter =
-                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.close)
+                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.open)
 
         if (period != ALL) {
             showPercentageGainOrLoss(dataListPair.first)
         } else {
-            inflatedView.tvChartPercentageChange.text = ""
+            inflatedView.tvPortfolioChangedValue.text = ""
             showPositiveGainColor()
         }
         showChartPeriodText(period)
@@ -99,7 +99,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             val currentClosingPrice = historicalData.last().close.toFloat()
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
-            inflatedView.tvChartPercentageChange.text =
+            inflatedView.tvPortfolioChangedValue.text =
                     resourceProvider.getString(R.string.gain, percentageChange,
                         formatter.formatAmount(gain.toString(), currency))
             if (gain > 0) {
@@ -111,7 +111,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     }
 
     private fun showPositiveGainColor() {
-        inflatedView.tvChartPercentageChange.setTextColor(
+        inflatedView.tvPortfolioChangedValue.setTextColor(
             resourceProvider.getColor(R.color.colorPrimary))
         inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorPrimary)
         inflatedView.rgPeriodSelector.changeChildrenColor(
@@ -119,7 +119,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     }
 
     private fun showNegativeGainColor() {
-        inflatedView.tvChartPercentageChange.setTextColor(
+        inflatedView.tvPortfolioChangedValue.setTextColor(
             resourceProvider.getColor(R.color.colorSecondary))
         inflatedView.historicalChartView.lineColor =
                 resourceProvider.getColor(R.color.colorSecondary)
@@ -137,7 +137,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             ALL -> resourceProvider.getString(R.string.all_time)
             else -> resourceProvider.getString(R.string.past_hour)
         }
-        inflatedView.tvChartPeriod.text = periodText
+        inflatedView.tvPortfolioChangedPercentage.text = periodText
     }
 
     private fun addChartScrubListener() {
@@ -148,8 +148,8 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
                 showChartPeriodText(selectedPeriod)
             } else {
                 val historicalData = value as CryptoCompareHistoricalResponse.Data
-                inflatedView.tvChartPercentageChange.text = ""
-                inflatedView.tvChartPeriod.text = formatter.formatDate(historicalData.time, 1000)
+                inflatedView.tvPortfolioChangedValue.text = ""
+                inflatedView.tvPortfolioChangedPercentage.text = formatter.formatDate(historicalData.time, 1000)
                 animateCoinPrice(historicalData.close)
             }
         }

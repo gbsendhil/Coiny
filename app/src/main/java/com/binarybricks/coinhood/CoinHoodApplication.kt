@@ -11,7 +11,7 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 /**
- * Created by pranay airan on 1/8/18.
+Created by Pranay Airan 1/8/18.
  */
 
 class CoinHoodApplication : Application() {

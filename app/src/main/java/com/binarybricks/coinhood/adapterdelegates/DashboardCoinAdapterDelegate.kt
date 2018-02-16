@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coinhood.components.DashboardCoinModule
-import com.binarybricks.coinhood.data.database.entities.WatchedCoin
-import com.binarybricks.coinhood.network.models.CoinPrice
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 
 /**
- * Created by pranay airan on 1/23/18.
+ * Created by Pranay Airan
  * Adapter delegate that takes care of coin row in dashboard.
  */
 
@@ -29,13 +27,12 @@ class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDele
 
     override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val aboutCoinViewHolder = holder as DashboardCoinViewHolder
-        val dashboardCoinModuleData = items[position] as DashboardCoinModule.DashboardCoinModuleData
-        aboutCoinViewHolder.showCoinInfo(dashboardCoinModuleData.watchedCoin, dashboardCoinModuleData.coinPrice)
+        aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData)
     }
 
     class DashboardCoinViewHolder(itemView: View, private val dashboardCoinModule: DashboardCoinModule) : RecyclerView.ViewHolder(itemView) {
-        fun showCoinInfo(watchedCoin: WatchedCoin, coinPrice: CoinPrice) {
-            dashboardCoinModule.showCoinInfo(itemView, watchedCoin, coinPrice)
+        fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData) {
+            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData)
         }
     }
 }

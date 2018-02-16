@@ -28,10 +28,6 @@ data class Coin(
     @ColumnInfo(name = "totalCoinsFreeFloat") var totalCoinsFreeFloat: String,
     @ColumnInfo(name = "sortOrder") var sortOrder: String,
     @ColumnInfo(name = "sponsored") var sponsored: Boolean = false,
-    @ColumnInfo(name = "watched") var watched: Boolean = false
-) : Parcelable {
-
-    @ColumnInfo(name = "id")
-    @PrimaryKey(autoGenerate = true)
-    var idKey: Long = 0
-}
+    @ColumnInfo(name = "watched") var watched: Boolean = false,
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var idKey: Long = 0
+) : Parcelable

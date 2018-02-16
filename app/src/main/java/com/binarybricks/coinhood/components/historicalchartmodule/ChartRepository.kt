@@ -17,7 +17,7 @@ import io.reactivex.Single
 import timber.log.Timber
 
 /**
- * Created by pranay airan on 1/8/18.
+ Created by Pranay Airan 1/8/18.
  * Repository that interact with crypto api to get charts.
  */
 

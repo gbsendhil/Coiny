@@ -4,7 +4,7 @@ import com.binarybricks.coinhood.data.database.entities.Coin
 import com.google.gson.annotations.SerializedName
 
 /**
- * Created by pranay airan on 1/15/18.
+ Created by Pranay Airan 1/15/18.
  *
  * Network object representing Coin from crypto compare
  */

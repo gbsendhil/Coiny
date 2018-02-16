@@ -24,11 +24,11 @@ class CryptoNewsRepository(private val baseSchedulerProvider: BaseSchedulerProvi
         } else {
 
             cryptoCompareRetrofit.create(API::class.java)
-                    .getCryptoNewsForCurrency(coinSymbol, "important")
-                    .subscribeOn(baseSchedulerProvider.io())
-                    .doOnSuccess {
-                        CoinHoodCache.newsMap[coinSymbol] = it
-                    }
+                .getCryptoNewsForCurrency(coinSymbol, "important", true)
+                .subscribeOn(baseSchedulerProvider.io())
+                .doOnSuccess {
+                    CoinHoodCache.newsMap[coinSymbol] = it
+                }
         }
     }
 }
