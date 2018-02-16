@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">CoinHood</string>
+    <string name="app_name">Coiny</string>
+
     <string name="period_1h">1H</string>
     <string name="period_1day">1D</string>
     <string name="period_1week">1W</string>
