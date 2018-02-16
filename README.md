@@ -1,1 +1,1 @@
-# CoinHood
+# Coiny
