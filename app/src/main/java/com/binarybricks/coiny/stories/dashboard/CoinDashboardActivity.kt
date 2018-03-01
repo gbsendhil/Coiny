@@ -72,6 +72,9 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         coinDashboardPresenter.loadWatchedCoins()
 
         coinDashboardPresenter.loadAllSupportedCoins()
+
+        // get list of all exchanges
+        coinDashboardPresenter.getAllSupportedExchanges()
     }
 
     private fun initializeUI() {

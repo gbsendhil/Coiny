@@ -5,7 +5,7 @@ import com.binarybricks.coiny.stories.BaseView
 import java.util.*
 
 /**
- Created by Pranay Airan
+Created by Pranay Airan
  */
 
 interface CoinDashboardContract {
@@ -21,5 +21,6 @@ interface CoinDashboardContract {
         fun loadWatchedCoins()
         fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String)
         fun loadAllSupportedCoins()
+        fun getAllSupportedExchanges()
     }
 }

@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.binarybricks.coiny.CoinyApplication"
+        android:name=".CoinyApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.binarybricks.coiny.stories.launch.LaunchActivity">
+        <activity android:name=".stories.launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,19 +30,27 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.binarybricks.coiny.stories.dashboard.CoinDashboardActivity"
+            android:name=".stories.dashboard.CoinDashboardActivity"
             android:launchMode="singleTop" />
-
         <activity
-            android:name="com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity"
+            android:name=".stories.coindetails.CoinDetailsPagerActivity"
             android:launchMode="singleTop"
-            android:parentActivityName="com.binarybricks.coiny.stories.dashboard.CoinDashboardActivity" />
+            android:parentActivityName=".stories.dashboard.CoinDashboardActivity" />
+        <activity
+            android:name=".stories.newslist.NewsListActivity"
+            android:parentActivityName=".stories.coindetails.CoinDetailsPagerActivity" />
+        <activity
+            android:name=".stories.transaction.CoinTransactionActivity"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name="com.binarybricks.coiny.stories.newslist.NewsListActivity"
-            android:parentActivityName="com.binarybricks.coiny.stories.coindetails.CoinDetailsFragment" />
+            android:name=".stories.exchangesearch.ExchangeSearchActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".stories.pairsearch.PairSearchActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

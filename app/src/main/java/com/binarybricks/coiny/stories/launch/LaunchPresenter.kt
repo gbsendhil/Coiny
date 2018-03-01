@@ -6,15 +6,16 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.data.database.entities.Coin
-import com.binarybricks.coiny.data.database.entities.Exchange
 import com.binarybricks.coiny.network.models.getCoinFromCCCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.getTop5CoinsToWatch
+import com.binarybricks.coiny.utils.defaultExchange
 import timber.log.Timber
 
 /**
- Created by Pranay Airan
+Created by Pranay Airan
  */
 
 class LaunchPresenter(
@@ -23,7 +24,7 @@ class LaunchPresenter(
 ) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, coinyDatabase)
     }
 
     override fun getAllSupportedCoins() {
@@ -34,8 +35,7 @@ class LaunchPresenter(
                 it.forEach {
                     coinList.add(getCoinFromCCCoin(it))
                 }
-                coinyDatabase?.coinDao()
-                    ?.insertCoins(coinList)
+                coinRepo.insertCoins(coinList)
                 coinList
             }
             .observeOn(schedulerProvider.ui())
@@ -47,25 +47,9 @@ class LaunchPresenter(
         )
     }
 
-    override fun getAllSupportedExchanges() {
-        compositeDisposable.add(coinRepo.getAllSupportedExchanges()
-            .filter { it.size > 0 }
-            .map {
-                val exchangeList: MutableList<Exchange> = mutableListOf()
-                it.forEach {
-                    exchangeList.add(Exchange(it))
-                }
-                coinyDatabase?.exchangeDao()
-                    ?.insertExchanges(exchangeList)
-                exchangeList
-            }
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("Inserted all exchange with size ${it.size}")
-            }, {
-                Timber.e(it.localizedMessage)
-            })
-        )
+    override fun addTop5CoinsInWishlist(defaultCurrency: String) {
+        // add top 5 coins in watch list
+        coinRepo.insertCoinsInWatchList(getTop5CoinsToWatch(defaultExchange, defaultCurrency))
     }
 
     // cleanup

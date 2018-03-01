@@ -1,9 +1,11 @@
 package com.binarybricks.coiny.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.TypedValue
+import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
 
 
@@ -51,4 +53,12 @@ fun getDefaultExchangeText(exchangeName: String, context: Context): String {
     }
 
     return exchangeName
+}
+
+fun dismissKeyboard(activity: Activity) {
+    val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val focusedView = activity.currentFocus
+    if (focusedView != null) {
+        imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
+    }
 }

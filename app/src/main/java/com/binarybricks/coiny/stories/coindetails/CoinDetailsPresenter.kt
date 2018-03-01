@@ -25,7 +25,7 @@ class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider)
      * Get the current price of a coin say btc or eth
      */
     override fun loadCurrentCoinPrice(watchedCoin: WatchedCoin, toCurrency: String) {
-        compositeDisposable.add(coinRepo.getCoinPrice(watchedCoin.coin.symbol, toCurrency)
+        compositeDisposable.add(coinRepo.getCoinPriceFull(watchedCoin.coin.symbol, toCurrency)
             .observeOn(schedulerProvider.ui())
             .subscribe({
                 currentView?.onCoinPriceLoaded(it, watchedCoin)

@@ -36,4 +36,13 @@
     <string name="add_transaction">Add Transaction</string>
     <string name="portfolio_changed_percentage">(0%)</string>
     <string name="search_hint">Search Coin</string>
+    <string name="trading_pair">Trading Pair</string>
+    <string name="buy_price">Buy Price</string>
+    <string name="amount_bought">Amount Bought</string>
+    <string name="date_time"><![CDATA[Date & time]]></string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="arrow"><![CDATA[>]]></string>
+    <string name="change_exchange">Change Exchange</string>
+    <string name="change_trading_pair">Change trading pair</string>
 </resources>

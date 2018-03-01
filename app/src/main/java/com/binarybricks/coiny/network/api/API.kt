@@ -23,8 +23,9 @@ interface API {
                                 @Query("limit") limit: Int,
                                 @Query("aggregate") aggregate: Int): Single<CryptoCompareHistoricalResponse>
 
-//    @GET("top/pairs")
-//    fun getPairs(@Query("fsym") from: String): Single<JsonObject>
+
+    @GET("price")
+    fun getPrice(@Query("fsym") fromSymbol: String, @Query("tsyms") toSymbol: String, @Query("e") exchange: String): Single<JsonObject>
 
     @GET("all/exchanges")
     fun getExchangeList(): Single<JsonObject>

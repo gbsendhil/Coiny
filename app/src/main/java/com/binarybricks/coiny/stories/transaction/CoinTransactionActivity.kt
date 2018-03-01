@@ -1,0 +1,299 @@
+package com.binarybricks.coiny.stories.transaction
+
+import CoinTransactionContract
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.MenuItem
+import android.view.View
+import com.binarybricks.coiny.CoinyApplication
+import com.binarybricks.coiny.R
+import com.binarybricks.coiny.components.historicalchartmodule.CoinTransactionPresenter
+import com.binarybricks.coiny.data.database.entities.Coin
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
+import com.binarybricks.coiny.network.models.ExchangePair
+import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.exchangesearch.ExchangeSearchActivity
+import com.binarybricks.coiny.stories.pairsearch.PairSearchActivity
+import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
+import com.binarybricks.coiny.utils.dismissKeyboard
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import kotlinx.android.synthetic.main.activity_coin_transaction.*
+import timber.log.Timber
+import java.math.BigDecimal
+import java.util.*
+
+class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    private val EXCHANGE_REQUEST = 100
+    private val PAIR_REQUEST = 101
+
+    private var exchangeName = ""
+    private var pairName = ""
+
+    private val transactionDate by lazy {
+        Calendar.getInstance()
+    }
+
+    private val formatter by lazy {
+        Formatters()
+    }
+
+    companion object {
+        private const val COIN = "COIN"
+
+        @JvmStatic
+        fun buildLaunchIntent(context: Context, coin: Coin): Intent {
+            val intent = Intent(context, CoinTransactionActivity::class.java)
+            intent.putExtra(COIN, coin)
+            return intent
+        }
+    }
+
+    private val schedulerProvider: SchedulerProvider by lazy {
+        SchedulerProvider.getInstance()
+    }
+    private val coinTransactionPresenter: CoinTransactionPresenter by lazy {
+        CoinTransactionPresenter(schedulerProvider, CoinyApplication.database)
+    }
+
+    private var exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>? = null
+
+    private var coin: Coin? = null
+    private var cost = BigDecimal.ZERO
+    private var price = BigDecimal.ZERO
+
+    private val transactionType = TRANSACTION_TYPE_BUY
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_coin_transaction)
+
+        val toolbar = findViewById<View>(R.id.toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        coin = intent.getParcelableExtra(COIN)
+
+        checkNotNull(coin)
+
+        supportActionBar?.title = coin?.fullName
+
+        coinTransactionPresenter.attachView(this)
+        lifecycle.addObserver(coinTransactionPresenter)
+
+        initializeUI()
+
+        coinTransactionPresenter.getAllSupportedExchanges()
+    }
+
+    private fun initializeUI() {
+
+        svContainer.setOnClickListener {
+            dismissKeyboard(this)
+        }
+
+        containerExchange.setOnClickListener {
+            val exchangeList = exchangeCoinMap?.get(coin?.symbol?.toUpperCase())
+            if (exchangeList != null) {
+
+                startActivityForResult(ExchangeSearchActivity.buildLaunchIntent(this, getExchangeNameList(exchangeList), getString(R.string.change_exchange)),
+                    EXCHANGE_REQUEST)
+            }
+        }
+
+        containerPair.setOnClickListener {
+            val symbol = coin?.symbol
+
+            val exchangeList = exchangeCoinMap?.get(symbol?.toUpperCase())
+            if (exchangeList != null && symbol != null && exchangeName.isNotEmpty()) {
+                startActivityForResult(PairSearchActivity.buildLaunchIntent(this, getTopPair(exchangeList), symbol),
+                    PAIR_REQUEST)
+            }
+        }
+
+        containerDate.setOnClickListener {
+            val datePickerDialog = DatePickerDialog.newInstance(this, transactionDate.get(Calendar.YEAR), transactionDate.get(Calendar.MONTH),
+                transactionDate.get(Calendar.DAY_OF_MONTH))
+
+            datePickerDialog.isThemeDark = true
+            datePickerDialog.accentColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+            datePickerDialog.show(fragmentManager, "DatePickerDialog")
+        }
+
+        etBuyPrice.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                if (editable.isNullOrEmpty()) {
+                    tvBuyPriceLabel.visibility = View.GONE
+                } else {
+                    tvBuyPriceLabel.visibility = View.VISIBLE
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        etAmount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                if (editable.isNullOrEmpty()) {
+                    tvBuyAmountLabel.visibility = View.GONE
+                } else {
+                    tvBuyAmountLabel.visibility = View.VISIBLE
+                    calculateCost()
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        btnAddTransaction.setOnClickListener {
+            val coinTransaction = validateAndMakeTransaction()
+
+            if (coinTransaction != null) {
+                loading.show()
+                coinTransactionPresenter.addTransaction(coinTransaction)
+            }
+        }
+    }
+
+    private fun validateAndMakeTransaction(): CoinTransaction? {
+        coin?.let {
+            if (pairName.isNotEmpty() && price > BigDecimal.ZERO && etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
+                return CoinTransaction(transactionType, it.symbol, pairName, price.toPlainString(), etAmount.text.toString(),
+                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, "0")
+            }
+        }
+
+        return null
+    }
+
+    override fun onAllSupportedExchangesLoaded(exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>) {
+        this.exchangeCoinMap = exchangeCoinMap
+        // check for default exchange chosen
+    }
+
+    override fun onCoinPriceLoaded(price: BigDecimal) {
+        etBuyPrice.setText(price.toString())
+        this.price = price
+    }
+
+    fun calculateCost() {
+        if (etBuyPrice.text.isNotEmpty() && etAmount.text.isNotEmpty()) {
+            cost = BigDecimal(etBuyPrice.text.toString()).multiply(BigDecimal(etAmount.text.toString()))
+            tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${pairName}"
+        }
+    }
+
+    override fun onTransactionAdded() {
+        loading.hide()
+        finish()
+    }
+
+    override fun onNetworkError(errorMessage: String) {
+        Timber.e(errorMessage)
+    }
+
+    private fun getExchangeNameList(exchangePairList: MutableList<ExchangePair>): ArrayList<String> {
+        val exchangeList: ArrayList<String> = arrayListOf()
+
+        exchangePairList.forEach {
+            exchangeList.add(it.exchangeName)
+        }
+
+        exchangeList.sort()
+        return exchangeList
+    }
+
+    private fun getTopPair(exchangePairList: MutableList<ExchangePair>): ArrayList<String> {
+
+        exchangePairList.filter {
+            it.exchangeName.equals(exchangeName, true)
+        }.map { exchangePair ->
+                return exchangePair.pairList as ArrayList<String>
+            }
+
+        return arrayListOf()
+    }
+
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        transactionDate.set(Calendar.YEAR, year)
+        transactionDate.set(Calendar.MONTH, monthOfYear)
+        transactionDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+        val timePickerDialog = TimePickerDialog.newInstance(this, transactionDate.get(Calendar.HOUR_OF_DAY), transactionDate.get(Calendar.MINUTE),
+            transactionDate.get(Calendar.SECOND), false)
+
+        timePickerDialog.accentColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+        timePickerDialog.isThemeDark = true
+        timePickerDialog.show(fragmentManager, "TimePickerDialog")
+
+    }
+
+    override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
+        transactionDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        transactionDate.set(Calendar.MINUTE, minute)
+        transactionDate.set(Calendar.SECOND, second)
+
+        tvDatetimeLabel.visibility = View.VISIBLE
+        tvDatetime.text = formatter.formatDatePretty(transactionDate.time)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            EXCHANGE_REQUEST -> {
+                if (data != null) {
+                    exchangeName = ExchangeSearchActivity.getResultFromIntent(data)
+                    tvExchangeLabel.visibility = View.VISIBLE
+                    tvExchange.text = exchangeName.toUpperCase()
+                }
+            }
+            PAIR_REQUEST -> {
+                if (data != null) {
+                    pairName = PairSearchActivity.getResultFromIntent(data)
+                    tvPairLabel.visibility = View.VISIBLE
+
+                    if (coin != null) {
+                        tvPair.text = coin?.symbol + "/" + pairName.toUpperCase()
+                        coinTransactionPresenter.getPriceForPair(coin?.symbol
+                                ?: "", pairName, exchangeName)
+                    }
+
+                    tvBuyPriceLabel.text = "Buy Price " + pairName
+                    etBuyPrice.hint = "Buy Price " + pairName
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+        // Respond to the action bar's Up/Home button
+            android.R.id.home -> {
+                // tell the calling activity/fragment that we're done deleting this transaction
+                onBackPressed()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+}

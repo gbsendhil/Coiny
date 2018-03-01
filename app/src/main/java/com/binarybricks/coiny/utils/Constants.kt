@@ -1,10 +1,13 @@
 package com.binarybricks.coiny.utils
 
 /**
- Created by Pranay Airan 1/14/18.
+Created by Pranay Airan 1/14/18.
  */
 
-val chartAnimationDuration: Long = 250
+const val chartAnimationDuration: Long = 250
 
-val defaultExchange: String = "CCCAGG"
-val defaultCurrency: String = "USD"
+const val defaultExchange: String = "CCCAGG"
+const val defaultCurrency: String = "USD"
+
+const val TRANSACTION_TYPE_BUY: Int = 1
+const val TRANSACTION_TYPE_SELL: Int = 2

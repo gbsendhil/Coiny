@@ -53,6 +53,11 @@ class Formatters {
         SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd/MM/YYYY hh:mm aaa"), Locale.getDefault())
     }
 
+    // this formatter is use to show full date with time in pretty format
+    private val prettyDateFormat: SimpleDateFormat by lazy {
+        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEE,dd MMM YYYY,hh:mm"), Locale.getDefault())
+    }
+
     // this is ISO 8601 format for api
     private val simpleDateFormatIso: SimpleDateFormat by lazy {
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
@@ -99,6 +104,10 @@ class Formatters {
     fun formatDate(timestamp: String, multiplier: Int): String {
         calendar.timeInMillis = timestamp.toLong() * multiplier // time we get from some api call is in seconds
         return simpleDateFormat.format(calendar.time)
+    }
+
+    fun formatDatePretty(date: Date): String {
+        return prettyDateFormat.format(date)
     }
 
     // for ISO dates we need to parse it and then format it.

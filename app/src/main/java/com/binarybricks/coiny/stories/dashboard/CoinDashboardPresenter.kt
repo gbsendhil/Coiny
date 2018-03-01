@@ -9,6 +9,7 @@ import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.dashboard.DashboardRepository
 import timber.log.Timber
 
@@ -22,6 +23,10 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
 
     private val dashboardRepository by lazy {
         DashboardRepository(schedulerProvider, coinyDatabase)
+    }
+
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider)
     }
 
     override fun loadWatchedCoins() {
@@ -57,6 +62,17 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
                     .subscribe({ currentView?.onSupportedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
             )
         }
+    }
+
+    override fun getAllSupportedExchanges() {
+        compositeDisposable.add(coinRepo.getAllSupportedExchanges()
+            .observeOn(schedulerProvider.ui())
+            .subscribe({
+                Timber.d("All Exchange Loaded")
+            }, {
+                Timber.e(it.localizedMessage)
+            })
+        )
     }
 
     // cleanup

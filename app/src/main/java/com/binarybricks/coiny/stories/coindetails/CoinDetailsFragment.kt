@@ -101,7 +101,7 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
     override fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin) {
         coinDetailList.add(HistoricalChartModule.HistoricalChartModuleData(coinPrice))
 
-        coinDetailList.add(AddCoinModule.AddCoinModuleData())
+        coinDetailList.add(AddCoinModule.AddCoinModuleData(watchedCoin.coin))
 
         if (coinPrice != null) {
             coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
