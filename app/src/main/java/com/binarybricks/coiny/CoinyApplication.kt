@@ -3,7 +3,6 @@ package com.binarybricks.coiny
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
-import android.support.annotation.NonNull
 import android.util.Log
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.facebook.stetho.Stetho
@@ -46,7 +45,7 @@ class CoinyApplication : Application() {
 
     /** A tree which logs important information for crash reporting.  */
     private class CrashReportingTree : Timber.Tree() {
-        override fun log(priority: Int, tag: String, @NonNull message: String, t: Throwable?) {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             if (priority == Log.VERBOSE || priority == Log.DEBUG) {
                 return
             }

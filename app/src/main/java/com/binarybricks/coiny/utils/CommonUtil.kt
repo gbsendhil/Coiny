@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
@@ -36,6 +38,20 @@ fun getBrowserIntent(url: String): Intent {
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
     return intent
+}
+
+/**
+ * Open the URL in chrome custom tab
+ */
+fun openCustomTab(url: String, context: Context) {
+
+    val builder = CustomTabsIntent.Builder()
+    builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+    builder.set
+    // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
+    val customTabsIntent = builder.build()
+    // and launch the desired Url with CustomTabsIntent.launchUrl()
+    customTabsIntent.launchUrl(context, Uri.parse(url))
 }
 
 fun dpToPx(context: Context?, dp: Int): Int {

@@ -13,7 +13,7 @@ import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.newslist.NewsListActivity
 import com.binarybricks.coiny.utils.Formatters
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.coin_news_module.view.*
 
 /**
@@ -72,14 +72,14 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
             inflatedView.tvFirstArticleTitle.text = newsResult[0].title
             inflatedView.tvFirstArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[0].created_at, true)
             inflatedView.clFirstArticle.setOnClickListener {
-                inflatedView.context.startActivity(getBrowserIntent(newsResult[0].url))
+                openCustomTab(newsResult[0].url, inflatedView.context)
             }
 
             if (newsResult.size > 1) {
                 inflatedView.tvSecondArticleTitle.text = newsResult[1].title
                 inflatedView.tvSecondArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[1].created_at, true)
                 inflatedView.clSecondArticle.setOnClickListener {
-                    inflatedView.context.startActivity(getBrowserIntent(newsResult[1].url))
+                    openCustomTab(newsResult[1].url, inflatedView.context)
                 }
             }
 
@@ -87,7 +87,7 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
                 inflatedView.tvThirdArticleTitle.text = newsResult[2].title
                 inflatedView.tvThirdArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[2].created_at, true)
                 inflatedView.clThirdArticle.setOnClickListener {
-                    inflatedView.context.startActivity(getBrowserIntent(newsResult[2].url))
+                    openCustomTab(newsResult[2].url, inflatedView.context)
                 }
             }
 
