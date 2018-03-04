@@ -24,7 +24,7 @@ class CoinInfoModule : Module() {
 
         var exchange = coinInfoModuleData.exchange
         exchange = getDefaultExchangeText(exchange, inflatedView.context)
-        inflatedView.tvExchangeName.text = exchange
+        inflatedView.tvFirstTxnTimeAndExchange.text = exchange
         inflatedView.tvAlgorithmName.text = coinInfoModuleData.algorithm
         inflatedView.tvProofTypeName.text = coinInfoModuleData.proofType
     }

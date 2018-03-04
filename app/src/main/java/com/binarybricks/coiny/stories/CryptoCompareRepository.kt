@@ -15,6 +15,7 @@ import com.binarybricks.coiny.utils.getCoinPriceFromJson
 import com.binarybricks.coiny.utils.getCoinPricesFromJson
 import com.binarybricks.coiny.utils.getCoinsFromJson
 import com.binarybricks.coiny.utils.getExchangeListFromJson
+import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
 import java.math.BigDecimal
@@ -111,6 +112,11 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
                     exchangeListFromJson
                 }
         }
+    }
+
+    fun getRecentTransaction(symbol: String): Flowable<List<CoinTransaction>>? {
+        return coinyDatabase?.coinTransactionDao()?.getTransactionsForCoin(symbol.toUpperCase())
+            ?.subscribeOn(baseSchedulerProvider.io())
     }
 
     // insert coins in database

@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDetailsPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
 import com.binarybricks.coiny.data.PreferenceHelper
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
@@ -35,7 +37,7 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
     }
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDetailsPresenter: CoinDetailsPresenter by lazy {
@@ -120,5 +122,15 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
 
         view?.rvCoinDetails?.adapter = coinDetailsAdapter
         coinDetailsAdapter?.notifyDataSetChanged()
+
+        coinDetailsPresenter.loadRecentTransaction(watchedCoin.coin.symbol)
+    }
+
+    override fun onRecentTransactionLoaded(coinTransactionList: List<CoinTransaction>) {
+        if (!coinTransactionList.isEmpty()) {
+            coinDetailList.add(3, CoinTransactionHistoryModule.CoinTransactionHistoryModuleData(coinTransactionList))
+            coinDetailsAdapter?.coinDetailList = coinDetailList
+            coinDetailsAdapter?.notifyItemChanged(3)
+        }
     }
 }

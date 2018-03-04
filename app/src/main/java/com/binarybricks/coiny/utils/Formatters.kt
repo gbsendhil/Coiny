@@ -43,9 +43,9 @@ class Formatters {
     }
 
 
-    // use to show date like January 10 2017
+    // use to show date like Jan 10 2017
     private val simpleDateFormatMonthDayYear: SimpleDateFormat by lazy {
-        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMM d yyyy"), Locale.getDefault())
+        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMM d, yyyy"), Locale.getDefault())
     }
 
     // this formatter is use to show full date with time
@@ -108,6 +108,11 @@ class Formatters {
 
     fun formatDatePretty(date: Date): String {
         return prettyDateFormat.format(date)
+    }
+
+    fun formatTransactionDate(timestamp: String): String {
+        calendar.timeInMillis = timestamp.toLong()
+        return simpleDateFormatMonthDayYear.format(calendar.time)
     }
 
     // for ISO dates we need to parse it and then format it.

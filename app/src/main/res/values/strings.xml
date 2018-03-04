@@ -45,4 +45,5 @@
     <string name="arrow"><![CDATA[>]]></string>
     <string name="change_exchange">Change Exchange</string>
     <string name="change_trading_pair">Change trading pair</string>
+    <string name="transactions">Transactions</string>
 </resources>

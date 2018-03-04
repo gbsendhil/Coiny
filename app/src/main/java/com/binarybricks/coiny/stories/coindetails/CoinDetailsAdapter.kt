@@ -18,7 +18,7 @@ Created by Pranay Airan 1/18/18.
 class CoinDetailsAdapter(fromCurrency: String,
                          toCurrency: String,
                          coinName: String,
-                         private val coinDetailList: List<ModuleItem>,
+                         var coinDetailList: List<ModuleItem>,
                          schedulerProvider: BaseSchedulerProvider,
                          resourceProvider: ResourceProvider) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,6 +29,7 @@ class CoinDetailsAdapter(fromCurrency: String,
     private val COIN_NEWS = 4
     private val COIN_STATS = 5
     private val ABOUT_COIN = 6
+    private val COINT_TRANSACTION = 7
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
@@ -40,6 +41,7 @@ class CoinDetailsAdapter(fromCurrency: String,
         delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
+        delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -21,4 +21,7 @@ interface CoinTransactionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTransaction(coinTransaction: CoinTransaction)
+
+    @Query("SELECT * FROM cointransaction WHERE coin = :coin ORDER BY transactionTime ASC")
+    fun getTransactionsForCoin(coin: String): Flowable<List<CoinTransaction>>
 }

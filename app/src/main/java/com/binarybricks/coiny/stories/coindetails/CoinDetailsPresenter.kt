@@ -14,7 +14,8 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDetailsContract.View>()
+class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider,
+                           private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDetailsContract.View>()
     , CoinDetailsContract.Presenter, LifecycleObserver {
 
     /**
@@ -28,6 +29,17 @@ class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider,
             }, { Timber.e(it.localizedMessage) }))
     }
 
+    override fun loadRecentTransaction(symbol: String) {
+        coinRepo.getRecentTransaction(symbol)
+            ?.observeOn(schedulerProvider.ui())
+            ?.subscribe({ coinTransactionsList ->
+                coinTransactionsList?.let {
+                    currentView?.onRecentTransactionLoaded(it)
+                }
+            }, {
+                Timber.e(it.localizedMessage)
+            })?.let { compositeDisposable.add(it) }
+    }
 
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

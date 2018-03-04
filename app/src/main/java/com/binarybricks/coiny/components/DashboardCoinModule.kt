@@ -65,10 +65,10 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
 
         if (dashboardCoinModuleData.watchedCoin.purchased) {
             // do a different flow
-            inflatedView.tvExchangeName.visibility = View.GONE
+            inflatedView.tvFirstTxnTimeAndExchange.visibility = View.GONE
         } else {
-            inflatedView.tvExchangeName.visibility = View.VISIBLE
-            inflatedView.tvExchangeName.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
+            inflatedView.tvFirstTxnTimeAndExchange.visibility = View.VISIBLE
+            inflatedView.tvFirstTxnTimeAndExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
         }
 
         if (coinPrice != null) {
@@ -99,8 +99,8 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
             chartCoinPriceAnimation.duration = chartAnimationDuration
             chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
-                inflatedView.tvCoinPrice.text = formatter.formatAmount(animatedValue.toString(), currency)
-                inflatedView.tvCoinPrice.tag = animatedValue
+                inflatedView.tvCost.text = formatter.formatAmount(animatedValue.toString(), currency)
+                inflatedView.tvCost.tag = animatedValue
             })
             chartCoinPriceAnimation.start()
         }
