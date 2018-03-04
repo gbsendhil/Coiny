@@ -18,6 +18,7 @@ import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.network.models.ExchangePair
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.exchangesearch.ExchangeSearchActivity
 import com.binarybricks.coiny.stories.pairsearch.PairSearchActivity
 import com.binarybricks.coiny.utils.Formatters
@@ -60,8 +61,12 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
     }
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
+    }
+
     private val coinTransactionPresenter: CoinTransactionPresenter by lazy {
-        CoinTransactionPresenter(schedulerProvider, CoinyApplication.database)
+        CoinTransactionPresenter(schedulerProvider, coinRepo)
     }
 
     private var exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>? = null
@@ -226,8 +231,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         exchangePairList.filter {
             it.exchangeName.equals(exchangeName, true)
         }.map { exchangePair ->
-                return exchangePair.pairList as ArrayList<String>
-            }
+            return exchangePair.pairList as ArrayList<String>
+        }
 
         return arrayListOf()
     }

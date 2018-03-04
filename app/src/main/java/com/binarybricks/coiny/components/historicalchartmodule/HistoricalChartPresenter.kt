@@ -6,14 +6,11 @@ import com.binarybricks.coiny.stories.BasePresenter
 import timber.log.Timber
 
 /**
- Created by Pranay Airan
+Created by Pranay Airan
  */
 
-class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvider) : BasePresenter<HistoricalChartContract.View>(), HistoricalChartContract.Presenter {
-
-    private val chatRepo by lazy {
-        ChartRepository(schedulerProvider)
-    }
+class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvider, private val chartRepo: ChartRepository)
+    : BasePresenter<HistoricalChartContract.View>(), HistoricalChartContract.Presenter {
 
     /**
      * Load historical data for the coin to show the chart.
@@ -21,14 +18,14 @@ class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvi
     override fun loadHistoricalData(period: String, fromCurrency: String, toCurrency: String) {
         currentView?.showOrHideChartLoadingIndicator(true)
 
-        compositeDisposable.add(chatRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
-                .filter { it.first.isNotEmpty() }
-                .observeOn(schedulerProvider.ui())
-                .doAfterTerminate({ currentView?.showOrHideChartLoadingIndicator(false) })
-                .subscribe({
-                    currentView?.onHistoricalDataLoaded(period, it)
-                }, {
-                    Timber.e(it.localizedMessage)
-                }))
+        compositeDisposable.add(chartRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
+            .filter { it.first.isNotEmpty() }
+            .observeOn(schedulerProvider.ui())
+            .doAfterTerminate({ currentView?.showOrHideChartLoadingIndicator(false) })
+            .subscribe({
+                currentView?.onHistoricalDataLoaded(period, it)
+            }, {
+                Timber.e(it.localizedMessage)
+            }))
     }
 }

@@ -2,13 +2,14 @@ package com.binarybricks.coiny.components.cryptonewsmodule
 
 import CryptoNewsContract
 import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.components.Module
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.newslist.NewsListActivity
@@ -20,21 +21,25 @@ import kotlinx.android.synthetic.main.coin_news_module.view.*
  * Created by Pragya Agrawal
  * A compound layout to see coin news
  */
-class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String, private val coinName: String) : LifecycleObserver, CryptoNewsContract.View {
+class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String,
+                     private val coinName: String) : Module(), CryptoNewsContract.View {
 
     private lateinit var inflatedView: View
 
     private var cryptoPanicNews: CryptoPanicNews? = null
 
+    private val cryptoNewsRepository by lazy {
+        CryptoNewsRepository(schedulerProvider)
+    }
     private val cryptoNewsPresenter: CryptoNewsPresenter by lazy {
-        CryptoNewsPresenter(schedulerProvider)
+        CryptoNewsPresenter(schedulerProvider, cryptoNewsRepository)
     }
 
     private val formatters: Formatters by lazy {
         Formatters()
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
         val inflatedView = layoutInflater.inflate(R.layout.coin_news_module, parent, false)
 
@@ -101,5 +106,10 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    class CoinNewsModuleData
+    override fun cleanUp() {
+        cryptoPanicNews = null
+        cryptoNewsPresenter.detachView()
+    }
+
+    class CoinNewsModuleData : ModuleItem
 }

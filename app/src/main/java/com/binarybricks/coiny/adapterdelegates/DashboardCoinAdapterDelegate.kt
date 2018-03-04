@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DashboardCoinModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
@@ -13,9 +15,9 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
  * Adapter delegate that takes care of coin row in dashboard.
  */
 
-class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<Any>>() {
+class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardCoinModule.DashboardCoinModuleData
     }
 
@@ -25,12 +27,13 @@ class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDele
         return DashboardCoinViewHolder(dashboardCoinModuleView, dashboardCoinModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val aboutCoinViewHolder = holder as DashboardCoinViewHolder
         aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData)
     }
 
-    class DashboardCoinViewHolder(itemView: View, private val dashboardCoinModule: DashboardCoinModule) : RecyclerView.ViewHolder(itemView) {
+    class DashboardCoinViewHolder(override val containerView: View, private val dashboardCoinModule: DashboardCoinModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData) {
             dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData)
         }

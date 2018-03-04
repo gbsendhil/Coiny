@@ -7,6 +7,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.stories.transaction.CoinTransactionActivity
 import kotlinx.android.synthetic.main.coin_add_transaction_module.view.*
+import timber.log.Timber
 
 /**
  * Created by Pragya Agrawal
@@ -14,17 +15,21 @@ import kotlinx.android.synthetic.main.coin_add_transaction_module.view.*
  * Simple class that wraps all logic related to showing Add transaction on coin details screen
  */
 
-class AddCoinModule {
+class AddCoinModule : Module() {
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.coin_add_transaction_module, parent, false)
     }
 
-    fun addCoinListner(inflatedView: View, coin: Coin) {
+    fun addCoinListner(inflatedView: View, addCoinModuleData: AddCoinModuleData) {
         inflatedView.btnAddTransaction.setOnClickListener {
-            inflatedView.context.startActivity(CoinTransactionActivity.buildLaunchIntent(inflatedView.context, coin))
+            inflatedView.context.startActivity(CoinTransactionActivity.buildLaunchIntent(inflatedView.context, addCoinModuleData.coin))
         }
     }
 
-    class AddCoinModuleData(val coin: Coin)
+    override fun cleanUp() {
+        Timber.d("Clean up add coin module")
+    }
+
+    class AddCoinModuleData(val coin: Coin) : ModuleItem
 }

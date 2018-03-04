@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.utils.getDefaultExchangeText
 import kotlinx.android.synthetic.main.coin_info_module.view.*
+import timber.log.Timber
 
 /**
  * Created by Pragya Agrawal
@@ -13,9 +14,9 @@ import kotlinx.android.synthetic.main.coin_info_module.view.*
  * Simple class that wraps all logic related to Coin info
  */
 
-class CoinInfoModule {
+class CoinInfoModule : Module() {
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.coin_info_module, parent, false)
     }
 
@@ -28,5 +29,9 @@ class CoinInfoModule {
         inflatedView.tvProofTypeName.text = coinInfoModuleData.proofType
     }
 
-    data class CoinInfoModuleData(val exchange: String, val algorithm: String, val proofType: String)
+    override fun cleanUp() {
+        Timber.d("Clean up coin info module")
+    }
+
+    data class CoinInfoModuleData(val exchange: String, val algorithm: String, val proofType: String) : ModuleItem
 }

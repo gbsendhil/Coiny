@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DashboardHeaderModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pranay Airan
  */
 
-class DashboardHeaderAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<Any>>() {
+class DashboardHeaderAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardHeaderModule.DashboardHeaderModuleData
     }
 
@@ -24,12 +26,13 @@ class DashboardHeaderAdapterDelegate(private val toCurrency: String) : AdapterDe
         return DashboardHeaderViewHolder(dashboardHeaderModuleView, dashboardHeaderModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val dashboardHeaderViewHolder = holder as DashboardHeaderViewHolder
         dashboardHeaderViewHolder.loadPortfolio()
     }
 
-    class DashboardHeaderViewHolder(itemView: View, private val dashboardHeaderModule: DashboardHeaderModule) : RecyclerView.ViewHolder(itemView) {
+    class DashboardHeaderViewHolder(override val containerView: View, private val dashboardHeaderModule: DashboardHeaderModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun loadPortfolio() {
             dashboardHeaderModule.loadPortfolioData(itemView)
         }

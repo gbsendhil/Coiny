@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DashboardEmptyCardModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pranay Airan
  */
 
-class DashboardEmptyCardAdapterDelegate : AdapterDelegate<List<Any>>() {
+class DashboardEmptyCardAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardEmptyCardModule.DashboardEmptyCardModuleData
     }
 
@@ -24,14 +26,15 @@ class DashboardEmptyCardAdapterDelegate : AdapterDelegate<List<Any>>() {
         return DashboardEmptyCardViewHolder(dashboardEmptyCardModuleView, dashboardEmptyCardModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val dashboardEmptyCardViewHolder = holder as DashboardEmptyCardViewHolder
-        dashboardEmptyCardViewHolder.showTextInEmptySpace((items[position] as DashboardEmptyCardModule.DashboardEmptyCardModuleData).emptySpaceText)
+        dashboardEmptyCardViewHolder.showTextInEmptySpace((items[position] as DashboardEmptyCardModule.DashboardEmptyCardModuleData))
     }
 
-    class DashboardEmptyCardViewHolder(itemView: View, private val dashboardEmptyCardModule: DashboardEmptyCardModule) : RecyclerView.ViewHolder(itemView) {
-        fun showTextInEmptySpace(emptySpaceText: String) {
-            dashboardEmptyCardModule.showTextInEmptySpace(itemView, emptySpaceText)
+    class DashboardEmptyCardViewHolder(override val containerView: View, private val dashboardEmptyCardModule: DashboardEmptyCardModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun showTextInEmptySpace(dashboardEmptyCardModuleData: DashboardEmptyCardModule.DashboardEmptyCardModuleData) {
+            dashboardEmptyCardModule.showTextInEmptySpace(itemView, dashboardEmptyCardModuleData)
         }
     }
 }

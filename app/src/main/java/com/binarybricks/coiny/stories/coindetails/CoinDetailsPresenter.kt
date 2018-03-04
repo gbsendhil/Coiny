@@ -14,12 +14,8 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider) : BasePresenter<CoinDetailsContract.View>()
+class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDetailsContract.View>()
     , CoinDetailsContract.Presenter, LifecycleObserver {
-
-    private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
-    }
 
     /**
      * Get the current price of a coin say btc or eth

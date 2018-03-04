@@ -10,6 +10,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.historicalchartmodule.LaunchPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.dashboard.CoinDashboardActivity
 import com.binarybricks.coiny.utils.defaultCurrency
 import com.mynameismidori.currencypicker.CurrencyPicker
@@ -21,8 +22,12 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
     }
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
+    }
+
     private val launchPresenter: LaunchPresenter by lazy {
-        LaunchPresenter(schedulerProvider, CoinyApplication.database)
+        LaunchPresenter(schedulerProvider, coinRepo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

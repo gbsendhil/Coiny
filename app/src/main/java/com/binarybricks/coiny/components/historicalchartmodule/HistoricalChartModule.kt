@@ -2,15 +2,14 @@ package com.binarybricks.coiny.components.historicalchartmodule
 
 import HistoricalChartContract
 import android.animation.ValueAnimator
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.components.Module
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.network.*
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
@@ -28,7 +27,7 @@ Created by Pranay Airan 1/10/18.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
                             private val resourceProvider: ResourceProvider, private val fromCurrency: String,
-                            private val toCurrency: String) : LifecycleObserver, HistoricalChartContract.View {
+                            private val toCurrency: String) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
 
@@ -45,11 +44,15 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Formatters()
     }
 
-    private val historicalChatPresenter: HistoricalChartPresenter by lazy {
-        HistoricalChartPresenter(schedulerProvider)
+    private val chartRepo by lazy {
+        ChartRepository(schedulerProvider)
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    private val historicalChatPresenter: HistoricalChartPresenter by lazy {
+        HistoricalChartPresenter(schedulerProvider, chartRepo)
+    }
+
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
         val inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, parent, false)
 
@@ -188,9 +191,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         })
     }
 
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
+    override fun cleanUp() {
         historicalChatPresenter.detachView()
         historicalData = null
         coinPrice = null
@@ -200,5 +201,5 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?)
+    data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?) : ModuleItem
 }

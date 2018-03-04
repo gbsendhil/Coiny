@@ -1,30 +1,33 @@
 package com.binarybricks.coiny.components
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import kotlinx.android.synthetic.main.coin_position_card_module.view.*
+import timber.log.Timber
 
 /**
  * Created by Pragya Agrawal
  */
 
-class CoinPositionCard {
+class CoinPositionCard : Module() {
 
     private lateinit var inflatedView: View
 
-    fun init(context: Context, parent: ViewGroup): View {
-        val layoutInflater = LayoutInflater.from(context)
-        inflatedView = layoutInflater.inflate(R.layout.coin_position_card_module, parent, false)
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
+        inflatedView = layoutInflater.inflate(R.layout.coin_position_card_module, parent, false)
         return inflatedView
     }
 
-    fun showNoOfCoinsView(coins: String) {
-        inflatedView.noOfCoins.text = coins
+    fun showNoOfCoinsView(coinPositionCardModuleData: CoinPositionCardModuleData) {
+        inflatedView.noOfCoins.text = coinPositionCardModuleData.noOfCoins
     }
 
-    data class CoinPositionCardModuleData(val noOfCoins: String)
+    override fun cleanUp() {
+        Timber.d("Clean up add coin module")
+    }
+
+    data class CoinPositionCardModuleData(val noOfCoins: String) : ModuleItem
 }

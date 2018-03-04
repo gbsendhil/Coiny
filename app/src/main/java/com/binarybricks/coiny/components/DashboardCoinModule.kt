@@ -16,13 +16,14 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
+import timber.log.Timber
 import java.util.*
 
 /**
  * Created by Pranay Airan
  */
 
-class DashboardCoinModule(private val toCurrency: String) {
+class DashboardCoinModule(private val toCurrency: String) : Module() {
 
     private lateinit var picasso: Picasso
 
@@ -42,7 +43,7 @@ class DashboardCoinModule(private val toCurrency: String) {
         GrayscaleTransformation()
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         val inflatedView = layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
         picasso = Picasso.with(inflatedView.context)
         return inflatedView
@@ -85,7 +86,11 @@ class DashboardCoinModule(private val toCurrency: String) {
         }
     }
 
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?)
+    override fun cleanUp() {
+        Timber.d("Clean up dashboard coin module")
+    }
+
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?) : ModuleItem
 
 
     private fun animateCoinPrice(inflatedView: View, amount: String?) {

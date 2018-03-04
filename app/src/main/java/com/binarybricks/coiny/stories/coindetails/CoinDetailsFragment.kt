@@ -10,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.AboutCoinModule
-import com.binarybricks.coiny.components.AddCoinModule
-import com.binarybricks.coiny.components.CoinInfoModule
-import com.binarybricks.coiny.components.CoinStatsticsModule
+import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDetailsPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
@@ -21,6 +18,7 @@ import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.*
 import kotlinx.android.synthetic.main.activity_all_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
@@ -29,14 +27,19 @@ import kotlinx.android.synthetic.main.fragment_coin_details.view.*
 
 class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
 
-    private val coinDetailList: MutableList<Any> = ArrayList()
+    private val coinDetailList: MutableList<ModuleItem> = ArrayList()
     private var coinDetailsAdapter: CoinDetailsAdapter? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
     }
+
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider)
+    }
+
     private val coinDetailsPresenter: CoinDetailsPresenter by lazy {
-        CoinDetailsPresenter(schedulerProvider)
+        CoinDetailsPresenter(schedulerProvider, coinRepo)
     }
 
     val resourceProvider: ResourceProvider by lazy {
@@ -104,7 +107,7 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
         coinDetailList.add(AddCoinModule.AddCoinModuleData(watchedCoin.coin))
 
         if (coinPrice != null) {
-            coinDetailList.add(CoinStatsticsModule.CoinStatsticsModuleData(coinPrice))
+            coinDetailList.add(CoinStatsticsModule.CoinStatisticsModuleData(coinPrice))
         }
 
         coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice?.market
@@ -113,7 +116,7 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
 
         coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, context?.applicationContext)))
-        coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, lifecycle, coinDetailList, schedulerProvider, resourceProvider)
+        coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, coinDetailList, schedulerProvider, resourceProvider)
 
         view?.rvCoinDetails?.adapter = coinDetailsAdapter
         coinDetailsAdapter?.notifyDataSetChanged()

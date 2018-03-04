@@ -47,7 +47,6 @@ fun openCustomTab(url: String, context: Context) {
 
     val builder = CustomTabsIntent.Builder()
     builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-    builder.set
     // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
     val customTabsIntent = builder.build()
     // and launch the desired Url with CustomTabsIntent.launchUrl()

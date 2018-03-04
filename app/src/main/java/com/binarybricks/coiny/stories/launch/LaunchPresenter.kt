@@ -4,7 +4,6 @@ import LaunchContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.network.models.getCoinFromCCCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
@@ -18,14 +17,9 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class LaunchPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase?
-) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
+class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
+                      private val coinRepo: CryptoCompareRepository) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
-    private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider, coinyDatabase)
-    }
 
     override fun getAllSupportedCoins() {
         compositeDisposable.add(coinRepo.getAllCoins()
