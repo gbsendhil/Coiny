@@ -17,7 +17,7 @@ data class CoinTransaction(
     @ColumnInfo(name = "coin") var coin: String,
     @ColumnInfo(name = "pair") var pair: String,
     @ColumnInfo(name = "price") var price: String,
-    @ColumnInfo(name = "amount") var amount: String,
+    @ColumnInfo(name = "amount") var amount: String, // this is quantity we should change the name
     @ColumnInfo(name = "transactionTime") var transactionTime: String,
     @ColumnInfo(name = "cost") var cost: String,
     @ColumnInfo(name = "exchange") var exchange: String,

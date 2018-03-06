@@ -23,9 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic12dp"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:cardBackgroundColor="@color/backgroundColor">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

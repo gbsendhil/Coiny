@@ -8,7 +8,7 @@
     <string name="period_1year">1Y</string>
     <string name="period_all">ALL</string>
 
-    <string name="gain">%1$.2f%% (%2$s)</string>
+    <string name="gain">%1$s (%2$.2f%%)</string>
     <string name="past_hour">past hour</string>
     <string name="past_day">past day</string>
     <string name="past_week">past week</string>
@@ -46,4 +46,8 @@
     <string name="change_exchange">Change Exchange</string>
     <string name="change_trading_pair">Change trading pair</string>
     <string name="transactions">Transactions</string>
+    <string name="position">Position</string>
+    <string name="market_value">Market Value</string>
+    <string name="total_return">Total Return</string>
+    <string name="today_s_return">Today\'s Return</string>
 </resources>

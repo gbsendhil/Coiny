@@ -1,114 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/generic8dp"
-    android:layout_marginStart="@dimen/generic8dp">
+    android:layout_marginStart="@dimen/generic8dp"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/generic16dp">
 
-    <android.support.constraint.ConstraintLayout
+    <TextView
+        style="@style/TextRegularSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/generic8dp"
+        android:text="@string/position" />
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundColor">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/generic12dp"
+        app:cardBackgroundColor="@color/backgroundColor">
 
-        <TextView
-            android:id="@+id/noOfCoins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="48dp"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/generic16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="10" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/generic16dp"
+            android:paddingTop="@dimen/generic16dp">
 
-        <TextView
-            android:id="@+id/coinsFieldName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="164dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Coins"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="@dimen/generic8dp"
-            app:layout_constraintEnd_toStartOf="@+id/equityValueFieldName"
-            app:layout_constraintHorizontal_bias="0.727"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/noOfCoins" />
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-        <TextView
-            android:id="@+id/equityValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="184dp"
-            android:layout_marginTop="48dp"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/generic16dp"
-            app:layout_constraintStart_toEndOf="@+id/noOfCoins"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="$575.00" />
+            <TextView
+                android:id="@+id/tvNoOfCoins"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="20" />
 
-        <TextView
-            android:id="@+id/equityValueFieldName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Equity Value"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="@dimen/generic8dp"
-            app:layout_constraintStart_toStartOf="@+id/equityValue"
-            app:layout_constraintTop_toBottomOf="@+id/equityValue" />
+            <TextView
+                android:id="@+id/tvCoinLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNoOfCoins"
+                tools:text="Coins" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginBottom="36dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/primaryTextColor"
-            app:layout_constraintBottom_toTopOf="@+id/averageCostFieldName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coinsFieldName" />
+            <TextView
+                android:id="@+id/tvCoinValue"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic8dp"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$200.22" />
 
-        <TextView
-            android:id="@+id/averageCostFieldName"
-            android:layout_width="82dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="36dp"
-            android:layout_marginStart="32dp"
-            android:text="Average Cost"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="@dimen/generic8dp"
-            app:layout_constraintBottom_toTopOf="@+id/totalReturnFieldName"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/tvVolumeLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic4dp"
+                android:text="@string/market_value"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/tvCoinValue" />
 
-        <TextView
-            android:id="@+id/totalReturnFieldName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="225dp"
-            android:text="Total Return"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="@dimen/generic8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/generic24dp"
+                android:background="@color/primaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvVolumeLabel" />
 
-        <TextView
-            android:id="@+id/todayReturnFieldName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="40dp"
-            android:text="Today's Return"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/generic8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalReturnFieldName" />
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvAvgCostLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic24dp"
+                android:text="Average Cost"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
-</android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/tvAvgCostValue"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAvgCostLabel"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvAvgCostLabel"
+                tools:text="$53.43" />
+
+            <TextView
+                android:id="@+id/tvTotalReturnLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic20dp"
+                android:text="@string/total_return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAvgCostLabel" />
+
+            <TextView
+                android:id="@+id/tvTotalReturnValue"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTotalReturnLabel"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvTotalReturnLabel"
+                tools:text="$2223.43" />
+
+
+            <TextView
+                android:id="@+id/tvTodaysReturnLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                android:layout_marginTop="@dimen/generic20dp"
+                android:text="@string/today_s_return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalReturnLabel" />
+
+            <TextView
+                android:id="@+id/tvTodaysReturnValue"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/generic16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTodaysReturnLabel"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvTodaysReturnLabel"
+                tools:text="$153.43" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

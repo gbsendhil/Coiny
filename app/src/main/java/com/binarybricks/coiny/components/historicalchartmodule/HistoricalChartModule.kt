@@ -103,8 +103,8 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
             inflatedView.tvPortfolioChangedValue.text =
-                    resourceProvider.getString(R.string.gain, percentageChange,
-                        formatter.formatAmount(gain.toString(), currency))
+                    resourceProvider.getString(R.string.gain,
+                        formatter.formatAmount(gain.toString(), currency), percentageChange)
             if (gain > 0) {
                 showPositiveGainColor()
             } else {
