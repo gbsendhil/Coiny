@@ -131,30 +131,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvTotalReturnLabel"
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tvTotalReturnLabel"
-                tools:text="$2223.43" />
-
-
-            <TextView
-                android:id="@+id/tvTodaysReturnLabel"
-                style="@style/TextSmallSecondary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/generic16dp"
-                android:layout_marginTop="@dimen/generic20dp"
-                android:text="@string/today_s_return"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTotalReturnLabel" />
-
-            <TextView
-                android:id="@+id/tvTodaysReturnValue"
-                style="@style/TextRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/generic16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvTodaysReturnLabel"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/tvTodaysReturnLabel"
-                tools:text="$153.43" />
+                tools:text="$2223" />
 
         </android.support.constraint.ConstraintLayout>
 
