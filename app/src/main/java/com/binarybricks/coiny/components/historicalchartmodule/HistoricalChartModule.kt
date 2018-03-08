@@ -14,10 +14,7 @@ import com.binarybricks.coiny.network.*
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coiny.utils.Formatters
-import com.binarybricks.coiny.utils.ResourceProvider
-import com.binarybricks.coiny.utils.changeChildrenColor
-import com.binarybricks.coiny.utils.chartAnimationDuration
+import com.binarybricks.coiny.utils.*
 import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
@@ -94,8 +91,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         showChartPeriodText(period)
     }
 
-    private fun showPercentageGainOrLoss(
-        historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
+    private fun showPercentageGainOrLoss(historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
         if (historicalData != null) {
             val lastClosingPrice =
                 historicalData.first().close.toFloat() // we always get's oldest first in api
@@ -107,8 +103,10 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
                         formatter.formatAmount(gain.toString(), currency), percentageChange)
             if (gain > 0) {
                 showPositiveGainColor()
+                RxBus.publish(HistoricalChartBusData(true, gain))
             } else {
                 showNegativeGainColor()
+                RxBus.publish(HistoricalChartBusData(false, gain))
             }
         }
     }
@@ -202,4 +200,6 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
     }
 
     data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?) : ModuleItem
+
+    data class HistoricalChartBusData(val isGain: Boolean, val gain: Float)
 }
