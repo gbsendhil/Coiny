@@ -71,10 +71,10 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
 
         coinTransactionList.forEach { coinTransaction ->
             if (coinTransaction.transactionType == TRANSACTION_TYPE_BUY) {
-                noOfCoins += coinTransaction.amount.toInt()
+                noOfCoins += coinTransaction.quantity.toInt()
                 totalCost += totalCost.add(coinTransaction.cost.toBigDecimal())
             } else {
-                noOfCoins -= coinTransaction.amount.toInt()
+                noOfCoins -= coinTransaction.quantity.toInt()
                 totalCost -= totalCost.add(coinTransaction.cost.toBigDecimal())
             }
         }
@@ -83,7 +83,7 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up add coin module")
+        Timber.d("Clean up add coinSymbol module")
     }
 
     data class CoinPositionCardModuleData(val coinPrice: CoinPrice, val coinTransactionList: List<CoinTransaction>) : ModuleItem

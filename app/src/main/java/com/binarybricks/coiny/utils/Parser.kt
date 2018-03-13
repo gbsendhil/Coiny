@@ -33,7 +33,7 @@ fun getCoinPricesFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
         val rawCoinObject = jsonObject.getAsJsonObject(RAW)
         val coins = rawCoinObject.keySet() // this will give us list of all the coins in raw like BTC, ETH
         coins.forEach { coinName ->
-            val toCurrencies = rawCoinObject.getAsJsonObject(coinName) // this will give us list of prices for this coin in currencies we asked for
+            val toCurrencies = rawCoinObject.getAsJsonObject(coinName) // this will give us list of prices for this coinSymbol in currencies we asked for
             toCurrencies.keySet().forEach {
                 val coinJsonObject = toCurrencies.getAsJsonObject(it) // this will give us the price object we need
                 val coin = Gson().fromJson(coinJsonObject, CoinPrice::class.java)

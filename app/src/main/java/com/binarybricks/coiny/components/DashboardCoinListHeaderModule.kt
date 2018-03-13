@@ -21,7 +21,7 @@ class DashboardCoinListHeaderModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up coin list module")
+        Timber.d("Clean up coinSymbol list module")
     }
 
     data class DashboardCoinListHeaderModuleData(val title: String) : ModuleItem

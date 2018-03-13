@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.CoinPositionCard
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -13,14 +14,14 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class CoinPositionAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+class CoinPositionAdapterDelegate(private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is CoinPositionCard.CoinPositionCardModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val coinPositionCard = CoinPositionCard()
+        val coinPositionCard = CoinPositionCard(resourceProvider)
         val coinPositionCardView = coinPositionCard.init(LayoutInflater.from(parent.context), parent)
         return CoinPositionCardViewHolder(coinPositionCardView, coinPositionCard)
     }

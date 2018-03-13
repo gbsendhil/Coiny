@@ -181,8 +181,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
     private fun validateAndMakeTransaction(): CoinTransaction? {
         coin?.let {
             if (pairName.isNotEmpty() && price > BigDecimal.ZERO && etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
-                return CoinTransaction(transactionType, it.symbol, pairName, price.toPlainString(), etAmount.text.toString(),
-                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, "0")
+                return CoinTransaction(transactionType, it.symbol, pairName, price, BigDecimal(etAmount.text.toString()),
+                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
             }
         }
 

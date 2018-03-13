@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 /**
  * Created by Pragya Agrawal
  *
- * Add queries to read/update coin transaction data from database.
+ * Add queries to read/update coinSymbol transaction data from database.
  */
 @Dao
 interface CoinTransactionDao {
@@ -22,6 +22,6 @@ interface CoinTransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTransaction(coinTransaction: CoinTransaction)
 
-    @Query("SELECT * FROM cointransaction WHERE coin = :coin ORDER BY transactionTime ASC")
-    fun getTransactionsForCoin(coin: String): Flowable<List<CoinTransaction>>
+    @Query("SELECT * FROM cointransaction WHERE coinSymbol = :coinSymbol ORDER BY transactionTime ASC")
+    fun getTransactionsForCoin(coinSymbol: String): Flowable<List<CoinTransaction>>
 }

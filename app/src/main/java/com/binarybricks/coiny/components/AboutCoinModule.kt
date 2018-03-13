@@ -24,7 +24,7 @@ class AboutCoinModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up about coin module")
+        Timber.d("Clean up about coinSymbol module")
     }
 
     data class AboutCoinModuleData(val aboutCoin: String) : ModuleItem

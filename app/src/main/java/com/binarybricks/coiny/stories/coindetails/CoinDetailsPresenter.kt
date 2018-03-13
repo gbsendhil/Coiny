@@ -19,7 +19,7 @@ class CoinDetailsPresenter(private val schedulerProvider: BaseSchedulerProvider,
     , CoinDetailsContract.Presenter, LifecycleObserver {
 
     /**
-     * Get the current price of a coin say btc or eth
+     * Get the current price of a coinSymbol say btc or eth
      */
     override fun loadCurrentCoinPrice(watchedCoin: WatchedCoin, toCurrency: String) {
         compositeDisposable.add(coinRepo.getCoinPriceFull(watchedCoin.coin.symbol, toCurrency)

@@ -36,7 +36,7 @@ class CoinDetailsAdapter(fromCurrency: String,
     init {
         delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, resourceProvider))
         delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
-        delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
+        delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate(resourceProvider))
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
         delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())

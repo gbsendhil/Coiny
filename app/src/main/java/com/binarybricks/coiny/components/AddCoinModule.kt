@@ -12,7 +12,7 @@ import timber.log.Timber
 /**
  * Created by Pragya Agrawal
  *
- * Simple class that wraps all logic related to showing Add transaction on coin details screen
+ * Simple class that wraps all logic related to showing Add transaction on coinSymbol details screen
  */
 
 class AddCoinModule : Module() {
@@ -28,7 +28,7 @@ class AddCoinModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up add coin module")
+        Timber.d("Clean up add coinSymbol module")
     }
 
     class AddCoinModuleData(val coin: Coin) : ModuleItem

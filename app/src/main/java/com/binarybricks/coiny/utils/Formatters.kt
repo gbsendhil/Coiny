@@ -16,7 +16,7 @@ Created by Pranay Airan 1/13/18.
  */
 
 /**
- * Use to format amount that we get it from api
+ * Use to format quantity that we get it from api
  */
 
 class Formatters {
@@ -63,7 +63,7 @@ class Formatters {
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
     }
 
-    // formats the amount based on the currency code
+    // formats the quantity based on the currency code
     fun formatAmount(amount: String, currency: Currency = Currency.getInstance("USD"), rounding: Boolean = false): String {
         formatter.currency = currency
 

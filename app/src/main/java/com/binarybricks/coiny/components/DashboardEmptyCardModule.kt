@@ -24,7 +24,7 @@ class DashboardEmptyCardModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up empty coin module")
+        Timber.d("Clean up empty coinSymbol module")
     }
 
     data class DashboardEmptyCardModuleData(val emptySpaceText: String) : ModuleItem

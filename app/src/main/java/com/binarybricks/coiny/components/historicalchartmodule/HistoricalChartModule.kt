@@ -143,7 +143,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
 
     private fun addChartScrubListener() {
         inflatedView.historicalChartView.setScrubListener { value ->
-            if (value == null) { // reset the amount
+            if (value == null) { // reset the quantity
                 animateCoinPrice(coinPrice?.price)
                 showPercentageGainOrLoss(historicalData)
                 showChartPeriodText(selectedPeriod)

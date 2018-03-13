@@ -14,7 +14,7 @@ import java.util.*
 
 /**
  * Created by Pranay Airan
- * A compound layout to see coin transaction history
+ * A compound layout to see coinSymbol transaction history
  */
 class CoinTransactionHistoryModule : Module() {
 
@@ -34,7 +34,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[0]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.amount})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {
@@ -45,7 +45,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[1]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.amount})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {
@@ -56,7 +56,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[2]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.amount})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {

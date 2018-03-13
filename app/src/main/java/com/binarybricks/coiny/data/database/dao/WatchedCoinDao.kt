@@ -6,16 +6,17 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import io.reactivex.Flowable
+import java.math.BigDecimal
 
 /**
  * Created by Pragya Agrawal
  *
- * Add queries to read/update coin data from database.
+ * Add queries to read/update coinSymbol data from database.
  */
 @Dao
 interface WatchedCoinDao {
 
-    @Query("select * from WatchedCoin order by purchased")
+    @Query("select * from WatchedCoin order by purchaseQuantity")
     fun getAllWatchedCoins(): Flowable<List<WatchedCoin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,4 +24,7 @@ interface WatchedCoinDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinIntoWatchList(watchedCoin: WatchedCoin)
+
+    @Query("update WatchedCoin set purchaseQuantity = purchaseQuantity + :quantity where symbol=:symbol")
+    fun updateWatchedCoinWithPurchaseQuantity(quantity: BigDecimal, symbol: String): Int
 }

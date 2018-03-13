@@ -2,6 +2,7 @@ package com.binarybricks.coiny.data.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import com.binarybricks.coiny.data.database.dao.CoinDao
 import com.binarybricks.coiny.data.database.dao.CoinTransactionDao
 import com.binarybricks.coiny.data.database.dao.ExchangeDao
@@ -14,9 +15,8 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 /**
  * Created by Pragya Agrawal
  */
-@Database(
-    entities = [Coin::class, Exchange::class, WatchedCoin::class, CoinTransaction::class], version = 1, exportSchema = false
-)
+@Database(entities = [Coin::class, Exchange::class, WatchedCoin::class, CoinTransaction::class], version = 1, exportSchema = false)
+@TypeConverters(BigDecimalConverter::class)
 abstract class CoinyDatabase : RoomDatabase() {
 
     abstract fun coinDao(): CoinDao

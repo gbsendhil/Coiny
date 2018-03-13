@@ -26,6 +26,7 @@ import com.lapism.searchview.SearchAdapter
 import com.lapism.searchview.SearchItem
 import com.lapism.searchview.SearchView
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import java.math.BigDecimal
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
@@ -120,7 +121,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         toolbarTitle.text = "$10.00"
         coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData())
 
-        // add coin section
+        // add coinSymbol section
         val coinPurchasesList: MutableList<ModuleItem> = ArrayList()
         coinPurchasesList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Crypto Currencies"))
 
@@ -128,7 +129,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         coinWatchList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Watchlist"))
 
         watchedCoinList.forEach { watchedCoin ->
-            if (watchedCoin.purchased) {
+            if (watchedCoin.purchaseQuantity > BigDecimal.ZERO) {
                 coinPurchasesList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
             } else {
                 coinWatchList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
@@ -140,7 +141,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         }
 
         if (coinWatchList.size == 1) {
-            coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coin prices. Search and click + to get started."))
+            coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coinSymbol prices. Search and click + to get started."))
         }
 
         coinDashboardList.addAll(coinPurchasesList)

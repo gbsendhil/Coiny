@@ -6,6 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.math.BigDecimal
 
 /**
  * Created by Pragya Agrawal
@@ -14,13 +15,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CoinTransaction(
     @ColumnInfo(name = "transactionType") var transactionType: Int,
-    @ColumnInfo(name = "coin") var coin: String,
+    @ColumnInfo(name = "coinSymbol") var coinSymbol: String,
     @ColumnInfo(name = "pair") var pair: String,
-    @ColumnInfo(name = "price") var price: String,
-    @ColumnInfo(name = "amount") var amount: String, // this is quantity we should change the name
+    @ColumnInfo(name = "price") var price: BigDecimal,
+    @ColumnInfo(name = "quantity") var quantity: BigDecimal,
     @ColumnInfo(name = "transactionTime") var transactionTime: String,
     @ColumnInfo(name = "cost") var cost: String,
     @ColumnInfo(name = "exchange") var exchange: String,
-    @ColumnInfo(name = "exchangeFees") var exchangeFees: String,
+    @ColumnInfo(name = "exchangeFees") var exchangeFees: BigDecimal,
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var idKey: Long = 0
 ) : Parcelable

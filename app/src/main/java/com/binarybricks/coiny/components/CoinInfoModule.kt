@@ -30,7 +30,7 @@ class CoinInfoModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up coin info module")
+        Timber.d("Clean up coinSymbol info module")
     }
 
     data class CoinInfoModuleData(val exchange: String, val algorithm: String, val proofType: String) : ModuleItem

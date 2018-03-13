@@ -53,7 +53,7 @@ class CoinStatsticsModule : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up coin stats module")
+        Timber.d("Clean up coinSymbol stats module")
     }
 
     data class CoinStatisticsModuleData(val coinPrice: CoinPrice) : ModuleItem
