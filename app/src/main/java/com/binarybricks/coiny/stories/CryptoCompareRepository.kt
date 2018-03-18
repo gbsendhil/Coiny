@@ -52,6 +52,20 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
     }
 
     /**
+     * Get Price for specific coin to 1 or many other coins or currency.
+     * This prices are for specific exchange and for specific time stamp.
+     */
+    fun getCoinPriceForTimeStamp(fromCoinSymbol: String, toSymbols: String, exchange: String, time: String): Single<MutableMap<String, BigDecimal>> {
+        return cryptoCompareRetrofit.create(API::class.java)
+            .getCoinPriceForTimeStamp(fromCoinSymbol, toSymbols, exchange, time)
+            .subscribeOn(baseSchedulerProvider.io())
+            .map {
+                Timber.d("Coin price fetched, parsing response")
+                getCoinPriceFromJsonHistorical(it)
+            }
+    }
+
+    /**
      * Get Price and other details of Single currency to single currency, we are using the same api for multi.
      */
     fun getCoinPriceFull(fromCurrencySymbol: String, toCurrencySymbol: String): Single<CoinPrice?> {

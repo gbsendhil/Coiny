@@ -4,7 +4,9 @@ import android.animation.ValueAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import kotlinx.android.synthetic.main.dashboard_header_module.view.*
@@ -17,7 +19,7 @@ import java.util.*
  * Simple class that wraps all logic related to showing header on dashboard
  */
 
-class DashboardHeaderModule(private val toCurrency: String) : Module() {
+class DashboardHeaderModule(private val toCurrency: String, private val toolbarTitle: TextView) : Module() {
 
     private lateinit var inflatedView: View
 
@@ -44,8 +46,6 @@ class DashboardHeaderModule(private val toCurrency: String) : Module() {
         Timber.d("Clean up header module")
     }
 
-    class DashboardHeaderModuleData : ModuleItem
-
     private fun animateCoinPrice(amount: String?) {
         if (amount != null) {
             val chartCoinPriceAnimation = ValueAnimator.ofFloat(inflatedView.tvPortfolioValue.tag.toString().toFloat(), amount.toFloat())
@@ -58,4 +58,6 @@ class DashboardHeaderModule(private val toCurrency: String) : Module() {
             chartCoinPriceAnimation.start()
         }
     }
+
+    data class DashboardHeaderModuleData(var coinPurchasesList: MutableList<ModuleItem>, var coinPriceListMap: HashMap<String, CoinPrice>) : ModuleItem
 }

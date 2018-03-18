@@ -26,6 +26,22 @@ fun getCoinPriceFromJson(jsonObject: JsonObject): BigDecimal {
     return coinPrice
 }
 
+fun getCoinPriceFromJsonHistorical(jsonObject: JsonObject): MutableMap<String, BigDecimal> {
+
+    val coinPrices: MutableMap<String, BigDecimal> = hashMapOf()
+
+    val prices = jsonObject.keySet() // this will give us list of all the currency like USD, EUR
+    prices.forEach { currency ->
+        val currencyJson = jsonObject.getAsJsonObject(currency)
+        val currencyValue = currencyJson.keySet()
+        currencyValue.forEach { currencyValue ->
+            coinPrices[currencyValue] = currencyJson.getAsJsonPrimitive(currencyValue).asBigDecimal
+        }
+    }
+
+    return coinPrices
+}
+
 fun getCoinPricesFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
     val coinPriceList: ArrayList<CoinPrice> = ArrayList()
 

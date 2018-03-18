@@ -36,4 +36,7 @@ interface API {
                                  @Query("filter") filter: String,
                                  @Query("public") public: Boolean): Single<CryptoPanicNews>
 
+    @GET("pricehistorical")
+    fun getCoinPriceForTimeStamp(@Query("fsym") fromSymbol: String, @Query("tsyms") toSymbol: String,
+                                 @Query("e") exchange: String, @Query("ts") timeStamp: String): Single<JsonObject>
 }

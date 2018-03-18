@@ -193,6 +193,55 @@
                 app:layout_constraintTop_toBottomOf="@id/containerPair" />
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/containerDate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cell_height"
+                android:animateLayoutChanges="true"
+                android:background="@color/backgroundColor"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingEnd="@dimen/generic16dp"
+                android:paddingStart="@dimen/generic16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerPair">
+
+                <TextView
+                    android:id="@+id/tvDatetimeLabel"
+                    style="@style/TextSmallSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/generic4dp"
+                    android:text="@string/date_time"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/tvDatetime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tvDatetime"
+                    style="@style/DisplayNumberMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_time"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDatetimeLabel" />
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/dividerDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccentOpaque"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/containerDate" />
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/containerBuyPrice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/cell_height"
@@ -204,7 +253,7 @@
                 android:paddingStart="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dividerPair">
+                app:layout_constraintTop_toBottomOf="@id/dividerDateTime">
 
                 <TextView
                     android:id="@+id/tvBuyPriceLabel"
@@ -297,56 +346,6 @@
                 app:layout_constraintTop_toBottomOf="@id/containerAmount" />
 
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/containerDate"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/cell_height"
-                android:animateLayoutChanges="true"
-                android:background="@color/backgroundColor"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:paddingEnd="@dimen/generic16dp"
-                android:paddingStart="@dimen/generic16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dividerAmount">
-
-                <TextView
-                    android:id="@+id/tvDatetimeLabel"
-                    style="@style/TextSmallSecondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/generic4dp"
-                    android:text="@string/date_time"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDatetime"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/tvDatetime"
-                    style="@style/DisplayNumberMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/date_time"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDatetimeLabel" />
-            </android.support.constraint.ConstraintLayout>
-
-            <View
-                android:id="@+id/dividerDateTime"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/containerDate" />
-
-
             <TextView
                 android:id="@+id/tvAdditionalOptionLabel"
                 style="@style/TextSubHeadSecondary"
@@ -357,7 +356,7 @@
                 android:padding="@dimen/generic8dp"
                 android:text="Additional Options"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dividerDateTime"
+                app:layout_constraintTop_toBottomOf="@+id/dividerAmount"
                 tools:visibility="visible" />
 
             <android.support.constraint.ConstraintLayout

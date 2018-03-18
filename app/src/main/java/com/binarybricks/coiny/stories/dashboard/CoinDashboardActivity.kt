@@ -90,7 +90,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         setupSearchView()
 
         rvDashboard.layoutManager = LinearLayoutManager(this)
-        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList)
+        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList, toolbarTitle)
         rvDashboard.adapter = coinDashboardAdapter
         rvDashboard.addOnScrollListener(object : OnVerticalScrollListener() {
             override fun onScrolled(offset: Int) {
@@ -117,9 +117,8 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         // empty existing list
         coinDashboardList = ArrayList()
 
-        // Add Dashboard Header
-        toolbarTitle.text = "$10.00"
-        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData())
+        // Add Dashboard Header with empty data
+        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(mutableListOf(), hashMapOf()))
 
         // add coinSymbol section
         val coinPurchasesList: MutableList<ModuleItem> = ArrayList()
@@ -176,6 +175,8 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
                 coinDashboardAdapter?.notifyItemChanged(index)
             }
         }
+
+        // update dashboard card
     }
 
     private fun setupSearchView() {

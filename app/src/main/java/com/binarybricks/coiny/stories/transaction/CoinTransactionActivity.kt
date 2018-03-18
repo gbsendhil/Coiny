@@ -14,6 +14,7 @@ import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.historicalchartmodule.CoinTransactionPresenter
+import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.network.models.ExchangePair
@@ -29,6 +30,8 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_coin_transaction.*
 import timber.log.Timber
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import java.util.*
 
 class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -47,17 +50,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         Formatters()
     }
 
-    companion object {
-        private const val COIN = "COIN"
-
-        @JvmStatic
-        fun buildLaunchIntent(context: Context, coin: Coin): Intent {
-            val intent = Intent(context, CoinTransactionActivity::class.java)
-            intent.putExtra(COIN, coin)
-            return intent
-        }
-    }
-
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
     }
@@ -69,13 +61,34 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         CoinTransactionPresenter(schedulerProvider, coinRepo)
     }
 
+    private val defaultCurrency: String by lazy {
+        PreferenceHelper.getDefaultCurrency(this)
+    }
+
+    private val mc: MathContext by lazy {
+        MathContext(6, RoundingMode.HALF_UP)
+    }
+
     private var exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>? = null
 
     private var coin: Coin? = null
     private var cost = BigDecimal.ZERO
-    private var price = BigDecimal.ZERO
+    private var buyPrice = BigDecimal.ZERO
+    private var buyPriceInHomeCurrency = BigDecimal.ZERO
+    private var prices: MutableMap<String, BigDecimal> = hashMapOf()
 
     private val transactionType = TRANSACTION_TYPE_BUY
+
+    companion object {
+        private const val COIN = "COIN"
+
+        @JvmStatic
+        fun buildLaunchIntent(context: Context, coin: Coin): Intent {
+            val intent = Intent(context, CoinTransactionActivity::class.java)
+            intent.putExtra(COIN, coin)
+            return intent
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +110,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         initializeUI()
 
         coinTransactionPresenter.getAllSupportedExchanges()
+
+
     }
 
     private fun initializeUI() {
@@ -139,6 +154,7 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
                     tvBuyPriceLabel.visibility = View.GONE
                 } else {
                     tvBuyPriceLabel.visibility = View.VISIBLE
+                    calculateCost()
                 }
             }
 
@@ -170,7 +186,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
         btnAddTransaction.setOnClickListener {
             val coinTransaction = validateAndMakeTransaction()
-
             if (coinTransaction != null) {
                 loading.show()
                 coinTransactionPresenter.addTransaction(coinTransaction)
@@ -178,32 +193,15 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         }
     }
 
-    private fun validateAndMakeTransaction(): CoinTransaction? {
-        coin?.let {
-            if (pairName.isNotEmpty() && price > BigDecimal.ZERO && etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
-                return CoinTransaction(transactionType, it.symbol, pairName, price, BigDecimal(etAmount.text.toString()),
-                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
-            }
-        }
-
-        return null
-    }
 
     override fun onAllSupportedExchangesLoaded(exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>) {
         this.exchangeCoinMap = exchangeCoinMap
         // check for default exchange chosen
     }
 
-    override fun onCoinPriceLoaded(price: BigDecimal) {
-        etBuyPrice.setText(price.toString())
-        this.price = price
-    }
-
-    fun calculateCost() {
-        if (etBuyPrice.text.isNotEmpty() && etAmount.text.isNotEmpty()) {
-            cost = BigDecimal(etBuyPrice.text.toString()).multiply(BigDecimal(etAmount.text.toString()))
-            tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${pairName}"
-        }
+    override fun onCoinPriceLoaded(prices: MutableMap<String, BigDecimal>) {
+        etBuyPrice.setText(prices[pairName.toUpperCase()].toString())
+        this.prices = prices
     }
 
     override fun onTransactionAdded() {
@@ -211,8 +209,38 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         finish()
     }
 
-    override fun onNetworkError(errorMessage: String) {
-        Timber.e(errorMessage)
+    private fun calculateCost() {
+        if (etBuyPrice.text.isNotEmpty() && etAmount.text.isNotEmpty()) {
+            buyPrice = BigDecimal(etBuyPrice.text.toString())
+            buyPriceInHomeCurrency = buyPrice
+
+            // this means the pair is not home currency one
+            if (prices.size > 1 && prices.containsKey(defaultCurrency.toUpperCase())) {
+                // get rate
+                val rate = BigDecimal(etBuyPrice.text.toString()).divide(prices[pairName.toUpperCase()], mc)
+                buyPriceInHomeCurrency = (prices[defaultCurrency.toUpperCase()]?.multiply(rate, mc))
+
+                // cal cost
+                cost = buyPriceInHomeCurrency.multiply(BigDecimal(etAmount.text.toString()), mc)
+                tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${defaultCurrency.toUpperCase()}"
+            } else {
+                cost = buyPrice.multiply(BigDecimal(etAmount.text.toString()), mc)
+                tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${pairName}"
+            }
+        }
+    }
+
+    private fun validateAndMakeTransaction(): CoinTransaction? {
+        calculateCost()
+
+        coin?.let {
+            if (pairName.isNotEmpty() && buyPrice > BigDecimal.ZERO && buyPriceInHomeCurrency > BigDecimal.ZERO
+                && etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
+                return CoinTransaction(transactionType, it.symbol, pairName, buyPrice, buyPriceInHomeCurrency, BigDecimal(etAmount.text.toString()),
+                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
+            }
+        }
+        return null
     }
 
     private fun getExchangeNameList(exchangePairList: MutableList<ExchangePair>): ArrayList<String> {
@@ -227,7 +255,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
     }
 
     private fun getTopPair(exchangePairList: MutableList<ExchangePair>): ArrayList<String> {
-
         exchangePairList.filter {
             it.exchangeName.equals(exchangeName, true)
         }.map { exchangePair ->
@@ -258,6 +285,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
         tvDatetimeLabel.visibility = View.VISIBLE
         tvDatetime.text = formatter.formatDatePretty(transactionDate.time)
+
+        getCoinPrice()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -267,6 +296,12 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
                     exchangeName = ExchangeSearchActivity.getResultFromIntent(data)
                     tvExchangeLabel.visibility = View.VISIBLE
                     tvExchange.text = exchangeName.toUpperCase()
+
+                    tvPair.text = getString(R.string.trading_pair)
+                    pairName = ""
+                    etBuyPrice.setText("")
+                    etAmount.setText("")
+                    tvTotalAmountInCurrencyLabel.text = ""
                 }
             }
             PAIR_REQUEST -> {
@@ -276,16 +311,31 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
                     if (coin != null) {
                         tvPair.text = coin?.symbol + "/" + pairName.toUpperCase()
-                        coinTransactionPresenter.getPriceForPair(coin?.symbol
-                                ?: "", pairName, exchangeName)
+
+                        getCoinPrice()
                     }
 
                     tvBuyPriceLabel.text = "Buy Price " + pairName
                     etBuyPrice.hint = "Buy Price " + pairName
+                    etAmount.setText("")
+                    tvTotalAmountInCurrencyLabel.text = ""
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun getCoinPrice() {
+
+        var toCurrencies = pairName
+
+        // in case pair is not default currency get default currency as well say for example if pair is ETH/BTC get price in USD as well
+        if (!pairName.contains(defaultCurrency, true)) {
+            toCurrencies = "$toCurrencies,$defaultCurrency"
+        }
+
+        coinTransactionPresenter.getPriceForPair(coin?.symbol ?: "",
+            toCurrencies, exchangeName, (transactionDate.timeInMillis / 1000).toInt().toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -300,5 +350,9 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNetworkError(errorMessage: String) {
+        Timber.e(errorMessage)
     }
 }

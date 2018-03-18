@@ -31,9 +31,10 @@ class CoinTransactionPresenter(private val schedulerProvider: BaseSchedulerProvi
         )
     }
 
-    override fun getPriceForPair(fromCoin: String, toCoin: String, exchange: String) {
+    // to coins is , separated multiple coin list.
+    override fun getPriceForPair(fromCoin: String, toCoins: String, exchange: String, timeStamp: String) {
         if (exchange.isNotEmpty()) {
-            compositeDisposable.add(coinRepo.getCoinPrice(fromCoin, toCoin, exchange)
+            compositeDisposable.add(coinRepo.getCoinPriceForTimeStamp(fromCoin, toCoins, exchange, timeStamp)
                 .observeOn(schedulerProvider.ui())
                 .subscribe({
                     Timber.d("Coin price Loaded")

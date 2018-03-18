@@ -2,6 +2,7 @@ package com.binarybricks.coiny.stories.dashboard
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.TextView
 import com.binarybricks.coiny.adapterdelegates.DashboardCoinAdapterDelegate
 import com.binarybricks.coiny.adapterdelegates.DashboardCoinListHeaderAdapterDelegate
 import com.binarybricks.coiny.adapterdelegates.DashboardEmptyCardAdapterDelegate
@@ -17,7 +18,7 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDashboardAdapter(toCurrency: String,
-                           var coinDashboardList: List<ModuleItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                           var coinDashboardList: List<ModuleItem>, private val toolbarTitle: TextView) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DASHBOARD_COIN_List_HEADER = 0
     private val DASHBOARD_COIN = 1
@@ -30,7 +31,7 @@ class CoinDashboardAdapter(toCurrency: String,
         delegates.addDelegate(DASHBOARD_COIN_List_HEADER, DashboardCoinListHeaderAdapterDelegate())
         delegates.addDelegate(DASHBOARD_COIN, DashboardCoinAdapterDelegate(toCurrency))
         delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency))
+        delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle))
     }
 
     override fun getItemViewType(position: Int): Int {

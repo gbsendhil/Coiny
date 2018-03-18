@@ -12,13 +12,13 @@ interface CoinTransactionContract {
 
     interface View : BaseView {
         fun onAllSupportedExchangesLoaded(exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>)
-        fun onCoinPriceLoaded(price: BigDecimal)
+        fun onCoinPriceLoaded(prices: MutableMap<String, BigDecimal>)
         fun onTransactionAdded()
     }
 
     interface Presenter {
         fun getAllSupportedExchanges()
-        fun getPriceForPair(fromCoin: String, toCoin: String, exchange: String)
+        fun getPriceForPair(fromCoin: String, toCoin: String, exchange: String, timeStamp: String)
         fun addTransaction(transaction: CoinTransaction)
     }
 }
