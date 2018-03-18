@@ -1,9 +1,13 @@
 package com.binarybricks.coiny.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
 
 
@@ -36,6 +40,19 @@ fun getBrowserIntent(url: String): Intent {
     return intent
 }
 
+/**
+ * Open the URL in chrome custom tab
+ */
+fun openCustomTab(url: String, context: Context) {
+
+    val builder = CustomTabsIntent.Builder()
+    builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+    // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
+    val customTabsIntent = builder.build()
+    // and launch the desired Url with CustomTabsIntent.launchUrl()
+    customTabsIntent.launchUrl(context, Uri.parse(url))
+}
+
 fun dpToPx(context: Context?, dp: Int): Int {
 
     if (context != null) {
@@ -51,4 +68,12 @@ fun getDefaultExchangeText(exchangeName: String, context: Context): String {
     }
 
     return exchangeName
+}
+
+fun dismissKeyboard(activity: Activity) {
+    val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val focusedView = activity.currentFocus
+    if (focusedView != null) {
+        imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
+    }
 }

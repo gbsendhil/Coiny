@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.CoinInfoModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pragya Agrawal
  */
 
-class CoinInfoAdapterDelegate : AdapterDelegate<List<Any>>() {
+class CoinInfoAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is CoinInfoModule.CoinInfoModuleData
     }
 
@@ -24,12 +26,13 @@ class CoinInfoAdapterDelegate : AdapterDelegate<List<Any>>() {
         return CoinInfoViewHolder(coinInfoModuleView, coinInfoModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val coinInfoViewHolder = holder as CoinInfoViewHolder
         coinInfoViewHolder.showCoinInfo((items[position] as CoinInfoModule.CoinInfoModuleData))
     }
 
-    class CoinInfoViewHolder(itemView: View, private val coinInfoModule: CoinInfoModule) : RecyclerView.ViewHolder(itemView) {
+    class CoinInfoViewHolder(override val containerView: View, private val coinInfoModule: CoinInfoModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun showCoinInfo(coinInfoModuleData: CoinInfoModule.CoinInfoModuleData) {
             coinInfoModule.showCoinInfo(itemView, coinInfoModuleData)
         }

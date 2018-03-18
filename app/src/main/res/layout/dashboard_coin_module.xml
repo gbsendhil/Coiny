@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/ivCoin"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:contentDescription="@string/cd_coin_image"
             app:layout_constraintBottom_toBottomOf="@+id/tvCoinName"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,13 +34,13 @@
             style="@style/TextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:labelFor="@id/ivCoin"
             app:layout_constraintStart_toEndOf="@+id/ivCoin"
             tools:text="BitCoin" />
 
         <TextView
-            android:id="@+id/tvExchangeName"
+            android:id="@+id/tvTxnTimeAndExchange"
             style="@style/TextSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,12 +56,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
-            app:layout_constraintStart_toEndOf="@+id/tvExchangeName"
+            app:layout_constraintStart_toEndOf="@+id/tvTxnTimeAndExchange"
             app:layout_constraintTop_toBottomOf="@+id/ivCoin"
             tools:text="today" />
 
         <TextView
-            android:id="@+id/tvCoinPrice"
+            android:id="@+id/tvCost"
             style="@style/DisplayNumberLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

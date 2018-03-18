@@ -5,28 +5,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.AddCoinModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pragya Agrawal
  */
 
-class AddCoinAdapterDelegate : AdapterDelegate<List<Any>>() {
+class AddCoinAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is AddCoinModule.AddCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val addCoinModule = AddCoinModule()
         val addCoinModuleView = addCoinModule.init(LayoutInflater.from(parent.context), parent)
-        return AddCoinViewHolder(addCoinModuleView)
+        return AddCoinViewHolder(addCoinModuleView, addCoinModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
-
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+        val addCoinViewHolder = holder as AddCoinAdapterDelegate.AddCoinViewHolder
+        addCoinViewHolder.addCoinListener((items[position] as AddCoinModule.AddCoinModuleData))
     }
 
-    class AddCoinViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class AddCoinViewHolder(override val containerView: View, private val addCoinModule: AddCoinModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun addCoinListener(addCoinModuleData: AddCoinModule.AddCoinModuleData) {
+            addCoinModule.addCoinListner(itemView, addCoinModuleData)
+        }
+    }
 }

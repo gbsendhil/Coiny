@@ -2,23 +2,19 @@ package com.binarybricks.coiny.components.historicalchartmodule
 
 import HistoricalChartContract
 import android.animation.ValueAnimator
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.components.Module
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.network.*
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coiny.utils.Formatters
-import com.binarybricks.coiny.utils.ResourceProvider
-import com.binarybricks.coiny.utils.changeChildrenColor
-import com.binarybricks.coiny.utils.chartAnimationDuration
+import com.binarybricks.coiny.utils.*
 import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
@@ -28,7 +24,7 @@ Created by Pranay Airan 1/10/18.
  */
 class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
                             private val resourceProvider: ResourceProvider, private val fromCurrency: String,
-                            private val toCurrency: String) : LifecycleObserver, HistoricalChartContract.View {
+                            private val toCurrency: String) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
 
@@ -45,11 +41,15 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Formatters()
     }
 
-    private val historicalChatPresenter: HistoricalChartPresenter by lazy {
-        HistoricalChartPresenter(schedulerProvider)
+    private val chartRepo by lazy {
+        ChartRepository(schedulerProvider)
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    private val historicalChatPresenter: HistoricalChartPresenter by lazy {
+        HistoricalChartPresenter(schedulerProvider, chartRepo)
+    }
+
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
         val inflatedView = layoutInflater.inflate(R.layout.historical_chart_module, parent, false)
 
@@ -91,8 +91,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         showChartPeriodText(period)
     }
 
-    private fun showPercentageGainOrLoss(
-        historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
+    private fun showPercentageGainOrLoss(historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
         if (historicalData != null) {
             val lastClosingPrice =
                 historicalData.first().close.toFloat() // we always get's oldest first in api
@@ -100,12 +99,14 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
             inflatedView.tvPortfolioChangedValue.text =
-                    resourceProvider.getString(R.string.gain, percentageChange,
-                        formatter.formatAmount(gain.toString(), currency))
+                    resourceProvider.getString(R.string.gain,
+                        formatter.formatAmount(gain.toString(), currency), percentageChange)
             if (gain > 0) {
                 showPositiveGainColor()
+                RxBus.publish(HistoricalChartBusData(true, gain))
             } else {
                 showNegativeGainColor()
+                RxBus.publish(HistoricalChartBusData(false, gain))
             }
         }
     }
@@ -142,7 +143,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
 
     private fun addChartScrubListener() {
         inflatedView.historicalChartView.setScrubListener { value ->
-            if (value == null) { // reset the amount
+            if (value == null) { // reset the quantity
                 animateCoinPrice(coinPrice?.price)
                 showPercentageGainOrLoss(historicalData)
                 showChartPeriodText(selectedPeriod)
@@ -188,9 +189,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         })
     }
 
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
+    override fun cleanUp() {
         historicalChatPresenter.detachView()
         historicalData = null
         coinPrice = null
@@ -200,5 +199,7 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?)
+    data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?) : ModuleItem
+
+    data class HistoricalChartBusData(val isGain: Boolean, val gain: Float)
 }

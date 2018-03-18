@@ -8,17 +8,17 @@ import android.widget.TextView
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.utils.Formatters
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.news_item.view.*
 
 
 /**
- Created by Pranay Airan 1/18/18.
+Created by Pranay Airan 1/18/18.
  *
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
 
-class NewsListAdapter(val cryptoPanicNews: CryptoPanicNews) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
+class NewsListAdapter(private val cryptoPanicNews: CryptoPanicNews) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {
         Formatters()
@@ -29,13 +29,13 @@ class NewsListAdapter(val cryptoPanicNews: CryptoPanicNews) : RecyclerView.Adapt
         return NewsViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(viewHolder: NewsViewHolder?, position: Int) {
+    override fun onBindViewHolder(viewHolder: NewsViewHolder, position: Int) {
         val newsresult = cryptoPanicNews.results?.get(position)
         newsresult?.let {
-            viewHolder?.title?.text = newsresult.title
-            viewHolder?.date?.text = formatter.parseAndFormatIsoDate(newsresult.created_at, true)
-            viewHolder?.clArticle?.setOnClickListener {
-                it.context.startActivity(getBrowserIntent(newsresult.url))
+            viewHolder.title?.text = newsresult.title
+            viewHolder.date?.text = formatter.parseAndFormatIsoDate(newsresult.created_at, true)
+            viewHolder.clArticle?.setOnClickListener {
+                openCustomTab(newsresult.url, it.context)
             }
         }
     }

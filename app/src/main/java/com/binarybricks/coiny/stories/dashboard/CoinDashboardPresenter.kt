@@ -5,10 +5,10 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.CoinyCache
-import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.dashboard.DashboardRepository
 import timber.log.Timber
 
@@ -16,13 +16,11 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinyDatabase: CoinyDatabase?) :
-    BasePresenter<CoinDashboardContract.View>(), CoinDashboardContract.Presenter,
-    LifecycleObserver {
+class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider,
+                             private val dashboardRepository: DashboardRepository,
+                             private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDashboardContract.View>(),
+    CoinDashboardContract.Presenter, LifecycleObserver {
 
-    private val dashboardRepository by lazy {
-        DashboardRepository(schedulerProvider, coinyDatabase)
-    }
 
     override fun loadWatchedCoins() {
         dashboardRepository.loadWatchedCoins()?.let {
@@ -57,6 +55,17 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
                     .subscribe({ currentView?.onSupportedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
             )
         }
+    }
+
+    override fun getAllSupportedExchanges() {
+        compositeDisposable.add(coinRepo.getAllSupportedExchanges()
+            .observeOn(schedulerProvider.ui())
+            .subscribe({
+                Timber.d("All Exchange Loaded")
+            }, {
+                Timber.e(it.localizedMessage)
+            })
+        )
     }
 
     // cleanup

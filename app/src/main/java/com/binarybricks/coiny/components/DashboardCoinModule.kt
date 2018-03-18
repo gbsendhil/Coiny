@@ -16,13 +16,17 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
+import timber.log.Timber
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import java.util.*
 
 /**
  * Created by Pranay Airan
  */
 
-class DashboardCoinModule(private val toCurrency: String) {
+class DashboardCoinModule(private val toCurrency: String) : Module() {
 
     private lateinit var picasso: Picasso
 
@@ -42,7 +46,11 @@ class DashboardCoinModule(private val toCurrency: String) {
         GrayscaleTransformation()
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    private val mc by lazy {
+        MathContext(2, RoundingMode.HALF_UP)
+    }
+
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         val inflatedView = layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
         picasso = Picasso.with(inflatedView.context)
         return inflatedView
@@ -53,7 +61,7 @@ class DashboardCoinModule(private val toCurrency: String) {
         val coin = dashboardCoinModuleData.watchedCoin.coin
         val coinPrice = dashboardCoinModuleData.coinPrice
 
-        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=60"
+        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=40"
 
         picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
@@ -62,20 +70,20 @@ class DashboardCoinModule(private val toCurrency: String) {
 
         inflatedView.tvCoinName.text = coin.coinName
 
-        if (dashboardCoinModuleData.watchedCoin.purchased) {
-            // do a different flow
-            inflatedView.tvExchangeName.visibility = View.GONE
-        } else {
-            inflatedView.tvExchangeName.visibility = View.VISIBLE
-            inflatedView.tvExchangeName.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
-        }
-
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
 
             animateCoinPrice(inflatedView, coinPrice.price)
+            val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity.round(mc)
+            if (purchaseQuantity > BigDecimal.ZERO) {
+                inflatedView.tvTxnTimeAndExchange.text = "${purchaseQuantity.toPlainString()} ${dashboardCoinModuleData.watchedCoin.coin.symbol}"
 
-            inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+                val currentWorth = purchaseQuantity.multiply(BigDecimal(coinPrice.price))
+                inflatedView.tvCoinPair.text = "(${formatter.formatAmount(currentWorth.toPlainString(), currency)})"
+            } else {
+                inflatedView.tvTxnTimeAndExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
+                inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+            }
 
             // adjust color logic here for text
 
@@ -85,7 +93,11 @@ class DashboardCoinModule(private val toCurrency: String) {
         }
     }
 
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?)
+    override fun cleanUp() {
+        Timber.d("Clean up dashboard coinSymbol module")
+    }
+
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?) : ModuleItem
 
 
     private fun animateCoinPrice(inflatedView: View, amount: String?) {
@@ -94,8 +106,8 @@ class DashboardCoinModule(private val toCurrency: String) {
             chartCoinPriceAnimation.duration = chartAnimationDuration
             chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
-                inflatedView.tvCoinPrice.text = formatter.formatAmount(animatedValue.toString(), currency)
-                inflatedView.tvCoinPrice.tag = animatedValue
+                inflatedView.tvCost.text = formatter.formatAmount(animatedValue.toString(), currency)
+                inflatedView.tvCost.tag = animatedValue
             })
             chartCoinPriceAnimation.start()
         }

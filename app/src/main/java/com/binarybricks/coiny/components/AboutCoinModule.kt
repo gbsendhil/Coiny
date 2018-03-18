@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import kotlinx.android.synthetic.main.coin_about_module.view.*
+import timber.log.Timber
 
 /**
  * Created by Pranay Airan
@@ -12,15 +13,19 @@ import kotlinx.android.synthetic.main.coin_about_module.view.*
  * Simple class that wraps all logic related to showing about us section
  */
 
-class AboutCoinModule {
+class AboutCoinModule : Module() {
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.coin_about_module, parent, false)
     }
 
-    fun showAboutCoinText(inflatedView: View, coinText: String) {
-        inflatedView.tvAboutCoin.text = coinText
+    fun showAboutCoinText(inflatedView: View, aboutCoinModuleData: AboutCoinModuleData) {
+        inflatedView.tvAboutCoin.text = aboutCoinModuleData.aboutCoin
     }
 
-    data class AboutCoinModuleData(val aboutcoin: String)
+    override fun cleanUp() {
+        Timber.d("Clean up about coinSymbol module")
+    }
+
+    data class AboutCoinModuleData(val aboutCoin: String) : ModuleItem
 }

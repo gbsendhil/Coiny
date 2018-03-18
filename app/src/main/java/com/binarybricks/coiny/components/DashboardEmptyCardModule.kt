@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import kotlinx.android.synthetic.main.dashboard_empty_card_module.view.*
+import timber.log.Timber
 
 /**
  * Created by Pranay Airan
@@ -12,15 +13,19 @@ import kotlinx.android.synthetic.main.dashboard_empty_card_module.view.*
  * Simple class that shows the empty card on dashboard
  */
 
-class DashboardEmptyCardModule {
+class DashboardEmptyCardModule : Module() {
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.dashboard_empty_card_module, parent, false)
     }
 
-    fun showTextInEmptySpace(inflatedView: View, emptyText: String) {
-        inflatedView.tvEmptyMessage.text = emptyText
+    fun showTextInEmptySpace(inflatedView: View, dashboardEmptyCardModuleData: DashboardEmptyCardModuleData) {
+        inflatedView.tvEmptyMessage.text = dashboardEmptyCardModuleData.emptySpaceText
     }
 
-    data class DashboardEmptyCardModuleData(val emptySpaceText: String)
+    override fun cleanUp() {
+        Timber.d("Clean up empty coinSymbol module")
+    }
+
+    data class DashboardEmptyCardModuleData(val emptySpaceText: String) : ModuleItem
 }

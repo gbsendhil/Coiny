@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 /**
  * Created by Pragya Agrawal
  *
- * Add queries to read/update coin data from database.
+ * Add queries to read/update coinSymbol data from database.
  */
 @Dao
 interface CoinDao {

@@ -1,15 +1,16 @@
 package com.binarybricks.coiny.adapterdelegates
 
-import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
@@ -19,22 +20,22 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 class HistoricalChartAdapterDelegate(private val fromCurrency: String,
                                      private val toCurrency: String,
                                      private val schedulerProvider: BaseSchedulerProvider,
-                                     private val lifecycle: Lifecycle,
-                                     private val resourceProvider: ResourceProvider) : AdapterDelegate<List<Any>>() {
+                                     private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    private val historicalChartModule by lazy {
+        HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
+    }
+
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is HistoricalChartModule.HistoricalChartModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val historicalChartModule = HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
-        lifecycle.addObserver(historicalChartModule)
-
         val historicalChartModuleView = historicalChartModule.init(LayoutInflater.from(parent.context), parent)
         return HistoricalChartViewHolder(historicalChartModuleView, historicalChartModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         // load data
         val historicalChartViewHolder = holder as HistoricalChartViewHolder
         val historicalChartModuleData = items[position] as HistoricalChartModule.HistoricalChartModuleData
@@ -43,7 +44,13 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
         historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinPriceWithCurrentPrice)
     }
 
-    class HistoricalChartViewHolder(itemView: View, private val historicalChartModule: HistoricalChartModule) : RecyclerView.ViewHolder(itemView) {
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+        super.onViewDetachedFromWindow(holder)
+        historicalChartModule.cleanUp()
+    }
+
+    class HistoricalChartViewHolder(override val containerView: View, private val historicalChartModule: HistoricalChartModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun loadHistoricalChartData() {
             historicalChartModule.loadData(itemView)
         }

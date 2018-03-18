@@ -9,11 +9,8 @@ import timber.log.Timber
  * Created by Pragya Agrawal
  */
 
-class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider) : BasePresenter<CryptoNewsContract.View>(), CryptoNewsContract.Presenter {
-
-    private val cryptoNewsRepository by lazy {
-        CryptoNewsRepository(schedulerProvider)
-    }
+class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider, private val cryptoNewsRepository: CryptoNewsRepository)
+    : BasePresenter<CryptoNewsContract.View>(), CryptoNewsContract.Presenter {
 
     /**
      * Load the crypto news from the crypto panic api
@@ -23,9 +20,9 @@ class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider) 
         currentView?.showOrHideLoadingIndicator(true)
 
         compositeDisposable.add(cryptoNewsRepository.getCryptoPanicNews(coinSymbol)
-                .filter { it.results?.isNotEmpty() == true }
-                .observeOn(schedulerProvider.ui())
-                .doAfterTerminate({ currentView?.showOrHideLoadingIndicator(false) })
-                .subscribe({ currentView?.onNewsLoaded(it) }, { Timber.e(it.localizedMessage) }))
+            .filter { it.results?.isNotEmpty() == true }
+            .observeOn(schedulerProvider.ui())
+            .doAfterTerminate({ currentView?.showOrHideLoadingIndicator(false) })
+            .subscribe({ currentView?.onNewsLoaded(it) }, { Timber.e(it.localizedMessage) }))
     }
 }

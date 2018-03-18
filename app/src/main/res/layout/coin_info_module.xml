@@ -71,7 +71,7 @@
                 app:layout_constraintGuide_percent="0.5" />
 
             <TextView
-                android:id="@+id/tvExchangeName"
+                android:id="@+id/tvFirstTxnTimeAndExchange"
                 style="@style/TextRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

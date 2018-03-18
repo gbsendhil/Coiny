@@ -1,7 +1,7 @@
 import com.binarybricks.coiny.stories.BaseView
 
 /**
- Created by Pranay Airan 2/3/18.
+Created by Pranay Airan 2/3/18.
  */
 
 interface LaunchContract {
@@ -10,6 +10,6 @@ interface LaunchContract {
 
     interface Presenter {
         fun getAllSupportedCoins()
-        fun getAllSupportedExchanges()
+        fun addTop5CoinsInWishlist(defaultCurrency: String)
     }
 }

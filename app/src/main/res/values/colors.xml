@@ -9,6 +9,10 @@
     <color name="colorSecondaryAccent">#ff965e</color>
     <color name="colorSecondaryDark">#b93300</color>
 
+    <color name="colorPrimaryOpaque">#BF22c478</color>
+    <color name="colorSecondaryTextOpaque">#33757577</color>
+    <color name="colorAccentOpaque">#3366f8a7</color>
+
     <color name="backgroundColor">#303032</color>
     <color name="backgroundLightColor">#59595b</color>
     <color name="backgroundDarkColor">#212124</color>

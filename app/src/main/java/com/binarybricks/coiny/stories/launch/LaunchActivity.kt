@@ -9,12 +9,10 @@ import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.historicalchartmodule.LaunchPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
-import com.binarybricks.coiny.data.database.DbController
-import com.binarybricks.coiny.data.database.getTop5CoinsToWatch
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.dashboard.CoinDashboardActivity
 import com.binarybricks.coiny.utils.defaultCurrency
-import com.binarybricks.coiny.utils.defaultExchange
 import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.activity_launch.*
 import timber.log.Timber
@@ -24,8 +22,12 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
     }
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
+    }
+
     private val launchPresenter: LaunchPresenter by lazy {
-        LaunchPresenter(schedulerProvider, CoinyApplication.database)
+        LaunchPresenter(schedulerProvider, coinRepo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +43,6 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
                 false)
         ) { // get list of all coins
             launchPresenter.getAllSupportedCoins()
-
-            // get list of all exchanges
-            launchPresenter.getAllSupportedExchanges()
 
             initializeUI()
 
@@ -83,10 +82,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
             continueButton.visibility = View.VISIBLE
             picker.dismiss() // Show currency that is picked.
 
-            // add top 5 coins in watch list
-            DbController(CoinyApplication.database).insertCoinsInWatchList(
-                getTop5CoinsToWatch(defaultExchange,
-                    PreferenceHelper.getPreference(this, code, defaultCurrency)), schedulerProvider)
+            launchPresenter.addTop5CoinsInWishlist(PreferenceHelper.getPreference(this, code, defaultCurrency))
         }
 
         picker.show(supportFragmentManager, "CURRENCY_PICKER")

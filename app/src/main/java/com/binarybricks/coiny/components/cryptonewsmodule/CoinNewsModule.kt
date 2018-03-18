@@ -2,39 +2,44 @@ package com.binarybricks.coiny.components.cryptonewsmodule
 
 import CryptoNewsContract
 import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.components.Module
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.newslist.NewsListActivity
 import com.binarybricks.coiny.utils.Formatters
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.coin_news_module.view.*
 
 /**
  * Created by Pragya Agrawal
  * A compound layout to see coin news
  */
-class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String, private val coinName: String) : LifecycleObserver, CryptoNewsContract.View {
+class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, private val coinSymbol: String,
+                     private val coinName: String) : Module(), CryptoNewsContract.View {
 
     private lateinit var inflatedView: View
 
     private var cryptoPanicNews: CryptoPanicNews? = null
 
+    private val cryptoNewsRepository by lazy {
+        CryptoNewsRepository(schedulerProvider)
+    }
     private val cryptoNewsPresenter: CryptoNewsPresenter by lazy {
-        CryptoNewsPresenter(schedulerProvider)
+        CryptoNewsPresenter(schedulerProvider, cryptoNewsRepository)
     }
 
     private val formatters: Formatters by lazy {
         Formatters()
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
         val inflatedView = layoutInflater.inflate(R.layout.coin_news_module, parent, false)
 
@@ -72,14 +77,14 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
             inflatedView.tvFirstArticleTitle.text = newsResult[0].title
             inflatedView.tvFirstArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[0].created_at, true)
             inflatedView.clFirstArticle.setOnClickListener {
-                inflatedView.context.startActivity(getBrowserIntent(newsResult[0].url))
+                openCustomTab(newsResult[0].url, inflatedView.context)
             }
 
             if (newsResult.size > 1) {
                 inflatedView.tvSecondArticleTitle.text = newsResult[1].title
                 inflatedView.tvSecondArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[1].created_at, true)
                 inflatedView.clSecondArticle.setOnClickListener {
-                    inflatedView.context.startActivity(getBrowserIntent(newsResult[1].url))
+                    openCustomTab(newsResult[1].url, inflatedView.context)
                 }
             }
 
@@ -87,7 +92,7 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
                 inflatedView.tvThirdArticleTitle.text = newsResult[2].title
                 inflatedView.tvThirdArticleTime.text = formatters.parseAndFormatIsoDate(newsResult[2].created_at, true)
                 inflatedView.clThirdArticle.setOnClickListener {
-                    inflatedView.context.startActivity(getBrowserIntent(newsResult[2].url))
+                    openCustomTab(newsResult[2].url, inflatedView.context)
                 }
             }
 
@@ -101,5 +106,10 @@ class CoinNewsModule(private val schedulerProvider: BaseSchedulerProvider, priva
         Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    class CoinNewsModuleData
+    override fun cleanUp() {
+        cryptoPanicNews = null
+        cryptoNewsPresenter.detachView()
+    }
+
+    class CoinNewsModuleData : ModuleItem
 }

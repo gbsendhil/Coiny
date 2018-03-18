@@ -16,7 +16,7 @@ Created by Pranay Airan 1/13/18.
  */
 
 /**
- * Use to format amount that we get it from api
+ * Use to format quantity that we get it from api
  */
 
 class Formatters {
@@ -43,9 +43,9 @@ class Formatters {
     }
 
 
-    // use to show date like January 10 2017
+    // use to show date like Jan 10 2017
     private val simpleDateFormatMonthDayYear: SimpleDateFormat by lazy {
-        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMM d yyyy"), Locale.getDefault())
+        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMM d, yyyy"), Locale.getDefault())
     }
 
     // this formatter is use to show full date with time
@@ -53,12 +53,17 @@ class Formatters {
         SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "dd/MM/YYYY hh:mm aaa"), Locale.getDefault())
     }
 
+    // this formatter is use to show full date with time in pretty format
+    private val prettyDateFormat: SimpleDateFormat by lazy {
+        SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEE,dd MMM YYYY,hh:mm"), Locale.getDefault())
+    }
+
     // this is ISO 8601 format for api
     private val simpleDateFormatIso: SimpleDateFormat by lazy {
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
     }
 
-    // formats the amount based on the currency code
+    // formats the quantity based on the currency code
     fun formatAmount(amount: String, currency: Currency = Currency.getInstance("USD"), rounding: Boolean = false): String {
         formatter.currency = currency
 
@@ -99,6 +104,15 @@ class Formatters {
     fun formatDate(timestamp: String, multiplier: Int): String {
         calendar.timeInMillis = timestamp.toLong() * multiplier // time we get from some api call is in seconds
         return simpleDateFormat.format(calendar.time)
+    }
+
+    fun formatDatePretty(date: Date): String {
+        return prettyDateFormat.format(date)
+    }
+
+    fun formatTransactionDate(timestamp: String): String {
+        calendar.timeInMillis = timestamp.toLong()
+        return simpleDateFormatMonthDayYear.format(calendar.time)
     }
 
     // for ISO dates we need to parse it and then format it.

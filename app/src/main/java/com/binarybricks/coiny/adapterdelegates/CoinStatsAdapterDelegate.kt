@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.CoinStatsticsModule
-import com.binarybricks.coiny.network.models.CoinPrice
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pragya Agrawal
  */
 
-class CoinStatsAdapterDelegate : AdapterDelegate<List<Any>>() {
+class CoinStatsAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
-        return items[position] is CoinStatsticsModule.CoinStatsticsModuleData
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
+        return items[position] is CoinStatsticsModule.CoinStatisticsModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
@@ -25,14 +26,15 @@ class CoinStatsAdapterDelegate : AdapterDelegate<List<Any>>() {
         return CoinStatsViewHolder(coinStatsModuleView, coinStatsModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val aboutCoinViewHolder = holder as CoinStatsViewHolder
-        aboutCoinViewHolder.showAboutCoinText((items[position] as CoinStatsticsModule.CoinStatsticsModuleData).coinPrice)
+        aboutCoinViewHolder.showAboutCoinText((items[position] as CoinStatsticsModule.CoinStatisticsModuleData))
     }
 
-    class CoinStatsViewHolder(itemView: View, private val coinStatisticsModule: CoinStatsticsModule) : RecyclerView.ViewHolder(itemView) {
-        fun showAboutCoinText(coinPrice: CoinPrice) {
-            coinStatisticsModule.showCoinStats(itemView, coinPrice)
+    class CoinStatsViewHolder(override val containerView: View, private val coinStatisticsModule: CoinStatsticsModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun showAboutCoinText(coinStatisticsModuleData: CoinStatsticsModule.CoinStatisticsModuleData) {
+            coinStatisticsModule.showCoinStats(itemView, coinStatisticsModuleData)
         }
     }
 }

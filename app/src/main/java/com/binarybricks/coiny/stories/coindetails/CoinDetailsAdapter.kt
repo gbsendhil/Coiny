@@ -1,16 +1,16 @@
 package com.binarybricks.coiny.stories.coindetails
 
-import android.arch.lifecycle.Lifecycle
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.binarybricks.coiny.adapterdelegates.*
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 
 /**
- Created by Pranay Airan 1/18/18.
+Created by Pranay Airan 1/18/18.
  *
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
@@ -18,8 +18,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 class CoinDetailsAdapter(fromCurrency: String,
                          toCurrency: String,
                          coinName: String,
-                         lifecycle: Lifecycle,
-                         private val coinDetailList: List<Any>,
+                         var coinDetailList: List<ModuleItem>,
                          schedulerProvider: BaseSchedulerProvider,
                          resourceProvider: ResourceProvider) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,17 +29,19 @@ class CoinDetailsAdapter(fromCurrency: String,
     private val COIN_NEWS = 4
     private val COIN_STATS = 5
     private val ABOUT_COIN = 6
+    private val COINT_TRANSACTION = 7
 
-    private val delegates: AdapterDelegatesManager<List<Any>> = AdapterDelegatesManager()
+    private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
     init {
-        delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, lifecycle, resourceProvider))
+        delegates.addDelegate(HISTORICAL_CHART, HistoricalChartAdapterDelegate(fromCurrency, toCurrency, schedulerProvider, resourceProvider))
         delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
-        delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate())
+        delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate(resourceProvider))
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
-        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider, lifecycle))
+        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
+        delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())
     }
 
     override fun getItemViewType(position: Int): Int {

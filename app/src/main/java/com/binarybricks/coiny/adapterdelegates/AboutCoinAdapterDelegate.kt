@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.AboutCoinModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import kotlinx.android.extensions.LayoutContainer
 
 
 /**
  * Created by Pranay Airan
  */
 
-class AboutCoinAdapterDelegate : AdapterDelegate<List<Any>>() {
+class AboutCoinAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is AboutCoinModule.AboutCoinModuleData
     }
 
@@ -24,14 +26,15 @@ class AboutCoinAdapterDelegate : AdapterDelegate<List<Any>>() {
         return AboutCoinViewHolder(aboutCardModuleView, aboutCoinModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any>) {
         val aboutCoinViewHolder = holder as AboutCoinViewHolder
-        aboutCoinViewHolder.showAboutCoinText((items[position] as AboutCoinModule.AboutCoinModuleData).aboutcoin)
+        aboutCoinViewHolder.showAboutCoinText((items[position] as AboutCoinModule.AboutCoinModuleData))
     }
 
-    class AboutCoinViewHolder(itemView: View, private val aboutCoinModule: AboutCoinModule) : RecyclerView.ViewHolder(itemView) {
-        fun showAboutCoinText(aboutCoin: String) {
-            aboutCoinModule.showAboutCoinText(itemView, aboutCoin)
+    class AboutCoinViewHolder(override val containerView: View, private val aboutCoinModule: AboutCoinModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun showAboutCoinText(aboutCoinModuleData: AboutCoinModule.AboutCoinModuleData) {
+            aboutCoinModule.showAboutCoinText(itemView, aboutCoinModuleData)
         }
     }
 }
