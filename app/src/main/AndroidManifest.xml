@@ -51,6 +51,12 @@
         <activity
             android:name=".stories.pairsearch.PairSearchActivity"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".stories.coinsearch.CoinSearchActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/search_coin"/>
+
     </application>
 
 </manifest>

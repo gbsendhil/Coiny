@@ -20,11 +20,9 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.OnVerticalScrollListener
 import com.binarybricks.coiny.utils.dpToPx
-import com.lapism.searchview.SearchAdapter
-import com.lapism.searchview.SearchItem
-import com.lapism.searchview.SearchView
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.math.BigDecimal
 import java.util.HashMap
@@ -87,7 +85,6 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
     private fun initializeUI() {
         val toolBarDefaultElevation = dpToPx(this, 8) // default elevation of toolbar
-        setupSearchView()
 
         rvDashboard.layoutManager = LinearLayoutManager(this)
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList, toolbarTitle)
@@ -179,51 +176,16 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         // update dashboard card
     }
 
-    private fun setupSearchView() {
-        searchView.version = SearchView.Version.MENU_ITEM
-        searchView.versionMargins = SearchView.VersionMargins.MENU_ITEM
-        searchView.theme = SearchView.Theme.DARK
-
-        searchView.hint = getString(R.string.search_hint)
-        searchView.setVoice(false)
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        searchView.setNavigationIconClickListener({
-            searchView.close(true)
-        })
-
-        searchView.setOnOpenCloseListener(object : SearchView.OnOpenCloseListener {
-            override fun onOpen(): Boolean {
-                nextMenuItem?.isVisible = false
-                return true
-            }
-
-            override fun onClose(): Boolean {
-                nextMenuItem?.isVisible = true
-                return true
-            }
-        })
-    }
-
     override fun onSupportedCoinsLoaded(coinList: List<Coin>) {
-        val suggestionsList = ArrayList<SearchItem>()
-
-        coinList.forEach {
-            suggestionsList.add(SearchItem(it.fullName))
-        }
-
-        val searchAdapter = SearchAdapter(this, suggestionsList)
-        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
-        searchView.adapter = searchAdapter
+//        val suggestionsList = ArrayList<SearchItem>()
+//
+//        coinList.forEach {
+//            suggestionsList.add(SearchItem(it.fullName))
+//        }
+//
+//        val searchAdapter = SearchAdapter(this, suggestionsList)
+//        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
+//        searchView.adapter = searchAdapter
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -237,10 +199,9 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
         when (item?.itemId) {
             R.id.action_search -> {
-                searchView.open(true) // enable or disable animation
+                startActivity(CoinSearchActivity.buildLaunchIntent(this))
                 return true
             }
         }

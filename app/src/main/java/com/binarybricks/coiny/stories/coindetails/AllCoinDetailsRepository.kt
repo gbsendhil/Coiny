@@ -6,7 +6,7 @@ import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import io.reactivex.Flowable
 
 /**
-Created by Pranay Airan 1/8/18.
+Created by Pranay Airan
  * Repository that interact with crypto api and database for getting data.
  */
 

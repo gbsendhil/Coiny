@@ -50,4 +50,5 @@
     <string name="market_value">Market Value</string>
     <string name="total_return">Total Return</string>
     <string name="today_s_return">Today\'s Return</string>
+    <string name="search_coin">Search Coin</string>
 </resources>

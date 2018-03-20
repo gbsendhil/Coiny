@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerSearch"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/cell_height"
+    android:animateLayoutChanges="true"
+    android:background="@color/backgroundColor"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingEnd="@dimen/generic16dp"
+    android:paddingStart="@dimen/generic16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+    <ImageView
+        android:id="@+id/ivCoin"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/cd_coin_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvCoinName"
+        style="@style/DisplayNumberMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/generic16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvCoinSymbol"
+        app:layout_constraintStart_toEndOf="@+id/ivCoin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="BitCoin" />
+
+    <TextView
+        android:id="@+id/tvCoinSymbol"
+        style="@style/TextRegularSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/generic16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivCoin"
+        app:layout_constraintTop_toBottomOf="@+id/tvCoinName"
+        tools:text="BTC" />
+
+    <TextView
+        style="@style/DisplayNumberLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

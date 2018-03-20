@@ -1,8 +1,10 @@
 package com.binarybricks.coiny.data
 
+import com.binarybricks.coiny.network.models.CCCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.models.ExchangePair
+import java.util.*
 
 /**
  * Created by Pragya Agrawal
@@ -17,5 +19,7 @@ object CoinyCache {
 
     var coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
 
-    var coinExchangeMap: java.util.HashMap<String, MutableList<ExchangePair>> = hashMapOf()
+    var coinExchangeMap: HashMap<String, MutableList<ExchangePair>> = hashMapOf()
+
+    var coinList: ArrayList<CCCoin> = ArrayList()
 }

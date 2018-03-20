@@ -10,7 +10,7 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 /**
-Created by Pranay Airan 1/8/18.
+Created by Pranay Airan
  */
 
 class CoinyApplication : Application() {

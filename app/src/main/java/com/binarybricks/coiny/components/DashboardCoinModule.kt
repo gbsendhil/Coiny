@@ -61,7 +61,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         val coin = dashboardCoinModuleData.watchedCoin.coin
         val coinPrice = dashboardCoinModuleData.coinPrice
 
-        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=40"
+        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=50"
 
         picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)

@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.stories.exchangesearch
+package com.binarybricks.coiny.stories.coinsearch
 
 /**
 Created by Pranay Airan 1/26/18.
@@ -11,24 +11,47 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
+import com.binarybricks.coiny.network.models.CCCoin
+import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 import java.util.*
 
-class ExchangeSearchAdapter(val searchList: ArrayList<String>) : RecyclerView.Adapter<ExchangeSearchAdapter.ResultViewHolder>(), Filterable {
+class CoinSearchAdapter(val searchList: ArrayList<CCCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
 
-    var filterSearchList: ArrayList<String> = searchList
+    var filterSearchList: ArrayList<CCCoin> = searchList
+    private lateinit var picasso: Picasso
+
+    private val cropCircleTransformation by lazy {
+        CropCircleTransformation()
+    }
+
+    private val grayscaleTransformation by lazy {
+        GrayscaleTransformation()
+    }
 
     private var mListener: OnSearchItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.exchange_pair_search_item, parent, false)
+        val view = inflater.inflate(R.layout.coin_search_item, parent, false)
+        picasso = Picasso.with(view.context)
+
         return ResultViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ResultViewHolder, position: Int) {
-        viewHolder.tvSearchItemName.text = filterSearchList[position]
+        viewHolder.tvCoinName.text = filterSearchList[position].coinName
+        viewHolder.tvCoinSymbol.text = filterSearchList[position].symbol
+
+        picasso.load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
+            .transform(cropCircleTransformation)
+            .transform(grayscaleTransformation)
+            .into(viewHolder.ivCoin)
     }
 
     override fun getItemCount(): Int {
@@ -47,12 +70,13 @@ class ExchangeSearchAdapter(val searchList: ArrayList<String>) : RecyclerView.Ad
                 val list = searchList
 
                 val count = list.size
-                val filteredList = ArrayList<String>(count)
+                val filteredList = ArrayList<CCCoin>(count)
 
                 (0 until count)
                     .filter {
                         // Filter on the name
-                        list[it].contains(filterString, true)
+                        list[it].coinName.contains(filterString, true) ||
+                                list[it].symbol.contains(filterString, true)
                     }
                     .mapTo(filteredList) { list[it] }
 
@@ -62,9 +86,8 @@ class ExchangeSearchAdapter(val searchList: ArrayList<String>) : RecyclerView.Ad
                 return results
             }
 
-
             override fun publishResults(charSequence: CharSequence, results: Filter.FilterResults) {
-                filterSearchList = results.values as ArrayList<String>
+                filterSearchList = results.values as ArrayList<CCCoin>
                 notifyDataSetChanged()
             }
         }
@@ -79,13 +102,15 @@ class ExchangeSearchAdapter(val searchList: ArrayList<String>) : RecyclerView.Ad
     }
 
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvSearchItemName: TextView = view.findViewById(R.id.tvSearchItemName)
+        val tvCoinName: TextView = view.findViewById(R.id.tvCoinName)
+        val tvCoinSymbol: TextView = view.findViewById(R.id.tvCoinSymbol)
+        val ivCoin: ImageView = view.findViewById(R.id.ivCoin)
 
         init {
             // add second text
             view.setOnClickListener {
                 mListener?.let { searchListner ->
-                    searchListner.onSearchItemClick(it, layoutPosition, tvSearchItemName.text.toString())
+                    searchListner.onSearchItemClick(it, layoutPosition, tvCoinSymbol.text.toString())
                 }
             }
         }

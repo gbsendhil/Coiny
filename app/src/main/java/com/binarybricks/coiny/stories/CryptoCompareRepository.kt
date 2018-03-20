@@ -19,8 +19,8 @@ import java.math.BigDecimal
 import java.util.*
 
 /**
-Created by Pranay Airan 1/8/18.
- * Repository that interact with crypto api to get any info on coins.
+Created by Pranay Airan
+Repository that interact with crypto api to get any info on coins.
  */
 
 class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerProvider,
@@ -30,13 +30,20 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
      * Get list of all supported coins
      */
     fun getAllCoins(): Single<ArrayList<CCCoin>> {
-        return cryptoCompareRetrofit.create(API::class.java)
-            .getCoinList()
-            .subscribeOn(baseSchedulerProvider.io())
-            .map {
-                Timber.d("Coin fetched, parsing response")
-                getCoinsFromJson(it)
-            }
+
+        return if (CoinyCache.coinList.size > 0) {
+            Single.just(CoinyCache.coinList)
+        } else {
+            cryptoCompareRetrofit.create(API::class.java)
+                .getCoinList()
+                .subscribeOn(baseSchedulerProvider.io())
+                .map {
+                    Timber.d("Coin fetched, parsing response")
+                    val coinsFromJson = getCoinsFromJson(it)
+                    CoinyCache.coinList = coinsFromJson
+                    coinsFromJson
+                }
+        }
     }
 
     // get only price of the coinSymbol
