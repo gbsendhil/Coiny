@@ -47,16 +47,6 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
             .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
     }
 
-    override fun loadAllSupportedCoins() {
-        dashboardRepository.loadSupportedCoins()?.let {
-            compositeDisposable.add(
-                it.filter { it.isNotEmpty() }
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({ currentView?.onSupportedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
-            )
-        }
-    }
-
     override fun getAllSupportedExchanges() {
         compositeDisposable.add(coinRepo.getAllSupportedExchanges()
             .observeOn(schedulerProvider.ui())

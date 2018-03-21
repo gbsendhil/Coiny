@@ -21,16 +21,15 @@ class CoinSearchPresenter(private val schedulerProvider: BaseSchedulerProvider,
     override fun loadAllCoins() {
         currentView?.showOrHideLoadingIndicator(true)
 
-        compositeDisposable.add(coinRepo.getAllCoins()
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
+        coinRepo.getAllCoins()
+            ?.observeOn(schedulerProvider.ui())
+            ?.subscribe({
                 Timber.d("All Coins Loaded")
                 currentView?.showOrHideLoadingIndicator(false)
                 currentView?.onCoinsLoaded(it)
             }, {
                 currentView?.onNetworkError(it.localizedMessage)
-            })
-        )
+            })?.let { compositeDisposable.add(it) }
     }
 
     // cleanup

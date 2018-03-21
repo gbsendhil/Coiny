@@ -14,16 +14,15 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
-import com.binarybricks.coiny.network.models.CCCoin
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
-import java.util.*
 
-class CoinSearchAdapter(val searchList: ArrayList<CCCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
+class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
 
-    var filterSearchList: ArrayList<CCCoin> = searchList
+    var filterSearchList: List<WatchedCoin> = searchList
     private lateinit var picasso: Picasso
 
     private val cropCircleTransformation by lazy {
@@ -45,10 +44,10 @@ class CoinSearchAdapter(val searchList: ArrayList<CCCoin>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(viewHolder: ResultViewHolder, position: Int) {
-        viewHolder.tvCoinName.text = filterSearchList[position].coinName
-        viewHolder.tvCoinSymbol.text = filterSearchList[position].symbol
+        viewHolder.tvCoinName.text = filterSearchList[position].coin.coinName
+        viewHolder.tvCoinSymbol.text = filterSearchList[position].coin.symbol
 
-        picasso.load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
+        picasso.load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
             .transform(grayscaleTransformation)
             .into(viewHolder.ivCoin)
@@ -70,13 +69,13 @@ class CoinSearchAdapter(val searchList: ArrayList<CCCoin>) : RecyclerView.Adapte
                 val list = searchList
 
                 val count = list.size
-                val filteredList = ArrayList<CCCoin>(count)
+                val filteredList = mutableListOf<WatchedCoin>()
 
                 (0 until count)
                     .filter {
                         // Filter on the name
-                        list[it].coinName.contains(filterString, true) ||
-                                list[it].symbol.contains(filterString, true)
+                        list[it].coin.coinName.contains(filterString, true) ||
+                                list[it].coin.symbol.contains(filterString, true)
                     }
                     .mapTo(filteredList) { list[it] }
 
@@ -87,7 +86,7 @@ class CoinSearchAdapter(val searchList: ArrayList<CCCoin>) : RecyclerView.Adapte
             }
 
             override fun publishResults(charSequence: CharSequence, results: Filter.FilterResults) {
-                filterSearchList = results.values as ArrayList<CCCoin>
+                filterSearchList = results.values as MutableList<WatchedCoin>
                 notifyDataSetChanged()
             }
         }

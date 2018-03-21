@@ -2,7 +2,6 @@ package com.binarybricks.coiny.stories
 
 import com.binarybricks.coiny.data.CoinyCache
 import com.binarybricks.coiny.data.database.CoinyDatabase
-import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.api.API
@@ -27,9 +26,9 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
                               private val coinyDatabase: CoinyDatabase? = null) {
 
     /**
-     * Get list of all supported coins
+     * Get list of all coins from api
      */
-    fun getAllCoins(): Single<ArrayList<CCCoin>> {
+    fun getAllCoinsFromAPI(): Single<ArrayList<CCCoin>> {
 
         return if (CoinyCache.coinList.size > 0) {
             Single.just(CoinyCache.coinList)
@@ -111,7 +110,6 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
             }
     }
 
-
     /**
      * Get list of all supported exchanges coinSymbol pairs
      */
@@ -132,21 +130,27 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
         }
     }
 
+    /**
+     * --- Database operations --
+     */
+
+    /**
+     * Get all recent transactions
+     */
     fun getRecentTransaction(symbol: String): Flowable<List<CoinTransaction>>? {
         return coinyDatabase?.coinTransactionDao()?.getTransactionsForCoin(symbol.toUpperCase())
             ?.subscribeOn(baseSchedulerProvider.io())
     }
 
-    // insert coins in database
-    fun insertCoins(coinList: MutableList<Coin>) {
-        Single.fromCallable {
-            coinyDatabase?.coinDao()?.insertCoins(coinList)
-        }.subscribeOn(baseSchedulerProvider.io()).subscribe()
+    fun insertCoinsInWatchList(watchedCoinList: List<WatchedCoin>): Single<Unit?> {
+        return Single.fromCallable {
+            coinyDatabase?.watchedCoinDao()?.insertCoinsIntoWatchList(watchedCoinList)
+        }.subscribeOn(baseSchedulerProvider.io())
     }
 
-    fun insertCoinsInWatchList(watchedCoinList: List<WatchedCoin>) {
+    fun updateCoinWatchedStatus(watched: Boolean, coinID: String) {
         Single.fromCallable {
-            coinyDatabase?.watchedCoinDao()?.insertCoinsIntoWatchList(watchedCoinList)
+            coinyDatabase?.watchedCoinDao()?.updateWatchedCoinAddCoinToWatchlist(watched, coinID)
         }.subscribeOn(baseSchedulerProvider.io()).subscribe()
     }
 
@@ -162,44 +166,35 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
             coinyDatabase?.coinTransactionDao()?.insertTransaction(transaction)
         }.subscribeOn(baseSchedulerProvider.io())
     }
+
+    /**
+     * Get list of all coins watched or not
+     */
+    fun getAllCoins(): Flowable<List<WatchedCoin>>? {
+        coinyDatabase?.let {
+            return it.watchedCoinDao().getAllCoins().subscribeOn(baseSchedulerProvider.io())
+        }
+        return null
+    }
 }
 
-fun getTop5CoinsToWatch(defaultExchange: String,
-                        defaultCurrency: String): MutableList<WatchedCoin> {
-    val watchedCoin: MutableList<WatchedCoin> = mutableListOf()
+fun getTop5CoinsToWatch(): MutableList<String> {
+    val watchedCoin: MutableList<String> = mutableListOf()
 
-    val bitcoin =
-        Coin("1182", "/coins/btc/overview", "/media/19633/btc.png", "BTC", "BTC", "Bitcoin",
-            "Bitcoin (BTC)", "SHA256", "PoW", "0", "21000000", "N/A", "N/A", "1", false, false)
+    val bitcoin = "1182"
+    watchedCoin.add(bitcoin)
 
-    watchedCoin.add(WatchedCoin(bitcoin, defaultExchange, defaultCurrency, BigDecimal.ZERO))
+    val eth = "7605"
+    watchedCoin.add(eth)
 
-    val eth =
-        Coin("7605", "/coins/eth/overview", "/media/20646/eth_logo.png", "ETH", "ETH", "Ethereum",
-            "Ethereum (ETH)", "Ethash", "PoW", "0", "0", "N/A", "N/A", "2", false, false)
+    val ripple = "5031"
+    watchedCoin.add(ripple)
 
-    watchedCoin.add(WatchedCoin(eth, defaultExchange, defaultCurrency, BigDecimal.ZERO))
+    val cardano = "321992"
+    watchedCoin.add(cardano)
 
-    val ripple =
-        Coin("5031", "/coins/xrp/overview", "/media/19972/ripple.png", "XRP", "XRP", "Ripple",
-            "Ripple (XRP)", "N/A", "N/A", "1", "38305873865", "N/A", "N/A", "12", false, false)
-
-    watchedCoin.add(WatchedCoin(ripple, defaultExchange, defaultCurrency, BigDecimal.ZERO))
-
-    val cardano =
-        Coin("321992", "/coins/ada/overview", "/media/12318177/ada.png", "ADA", "ADA", "Cardano",
-            "Cardano (ADA)", "Ouroboros", "PoS", "0", "45000000000", "N/A", "N/A", "1635", false,
-            false)
-
-    watchedCoin.add(WatchedCoin(cardano, defaultExchange, defaultCurrency, BigDecimal.ZERO))
-
-    val litcoin =
-        Coin("3808", "/coins/ltc/overview", "/media/19782/litecoin-logo.png", "LTC", "LTC",
-            "Litecoin", "Litecoin (LTC)", "Scrypt", "PoW", "0", "84000000", "N/A", "N/A", "3",
-            false, false)
-
-    watchedCoin.add(WatchedCoin(litcoin, defaultExchange, defaultCurrency, BigDecimal.ZERO))
-
+    val litcoin = "3808"
+    watchedCoin.add(litcoin)
 
     return watchedCoin
 }

@@ -15,7 +15,6 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
-import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
@@ -76,8 +75,6 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         lifecycle.addObserver(coinDashboardPresenter)
 
         coinDashboardPresenter.loadWatchedCoins()
-
-        coinDashboardPresenter.loadAllSupportedCoins()
 
         // get list of all exchanges
         coinDashboardPresenter.getAllSupportedExchanges()
@@ -174,18 +171,6 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         }
 
         // update dashboard card
-    }
-
-    override fun onSupportedCoinsLoaded(coinList: List<Coin>) {
-//        val suggestionsList = ArrayList<SearchItem>()
-//
-//        coinList.forEach {
-//            suggestionsList.add(SearchItem(it.fullName))
-//        }
-//
-//        val searchAdapter = SearchAdapter(this, suggestionsList)
-//        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
-//        searchView.adapter = searchAdapter
     }
 
     // Menu icons are inflated just as they were with actionbar

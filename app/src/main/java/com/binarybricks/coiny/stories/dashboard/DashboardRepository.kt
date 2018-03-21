@@ -1,7 +1,6 @@
 package com.binarybricks.coiny.stories.dashboard
 
 import com.binarybricks.coiny.data.database.CoinyDatabase
-import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.api.API
 import com.binarybricks.coiny.network.api.cryptoCompareRetrofit
@@ -14,7 +13,7 @@ import timber.log.Timber
 import java.util.*
 
 /**
- Created by Pranay Airan
+Created by Pranay Airan
  * Repository that interact with crypto api and database for getting data.
  */
 
@@ -47,15 +46,5 @@ class DashboardRepository(private val baseSchedulerProvider: BaseSchedulerProvid
                 Timber.d("Coin prices fetched, parsing response")
                 getCoinPricesFromJson(it)
             }
-    }
-
-    /**
-     * Get list of all supported coins
-     */
-    fun loadSupportedCoins(): Flowable<List<Coin>>? {
-        coinyDatabase?.let {
-            return it.coinDao().getAllCoins().subscribeOn(baseSchedulerProvider.io())
-        }
-        return null
     }
 }

@@ -16,8 +16,11 @@ import java.math.BigDecimal
 @Dao
 interface WatchedCoinDao {
 
-    @Query("select * from WatchedCoin order by purchaseQuantity")
-    fun getAllWatchedCoins(): Flowable<List<WatchedCoin>>
+    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity")
+    fun getAllWatchedCoins(watched: Boolean = true): Flowable<List<WatchedCoin>>
+
+    @Query("select * from WatchedCoin order by sortOrder")
+    fun getAllCoins(): Flowable<List<WatchedCoin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinsIntoWatchList(list: List<WatchedCoin>)
@@ -27,4 +30,8 @@ interface WatchedCoinDao {
 
     @Query("update WatchedCoin set purchaseQuantity = purchaseQuantity + :quantity where symbol=:symbol")
     fun updateWatchedCoinWithPurchaseQuantity(quantity: BigDecimal, symbol: String): Int
+
+
+    @Query("UPDATE WatchedCoin SET watched = :watched  WHERE coinId = :coinId")
+    fun updateWatchedCoinAddCoinToWatchlist(watched: Boolean, coinId: String)
 }

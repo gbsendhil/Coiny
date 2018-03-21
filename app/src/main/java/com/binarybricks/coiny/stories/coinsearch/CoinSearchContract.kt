@@ -1,4 +1,4 @@
-import com.binarybricks.coiny.network.models.CCCoin
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.stories.BaseView
 
 /**
@@ -9,7 +9,7 @@ interface CoinSearchContract {
 
     interface View : BaseView {
         fun showOrHideLoadingIndicator(showLoading: Boolean = true)
-        fun onCoinsLoaded(coinList: ArrayList<CCCoin>)
+        fun onCoinsLoaded(coinList: List<WatchedCoin>)
     }
 
     interface Presenter {

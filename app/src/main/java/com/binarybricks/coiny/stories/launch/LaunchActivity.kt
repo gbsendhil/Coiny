@@ -41,11 +41,10 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         // determine if this is first time, if yes then show the animations else move away
         if (!PreferenceHelper.getPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN,
                 false)
-        ) { // get list of all coins
-            launchPresenter.getAllSupportedCoins()
-
+        ) {
             initializeUI()
 
+            launchPresenter.loadCoinsFromAPIInBackground()
             // FTU shown
             PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
         } else {
@@ -81,8 +80,10 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
             continueButton.visibility = View.VISIBLE
             picker.dismiss() // Show currency that is picked.
+            val currency = PreferenceHelper.getPreference(this, code, defaultCurrency)
 
-            launchPresenter.addTop5CoinsInWishlist(PreferenceHelper.getPreference(this, code, defaultCurrency))
+            // get list of all coins
+            launchPresenter.getAllSupportedCoins(currency)
         }
 
         picker.show(supportFragmentManager, "CURRENCY_PICKER")

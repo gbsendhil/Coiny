@@ -14,9 +14,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.historicalchartmodule.CoinSearchPresenter
-import com.binarybricks.coiny.network.models.CCCoin
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import kotlinx.android.synthetic.main.activity_coin_search.*
@@ -38,7 +39,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     }
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinSearchPresenter: CoinSearchPresenter by lazy {
@@ -79,7 +80,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         Snackbar.make(rvSearchList, errorMessage, Snackbar.LENGTH_LONG)
     }
 
-    override fun onCoinsLoaded(coinList: ArrayList<CCCoin>) {
+    override fun onCoinsLoaded(coinList: List<WatchedCoin>) {
 
         coinSearchAdapter = CoinSearchAdapter(coinList)
 
