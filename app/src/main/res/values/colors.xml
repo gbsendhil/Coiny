@@ -13,9 +13,9 @@
     <color name="colorSecondaryTextOpaque">#33757577</color>
     <color name="colorAccentOpaque">#3366f8a7</color>
 
-    <color name="backgroundColor">#303032</color>
-    <color name="backgroundLightColor">#59595b</color>
-    <color name="backgroundDarkColor">#212124</color>
+    <color name="backgroundColor">#353642</color>
+    <color name="backgroundLightColor">#363744</color>
+    <color name="backgroundDarkColor">#272834</color>
 
     <color name="textColorBlack">#212124</color>
     <color name="primaryTextColor">#ffffff</color>

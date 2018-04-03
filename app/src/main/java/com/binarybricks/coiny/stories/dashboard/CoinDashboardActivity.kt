@@ -12,7 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.*
+import com.binarybricks.coiny.components.DashboardCoinModule
+import com.binarybricks.coiny.components.DashboardHeaderModule
+import com.binarybricks.coiny.components.GenericFooterModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
@@ -23,7 +26,6 @@ import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.OnVerticalScrollListener
 import com.binarybricks.coiny.utils.dpToPx
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import java.math.BigDecimal
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
@@ -114,31 +116,11 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         // Add Dashboard Header with empty data
         coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(mutableListOf(), hashMapOf()))
 
-        // add coinSymbol section
-        val coinPurchasesList: MutableList<ModuleItem> = ArrayList()
-        coinPurchasesList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Crypto Currencies"))
-
-        val coinWatchList: MutableList<ModuleItem> = ArrayList()
-        coinWatchList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Watchlist"))
-
         watchedCoinList.forEach { watchedCoin ->
-            if (watchedCoin.purchaseQuantity > BigDecimal.ZERO) {
-                coinPurchasesList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
-            } else {
-                coinWatchList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
-            }
+            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
         }
 
-        if (coinPurchasesList.size == 1) {
-            coinPurchasesList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Track & monitor your holding. Add your first Transaction"))
-        }
-
-        if (coinWatchList.size == 1) {
-            coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coinSymbol prices. Search and click + to get started."))
-        }
-
-        coinDashboardList.addAll(coinPurchasesList)
-        coinDashboardList.addAll(coinWatchList)
+        coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
         showOrHideLoadingIndicator(false)
 

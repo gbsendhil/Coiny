@@ -51,4 +51,10 @@
     <string name="total_return">Total Return</string>
     <string name="today_s_return">Today\'s Return</string>
     <string name="search_coin">Search Coin</string>
+    <string name="crypto_compare">Powered by Cryptocompare.com</string>
+    <string name="crypto_compare_url">https://www.cryptocompare.com</string>
+    <string name="empty_holding">Track &amp; monitor your holdings></string>
+    <string name="empty_watchlist">Monitor currency prices, gains and loss</string>
+    <string name="empty_watchlist_cta">Add to Watchlist</string>
+    <string name="profit_loss">Profit/Loss</string>
 </resources>

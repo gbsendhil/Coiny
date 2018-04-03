@@ -34,5 +34,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cryptoImage"
             tools:text="Empty String" />
+
+        <Button
+            android:id="@+id/btnAddTransaction"
+            style="@style/ButtonRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/generic8dp"
+            android:layout_marginStart="@dimen/generic8dp"
+            android:layout_marginTop="@dimen/generic16dp"
+            android:text="@string/add_transaction"
+            app:layout_constraintTop_toBottomOf="@id/tvEmptyMessage" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/generic8dp"
         android:layout_marginStart="@dimen/generic8dp"
-        android:layout_marginTop="@dimen/generic12dp">
+        android:layout_marginTop="@dimen/generic8dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

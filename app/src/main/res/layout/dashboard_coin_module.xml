@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/generic8dp"
     android:layout_marginStart="@dimen/generic8dp"
+    android:layout_marginTop="@dimen/generic16dp"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/backgroundColor">
@@ -21,44 +22,35 @@
 
         <ImageView
             android:id="@+id/ivCoin"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:contentDescription="@string/cd_coin_image"
             app:layout_constraintBottom_toBottomOf="@+id/tvCoinName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvCoinName"
+            app:layout_constraintTop_toTopOf="@+id/tvCoinSymbol"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/tvCoinName"
+            android:id="@+id/tvCoinSymbol"
             style="@style/TextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/generic8dp"
             android:labelFor="@id/ivCoin"
             app:layout_constraintStart_toEndOf="@+id/ivCoin"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="BTC" />
+
+        <TextView
+            android:id="@+id/tvCoinName"
+            style="@style/TextSubHeadSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/generic8dp"
+            android:labelFor="@id/ivCoin"
+            app:layout_constraintStart_toEndOf="@+id/ivCoin"
+            app:layout_constraintTop_toBottomOf="@id/tvCoinSymbol"
             tools:text="BitCoin" />
-
-        <TextView
-            android:id="@+id/tvTxnTimeAndExchange"
-            style="@style/TextSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/generic4dp"
-            android:paddingEnd="@dimen/generic8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivCoin"
-            tools:text="CCAG" />
-
-        <TextView
-            android:id="@+id/tvCoinPair"
-            style="@style/TextSmallSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/generic4dp"
-            app:layout_constraintStart_toEndOf="@+id/tvTxnTimeAndExchange"
-            app:layout_constraintTop_toBottomOf="@+id/ivCoin"
-            tools:text="today" />
 
         <TextView
             android:id="@+id/tvCost"
@@ -66,7 +58,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="0"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="$100" />
@@ -76,10 +67,78 @@
             style="?android:attr/progressBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic4dp"
             android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvExchange"
+            style="@style/TextSmallSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCost"
+            tools:text="CCAG" />
+
+        <View
+            android:id="@+id/dividerView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/generic8dp"
+            android:background="@color/backgroundDarkColor"
+            app:layout_constraintTop_toBottomOf="@id/tvExchange" />
+
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerView"
+            tools:text="0.23456" />
+
+        <TextView
+            android:id="@+id/tvCurrentValue"
+            style="@style/TextTitleSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvQuantity"
+            tools:text="$500" />
+
+        <TextView
+            android:id="@+id/tvProfitLoss"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerView"
+            tools:text="+2.7%" />
+
+
+        <TextView
+            android:id="@+id/tvProfitLossLabel"
+            style="@style/TextSmallSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic4dp"
+            android:text="@string/profit_loss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProfitLoss" />
+
+
+        <android.support.constraint.Group
+            android:id="@+id/purchaseItemsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="dividerView,tvQuantity,tvCurrentValue,tvProfitLoss,tvProfitLossLabel"
+            tools:visibility="visible" />
+
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

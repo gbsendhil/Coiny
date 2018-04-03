@@ -16,7 +16,7 @@ import java.math.BigDecimal
 @Dao
 interface WatchedCoinDao {
 
-    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity")
+    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
     fun getAllWatchedCoins(watched: Boolean = true): Flowable<List<WatchedCoin>>
 
     @Query("select * from WatchedCoin order by sortOrder")

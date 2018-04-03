@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.binarybricks.coiny.components.DashboardEmptyCardModule
+import com.binarybricks.coiny.components.DashboardEmptyCoinModule
 import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
@@ -17,24 +17,24 @@ import kotlinx.android.extensions.LayoutContainer
 class DashboardEmptyCardAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
-        return items[position] is DashboardEmptyCardModule.DashboardEmptyCardModuleData
+        return items[position] is DashboardEmptyCoinModule.DashboardEmptyCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val dashboardEmptyCardModule = DashboardEmptyCardModule()
+        val dashboardEmptyCardModule = DashboardEmptyCoinModule()
         val dashboardEmptyCardModuleView = dashboardEmptyCardModule.init(LayoutInflater.from(parent.context), parent)
         return DashboardEmptyCardViewHolder(dashboardEmptyCardModuleView, dashboardEmptyCardModule)
     }
 
     override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val dashboardEmptyCardViewHolder = holder as DashboardEmptyCardViewHolder
-        dashboardEmptyCardViewHolder.showTextInEmptySpace((items[position] as DashboardEmptyCardModule.DashboardEmptyCardModuleData))
+        dashboardEmptyCardViewHolder.showTextInEmptySpace((items[position] as DashboardEmptyCoinModule.DashboardEmptyCoinModuleData))
     }
 
-    class DashboardEmptyCardViewHolder(override val containerView: View, private val dashboardEmptyCardModule: DashboardEmptyCardModule)
+    class DashboardEmptyCardViewHolder(override val containerView: View, private val dashboardEmptyCoinModule: DashboardEmptyCoinModule)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun showTextInEmptySpace(dashboardEmptyCardModuleData: DashboardEmptyCardModule.DashboardEmptyCardModuleData) {
-            dashboardEmptyCardModule.showTextInEmptySpace(itemView, dashboardEmptyCardModuleData)
+        fun showTextInEmptySpace(dashboardEmptyCoinModuleData: DashboardEmptyCoinModule.DashboardEmptyCoinModuleData) {
+            dashboardEmptyCoinModule.addEmptyCoinModule(itemView, dashboardEmptyCoinModuleData)
         }
     }
 }

@@ -65,27 +65,29 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
 
         picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
-            .transform(grayscaleTransformation)
             .into(inflatedView.ivCoin)
 
+        inflatedView.tvCoinSymbol.text = coin.symbol
         inflatedView.tvCoinName.text = coin.coinName
+        inflatedView.tvExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
 
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
 
             animateCoinPrice(inflatedView, coinPrice.price)
             val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity.round(mc)
-            if (purchaseQuantity > BigDecimal.ZERO) {
-                inflatedView.tvTxnTimeAndExchange.text = "${purchaseQuantity.toPlainString()} ${dashboardCoinModuleData.watchedCoin.coin.symbol}"
 
+            // check if coin is purchased
+            if (purchaseQuantity > BigDecimal.ZERO) {
+                inflatedView.purchaseItemsGroup.visibility = View.VISIBLE
+                inflatedView.tvQuantity.text = purchaseQuantity.toPlainString()
                 val currentWorth = purchaseQuantity.multiply(BigDecimal(coinPrice.price))
-                inflatedView.tvCoinPair.text = "(${formatter.formatAmount(currentWorth.toPlainString(), currency)})"
+                inflatedView.tvCurrentValue.text = "(${formatter.formatAmount(currentWorth.toPlainString(), currency)})"
+                // do the profit or loss things here.
             } else {
-                inflatedView.tvTxnTimeAndExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
-                inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+                inflatedView.purchaseItemsGroup.visibility = View.GONE
             }
 
-            // adjust color logic here for text
 
             inflatedView.coinCard.setOnClickListener {
                 inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))

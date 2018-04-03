@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
@@ -20,6 +19,7 @@ import com.binarybricks.coiny.components.historicalchartmodule.CoinSearchPresent
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coindetails.CoinDetailsActivity
 import kotlinx.android.synthetic.main.activity_coin_search.*
 
 class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
@@ -50,10 +50,6 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_search)
 
-        val toolbar = findViewById<View>(R.id.toolbar)
-        setSupportActionBar(toolbar as Toolbar?)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         rvSearchList.layoutManager = LinearLayoutManager(this)
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(this, R.drawable.divider_thin_horizontal)?.let { dividerItemDecoration.setDrawable(it) }
@@ -66,6 +62,10 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         lifecycle.addObserver(coinSearchPresenter)
 
         coinSearchPresenter.loadAllCoins()
+
+        ivBackArrow.setOnClickListener {
+            finish()
+        }
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
@@ -100,13 +100,12 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
             }
         })
 
-//        coinSearchAdapter?.setOnSearchItemClickListener(object : ExchangeSearchAdapter.OnSearchItemClickListener {
-//            override fun onSearchItemClick(view: View, position: Int, text: String) {
-//                intent.putExtra(SEARCH_RESULT, text)
-//                setResult(Activity.RESULT_OK, intent)
-//                finish()
-//            }
-//        })
+        coinSearchAdapter?.setOnSearchItemClickListener(object : CoinSearchAdapter.OnSearchItemClickListener {
+            override fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin) {
+                val coinDetailsIntent = CoinDetailsActivity.buildLaunchIntent(this@CoinSearchActivity, watchedCoin)
+                startActivity(coinDetailsIntent)
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

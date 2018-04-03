@@ -48,7 +48,7 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
         inflatedView.tvNoOfCoins.text = noOfCoins.toString()
         inflatedView.tvCoinLabel.text = coinPrice.fromSymbol
 
-        val totalCurrentValue = coinPositionCardModuleData.coinPrice.price?.toBigDecimal()?.multiply(noOfCoins.toBigDecimal())
+        val totalCurrentValue = coinPrice.price?.toBigDecimal()?.multiply(noOfCoins.toBigDecimal())
         if (totalCurrentValue != null) {
             inflatedView.tvCoinValue.text = formatter.formatAmount(totalCurrentValue.toPlainString(), currency)
         }

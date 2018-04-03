@@ -97,7 +97,7 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
     }
 
     interface OnSearchItemClickListener {
-        fun onSearchItemClick(view: View, position: Int, text: String)
+        fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin)
     }
 
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -109,7 +109,7 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
             // add second text
             view.setOnClickListener {
                 mListener?.let { searchListner ->
-                    searchListner.onSearchItemClick(it, layoutPosition, tvCoinSymbol.text.toString())
+                    searchListner.onSearchItemClick(it, adapterPosition, filterSearchList[adapterPosition])
                 }
             }
         }

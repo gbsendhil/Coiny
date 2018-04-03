@@ -22,7 +22,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.*
-import kotlinx.android.synthetic.main.activity_all_coin_details.*
+import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.view.*
 
@@ -82,8 +82,10 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
                 override fun onScrolled(offset: Int) {
                     super.onScrolled(offset)
-                    (activity as CoinDetailsPagerActivity).toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
-                    (activity as CoinDetailsPagerActivity).toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                    (activity as? CoinDetailsPagerActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                    (activity as? CoinDetailsPagerActivity)?.toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+
+                    (activity as? CoinDetailsActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
                 }
             })
 
@@ -128,6 +130,8 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
         coinDetailsAdapter?.notifyDataSetChanged()
 
         coinDetailsPresenter.loadRecentTransaction(watchedCoin.coin.symbol)
+
+        coinDetailList.add(GenericFooterModule.FooterModuleData())
     }
 
     override fun onRecentTransactionLoaded(coinTransactionList: List<CoinTransaction>) {
