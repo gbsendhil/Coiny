@@ -34,7 +34,7 @@
     <string name="recent_news">Recent News</string>
     <string name="more">More</string>
     <string name="add_transaction">Add Transaction</string>
-    <string name="portfolio_changed_percentage">(0%)</string>
+    <string name="portfolio_changed_percentage">(%1$s%%)</string>
     <string name="search_hint">Search Coin</string>
     <string name="trading_pair">Trading Pair</string>
     <string name="buy_price">Buy Price</string>
@@ -57,4 +57,6 @@
     <string name="empty_watchlist">Monitor currency prices, gains and loss</string>
     <string name="empty_watchlist_cta">Add to Watchlist</string>
     <string name="profit_loss">Profit/Loss</string>
+    <string name="your_total_balance">Your total balance</string>
+    <string name="_24h_changes">24h Changes</string>
 </resources>

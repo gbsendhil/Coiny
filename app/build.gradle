@@ -84,8 +84,8 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
     // image loading
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'jp.wasabeef:picasso-transformations:2.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
 
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'

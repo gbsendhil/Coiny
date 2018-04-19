@@ -5,11 +5,14 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.CoinyCache
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.dashboard.DashboardRepository
+import io.reactivex.functions.BiFunction
 import timber.log.Timber
 
 /**
@@ -22,13 +25,21 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
     CoinDashboardContract.Presenter, LifecycleObserver {
 
 
-    override fun loadWatchedCoins() {
-        dashboardRepository.loadWatchedCoins()?.let {
-            compositeDisposable.add(
-                it.filter { it.isNotEmpty() }
-                    .observeOn(schedulerProvider.ui())
-                    .subscribe({ currentView?.onWatchedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
-            )
+    override fun loadWatchedCoinsAndTransactions() {
+        val watchedCoins = dashboardRepository.loadWatchedCoins()
+        val transactions = dashboardRepository.loadTransactions()
+
+        if (watchedCoins != null && transactions != null) {
+
+            watchedCoins.zipWith(transactions, BiFunction<List<WatchedCoin>, List<CoinTransaction>,
+                    Pair<List<WatchedCoin>, List<CoinTransaction>>> { watchedCoinList, transactionList ->
+                Pair(watchedCoinList, transactionList)
+            }).observeOn(schedulerProvider.ui())
+                .subscribe({
+                    currentView?.onWatchedCoinsAndTransactionsLoaded(it.first, it.second)
+                }, {
+                    Timber.e(it.localizedMessage)
+                })
         }
     }
 

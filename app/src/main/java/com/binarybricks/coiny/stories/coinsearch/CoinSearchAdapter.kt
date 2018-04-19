@@ -23,7 +23,6 @@ import jp.wasabeef.picasso.transformations.GrayscaleTransformation
 class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
 
     var filterSearchList: List<WatchedCoin> = searchList
-    private lateinit var picasso: Picasso
 
     private val cropCircleTransformation by lazy {
         CropCircleTransformation()
@@ -38,7 +37,6 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.coin_search_item, parent, false)
-        picasso = Picasso.with(view.context)
 
         return ResultViewHolder(view)
     }
@@ -47,9 +45,8 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
         viewHolder.tvCoinName.text = filterSearchList[position].coin.coinName
         viewHolder.tvCoinSymbol.text = filterSearchList[position].coin.symbol
 
-        picasso.load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
+        Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
-            .transform(grayscaleTransformation)
             .into(viewHolder.ivCoin)
     }
 

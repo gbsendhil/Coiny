@@ -5,6 +5,7 @@
     android:id="@+id/containerSearch"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cell_height"
+    android:layout_marginBottom="@dimen/generic8dp"
     android:animateLayoutChanges="true"
     android:background="@color/backgroundColor"
     android:clickable="true"
@@ -28,27 +29,27 @@
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/tvCoinName"
+        android:id="@+id/tvCoinSymbol"
         style="@style/DisplayNumberMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic16dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvCoinSymbol"
+        app:layout_constraintBottom_toTopOf="@+id/tvCoinName"
         app:layout_constraintStart_toEndOf="@+id/ivCoin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="BitCoin" />
+        tools:text="BTC" />
 
     <TextView
-        android:id="@+id/tvCoinSymbol"
+        android:id="@+id/tvCoinName"
         style="@style/TextRegularSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivCoin"
-        app:layout_constraintTop_toBottomOf="@+id/tvCoinName"
-        tools:text="BTC" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCoinSymbol"
+        tools:text="BitCoin" />
 
     <TextView
         style="@style/DisplayNumberLarge"

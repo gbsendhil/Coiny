@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
+import java.math.BigDecimal
 
 
 /**
@@ -76,4 +78,20 @@ fun dismissKeyboard(activity: Activity) {
     if (focusedView != null) {
         imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
     }
+}
+
+fun getTotalCost(coinTransactionList: List<CoinTransaction>, coinSymbol: String): BigDecimal {
+    var totalCost = BigDecimal.ZERO
+
+    coinTransactionList.forEach { coinTransaction ->
+        if (coinTransaction.coinSymbol.equals(coinSymbol, true)) {
+            if (coinTransaction.transactionType == TRANSACTION_TYPE_BUY) {
+                totalCost += totalCost.add(coinTransaction.cost.toBigDecimal())
+            } else {
+                totalCost -= totalCost.add(coinTransaction.cost.toBigDecimal())
+            }
+        }
+    }
+
+    return totalCost
 }

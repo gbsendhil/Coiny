@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -51,11 +49,6 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         setContentView(R.layout.activity_coin_search)
 
         rvSearchList.layoutManager = LinearLayoutManager(this)
-        val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        ContextCompat.getDrawable(this, R.drawable.divider_thin_horizontal)?.let { dividerItemDecoration.setDrawable(it) }
-
-        rvSearchList.addItemDecoration(dividerItemDecoration)
-
 
         coinSearchPresenter.attachView(this)
 

@@ -18,6 +18,7 @@ import com.binarybricks.coiny.components.GenericFooterModule
 import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
@@ -44,6 +45,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     private var coinDashboardList: MutableList<ModuleItem> = ArrayList()
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
     private var watchedCoinList: List<WatchedCoin> = emptyList()
+    private var coinTransactionList: List<CoinTransaction> = emptyList()
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
@@ -76,7 +78,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         lifecycle.addObserver(coinDashboardPresenter)
 
-        coinDashboardPresenter.loadWatchedCoins()
+        coinDashboardPresenter.loadWatchedCoinsAndTransactions()
 
         // get list of all exchanges
         coinDashboardPresenter.getAllSupportedExchanges()
@@ -97,27 +99,26 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         })
     }
 
-    override fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?) {
-        if (watchedCoinList != null) {
-            this.watchedCoinList = watchedCoinList
+    override fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
-            getAllWatchedCoinsPrice()
+        this.watchedCoinList = watchedCoinList
+        this.coinTransactionList = coinTransactionList
 
-            setupDashBoardAdapter(watchedCoinList)
-        }
+        getAllWatchedCoinsPrice()
 
+        setupDashBoardAdapter(watchedCoinList, coinTransactionList)
     }
 
-    private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>) {
+    private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
         // empty existing list
         coinDashboardList = ArrayList()
 
         // Add Dashboard Header with empty data
-        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(mutableListOf(), hashMapOf()))
+        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
         watchedCoinList.forEach { watchedCoin ->
-            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
+            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))
         }
 
         coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
@@ -148,6 +149,9 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         adapterDashboardList?.forEachIndexed { index, item ->
             if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
                 item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
+                coinDashboardAdapter?.notifyItemChanged(index)
+            } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
+                item.coinPriceListMap = coinPriceListMap
                 coinDashboardAdapter?.notifyItemChanged(index)
             }
         }

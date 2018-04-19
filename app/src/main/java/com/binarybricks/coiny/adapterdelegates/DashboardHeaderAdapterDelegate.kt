@@ -17,25 +17,28 @@ import kotlinx.android.extensions.LayoutContainer
 
 class DashboardHeaderAdapterDelegate(private val toCurrency: String, private val toolbarTitle: TextView) : AdapterDelegate<List<ModuleItem>>() {
 
+    private val dashboardHeaderModule by lazy {
+        DashboardHeaderModule(toCurrency, toolbarTitle)
+    }
+
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardHeaderModule.DashboardHeaderModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val dashboardHeaderModule = DashboardHeaderModule(toCurrency, toolbarTitle)
         val dashboardHeaderModuleView = dashboardHeaderModule.init(LayoutInflater.from(parent.context), parent)
         return DashboardHeaderViewHolder(dashboardHeaderModuleView, dashboardHeaderModule)
     }
 
     override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val dashboardHeaderViewHolder = holder as DashboardHeaderViewHolder
-        dashboardHeaderViewHolder.loadPortfolio()
+        dashboardHeaderViewHolder.loadPortfolio(items[position] as DashboardHeaderModule.DashboardHeaderModuleData)
     }
 
     class DashboardHeaderViewHolder(override val containerView: View, private val dashboardHeaderModule: DashboardHeaderModule)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun loadPortfolio() {
-            dashboardHeaderModule.loadPortfolioData(itemView)
+        fun loadPortfolio(dashboardHeaderModuleData: DashboardHeaderModule.DashboardHeaderModuleData) {
+            dashboardHeaderModule.loadPortfolioData(itemView, dashboardHeaderModuleData)
         }
     }
 }

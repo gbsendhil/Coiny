@@ -9,17 +9,26 @@
     <color name="colorSecondaryAccent">#ff965e</color>
     <color name="colorSecondaryDark">#b93300</color>
 
+    <!--<color name="colorPrimary">#22c478</color>-->
+    <!--<color name="colorAccent">#66f8a7</color>-->
+    <!--<color name="colorPrimaryDark">#00924b</color>-->
+
     <color name="colorPrimaryOpaque">#BF22c478</color>
     <color name="colorSecondaryTextOpaque">#33757577</color>
     <color name="colorAccentOpaque">#3366f8a7</color>
 
-    <color name="backgroundColor">#353642</color>
-    <color name="backgroundLightColor">#363744</color>
-    <color name="backgroundDarkColor">#272834</color>
+    <!--<color name="backgroundColor">#353642</color>-->
+    <!--<color name="backgroundLightColor">#363744</color>-->
+    <!--<color name="backgroundDarkColor">#272834</color>-->
+
+    <color name="backgroundColor">#303032</color>
+    <color name="backgroundLightColor">#59595b</color>
+    <color name="backgroundDarkColor">#212124</color>
 
     <color name="textColorBlack">#212124</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#757577</color>
+    <color name="textColorSecondaryBlack">#373739</color>
 
     <color name="tabTextColor">#dadadb</color>
 </resources>
