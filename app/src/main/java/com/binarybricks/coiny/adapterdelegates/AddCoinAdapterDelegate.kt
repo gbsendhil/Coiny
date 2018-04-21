@@ -16,12 +16,15 @@ import kotlinx.android.extensions.LayoutContainer
 
 class AddCoinAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
 
+    private val addCoinModule by lazy {
+        AddCoinModule()
+    }
+
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is AddCoinModule.AddCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val addCoinModule = AddCoinModule()
         val addCoinModuleView = addCoinModule.init(LayoutInflater.from(parent.context), parent)
         return AddCoinViewHolder(addCoinModuleView, addCoinModule)
     }

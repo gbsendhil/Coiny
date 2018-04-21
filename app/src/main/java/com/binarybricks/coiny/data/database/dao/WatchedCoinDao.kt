@@ -23,15 +23,16 @@ interface WatchedCoinDao {
     fun getAllCoins(): Flowable<List<WatchedCoin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCoinsIntoWatchList(list: List<WatchedCoin>)
+    fun insertCoinListIntoWatchList(list: List<WatchedCoin>)
 
+    //TODO have an option to update coin list when app opens up or in search screen.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinIntoWatchList(watchedCoin: WatchedCoin)
 
     @Query("update WatchedCoin set purchaseQuantity = purchaseQuantity + :quantity where symbol=:symbol")
-    fun updateWatchedCoinWithPurchaseQuantity(quantity: BigDecimal, symbol: String): Int
+    fun addPurchaseQuantityForCoin(quantity: BigDecimal, symbol: String): Int
 
 
     @Query("UPDATE WatchedCoin SET watched = :watched  WHERE coinId = :coinId")
-    fun updateWatchedCoinAddCoinToWatchlist(watched: Boolean, coinId: String)
+    fun makeCoinWatched(watched: Boolean, coinId: String)
 }

@@ -32,6 +32,17 @@ class CoinSearchPresenter(private val schedulerProvider: BaseSchedulerProvider,
             })?.let { compositeDisposable.add(it) }
     }
 
+    override fun updateCoinWatchedStatus(watched: Boolean, coinID: String, coinSymbol: String) {
+        compositeDisposable.add(coinRepo.updateCoinWatchedStatus(watched, coinID)
+            .observeOn(schedulerProvider.ui())
+            .subscribe({
+                Timber.d("Coin status updated")
+                currentView?.onCoinWatchedStatusUpdated(watched, coinSymbol)
+            }, {
+                currentView?.onNetworkError(it.localizedMessage)
+            }))
+    }
+
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun cleanYourSelf() {

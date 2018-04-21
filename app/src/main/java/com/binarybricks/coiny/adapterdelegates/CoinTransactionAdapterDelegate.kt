@@ -15,13 +15,15 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinTransactionAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+    private val coinTransactionHistoryModule by lazy {
+        CoinTransactionHistoryModule()
+    }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is CoinTransactionHistoryModule.CoinTransactionHistoryModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val coinTransactionHistoryModule = CoinTransactionHistoryModule()
         val coinTransactionHistoryModuleView = coinTransactionHistoryModule.init(LayoutInflater.from(parent.context), parent)
         return CoinTransactionViewHolder(coinTransactionHistoryModuleView, coinTransactionHistoryModule)
     }

@@ -44,7 +44,7 @@ class CoinDetailsActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.flCoinDetails, coinDetailsFragment)
             fragmentTransaction.commit()
 
-            supportActionBar?.title = it.coin.coinName
+            supportActionBar?.title = "${it.coin.coinName}(${it.coin.symbol})"
         }
     }
 }

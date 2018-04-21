@@ -144,14 +144,14 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
 
     fun insertCoinsInWatchList(watchedCoinList: List<WatchedCoin>): Single<Unit?> {
         return Single.fromCallable {
-            coinyDatabase?.watchedCoinDao()?.insertCoinsIntoWatchList(watchedCoinList)
+            coinyDatabase?.watchedCoinDao()?.insertCoinListIntoWatchList(watchedCoinList)
         }.subscribeOn(baseSchedulerProvider.io())
     }
 
-    fun updateCoinWatchedStatus(watched: Boolean, coinID: String) {
-        Single.fromCallable {
-            coinyDatabase?.watchedCoinDao()?.updateWatchedCoinAddCoinToWatchlist(watched, coinID)
-        }.subscribeOn(baseSchedulerProvider.io()).subscribe()
+    fun updateCoinWatchedStatus(watched: Boolean, coinID: String): Single<Unit?> {
+        return Single.fromCallable {
+            coinyDatabase?.watchedCoinDao()?.makeCoinWatched(watched, coinID)
+        }.subscribeOn(baseSchedulerProvider.io())
     }
 
     fun insertTransaction(transaction: CoinTransaction): Single<Unit?> {
@@ -162,13 +162,13 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
         }
 
         return Single.fromCallable {
-            coinyDatabase?.watchedCoinDao()?.updateWatchedCoinWithPurchaseQuantity(quantity, transaction.coinSymbol)
+            coinyDatabase?.watchedCoinDao()?.addPurchaseQuantityForCoin(quantity, transaction.coinSymbol)
             coinyDatabase?.coinTransactionDao()?.insertTransaction(transaction)
         }.subscribeOn(baseSchedulerProvider.io())
     }
 
     /**
-     * Get list of all coins watched or not
+     * Get list of all coins with there watched status
      */
     fun getAllCoins(): Flowable<List<WatchedCoin>>? {
         coinyDatabase?.let {

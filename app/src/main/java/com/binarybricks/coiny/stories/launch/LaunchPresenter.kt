@@ -35,15 +35,16 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
                 }
 
                 // insert coins in db
-                coinRepo.insertCoinsInWatchList(coinList)
+                compositeDisposable.add(coinRepo.insertCoinsInWatchList(coinList)
                     .subscribe({ t1, t2 ->
                         // add top 5 coins in watch list
                         val top5CoinsToWatch = getTop5CoinsToWatch()
 
                         top5CoinsToWatch.forEach {
-                            coinRepo.updateCoinWatchedStatus(true, it)
+                            compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
+                                .subscribe())
                         }
-                    })
+                    }))
 
                 coinList
             }

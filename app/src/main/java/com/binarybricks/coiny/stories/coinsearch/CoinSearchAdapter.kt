@@ -9,16 +9,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import jp.wasabeef.picasso.transformations.GrayscaleTransformation
+import java.math.BigDecimal
 
 class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
 
@@ -26,10 +23,6 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
 
     private val cropCircleTransformation by lazy {
         CropCircleTransformation()
-    }
-
-    private val grayscaleTransformation by lazy {
-        GrayscaleTransformation()
     }
 
     private var mListener: OnSearchItemClickListener? = null
@@ -48,6 +41,10 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
         Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
             .into(viewHolder.ivCoin)
+
+        val purchaseQuantity = filterSearchList[position].purchaseQuantity
+
+        viewHolder.cbWatched.isChecked = purchaseQuantity > BigDecimal.ZERO || filterSearchList[position].watched
     }
 
     override fun getItemCount(): Int {
@@ -95,18 +92,29 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
 
     interface OnSearchItemClickListener {
         fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin)
+        fun onItemWatchedTicked(view: View, position: Int, watchedCoin: WatchedCoin, watched: Boolean)
+        fun showPurchasedItemRemovedMessage()
     }
 
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvCoinName: TextView = view.findViewById(R.id.tvCoinName)
         val tvCoinSymbol: TextView = view.findViewById(R.id.tvCoinSymbol)
         val ivCoin: ImageView = view.findViewById(R.id.ivCoin)
+        val cbWatched: CheckBox = view.findViewById(R.id.cbWatched)
+        private val clCoinInfo: View = view.findViewById(R.id.clCoinInfo)
 
         init {
             // add second text
-            view.setOnClickListener {
-                mListener?.let { searchListner ->
-                    searchListner.onSearchItemClick(it, adapterPosition, filterSearchList[adapterPosition])
+            clCoinInfo.setOnClickListener {
+                mListener?.onSearchItemClick(it, adapterPosition, filterSearchList[adapterPosition])
+            }
+
+            cbWatched.setOnClickListener {
+                if (filterSearchList[adapterPosition].purchaseQuantity == BigDecimal.ZERO) {
+                    mListener?.onItemWatchedTicked(it, adapterPosition, filterSearchList[adapterPosition], cbWatched.isChecked)
+                } else {
+                    cbWatched.isChecked = !cbWatched.isChecked
+                    mListener?.showPurchasedItemRemovedMessage()
                 }
             }
         }

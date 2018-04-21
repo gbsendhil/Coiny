@@ -15,13 +15,15 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class DashboardEmptyCardAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+    private val dashboardEmptyCardModule by lazy {
+        DashboardEmptyCoinModule()
+    }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardEmptyCoinModule.DashboardEmptyCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val dashboardEmptyCardModule = DashboardEmptyCoinModule()
         val dashboardEmptyCardModuleView = dashboardEmptyCardModule.init(LayoutInflater.from(parent.context), parent)
         return DashboardEmptyCardViewHolder(dashboardEmptyCardModuleView, dashboardEmptyCardModule)
     }

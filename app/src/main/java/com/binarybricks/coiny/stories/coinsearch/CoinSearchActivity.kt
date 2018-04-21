@@ -94,11 +94,30 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         })
 
         coinSearchAdapter?.setOnSearchItemClickListener(object : CoinSearchAdapter.OnSearchItemClickListener {
+            override fun onItemWatchedTicked(view: View, position: Int, watchedCoin: WatchedCoin, watched: Boolean) {
+                coinSearchPresenter.updateCoinWatchedStatus(watched, watchedCoin.coin.id, watchedCoin.coin.symbol)
+            }
+
+            override fun showPurchasedItemRemovedMessage() {
+                Snackbar.make(rvSearchList, "Purchased coins can not be removed from watchlist", Snackbar.LENGTH_LONG).show()
+            }
+
             override fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin) {
                 val coinDetailsIntent = CoinDetailsActivity.buildLaunchIntent(this@CoinSearchActivity, watchedCoin)
                 startActivity(coinDetailsIntent)
             }
         })
+    }
+
+    override fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String) {
+
+        val statusText = if (watched) {
+            "Started Watching ${coinSymbol}"
+        } else {
+            "Stopped Watching ${coinSymbol}"
+        }
+
+        Snackbar.make(rvSearchList, statusText, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
