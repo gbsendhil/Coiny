@@ -5,6 +5,8 @@ Created by Pranay Airan 1/26/18.
  */
 
 
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +19,12 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import java.math.BigDecimal
 
-class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapter<CoinSearchAdapter.ResultViewHolder>(), Filterable {
+class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<WatchedCoin, CoinSearchAdapter.ResultViewHolder>(WatchedCoinDiffCallback()),
+    Filterable {
 
-    var filterSearchList: List<WatchedCoin> = searchList
+    init {
+        submitList(searchList)
+    }
 
     private val cropCircleTransformation by lazy {
         CropCircleTransformation()
@@ -35,22 +40,17 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(viewHolder: ResultViewHolder, position: Int) {
-        viewHolder.tvCoinName.text = filterSearchList[position].coin.coinName
-        viewHolder.tvCoinSymbol.text = filterSearchList[position].coin.symbol
+        viewHolder.tvCoinName.text = getItem(position).coin.coinName
+        viewHolder.tvCoinSymbol.text = getItem(position).coin.symbol
 
-        Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${filterSearchList[position].coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
+        Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${getItem(position).coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
             .into(viewHolder.ivCoin)
 
-        val purchaseQuantity = filterSearchList[position].purchaseQuantity
+        val purchaseQuantity = getItem(position).purchaseQuantity
 
-        viewHolder.cbWatched.isChecked = purchaseQuantity > BigDecimal.ZERO || filterSearchList[position].watched
+        viewHolder.cbWatched.isChecked = purchaseQuantity > BigDecimal.ZERO || getItem(position).watched
     }
-
-    override fun getItemCount(): Int {
-        return filterSearchList.size
-    }
-
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -80,8 +80,7 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
             }
 
             override fun publishResults(charSequence: CharSequence, results: Filter.FilterResults) {
-                filterSearchList = results.values as MutableList<WatchedCoin>
-                notifyDataSetChanged()
+                submitList(results.values as MutableList<WatchedCoin>)
             }
         }
     }
@@ -96,6 +95,11 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
         fun showPurchasedItemRemovedMessage()
     }
 
+    fun updateCoinList(updateList: List<WatchedCoin>) {
+        searchList = updateList
+        submitList(searchList)
+    }
+
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvCoinName: TextView = view.findViewById(R.id.tvCoinName)
         val tvCoinSymbol: TextView = view.findViewById(R.id.tvCoinSymbol)
@@ -106,12 +110,12 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
         init {
             // add second text
             clCoinInfo.setOnClickListener {
-                mListener?.onSearchItemClick(it, adapterPosition, filterSearchList[adapterPosition])
+                mListener?.onSearchItemClick(it, adapterPosition, getItem(adapterPosition))
             }
 
             cbWatched.setOnClickListener {
-                if (filterSearchList[adapterPosition].purchaseQuantity == BigDecimal.ZERO) {
-                    mListener?.onItemWatchedTicked(it, adapterPosition, filterSearchList[adapterPosition], cbWatched.isChecked)
+                if (getItem(adapterPosition).purchaseQuantity == BigDecimal.ZERO) {
+                    mListener?.onItemWatchedTicked(it, adapterPosition, getItem(adapterPosition), cbWatched.isChecked)
                 } else {
                     cbWatched.isChecked = !cbWatched.isChecked
                     mListener?.showPurchasedItemRemovedMessage()
@@ -119,5 +123,14 @@ class CoinSearchAdapter(val searchList: List<WatchedCoin>) : RecyclerView.Adapte
             }
         }
     }
+}
 
+class WatchedCoinDiffCallback : DiffUtil.ItemCallback<WatchedCoin>() {
+    override fun areItemsTheSame(oldItem: WatchedCoin?, newItem: WatchedCoin?): Boolean {
+        return oldItem?.coin?.id == newItem?.coin?.id
+    }
+
+    override fun areContentsTheSame(oldItem: WatchedCoin?, newItem: WatchedCoin?): Boolean {
+        return oldItem == newItem
+    }
 }

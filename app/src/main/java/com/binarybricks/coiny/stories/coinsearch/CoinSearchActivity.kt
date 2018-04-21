@@ -75,38 +75,43 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
 
     override fun onCoinsLoaded(coinList: List<WatchedCoin>) {
 
-        coinSearchAdapter = CoinSearchAdapter(coinList)
+        if (coinSearchAdapter == null) {
+            coinSearchAdapter = CoinSearchAdapter(coinList)
+            rvSearchList.adapter = coinSearchAdapter
 
-        rvSearchList.adapter = coinSearchAdapter
 
-        etSearchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(filterText: Editable?) {
-                coinSearchAdapter?.filter?.filter(filterText.toString())
-            }
+            etSearchBar.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(filterText: Editable?) {
+                    coinSearchAdapter?.filter?.filter(filterText.toString())
+                }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-            }
+                }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-            }
-        })
+                }
+            })
 
-        coinSearchAdapter?.setOnSearchItemClickListener(object : CoinSearchAdapter.OnSearchItemClickListener {
-            override fun onItemWatchedTicked(view: View, position: Int, watchedCoin: WatchedCoin, watched: Boolean) {
-                coinSearchPresenter.updateCoinWatchedStatus(watched, watchedCoin.coin.id, watchedCoin.coin.symbol)
-            }
+            coinSearchAdapter?.setOnSearchItemClickListener(object : CoinSearchAdapter.OnSearchItemClickListener {
+                override fun onItemWatchedTicked(view: View, position: Int, watchedCoin: WatchedCoin, watched: Boolean) {
+                    coinSearchPresenter.updateCoinWatchedStatus(watched, watchedCoin.coin.id, watchedCoin.coin.symbol)
+                }
 
-            override fun showPurchasedItemRemovedMessage() {
-                Snackbar.make(rvSearchList, "Purchased coins can not be removed from watchlist", Snackbar.LENGTH_LONG).show()
-            }
+                override fun showPurchasedItemRemovedMessage() {
+                    Snackbar.make(rvSearchList, "Purchased coins can not be removed from watchlist", Snackbar.LENGTH_LONG).show()
+                }
 
-            override fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin) {
-                val coinDetailsIntent = CoinDetailsActivity.buildLaunchIntent(this@CoinSearchActivity, watchedCoin)
-                startActivity(coinDetailsIntent)
-            }
-        })
+                override fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin) {
+                    val coinDetailsIntent = CoinDetailsActivity.buildLaunchIntent(this@CoinSearchActivity, watchedCoin)
+                    startActivity(coinDetailsIntent)
+                }
+            })
+        } else {
+            // update the list
+            coinSearchAdapter?.updateCoinList(coinList)
+        }
     }
 
     override fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String) {
