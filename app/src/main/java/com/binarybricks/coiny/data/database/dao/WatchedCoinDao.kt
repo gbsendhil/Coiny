@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import io.reactivex.Flowable
+import io.reactivex.Single
 import java.math.BigDecimal
 
 /**
@@ -18,6 +19,9 @@ interface WatchedCoinDao {
 
     @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
     fun getAllWatchedCoins(watched: Boolean = true): Flowable<List<WatchedCoin>>
+
+    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
+    fun getAllWatchedCoinsOnetime(watched: Boolean = true): Single<List<WatchedCoin>> // this method should be removed
 
     @Query("select * from WatchedCoin order by sortOrder")
     fun getAllCoins(): Flowable<List<WatchedCoin>>

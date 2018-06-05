@@ -71,7 +71,10 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
 
             // do the profit or loss things here.
             val totalReturnAmount = portfolioValue.subtract(totalPortfolioCost)
-            val totalReturnPercentage = (totalReturnAmount?.divide(totalPortfolioCost, mc))?.multiply(BigDecimal(100), mc)
+            var totalReturnPercentage = BigDecimal.ZERO
+            if (totalReturnAmount > BigDecimal.ZERO) {
+                (totalReturnAmount.divide(totalPortfolioCost, mc))?.multiply(BigDecimal(100), mc)
+            }
 
             if (totalReturnAmount != null) {
                 inflatedView.tvPortfolioChangedValue.text = formatter.formatAmount(totalReturnAmount.toPlainString(), currency)

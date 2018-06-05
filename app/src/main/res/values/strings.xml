@@ -59,4 +59,9 @@
     <string name="profit_loss">Profit/Loss</string>
     <string name="your_total_balance">Your total balance</string>
     <string name="_24h_changes">24h Changes</string>
+    <string name="add_to_watchlist">Add to watchlist</string>
+
+    <string name="coin_added_to_watchlist">Started Watching %1$s</string>
+    <string name="coin_removed_to_watchlist">Stopped Watching %1$s</string>
+    <string name="coin_already_purchased">Purchased coins can not be removed from watchlist</string>
 </resources>

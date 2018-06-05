@@ -160,8 +160,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     }
 
     // Menu icons are inflated just as they were with actionbar
-    override fun onCreateOptionsMenu(
-        menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
+    override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home_menu, menu)
 
         nextMenuItem = menu.findItem(R.id.action_search)

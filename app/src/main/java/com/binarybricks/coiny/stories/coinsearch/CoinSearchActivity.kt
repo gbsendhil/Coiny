@@ -100,7 +100,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
                 }
 
                 override fun showPurchasedItemRemovedMessage() {
-                    Snackbar.make(rvSearchList, "Purchased coins can not be removed from watchlist", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(rvSearchList, getString(R.string.coin_already_purchased), Snackbar.LENGTH_LONG).show()
                 }
 
                 override fun onSearchItemClick(view: View, position: Int, watchedCoin: WatchedCoin) {
@@ -117,9 +117,9 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     override fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String) {
 
         val statusText = if (watched) {
-            "Started Watching ${coinSymbol}"
+            getString(R.string.coin_added_to_watchlist, coinSymbol)
         } else {
-            "Stopped Watching ${coinSymbol}"
+            getString(R.string.coin_removed_to_watchlist, coinSymbol)
         }
 
         Snackbar.make(rvSearchList, statusText, Snackbar.LENGTH_LONG).show()

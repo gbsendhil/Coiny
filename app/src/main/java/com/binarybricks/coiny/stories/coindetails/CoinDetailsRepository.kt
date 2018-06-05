@@ -3,7 +3,7 @@ package com.binarybricks.coiny.stories.coindetails
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
 Created by Pranay Airan
@@ -16,10 +16,10 @@ class CoinDetailsRepository(private val baseSchedulerProvider: BaseSchedulerProv
     /**
      * Get list of all coins that is added in watch list
      */
-    fun loadWatchedCoins(): Flowable<List<WatchedCoin>>? {
+    fun loadWatchedCoins(): Single<List<WatchedCoin>>? {
 
         coinyDatabase?.let {
-            return it.watchedCoinDao().getAllWatchedCoins().subscribeOn(baseSchedulerProvider.io())
+            return it.watchedCoinDao().getAllWatchedCoinsOnetime().subscribeOn(baseSchedulerProvider.io())
         }
         return null
     }

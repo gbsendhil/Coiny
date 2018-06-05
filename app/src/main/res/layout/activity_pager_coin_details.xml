@@ -23,6 +23,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:rtl_tabIndicatorColor="@android:color/white"
         app:rtl_tabIndicatorHeight="2dp"
+        app:rtl_tabOnScreenLimit="5"
         app:rtl_tabSelectedTextColor="@android:color/white"
         app:rtl_tabTextAppearance="@style/rtl_RecyclerTabLayout.Tab" />
 

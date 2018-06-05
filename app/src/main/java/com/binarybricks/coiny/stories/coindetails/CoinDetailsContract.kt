@@ -13,10 +13,12 @@ interface CoinDetailsContract {
         fun showOrHideLoadingIndicator(showLoading: Boolean = true)
         fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin)
         fun onRecentTransactionLoaded(coinTransactionList: List<CoinTransaction>)
+        fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String)
     }
 
     interface Presenter {
         fun loadCurrentCoinPrice(watchedCoin: WatchedCoin, toCurrency: String)
         fun loadRecentTransaction(symbol: String)
+        fun updateCoinWatchedStatus(watched: Boolean, coinID: String, coinSymbol: String)
     }
 }
