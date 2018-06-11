@@ -17,22 +17,6 @@ import java.math.BigDecimal
 Created by Pranay Airan 1/15/18.
  */
 
-
-fun getAboutStringForCoin(coinSymbol: String, context: Context?): String {
-    if (context != null) {
-        return when (coinSymbol.toUpperCase()) {
-            "BTC" -> context.getString(R.string.btc)
-            "ETH" -> context.getString(R.string.eth)
-            "LTC" -> context.getString(R.string.ltc)
-            "XRP" -> context.getString(R.string.xrp)
-
-            else -> context.getString(R.string.unavailable)
-        }
-    }
-
-    return "N/A"
-}
-
 /**
  * Get's the browser intent to open a webpage.
  */

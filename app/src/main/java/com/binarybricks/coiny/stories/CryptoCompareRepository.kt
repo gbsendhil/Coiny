@@ -1,21 +1,26 @@
 package com.binarybricks.coiny.stories
 
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.data.CoinyCache
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.api.API
 import com.binarybricks.coiny.network.api.cryptoCompareRetrofit
-import com.binarybricks.coiny.network.models.CCCoin
-import com.binarybricks.coiny.network.models.CoinPrice
-import com.binarybricks.coiny.network.models.ExchangePair
+import com.binarybricks.coiny.network.models.*
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.utils.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
+import java.io.IOException
+import java.io.InputStream
 import java.math.BigDecimal
+import java.nio.charset.Charset
 import java.util.*
+
 
 /**
 Created by Pranay Airan
@@ -28,10 +33,11 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
     /**
      * Get list of all coins from api
      */
-    fun getAllCoinsFromAPI(): Single<ArrayList<CCCoin>> {
+    fun getAllCoinsFromAPI(): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
 
         return if (CoinyCache.coinList.size > 0) {
-            Single.just(CoinyCache.coinList)
+            val coinInfoMap = getCoinInfoMap()
+            Single.just(Pair(CoinyCache.coinList, coinInfoMap))
         } else {
             cryptoCompareRetrofit.create(API::class.java)
                 .getCoinList()
@@ -40,9 +46,43 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
                     Timber.d("Coin fetched, parsing response")
                     val coinsFromJson = getCoinsFromJson(it)
                     CoinyCache.coinList = coinsFromJson
-                    coinsFromJson
+                    Pair(coinsFromJson, mutableMapOf<String, CoinInfo>())
                 }
         }
+    }
+
+    private fun getCoinInfoMap(): Map<String, CoinInfo> {
+        val coinInfoMap = mutableMapOf<String, CoinInfo>()
+
+        var json: String? = null
+        var inputStream: InputStream? = null
+        try {
+            inputStream = CoinyApplication.getGlobalAppContext().assets.open("currencyinfo.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            json = String(buffer, Charset.defaultCharset())
+
+            val amountCurrencyType = object : TypeToken<ArrayList<CoinInfoWithCurrency>>() {
+
+            }.type
+
+            val coinInfoWithCurrencyList = Gson().fromJson<ArrayList<CoinInfoWithCurrency>>(json, amountCurrencyType)
+
+            coinInfoWithCurrencyList.forEach {
+                coinInfoMap[it.currencyName.toLowerCase()] = it.info
+            }
+
+            return coinInfoMap
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+        }
+
+        return coinInfoMap
     }
 
     // get only price of the coinSymbol

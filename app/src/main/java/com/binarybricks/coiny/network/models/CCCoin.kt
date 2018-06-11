@@ -41,12 +41,16 @@ data class CCCoin(
 
     @field:SerializedName("Sponsored") val sponsored: Boolean = false)
 
-fun getCoinFromCCCoin(ccCoin: CCCoin, defaultExchange: String, defaultCurrency: String): WatchedCoin {
+
+data class CoinInfoWithCurrency(val currencyName: String, val info: CoinInfo)
+data class CoinInfo(val desc: String, val web: String?, val twt: String?)
+
+fun getCoinFromCCCoin(ccCoin: CCCoin, defaultExchange: String, defaultCurrency: String, coinInfo: CoinInfo?): WatchedCoin {
 
     val coin = Coin(ccCoin.id, ccCoin.url, ccCoin.imageUrl, ccCoin.name, ccCoin.symbol, ccCoin.coinName,
         ccCoin.fullName, ccCoin.algorithm, ccCoin.proofType, ccCoin.fullyPremined,
         ccCoin.totalCoinSupply, ccCoin.preMinedValue, ccCoin.totalCoinsFreeFloat, ccCoin.sortOrder.toInt(),
-        ccCoin.sponsored)
+        ccCoin.sponsored, coinInfo?.desc, coinInfo?.twt, coinInfo?.web)
 
     return WatchedCoin(coin, defaultExchange, defaultCurrency)
 }

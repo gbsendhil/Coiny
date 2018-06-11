@@ -27,11 +27,13 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
 
     override fun getAllSupportedCoins(defaultCurrency: String) {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI()
-            .filter { it.size > 0 }
+            .filter { it.first.size > 0 }
             .map {
                 val coinList: MutableList<WatchedCoin> = mutableListOf()
-                it.forEach {
-                    coinList.add(getCoinFromCCCoin(it, defaultExchange, defaultCurrency))
+                val ccCoinList = it.first
+                ccCoinList.forEach { ccCoin ->
+                    val coinInfo = it.second[ccCoin.symbol.toLowerCase()]
+                    coinList.add(getCoinFromCCCoin(ccCoin, defaultExchange, defaultCurrency, coinInfo))
                 }
 
                 // insert coins in db

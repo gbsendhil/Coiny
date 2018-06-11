@@ -181,12 +181,12 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             coinDetailList.add(CoinStatsticsModule.CoinStatisticsModuleData(coinPrice))
 
             coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice.market
-                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
+                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType, watchedCoin.coin.website, watchedCoin.coin.twitter))
         }
 
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
 
-        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, context?.applicationContext)))
+        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(watchedCoin.coin.description))
         coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, coinDetailList, schedulerProvider, resourceProvider)
 
         view?.rvCoinDetails?.adapter = coinDetailsAdapter

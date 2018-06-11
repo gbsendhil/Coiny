@@ -20,12 +20,16 @@ class AboutCoinModule : Module() {
     }
 
     fun showAboutCoinText(inflatedView: View, aboutCoinModuleData: AboutCoinModuleData) {
-        inflatedView.tvAboutCoin.text = aboutCoinModuleData.aboutCoin
+
+        inflatedView.tvAboutCoin.text = aboutCoinModuleData.aboutCoin ?: inflatedView.context.getString(R.string.info_unavilable)
+        inflatedView.cvAboutCoin.setOnClickListener {
+            inflatedView.tvAboutCoin.maxLines = Int.MAX_VALUE
+        }
     }
 
     override fun cleanUp() {
         Timber.d("Clean up about coinSymbol module")
     }
 
-    data class AboutCoinModuleData(val aboutCoin: String) : ModuleItem
+    data class AboutCoinModuleData(val aboutCoin: String?) : ModuleItem
 }
