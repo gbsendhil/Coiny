@@ -4,7 +4,7 @@ import LaunchContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import com.binarybricks.coiny.data.database.entities.Coin
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.getCoinFromCCCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
@@ -21,15 +21,33 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
                       private val coinRepo: CryptoCompareRepository) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
 
-    override fun getAllSupportedCoins() {
-        compositeDisposable.add(coinRepo.getAllCoins()
-            .filter { it.size > 0 }
+    override fun loadCoinsFromAPIInBackground() {
+        compositeDisposable.add(coinRepo.getAllCoinsFromAPI().subscribe())
+    }
+
+    override fun getAllSupportedCoins(defaultCurrency: String) {
+        compositeDisposable.add(coinRepo.getAllCoinsFromAPI()
+            .filter { it.first.size > 0 }
             .map {
-                val coinList: MutableList<Coin> = mutableListOf()
-                it.forEach {
-                    coinList.add(getCoinFromCCCoin(it))
+                val coinList: MutableList<WatchedCoin> = mutableListOf()
+                val ccCoinList = it.first
+                ccCoinList.forEach { ccCoin ->
+                    val coinInfo = it.second[ccCoin.symbol.toLowerCase()]
+                    coinList.add(getCoinFromCCCoin(ccCoin, defaultExchange, defaultCurrency, coinInfo))
                 }
-                coinRepo.insertCoins(coinList)
+
+                // insert coins in db
+                compositeDisposable.add(coinRepo.insertCoinsInWatchList(coinList)
+                    .subscribe({ t1, t2 ->
+                        // add top 5 coins in watch list
+                        val top5CoinsToWatch = getTop5CoinsToWatch()
+
+                        top5CoinsToWatch.forEach {
+                            compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
+                                .subscribe())
+                        }
+                    }))
+
                 coinList
             }
             .observeOn(schedulerProvider.ui())
@@ -39,11 +57,6 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
                 Timber.e(it.localizedMessage)
             })
         )
-    }
-
-    override fun addTop5CoinsInWishlist(defaultCurrency: String) {
-        // add top 5 coins in watch list
-        coinRepo.insertCoinsInWatchList(getTop5CoinsToWatch(defaultExchange, defaultCurrency))
     }
 
     // cleanup

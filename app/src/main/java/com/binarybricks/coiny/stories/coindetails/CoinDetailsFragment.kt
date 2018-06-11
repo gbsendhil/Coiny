@@ -6,9 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
@@ -22,9 +20,10 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.*
-import kotlinx.android.synthetic.main.activity_all_coin_details.*
+import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.view.*
+import java.math.BigDecimal
 
 
 class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
@@ -32,6 +31,10 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
     private val coinDetailList: MutableList<ModuleItem> = ArrayList()
     private var coinDetailsAdapter: CoinDetailsAdapter? = null
     private var coinPrice: CoinPrice? = null
+    private var watchedMenuItem: MenuItem? = null
+    private var isCoinWatched = false
+    private var isCoinedPurchased = false
+    private var watchedCoin: WatchedCoin? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
@@ -66,9 +69,11 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_coin_details, container, false)
 
-        val watchedCoin = arguments?.getParcelable<WatchedCoin>(WATCHED_COIN)
+        watchedCoin = arguments?.getParcelable<WatchedCoin>(WATCHED_COIN)
 
-        if (watchedCoin != null) {
+        setHasOptionsMenu(true)
+
+        watchedCoin?.let {
 
             coinDetailsPresenter.attachView(this)
 
@@ -82,18 +87,78 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
                 override fun onScrolled(offset: Int) {
                     super.onScrolled(offset)
-                    (activity as CoinDetailsPagerActivity).toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
-                    (activity as CoinDetailsPagerActivity).toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                    (activity as? CoinDetailsPagerActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                    (activity as? CoinDetailsPagerActivity)?.toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+
+                    (activity as? CoinDetailsActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
                 }
             })
 
             showOrHideLoadingIndicator(true)
 
             // load data
-            coinDetailsPresenter.loadCurrentCoinPrice(watchedCoin, toCurrency)
+            coinDetailsPresenter.loadCurrentCoinPrice(it, toCurrency)
+
+            if (it.purchaseQuantity > BigDecimal.ZERO) {
+                isCoinedPurchased = true
+                isCoinWatched = true
+            } else if (it.watched) {
+                isCoinWatched = true
+            }
         }
 
         return inflate
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+
+        inflater?.inflate(R.menu.coin_details_menu, menu)
+
+        watchedMenuItem = menu?.findItem(R.id.action_watch)
+
+        changeCoinMenu(isCoinWatched, isCoinedPurchased)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_watch -> {
+                isCoinWatched = !isCoinWatched
+                changeCoinMenu(isCoinWatched, isCoinedPurchased)
+                changeCoinWatchedStatus(isCoinWatched)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun changeCoinWatchedStatus(isCoinWatched: Boolean) {
+        watchedCoin?.let {
+            coinDetailsPresenter.updateCoinWatchedStatus(isCoinWatched, it.coin.id, it.coin.symbol)
+        }
+    }
+
+    private fun changeCoinMenu(isCoinWatched: Boolean, isCoinPurchased: Boolean) {
+        if (!isCoinPurchased) {
+            if (isCoinWatched) {
+                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_check_box_white_24dp)
+            } else {
+                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_add_white_24dp)
+            }
+        } else {
+            watchedMenuItem?.isVisible = false
+        }
+    }
+
+    override fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String) {
+
+        val statusText = if (watched) {
+            getString(R.string.coin_added_to_watchlist, coinSymbol)
+        } else {
+            getString(R.string.coin_removed_to_watchlist, coinSymbol)
+        }
+
+        Snackbar.make(rvCoinDetails, statusText, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onNetworkError(errorMessage: String) {
@@ -116,18 +181,20 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             coinDetailList.add(CoinStatsticsModule.CoinStatisticsModuleData(coinPrice))
 
             coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice.market
-                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
+                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType, watchedCoin.coin.website, watchedCoin.coin.twitter))
         }
 
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
 
-        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(getAboutStringForCoin(watchedCoin.coin.symbol, context?.applicationContext)))
+        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(watchedCoin.coin.description))
         coinDetailsAdapter = CoinDetailsAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, coinDetailList, schedulerProvider, resourceProvider)
 
         view?.rvCoinDetails?.adapter = coinDetailsAdapter
         coinDetailsAdapter?.notifyDataSetChanged()
 
         coinDetailsPresenter.loadRecentTransaction(watchedCoin.coin.symbol)
+
+        coinDetailList.add(GenericFooterModule.FooterModuleData())
     }
 
     override fun onRecentTransactionLoaded(coinTransactionList: List<CoinTransaction>) {

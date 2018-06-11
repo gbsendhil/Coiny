@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cvInfoCoin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic12dp"
@@ -62,6 +63,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAlgorithmLabel" />
 
+            <TextView
+                android:id="@+id/tvTwitterLabel"
+                style="@style/TextSmallSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/generic16dp"
+                android:text="@string/twitter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvProofTypeLabel" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -99,6 +109,18 @@
                 app:layout_constraintStart_toStartOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tvProofTypeLabel"
                 tools:text="PoW" />
+
+            <TextView
+                android:id="@+id/tvTwitterName"
+                style="@style/TextRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:text="@string/na"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTwitterLabel"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvTwitterLabel" />
+
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

@@ -9,27 +9,13 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
+import java.math.BigDecimal
 
 
 /**
 Created by Pranay Airan 1/15/18.
  */
-
-
-fun getAboutStringForCoin(coinSymbol: String, context: Context?): String {
-    if (context != null) {
-        return when (coinSymbol.toUpperCase()) {
-            "BTC" -> context.getString(R.string.btc)
-            "ETH" -> context.getString(R.string.eth)
-            "LTC" -> context.getString(R.string.ltc)
-            "XRP" -> context.getString(R.string.xrp)
-
-            else -> context.getString(R.string.unavailable)
-        }
-    }
-
-    return "N/A"
-}
 
 /**
  * Get's the browser intent to open a webpage.
@@ -76,4 +62,20 @@ fun dismissKeyboard(activity: Activity) {
     if (focusedView != null) {
         imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
     }
+}
+
+fun getTotalCost(coinTransactionList: List<CoinTransaction>, coinSymbol: String): BigDecimal {
+    var totalCost = BigDecimal.ZERO
+
+    coinTransactionList.forEach { coinTransaction ->
+        if (coinTransaction.coinSymbol.equals(coinSymbol, true)) {
+            if (coinTransaction.transactionType == TRANSACTION_TYPE_BUY) {
+                totalCost += totalCost.add(coinTransaction.cost.toBigDecimal())
+            } else {
+                totalCost -= totalCost.add(coinTransaction.cost.toBigDecimal())
+            }
+        }
+    }
+
+    return totalCost
 }

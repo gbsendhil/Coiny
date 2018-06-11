@@ -12,21 +12,21 @@ import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.*
+import com.binarybricks.coiny.components.DashboardCoinModule
+import com.binarybricks.coiny.components.DashboardHeaderModule
+import com.binarybricks.coiny.components.GenericFooterModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
-import com.binarybricks.coiny.data.database.entities.Coin
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.OnVerticalScrollListener
 import com.binarybricks.coiny.utils.dpToPx
-import com.lapism.searchview.SearchAdapter
-import com.lapism.searchview.SearchItem
-import com.lapism.searchview.SearchView
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import java.math.BigDecimal
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
@@ -45,6 +45,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     private var coinDashboardList: MutableList<ModuleItem> = ArrayList()
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
     private var watchedCoinList: List<WatchedCoin> = emptyList()
+    private var coinTransactionList: List<CoinTransaction> = emptyList()
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
@@ -77,9 +78,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         lifecycle.addObserver(coinDashboardPresenter)
 
-        coinDashboardPresenter.loadWatchedCoins()
-
-        coinDashboardPresenter.loadAllSupportedCoins()
+        coinDashboardPresenter.loadWatchedCoinsAndTransactions()
 
         // get list of all exchanges
         coinDashboardPresenter.getAllSupportedExchanges()
@@ -87,7 +86,6 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
     private fun initializeUI() {
         val toolBarDefaultElevation = dpToPx(this, 8) // default elevation of toolbar
-        setupSearchView()
 
         rvDashboard.layoutManager = LinearLayoutManager(this)
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList, toolbarTitle)
@@ -101,50 +99,29 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         })
     }
 
-    override fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?) {
-        if (watchedCoinList != null) {
-            this.watchedCoinList = watchedCoinList
+    override fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
-            getAllWatchedCoinsPrice()
+        this.watchedCoinList = watchedCoinList
+        this.coinTransactionList = coinTransactionList
 
-            setupDashBoardAdapter(watchedCoinList)
-        }
+        getAllWatchedCoinsPrice()
 
+        setupDashBoardAdapter(watchedCoinList, coinTransactionList)
     }
 
-    private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>) {
+    private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
         // empty existing list
         coinDashboardList = ArrayList()
 
         // Add Dashboard Header with empty data
-        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(mutableListOf(), hashMapOf()))
-
-        // add coinSymbol section
-        val coinPurchasesList: MutableList<ModuleItem> = ArrayList()
-        coinPurchasesList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Crypto Currencies"))
-
-        val coinWatchList: MutableList<ModuleItem> = ArrayList()
-        coinWatchList.add(DashboardCoinListHeaderModule.DashboardCoinListHeaderModuleData("Watchlist"))
+        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
         watchedCoinList.forEach { watchedCoin ->
-            if (watchedCoin.purchaseQuantity > BigDecimal.ZERO) {
-                coinPurchasesList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
-            } else {
-                coinWatchList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null))
-            }
+            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))
         }
 
-        if (coinPurchasesList.size == 1) {
-            coinPurchasesList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Track & monitor your holding. Add your first Transaction"))
-        }
-
-        if (coinWatchList.size == 1) {
-            coinWatchList.add(DashboardEmptyCardModule.DashboardEmptyCardModuleData("Watch coinSymbol prices. Search and click + to get started."))
-        }
-
-        coinDashboardList.addAll(coinPurchasesList)
-        coinDashboardList.addAll(coinWatchList)
+        coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
         showOrHideLoadingIndicator(false)
 
@@ -173,62 +150,17 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
             if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
                 item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
                 coinDashboardAdapter?.notifyItemChanged(index)
+            } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
+                item.coinPriceListMap = coinPriceListMap
+                coinDashboardAdapter?.notifyItemChanged(index)
             }
         }
 
         // update dashboard card
     }
 
-    private fun setupSearchView() {
-        searchView.version = SearchView.Version.MENU_ITEM
-        searchView.versionMargins = SearchView.VersionMargins.MENU_ITEM
-        searchView.theme = SearchView.Theme.DARK
-
-        searchView.hint = getString(R.string.search_hint)
-        searchView.setVoice(false)
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        searchView.setNavigationIconClickListener({
-            searchView.close(true)
-        })
-
-        searchView.setOnOpenCloseListener(object : SearchView.OnOpenCloseListener {
-            override fun onOpen(): Boolean {
-                nextMenuItem?.isVisible = false
-                return true
-            }
-
-            override fun onClose(): Boolean {
-                nextMenuItem?.isVisible = true
-                return true
-            }
-        })
-    }
-
-    override fun onSupportedCoinsLoaded(coinList: List<Coin>) {
-        val suggestionsList = ArrayList<SearchItem>()
-
-        coinList.forEach {
-            suggestionsList.add(SearchItem(it.fullName))
-        }
-
-        val searchAdapter = SearchAdapter(this, suggestionsList)
-        searchAdapter.setOnSearchItemClickListener { view, position, text -> searchView.close(false) }
-        searchView.adapter = searchAdapter
-    }
-
     // Menu icons are inflated just as they were with actionbar
-    override fun onCreateOptionsMenu(
-        menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
+    override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home_menu, menu)
 
         nextMenuItem = menu.findItem(R.id.action_search)
@@ -237,10 +169,9 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
         when (item?.itemId) {
             R.id.action_search -> {
-                searchView.open(true) // enable or disable animation
+                startActivity(CoinSearchActivity.buildLaunchIntent(this))
                 return true
             }
         }

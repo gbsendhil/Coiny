@@ -13,7 +13,7 @@ import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
-import kotlinx.android.synthetic.main.activity_all_coin_details.*
+import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 
 
@@ -28,7 +28,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
     }
 
     private val allCoinDetailsRepository by lazy {
-        AllCoinDetailsRepository(schedulerProvider, CoinyApplication.database)
+        CoinDetailsRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDetailPagerPresenter: CoinDetailPagerPresenter by lazy {
@@ -48,7 +48,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_all_coin_details)
+        setContentView(R.layout.activity_pager_coin_details)
 
         val toolbar = findViewById<View>(R.id.toolbar)
         setSupportActionBar(toolbar as Toolbar?)

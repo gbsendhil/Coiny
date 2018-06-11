@@ -30,6 +30,7 @@ class CoinDetailsAdapter(fromCurrency: String,
     private val COIN_STATS = 5
     private val ABOUT_COIN = 6
     private val COINT_TRANSACTION = 7
+    private val FOOTER = 8
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
@@ -42,6 +43,7 @@ class CoinDetailsAdapter(fromCurrency: String,
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
         delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())
+        delegates.addDelegate(FOOTER, GenericFooterAdapterDelegate())
     }
 
     override fun getItemViewType(position: Int): Int {

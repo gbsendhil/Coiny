@@ -48,12 +48,12 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
         inflatedView.tvNoOfCoins.text = noOfCoins.toString()
         inflatedView.tvCoinLabel.text = coinPrice.fromSymbol
 
-        val totalCurrentValue = coinPositionCardModuleData.coinPrice.price?.toBigDecimal()?.multiply(noOfCoins.toBigDecimal())
+        val totalCurrentValue = coinPrice.price?.toBigDecimal()?.multiply(noOfCoins)
         if (totalCurrentValue != null) {
             inflatedView.tvCoinValue.text = formatter.formatAmount(totalCurrentValue.toPlainString(), currency)
         }
 
-        inflatedView.tvAvgCostValue.text = formatter.formatAmount(totalCost.divide(noOfCoins.toBigDecimal()).toPlainString(), currency)
+        inflatedView.tvAvgCostValue.text = formatter.formatAmount(totalCost.divide(noOfCoins, mc).toPlainString(), currency)
 
         val totalReturnAmount = totalCurrentValue?.subtract(totalCost)
         val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
@@ -65,21 +65,21 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
         }
     }
 
-    private fun getNoOfCoinsAndTotalCost(coinTransactionList: List<CoinTransaction>): Pair<Int, BigDecimal> {
-        var noOfCoins = 0
+    private fun getNoOfCoinsAndTotalCost(coinTransactionList: List<CoinTransaction>): Pair<BigDecimal, BigDecimal> {
+        var noOfCoins = BigDecimal.ZERO
         var totalCost = BigDecimal.ZERO
 
         coinTransactionList.forEach { coinTransaction ->
             if (coinTransaction.transactionType == TRANSACTION_TYPE_BUY) {
-                noOfCoins += coinTransaction.quantity.toInt()
+                noOfCoins += coinTransaction.quantity
                 totalCost += totalCost.add(coinTransaction.cost.toBigDecimal())
             } else {
-                noOfCoins -= coinTransaction.quantity.toInt()
+                noOfCoins -= coinTransaction.quantity
                 totalCost -= totalCost.add(coinTransaction.cost.toBigDecimal())
             }
         }
 
-        return Pair<Int, BigDecimal>(noOfCoins, totalCost)
+        return Pair<BigDecimal, BigDecimal>(noOfCoins, totalCost)
     }
 
     override fun cleanUp() {

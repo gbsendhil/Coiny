@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.binarybricks.coiny.stories.coindetails.CoinDetailsFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.nshmura.recyclertablayout.RecyclerTabLayout
+        android:id="@+id/rtTab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:rtl_tabIndicatorColor="@android:color/white"
+        app:rtl_tabIndicatorHeight="2dp"
+        app:rtl_tabOnScreenLimit="5"
+        app:rtl_tabSelectedTextColor="@android:color/white"
+        app:rtl_tabTextAppearance="@style/rtl_RecyclerTabLayout.Tab" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpCoins"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rtTab" />
+
+</android.support.constraint.ConstraintLayout>

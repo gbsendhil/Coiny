@@ -1,10 +1,12 @@
 package com.binarybricks.coiny.components
 
 import android.animation.ValueAnimator
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CoinPrice
@@ -12,6 +14,7 @@ import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import com.binarybricks.coiny.utils.getDefaultExchangeText
+import com.binarybricks.coiny.utils.getTotalCost
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
@@ -27,8 +30,6 @@ import java.util.*
  */
 
 class DashboardCoinModule(private val toCurrency: String) : Module() {
-
-    private lateinit var picasso: Picasso
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)
@@ -51,9 +52,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
     }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
-        val inflatedView = layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
-        picasso = Picasso.with(inflatedView.context)
-        return inflatedView
+        return layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
     }
 
     fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData) {
@@ -61,31 +60,49 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         val coin = dashboardCoinModuleData.watchedCoin.coin
         val coinPrice = dashboardCoinModuleData.coinPrice
 
-        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=40"
+        val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=50"
 
-        picasso.load(imageUrl).error(R.mipmap.ic_launcher_round)
+        Picasso.get().load(imageUrl).error(R.mipmap.ic_launcher_round)
             .transform(cropCircleTransformation)
-            .transform(grayscaleTransformation)
             .into(inflatedView.ivCoin)
 
+        inflatedView.tvCoinSymbol.text = coin.symbol
         inflatedView.tvCoinName.text = coin.coinName
+        inflatedView.tvExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
 
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
 
             animateCoinPrice(inflatedView, coinPrice.price)
-            val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity.round(mc)
+            val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity
+
+            // check if coin is purchased
             if (purchaseQuantity > BigDecimal.ZERO) {
-                inflatedView.tvTxnTimeAndExchange.text = "${purchaseQuantity.toPlainString()} ${dashboardCoinModuleData.watchedCoin.coin.symbol}"
+                inflatedView.purchaseItemsGroup.visibility = View.VISIBLE
+                inflatedView.tvQuantity.text = purchaseQuantity.toPlainString()
 
                 val currentWorth = purchaseQuantity.multiply(BigDecimal(coinPrice.price))
-                inflatedView.tvCoinPair.text = "(${formatter.formatAmount(currentWorth.toPlainString(), currency)})"
+                val totalCost = getTotalCost(dashboardCoinModuleData.coinTransactionList, coin.symbol)
+
+                inflatedView.tvCurrentValue.text = "(${formatter.formatAmount(currentWorth.toPlainString(), currency)})"
+
+                // do the profit or loss things here.
+                val totalReturnAmount = currentWorth?.subtract(totalCost)
+                //val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
+
+                if (totalReturnAmount != null) {
+                    inflatedView.tvProfitLoss.text = formatter.formatAmount(totalReturnAmount.toPlainString(), currency)
+                }
+
+                if (totalReturnAmount != null && totalReturnAmount < BigDecimal.ZERO) {
+                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
+                } else {
+                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorPrimary))
+                }
             } else {
-                inflatedView.tvTxnTimeAndExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
-                inflatedView.tvCoinPair.text = "${coinPrice.fromSymbol}/${coinPrice.toSymbol}"
+                inflatedView.purchaseItemsGroup.visibility = View.GONE
             }
 
-            // adjust color logic here for text
 
             inflatedView.coinCard.setOnClickListener {
                 inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
@@ -96,8 +113,6 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
     override fun cleanUp() {
         Timber.d("Clean up dashboard coinSymbol module")
     }
-
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?) : ModuleItem
 
 
     private fun animateCoinPrice(inflatedView: View, amount: String?) {
@@ -112,4 +127,6 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
             chartCoinPriceAnimation.start()
         }
     }
+
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?, val coinTransactionList: List<CoinTransaction>) : ModuleItem
 }

@@ -16,13 +16,15 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
+    private val dashboardCoinModule by lazy {
+        DashboardCoinModule(toCurrency)
+    }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardCoinModule.DashboardCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val dashboardCoinModule = DashboardCoinModule(toCurrency)
         val dashboardCoinModuleView = dashboardCoinModule.init(LayoutInflater.from(parent.context), parent)
         return DashboardCoinViewHolder(dashboardCoinModuleView, dashboardCoinModule)
     }

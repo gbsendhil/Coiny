@@ -9,7 +9,7 @@ interface LaunchContract {
     interface View : BaseView
 
     interface Presenter {
-        fun getAllSupportedCoins()
-        fun addTop5CoinsInWishlist(defaultCurrency: String)
+        fun loadCoinsFromAPIInBackground()
+        fun getAllSupportedCoins(defaultCurrency: String)
     }
 }

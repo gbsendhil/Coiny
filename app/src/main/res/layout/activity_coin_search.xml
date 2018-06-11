@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.binarybricks.coiny.stories.exchangesearch.ExchangeSearchActivity">
+
+
+    <EditText
+        android:id="@+id/etSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/generic8dp"
+        android:layout_marginStart="@dimen/generic8dp"
+        android:layout_marginTop="@dimen/generic8dp"
+        android:background="@color/backgroundColor"
+        android:hint="@string/search_hint"
+        android:paddingBottom="@dimen/generic8dp"
+        android:paddingEnd="@dimen/generic8dp"
+        android:paddingStart="@dimen/generic48dp"
+        android:paddingTop="@dimen/generic8dp"
+        android:textColor="@color/primaryTextColor"
+        android:textColorHint="@color/secondaryTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/generic8dp"
+        app:layout_constraintBottom_toBottomOf="@id/etSearchBar"
+        app:layout_constraintStart_toStartOf="@id/etSearchBar"
+        app:layout_constraintTop_toTopOf="@id/etSearchBar"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/generic8dp"
+        android:layout_marginStart="@dimen/generic8dp"
+        android:paddingTop="@dimen/generic16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchBar" />
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/pbLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

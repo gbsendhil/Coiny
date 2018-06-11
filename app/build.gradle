@@ -9,6 +9,7 @@ android {
         applicationId "com.binarybricks.coiny"
         minSdkVersion 21
         targetSdkVersion 27
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,9 +28,9 @@ androidExtensions {
 
 ext {
     // constant versions to use for common packages like support libs
-    supportLibVersion = '27.0.2'
+    supportLibVersion = '27.1.1'
     playServicesVersion = '11.8.0'
-    archComponentVersion = '1.0.0'
+    archComponentVersion = '1.1.0'
     okHttpVersion = '3.8.1'
 }
 
@@ -37,8 +38,8 @@ dependencies {
 
     // for testing
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -52,7 +53,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
     implementation "com.android.support:cardview-v7:${supportLibVersion}"
     implementation "com.android.support:customtabs:${supportLibVersion}"
-    implementation "com.android.support.constraint:constraint-layout:1.1.0-beta5"
+    implementation "com.android.support.constraint:constraint-layout:1.1.0"
 
     // architecture components
     // Room
@@ -72,23 +73,21 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.1.10"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
 
-    // search view
-    implementation 'com.lapism:searchview:5.0.0-alpha7'
-    implementation 'com.google.android:flexbox:0.3.1'
-
     // other dependencies
     implementation "com.jakewharton.timber:timber:4.6.1"
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     implementation 'com.github.midorikocak:currency-picker-android:1.1.9'
-    implementation 'com.airbnb.android:lottie:2.5.0'
+    implementation 'com.airbnb.android:lottie:2.5.1'
     implementation 'com.nshmura:recyclertablayout:1.5.0'
-    implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
+    implementation('com.wdullaer:materialdatetimepicker:3.5.1') {
+        exclude module: 'support-v13'
+    }
 
     // image loading
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'jp.wasabeef:picasso-transformations:2.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
 
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'

@@ -15,13 +15,15 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinPositionAdapterDelegate(private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+    private val coinPositionCard by lazy {
+        CoinPositionCard(resourceProvider)
+    }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is CoinPositionCard.CoinPositionCardModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val coinPositionCard = CoinPositionCard(resourceProvider)
         val coinPositionCardView = coinPositionCard.init(LayoutInflater.from(parent.context), parent)
         return CoinPositionCardViewHolder(coinPositionCardView, coinPositionCard)
     }

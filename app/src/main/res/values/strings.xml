@@ -34,7 +34,7 @@
     <string name="recent_news">Recent News</string>
     <string name="more">More</string>
     <string name="add_transaction">Add Transaction</string>
-    <string name="portfolio_changed_percentage">(0%)</string>
+    <string name="portfolio_changed_percentage">(%1$s%%)</string>
     <string name="search_hint">Search Coin</string>
     <string name="trading_pair">Trading Pair</string>
     <string name="buy_price">Buy Price</string>
@@ -50,4 +50,22 @@
     <string name="market_value">Market Value</string>
     <string name="total_return">Total Return</string>
     <string name="today_s_return">Today\'s Return</string>
+    <string name="search_coin">Search Coin</string>
+    <string name="crypto_compare">Powered by Cryptocompare.com</string>
+    <string name="crypto_compare_url">https://www.cryptocompare.com</string>
+    <string name="empty_holding">Track &amp; monitor your holdings></string>
+    <string name="empty_watchlist">Monitor currency prices, gains and loss</string>
+    <string name="empty_watchlist_cta">Add to Watchlist</string>
+    <string name="profit_loss">Profit/Loss</string>
+    <string name="your_total_balance">Your total balance</string>
+    <string name="_24h_changes">24h Changes</string>
+    <string name="add_to_watchlist">Add to watchlist</string>
+
+    <string name="coin_added_to_watchlist">Started Watching %1$s</string>
+    <string name="coin_removed_to_watchlist">Stopped Watching %1$s</string>
+    <string name="coin_already_purchased">Purchased coins can not be removed from watchlist</string>
+    <string name="info_unavilable">Currency Info Unavailable</string>
+    <string name="twitterValue">\@%1$s</string>
+    <string name="twitter">Twitter</string>
+    <string name="na">N/A</string>
 </resources>
