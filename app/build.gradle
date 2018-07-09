@@ -84,6 +84,7 @@ dependencies {
     implementation('com.wdullaer:materialdatetimepicker:3.5.1') {
         exclude module: 'support-v13'
     }
+    compile 'com.romandanylyk:pageindicatorview:1.0.1@aar'
 
     // image loading
     implementation 'com.squareup.picasso:picasso:2.71828'

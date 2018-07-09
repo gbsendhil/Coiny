@@ -38,7 +38,7 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
 
                 // insert coins in db
                 compositeDisposable.add(coinRepo.insertCoinsInWatchList(coinList)
-                    .subscribe({ t1, t2 ->
+                    .subscribe { t1, t2 ->
                         // add top 5 coins in watch list
                         val top5CoinsToWatch = getTop5CoinsToWatch()
 
@@ -46,13 +46,14 @@ class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
                             compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
                                 .subscribe())
                         }
-                    }))
+                    })
 
                 coinList
             }
             .observeOn(schedulerProvider.ui())
             .subscribe({
                 Timber.d("Inserted all coins in db with size ${it.size}")
+                currentView?.onAllSupportedCoinsLoaded()
             }, {
                 Timber.e(it.localizedMessage)
             })
