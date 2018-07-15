@@ -13,7 +13,7 @@ import com.binarybricks.coiny.components.historicalchartmodule.LaunchPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import com.binarybricks.coiny.stories.dashboard.CoinDashboardActivity
+import com.binarybricks.coiny.stories.HomeActivity
 import com.binarybricks.coiny.utils.IntroPageTransformer
 import com.binarybricks.coiny.utils.defaultCurrency
 import com.mynameismidori.currencypicker.CurrencyPicker
@@ -50,7 +50,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
             // FTU shown
             PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
         } else {
-            startActivity(CoinDashboardActivity.buildLaunchIntent(this))
+            startActivity(HomeActivity.buildLaunchIntent(this))
             finish()
         }
     }
@@ -89,9 +89,9 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         picker.show(supportFragmentManager, "CURRENCY_PICKER")
     }
 
-    //TODO add a dialog for this
+    //TODO add a progress dialog for this
     override fun onAllSupportedCoinsLoaded() {
-        startActivity(CoinDashboardActivity.buildLaunchIntent(this))
+        startActivity(HomeActivity.buildLaunchIntent(this))
         finish()
     }
 

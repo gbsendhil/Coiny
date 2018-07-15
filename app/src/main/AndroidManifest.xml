@@ -31,32 +31,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".stories.dashboard.CoinDashboardActivity"
+            android:name=".stories.HomeActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".stories.coindetails.CoinDetailsPagerActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".stories.dashboard.CoinDashboardActivity" />
+            android:parentActivityName=".stories.HomeActivity" />
         <activity
             android:name=".stories.newslist.NewsListActivity"
             android:parentActivityName=".stories.coindetails.CoinDetailsPagerActivity" />
         <activity
             android:name=".stories.transaction.CoinTransactionActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".stories.exchangesearch.ExchangeSearchActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".stories.pairsearch.PairSearchActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".stories.coinsearch.CoinSearchActivity"
             android:label="@string/search_coin"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".stories.coindetails.CoinDetailsActivity"
             android:launchMode="singleTop"

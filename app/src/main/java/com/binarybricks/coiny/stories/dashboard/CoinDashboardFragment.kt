@@ -1,15 +1,11 @@
 package com.binarybricks.coiny.stories.dashboard
 
 import CoinDashboardContract
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.DashboardCoinModule
@@ -27,17 +23,15 @@ import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.OnVerticalScrollListener
 import com.binarybricks.coiny.utils.dpToPx
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
 
-class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
+class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     companion object {
-        @JvmStatic
-        fun buildLaunchIntent(context: Context): Intent {
-            return Intent(context, CoinDashboardActivity::class.java)
-        }
+        val TAG = "CoinDashboardFragment"
     }
 
     private var nextMenuItem: MenuItem? = null
@@ -63,16 +57,16 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         CoinDashboardPresenter(schedulerProvider, dashboardRepository, coinRepo)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val toolbar = findViewById<View>(R.id.toolbar)
-        setSupportActionBar(toolbar as Toolbar?)
-        supportActionBar?.title = ""
+        val inflate = inflater.inflate(R.layout.activity_dashboard, container, false)
 
+        val toolbar = inflate.toolbar
+        toolbar?.title = ""
 
-        initializeUI()
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        initializeUI(inflate)
 
         coinDashboardPresenter.attachView(this)
 
@@ -82,19 +76,22 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
 
         // get list of all exchanges
         coinDashboardPresenter.getAllSupportedExchanges()
+
+        return inflate
     }
 
-    private fun initializeUI() {
-        val toolBarDefaultElevation = dpToPx(this, 8) // default elevation of toolbar
+    private fun initializeUI(inflatedView: View) {
+        val toolBarDefaultElevation = dpToPx(context, 8) // default elevation of toolbar
 
-        rvDashboard.layoutManager = LinearLayoutManager(this)
-        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(this), coinDashboardList, toolbarTitle)
-        rvDashboard.adapter = coinDashboardAdapter
-        rvDashboard.addOnScrollListener(object : OnVerticalScrollListener() {
+        inflatedView.rvDashboard.layoutManager = LinearLayoutManager(context)
+
+        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(context), coinDashboardList, inflatedView.toolbarTitle)
+        inflatedView.rvDashboard.adapter = coinDashboardAdapter
+        inflatedView.rvDashboard.addOnScrollListener(object : OnVerticalScrollListener() {
             override fun onScrolled(offset: Int) {
                 super.onScrolled(offset)
-                toolbar.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
-                toolbarTitle.alpha = Math.min(1.0f, offset / 60f) // approx height of header module
+                inflatedView.toolbar.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
+                inflatedView.toolbarTitle.alpha = Math.min(1.0f, offset / 60f) // approx height of header module
             }
         })
     }
@@ -139,7 +136,7 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
                 fromSymbol += watchedCoin.coin.symbol
             }
         }
-        coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(this))
+        coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(context))
     }
 
     override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
@@ -159,19 +156,29 @@ class CoinDashboardActivity : AppCompatActivity(), CoinDashboardContract.View {
         // update dashboard card
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.home_menu, menu)
 
-        nextMenuItem = menu.findItem(R.id.action_search)
+        nextMenuItem = menu?.findItem(R.id.action_search)
 
-        return super.onCreateOptionsMenu(menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
+
+//    // Menu icons are inflated just as they were with actionbar
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
+//        menuInflater.inflate(R.menu.home_menu, menu)
+//
+//        nextMenuItem = menu.findItem(R.id.action_search)
+//
+//        return super.onCreateOptionsMenu(menu)
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search -> {
-                startActivity(CoinSearchActivity.buildLaunchIntent(this))
+                context?.let {
+                    startActivity(CoinSearchActivity.buildLaunchIntent(it))
+                }
                 return true
             }
         }
