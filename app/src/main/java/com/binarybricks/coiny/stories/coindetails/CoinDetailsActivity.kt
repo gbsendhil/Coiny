@@ -9,7 +9,6 @@ import android.view.View
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 
-
 class CoinDetailsActivity : AppCompatActivity() {
 
     private var watchedCoin: WatchedCoin? = null

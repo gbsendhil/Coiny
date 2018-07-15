@@ -7,9 +7,18 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.api.API
 import com.binarybricks.coiny.network.api.cryptoCompareRetrofit
-import com.binarybricks.coiny.network.models.*
+import com.binarybricks.coiny.network.models.CCCoin
+import com.binarybricks.coiny.network.models.CoinInfo
+import com.binarybricks.coiny.network.models.CoinInfoWithCurrency
+import com.binarybricks.coiny.network.models.CoinPrice
+import com.binarybricks.coiny.network.models.ExchangePair
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coiny.utils.*
+import com.binarybricks.coiny.utils.TRANSACTION_TYPE_SELL
+import com.binarybricks.coiny.utils.getCoinPriceFromJson
+import com.binarybricks.coiny.utils.getCoinPriceFromJsonHistorical
+import com.binarybricks.coiny.utils.getCoinPricesFromJson
+import com.binarybricks.coiny.utils.getCoinsFromJson
+import com.binarybricks.coiny.utils.getExchangeListFromJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Flowable
@@ -19,16 +28,16 @@ import java.io.IOException
 import java.io.InputStream
 import java.math.BigDecimal
 import java.nio.charset.Charset
-import java.util.*
-
 
 /**
 Created by Pranay Airan
 Repository that interact with crypto api to get any info on coins.
  */
 
-class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerProvider,
-                              private val coinyDatabase: CoinyDatabase? = null) {
+class CryptoCompareRepository(
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase? = null
+) {
 
     /**
      * Get list of all coins from api
@@ -65,7 +74,6 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
             json = String(buffer, Charset.defaultCharset())
 
             val amountCurrencyType = object : TypeToken<ArrayList<CoinInfoWithCurrency>>() {
-
             }.type
 
             val coinInfoWithCurrencyList = Gson().fromJson<ArrayList<CoinInfoWithCurrency>>(json, amountCurrencyType)
@@ -75,7 +83,6 @@ class CryptoCompareRepository(private val baseSchedulerProvider: BaseSchedulerPr
             }
 
             return coinInfoMap
-
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {

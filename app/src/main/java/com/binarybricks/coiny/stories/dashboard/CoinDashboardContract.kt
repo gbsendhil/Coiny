@@ -2,7 +2,6 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.stories.BaseView
-import java.util.*
 
 /**
 Created by Pranay Airan

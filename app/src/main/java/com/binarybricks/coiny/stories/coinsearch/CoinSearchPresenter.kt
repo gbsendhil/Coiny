@@ -13,10 +13,11 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinSearchPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                          private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinSearchContract.View>(),
+class CoinSearchPresenter(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
+) : BasePresenter<CoinSearchContract.View>(),
     CoinSearchContract.Presenter, LifecycleObserver {
-
 
     override fun loadAllCoins() {
         currentView?.showOrHideLoadingIndicator(true)

@@ -7,7 +7,6 @@ import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.binarybricks.coiny.R
 
-
 class IntroPageTransformer : ViewPager.PageTransformer {
 
     override fun transformPage(page: View, position: Float) {
@@ -30,14 +29,12 @@ class IntroPageTransformer : ViewPager.PageTransformer {
 
             // The page is not visible. This is a good place to stop
             // any potential work / animations you may have running.
-
         } else if (position == 0.0f) {
 
             // The page is selected. This is a good time to reset Views
             // after animations as you can't always count on the PageTransformer
             // callbacks to match up perfectly.
             page.findViewById<LottieAnimationView>(R.id.animationView).playAnimation()
-
         } else {
 
             // The page is currently being scrolled / swiped. This is

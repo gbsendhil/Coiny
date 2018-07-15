@@ -50,7 +50,7 @@ class CoinyApplication : Application() {
                 return
             }
 
-            //TODO remove or enable this.
+            // TODO remove or enable this.
 //            FakeCrashLibrary.log(priority, tag, message)
 //
 //            if (t != null) {

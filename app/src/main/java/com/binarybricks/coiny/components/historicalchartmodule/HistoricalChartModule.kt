@@ -10,21 +10,38 @@ import android.widget.RadioButton
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.Module
 import com.binarybricks.coiny.components.ModuleItem
-import com.binarybricks.coiny.network.*
+import com.binarybricks.coiny.network.ALL
+import com.binarybricks.coiny.network.HOUR
+import com.binarybricks.coiny.network.HOURS24
+import com.binarybricks.coiny.network.MONTH
+import com.binarybricks.coiny.network.WEEK
+import com.binarybricks.coiny.network.YEAR
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coiny.utils.*
-import kotlinx.android.synthetic.main.historical_chart_module.view.*
-import java.util.*
+import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.RxBus
+import com.binarybricks.coiny.utils.changeChildrenColor
+import com.binarybricks.coiny.utils.chartAnimationDuration
+import kotlinx.android.synthetic.main.historical_chart_module.view.historicalChartView
+import kotlinx.android.synthetic.main.historical_chart_module.view.pbChartLoading
+import kotlinx.android.synthetic.main.historical_chart_module.view.rgPeriodSelector
+import kotlinx.android.synthetic.main.historical_chart_module.view.tvChartCoinPrice
+import kotlinx.android.synthetic.main.historical_chart_module.view.tvPortfolioChangedPercentage
+import kotlinx.android.synthetic.main.historical_chart_module.view.tvPortfolioChangedValue
+import java.util.Currency
 
 /**
 Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
-class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider,
-                            private val resourceProvider: ResourceProvider, private val fromCurrency: String,
-                            private val toCurrency: String) : Module(), HistoricalChartContract.View {
+class HistoricalChartModule(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val resourceProvider: ResourceProvider,
+    private val fromCurrency: String,
+    private val toCurrency: String
+) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
 
@@ -74,8 +91,10 @@ class HistoricalChartModule(private val schedulerProvider: BaseSchedulerProvider
         if (showLoading) inflatedView.pbChartLoading.show() else inflatedView.pbChartLoading.hide()
     }
 
-    override fun onHistoricalDataLoaded(period: String,
-                                        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>) {
+    override fun onHistoricalDataLoaded(
+        period: String,
+        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+    ) {
 
         historicalData = dataListPair.first
 

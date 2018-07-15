@@ -10,8 +10,10 @@ Created by Pranay Airan
  * Repository that interact with crypto api and database for getting data.
  */
 
-class CoinDetailsRepository(private val baseSchedulerProvider: BaseSchedulerProvider,
-                            private val coinyDatabase: CoinyDatabase?) {
+class CoinDetailsRepository(
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase?
+) {
 
     /**
      * Get list of all coins that is added in watch list

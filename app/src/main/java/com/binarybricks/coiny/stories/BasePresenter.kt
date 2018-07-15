@@ -1,6 +1,5 @@
 package com.binarybricks.coiny.stories
 
-
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -20,7 +19,6 @@ open class BasePresenter<V : BaseView> {
         CompositeDisposable()
     }
 
-
     /**
      * Check if the view is attached.
      * This checking is only necessary when returning from an asynchronous call
@@ -36,7 +34,6 @@ open class BasePresenter<V : BaseView> {
         }
         currentView = view
     }
-
 
     fun detachView() {
         compositeDisposable.dispose()

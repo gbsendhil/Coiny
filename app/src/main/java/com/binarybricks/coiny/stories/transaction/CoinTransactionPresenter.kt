@@ -14,10 +14,11 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinTransactionPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                               private val coinRepo: CryptoCompareRepository) :
+class CoinTransactionPresenter(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
+) :
     BasePresenter<CoinTransactionContract.View>(), CoinTransactionContract.Presenter, LifecycleObserver {
-
 
     override fun getAllSupportedExchanges() {
         compositeDisposable.add(coinRepo.getAllSupportedExchanges()

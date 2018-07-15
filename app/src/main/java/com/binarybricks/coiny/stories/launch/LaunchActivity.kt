@@ -20,7 +20,6 @@ import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.activity_launch.*
 import timber.log.Timber
 
-
 class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
     private val schedulerProvider: SchedulerProvider by lazy {
@@ -73,7 +72,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     }
 
     fun openCurrencyPicker() {
-        val picker = CurrencyPicker.newInstance("Select Currency")  // dialog title
+        val picker = CurrencyPicker.newInstance("Select Currency") // dialog title
 
         picker.setListener { name, code, _, _ ->
             Timber.d("Currency code selected $name,$code")
@@ -89,7 +88,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         picker.show(supportFragmentManager, "CURRENCY_PICKER")
     }
 
-    //TODO add a progress dialog for this
+    // TODO add a progress dialog for this
     override fun onAllSupportedCoinsLoaded() {
         startActivity(HomeActivity.buildLaunchIntent(this))
         finish()
@@ -100,10 +99,10 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> IntroFragment.newInstance(R.raw.smiley_stack, "5000 Coins",
-                    "Track more than 5000 coins, across 132 exchanges.", position, false) //5000 curencies
+                    "Track more than 5000 coins, across 132 exchanges.", position, false) // 5000 curencies
 
                 1 -> IntroFragment.newInstance(R.raw.graph, "Track Gains",
-                    "Add transactions, track profit and loss. All at 1 place.", position, false) //Track transactions
+                    "Add transactions, track profit and loss. All at 1 place.", position, false) // Track transactions
 
                 2 -> IntroFragment.newInstance(R.raw.bell, "Price Alert",
                     "Get price change alerts, for your favourite currencies.", position, true) // alert

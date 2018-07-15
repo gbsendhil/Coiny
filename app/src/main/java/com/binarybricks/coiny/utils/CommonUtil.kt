@@ -12,7 +12,6 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import java.math.BigDecimal
 
-
 /**
 Created by Pranay Airan 1/15/18.
  */

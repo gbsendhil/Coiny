@@ -7,7 +7,6 @@ import android.arch.persistence.room.Query
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import io.reactivex.Flowable
 
-
 /**
  * Created by Pragya Agrawal
  *

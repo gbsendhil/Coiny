@@ -25,7 +25,6 @@ class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvi
         }
     }
 
-
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun cleanYourSelf() {

@@ -8,8 +8,10 @@ import java.math.RoundingMode
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.Calendar
+import java.util.Currency
+import java.util.Date
+import java.util.Locale
 
 /**
 Created by Pranay Airan 1/13/18.
@@ -41,7 +43,6 @@ class Formatters {
     private val simpleTimeFormat: SimpleDateFormat by lazy {
         SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "h:mm a z"), Locale.getDefault())
     }
-
 
     // use to show date like Jan 10 2017
     private val simpleDateFormatMonthDayYear: SimpleDateFormat by lazy {
@@ -137,5 +138,4 @@ class Formatters {
 
         return timestamp
     }
-
 }

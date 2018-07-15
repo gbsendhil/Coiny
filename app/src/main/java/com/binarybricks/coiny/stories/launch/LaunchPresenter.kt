@@ -17,9 +17,10 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                      private val coinRepo: CryptoCompareRepository) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
-
+class LaunchPresenter(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
+) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
     override fun loadCoinsFromAPIInBackground() {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI().subscribe())

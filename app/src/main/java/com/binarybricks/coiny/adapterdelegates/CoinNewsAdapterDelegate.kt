@@ -10,14 +10,15 @@ import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
-
 /**
  * Created by Pranay Airan
  */
 
-class CoinNewsAdapterDelegate(private val coinSymbol: String,
-                              private val coinName: String,
-                              private val schedulerProvider: BaseSchedulerProvider) : AdapterDelegate<List<ModuleItem>>() {
+class CoinNewsAdapterDelegate(
+    private val coinSymbol: String,
+    private val coinName: String,
+    private val schedulerProvider: BaseSchedulerProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
     private val coinNewsModule by lazy {
         CoinNewsModule(schedulerProvider, coinSymbol, coinName)

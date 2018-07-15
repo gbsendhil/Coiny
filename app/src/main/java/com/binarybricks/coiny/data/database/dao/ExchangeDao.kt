@@ -6,7 +6,6 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.binarybricks.coiny.data.database.entities.Exchange
 
-
 /**
  * Created by Pragya Agrawal
  *

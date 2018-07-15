@@ -16,7 +16,6 @@ import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 
-
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
 
     var toolBarTab: View? = null
@@ -86,17 +85,14 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         vpCoins.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
-
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
 
             override fun onPageSelected(position: Int) {
                 supportActionBar?.title = watchedCoinList?.get(position)?.coin?.coinName
             }
-
         })
     }
 

@@ -45,7 +45,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             }
             WEEK -> {
                 histoPeriod = HISTO_HOUR
-                aggregate = 6 //1 week limit is 128 hours default that is
+                aggregate = 6 // 1 week limit is 128 hours default that is
             }
             MONTH -> {
                 histoPeriod = HISTO_DAY
@@ -75,5 +75,4 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
                     Pair(it.data, maxClosingValueFromHistoricalData)
                 }
     }
-
 }

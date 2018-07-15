@@ -39,8 +39,8 @@ data class CCCoin(
 
     @field:SerializedName("SortOrder") val sortOrder: String = "",
 
-    @field:SerializedName("Sponsored") val sponsored: Boolean = false)
-
+    @field:SerializedName("Sponsored") val sponsored: Boolean = false
+)
 
 data class CoinInfoWithCurrency(val currencyName: String, val info: CoinInfo)
 data class CoinInfo(val desc: String, val web: String?, val twt: String?)

@@ -19,11 +19,12 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                             private val dashboardRepository: DashboardRepository,
-                             private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDashboardContract.View>(),
+class CoinDashboardPresenter(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val dashboardRepository: DashboardRepository,
+    private val coinRepo: CryptoCompareRepository
+) : BasePresenter<CoinDashboardContract.View>(),
     CoinDashboardContract.Presenter, LifecycleObserver {
-
 
     override fun loadWatchedCoinsAndTransactions() {
         val watchedCoins = dashboardRepository.loadWatchedCoins()

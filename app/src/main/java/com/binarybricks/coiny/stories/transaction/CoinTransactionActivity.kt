@@ -27,12 +27,30 @@ import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
 import com.binarybricks.coiny.utils.dismissKeyboard
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.activity_coin_transaction.*
+import kotlinx.android.synthetic.main.activity_coin_transaction.btnAddTransaction
+import kotlinx.android.synthetic.main.activity_coin_transaction.containerDate
+import kotlinx.android.synthetic.main.activity_coin_transaction.containerExchange
+import kotlinx.android.synthetic.main.activity_coin_transaction.containerPair
+import kotlinx.android.synthetic.main.activity_coin_transaction.etAmount
+import kotlinx.android.synthetic.main.activity_coin_transaction.etBuyPrice
+import kotlinx.android.synthetic.main.activity_coin_transaction.loading
+import kotlinx.android.synthetic.main.activity_coin_transaction.svContainer
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvBuyAmountLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvBuyPriceLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvDatetime
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvDatetimeLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvExchange
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvExchangeLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvPair
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvPairLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.tvTotalAmountInCurrencyLabel
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.*
+import java.util.ArrayList
+import java.util.Calendar
+import java.util.HashMap
 
 class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -110,8 +128,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         initializeUI()
 
         coinTransactionPresenter.getAllSupportedExchanges()
-
-
     }
 
     private fun initializeUI() {
@@ -159,7 +175,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -177,7 +192,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -192,7 +206,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
             }
         }
     }
-
 
     override fun onAllSupportedExchangesLoaded(exchangeCoinMap: HashMap<String, MutableList<ExchangePair>>) {
         this.exchangeCoinMap = exchangeCoinMap
@@ -222,10 +235,10 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
                 // cal cost
                 cost = buyPriceInHomeCurrency.multiply(BigDecimal(etAmount.text.toString()), mc)
-                tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${defaultCurrency.toUpperCase()}"
+                tvTotalAmountInCurrencyLabel.text = "This transactions is worth $cost ${defaultCurrency.toUpperCase()}"
             } else {
                 cost = buyPrice.multiply(BigDecimal(etAmount.text.toString()), mc)
-                tvTotalAmountInCurrencyLabel.text = "This transactions is worth ${cost} ${pairName}"
+                tvTotalAmountInCurrencyLabel.text = "This transactions is worth $cost $pairName"
             }
         }
     }
@@ -234,8 +247,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         calculateCost()
 
         coin?.let {
-            if (pairName.isNotEmpty() && buyPrice > BigDecimal.ZERO && buyPriceInHomeCurrency > BigDecimal.ZERO
-                && etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
+            if (pairName.isNotEmpty() && buyPrice > BigDecimal.ZERO && buyPriceInHomeCurrency > BigDecimal.ZERO &&
+                etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
                 return CoinTransaction(transactionType, it.symbol, pairName, buyPrice, buyPriceInHomeCurrency, BigDecimal(etAmount.text.toString()),
                     transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
             }
@@ -275,7 +288,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         timePickerDialog.accentColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         timePickerDialog.isThemeDark = true
         timePickerDialog.show(fragmentManager, "TimePickerDialog")
-
     }
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {

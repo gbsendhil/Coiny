@@ -9,7 +9,6 @@ import com.binarybricks.coiny.stories.dashboard.CoinDashboardFragment
 import com.binarybricks.coiny.utils.dpToPx
 import kotlinx.android.synthetic.main.activity_home.*
 
-
 class HomeActivity : AppCompatActivity() {
 
     companion object {
@@ -60,10 +59,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun switchToAlerts() {
-
     }
 
     private fun switchToSettings() {
-
     }
 }

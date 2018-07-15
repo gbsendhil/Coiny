@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.DashboardCoinModule
@@ -22,11 +27,12 @@ import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.OnVerticalScrollListener
 import com.binarybricks.coiny.utils.dpToPx
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_dashboard.view.*
+import kotlinx.android.synthetic.main.activity_dashboard.loadingAnimation
+import kotlinx.android.synthetic.main.activity_dashboard.view.rvDashboard
+import kotlinx.android.synthetic.main.activity_dashboard.view.toolbar
+import kotlinx.android.synthetic.main.activity_dashboard.view.toolbarTitle
 import java.util.HashMap
 import kotlin.collections.ArrayList
-
 
 class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 

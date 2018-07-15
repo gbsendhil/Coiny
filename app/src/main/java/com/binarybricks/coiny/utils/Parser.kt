@@ -10,7 +10,6 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.math.BigDecimal
 
-
 /**
 Created by Pranay Airan 1/15/18.
  */

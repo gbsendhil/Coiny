@@ -6,10 +6,22 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.*
+import com.binarybricks.coiny.components.AboutCoinModule
+import com.binarybricks.coiny.components.AddCoinModule
+import com.binarybricks.coiny.components.CoinInfoModule
+import com.binarybricks.coiny.components.CoinPositionCard
+import com.binarybricks.coiny.components.CoinStatsticsModule
+import com.binarybricks.coiny.components.CoinTransactionHistoryModule
+import com.binarybricks.coiny.components.GenericFooterModule
+import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDetailsPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
@@ -19,12 +31,15 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import com.binarybricks.coiny.utils.*
-import kotlinx.android.synthetic.main.activity_pager_coin_details.*
-import kotlinx.android.synthetic.main.fragment_coin_details.*
-import kotlinx.android.synthetic.main.fragment_coin_details.view.*
+import com.binarybricks.coiny.utils.OnVerticalScrollListener
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
+import com.binarybricks.coiny.utils.defaultExchange
+import com.binarybricks.coiny.utils.dpToPx
+import kotlinx.android.synthetic.main.activity_pager_coin_details.toolbar
+import kotlinx.android.synthetic.main.fragment_coin_details.rvCoinDetails
+import kotlinx.android.synthetic.main.fragment_coin_details.view.rvCoinDetails
 import java.math.BigDecimal
-
 
 class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
 
@@ -64,7 +79,6 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
             return bundle
         }
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_coin_details, container, false)
@@ -166,7 +180,6 @@ class CoinDetailsFragment : Fragment(), CoinDetailsContract.View {
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
-
     }
 
     override fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin) {

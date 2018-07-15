@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "org.jmailen.kotlinter"
+
+configurations {
+    ktlint
+}
 
 android {
     compileSdkVersion versions.compileSdk
@@ -93,4 +98,8 @@ dependencies {
     implementation "com.facebook.stetho:stetho-js-rhino:${versions.stetho}"
 
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+}
+
+kotlinter {
+    ignoreFailures = true
 }

@@ -18,12 +18,22 @@ import com.binarybricks.coiny.utils.getTotalCost
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.GrayscaleTransformation
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.coinCard
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.ivCoin
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.pbLoading
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.purchaseItemsGroup
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCoinName
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCoinSymbol
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCost
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCurrentValue
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvExchange
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvProfitLoss
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvQuantity
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.*
+import java.util.Currency
 
 /**
  * Created by Pranay Airan
@@ -88,7 +98,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
 
                 // do the profit or loss things here.
                 val totalReturnAmount = currentWorth?.subtract(totalCost)
-                //val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
+                // val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
 
                 if (totalReturnAmount != null) {
                     inflatedView.tvProfitLoss.text = formatter.formatAmount(totalReturnAmount.toPlainString(), currency)
@@ -103,7 +113,6 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
                 inflatedView.purchaseItemsGroup.visibility = View.GONE
             }
 
-
             inflatedView.coinCard.setOnClickListener {
                 inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
             }
@@ -113,7 +122,6 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
     override fun cleanUp() {
         Timber.d("Clean up dashboard coinSymbol module")
     }
-
 
     private fun animateCoinPrice(inflatedView: View, amount: String?) {
         if (amount != null) {

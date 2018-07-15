@@ -4,7 +4,6 @@ import com.binarybricks.coiny.network.models.CCCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.models.ExchangePair
-import java.util.*
 
 /**
  * Created by Pragya Agrawal

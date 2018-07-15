@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  * api provider for crypto compare and others.
  */
 
-
 val cryptoCompareRetrofit: Retrofit by lazy {
     Retrofit.Builder()
             .baseUrl(BASE_CRYPTOCOMPARE_URL)

@@ -7,9 +7,16 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
-import kotlinx.android.synthetic.main.coin_statistic_module.view.*
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvAvgMarketCapAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvAvgVolumeAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvChangeTodayAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvOpenAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvSupplyNumber
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvTodayLowAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvTodaysHighAmount
+import kotlinx.android.synthetic.main.coin_statistic_module.view.tvVolumeQuantity
 import timber.log.Timber
-import java.util.*
+import java.util.Currency
 
 /**
  * Created by Pragya Agrawal

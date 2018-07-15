@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.binarybricks.coiny.R
 
-
 class IntroFragment : Fragment() {
     private var animationRes: Int = 0
     private lateinit var headerTitle: String
