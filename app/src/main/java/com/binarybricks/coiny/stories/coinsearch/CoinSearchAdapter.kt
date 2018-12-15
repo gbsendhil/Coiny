@@ -10,11 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
@@ -23,7 +19,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import java.math.BigDecimal
 
 class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<WatchedCoin, CoinSearchAdapter.ResultViewHolder>(WatchedCoinDiffCallback()),
-    Filterable {
+        Filterable {
 
     init {
         submitList(searchList)
@@ -47,8 +43,8 @@ class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<Watched
         viewHolder.tvCoinSymbol.text = getItem(position).coin.symbol
 
         Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${getItem(position).coin.imageUrl}?width=50").error(R.mipmap.ic_launcher_round)
-            .transform(cropCircleTransformation)
-            .into(viewHolder.ivCoin)
+                .transform(cropCircleTransformation)
+                .into(viewHolder.ivCoin)
 
         val purchaseQuantity = getItem(position).purchaseQuantity
 
@@ -69,12 +65,12 @@ class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<Watched
                 val filteredList = mutableListOf<WatchedCoin>()
 
                 (0 until count)
-                    .filter {
-                        // Filter on the name
-                        list[it].coin.coinName.contains(filterString, true) ||
-                                list[it].coin.symbol.contains(filterString, true)
-                    }
-                    .mapTo(filteredList) { list[it] }
+                        .filter {
+                            // Filter on the name
+                            list[it].coin.coinName.contains(filterString, true) ||
+                                    list[it].coin.symbol.contains(filterString, true)
+                        }
+                        .mapTo(filteredList) { list[it] }
 
                 results.values = filteredList
                 results.count = filteredList.size
@@ -129,11 +125,12 @@ class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<Watched
 }
 
 class WatchedCoinDiffCallback : DiffUtil.ItemCallback<WatchedCoin>() {
-    override fun areItemsTheSame(oldItem: WatchedCoin?, newItem: WatchedCoin?): Boolean {
-        return oldItem?.coin?.id == newItem?.coin?.id
+
+    override fun areItemsTheSame(oldItem: WatchedCoin, newItem: WatchedCoin): Boolean {
+        return oldItem.coin.id == newItem.coin.id
     }
 
-    override fun areContentsTheSame(oldItem: WatchedCoin?, newItem: WatchedCoin?): Boolean {
+    override fun areContentsTheSame(oldItem: WatchedCoin, newItem: WatchedCoin): Boolean {
         return oldItem == newItem
     }
 }

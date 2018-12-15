@@ -17,10 +17,10 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class HistoricalChartAdapterDelegate(
-    private val fromCurrency: String,
-    private val toCurrency: String,
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val resourceProvider: ResourceProvider
+        private val fromCurrency: String,
+        private val toCurrency: String,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider
 ) : AdapterDelegate<List<ModuleItem>>() {
 
     private val historicalChartModule by lazy {
@@ -45,7 +45,7 @@ class HistoricalChartAdapterDelegate(
         historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinPriceWithCurrentPrice)
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
         historicalChartModule.cleanUp()
     }

@@ -170,14 +170,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-//    // Menu icons are inflated just as they were with actionbar
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean { // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.home_menu, menu)
-//
-//        nextMenuItem = menu.findItem(R.id.action_search)
-//
-//        return super.onCreateOptionsMenu(menu)
-//    }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
