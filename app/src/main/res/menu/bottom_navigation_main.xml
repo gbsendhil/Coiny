@@ -8,9 +8,9 @@
         android:title=""
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/actionAlert"
+        android:id="@+id/actionSearch"
         android:enabled="true"
-        android:icon="@drawable/ic_notification"
+        android:icon="@drawable/ic_search"
         android:title=""
         app:showAsAction="ifRoom" />
     <item

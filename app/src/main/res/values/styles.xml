@@ -11,7 +11,7 @@
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
 
         <!-- color of the default background -->
-        <item name="android:windowBackground">@color/backgroundDarkColor</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
 
     </style>
 

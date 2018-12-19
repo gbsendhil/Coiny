@@ -5,12 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/generic8dp"
-    android:layout_marginStart="@dimen/generic8dp"
-    android:layout_marginTop="@dimen/generic16dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/backgroundColor">
+    app:cardBackgroundColor="@color/colorPrimaryLight">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/coinCard"
