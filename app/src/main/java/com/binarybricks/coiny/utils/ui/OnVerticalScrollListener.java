@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.utils;
+package com.binarybricks.coiny.utils.ui;
 
 /*
  * Copyright (c) 2015 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>

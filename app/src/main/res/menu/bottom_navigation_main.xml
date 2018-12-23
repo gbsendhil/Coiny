@@ -4,13 +4,13 @@
     <item
         android:id="@+id/actionHome"
         android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_watchlist"
         android:title=""
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionSearch"
         android:enabled="true"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/search_icon"
         android:title=""
         app:showAsAction="ifRoom" />
     <item

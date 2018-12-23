@@ -13,27 +13,15 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
-import com.binarybricks.coiny.utils.getDefaultExchangeText
 import com.binarybricks.coiny.utils.getTotalCost
 import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import jp.wasabeef.picasso.transformations.GrayscaleTransformation
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.coinCard
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.ivCoin
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.pbLoading
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.purchaseItemsGroup
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCoinName
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCoinSymbol
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCost
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvCurrentValue
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvExchange
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvProfitLoss
-import kotlinx.android.synthetic.main.dashboard_coin_module.view.tvQuantity
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.Currency
+import java.util.*
 
 /**
  * Created by Pranay Airan
@@ -50,11 +38,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
     }
 
     private val cropCircleTransformation by lazy {
-        CropCircleTransformation()
-    }
-
-    private val grayscaleTransformation by lazy {
-        GrayscaleTransformation()
+        RoundedCornersTransformation(15, 0)
     }
 
     private val mc by lazy {
@@ -65,7 +49,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         return layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
     }
 
-    fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData) {
+    fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData, isTopCard: Boolean = false) {
 
         val coin = dashboardCoinModuleData.watchedCoin.coin
         val coinPrice = dashboardCoinModuleData.coinPrice
@@ -73,12 +57,11 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=50"
 
         Picasso.get().load(imageUrl).error(R.mipmap.ic_launcher_round)
-            .transform(cropCircleTransformation)
-            .into(inflatedView.ivCoin)
+                .transform(cropCircleTransformation)
+                .into(inflatedView.ivCoin)
 
         inflatedView.tvCoinSymbol.text = coin.symbol
         inflatedView.tvCoinName.text = coin.coinName
-        inflatedView.tvExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
 
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
@@ -117,6 +100,10 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
                 inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
             }
         }
+
+        if (isTopCard) {
+            inflatedView.coinCard.background = inflatedView.context.getDrawable(R.drawable.ripple_background_rounded_top)
+        }
     }
 
     override fun cleanUp() {
@@ -127,11 +114,11 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         if (amount != null) {
             val chartCoinPriceAnimation = ValueAnimator.ofFloat(0f, amount.toFloat())
             chartCoinPriceAnimation.duration = chartAnimationDuration
-            chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
+            chartCoinPriceAnimation.addUpdateListener { updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
                 inflatedView.tvCost.text = formatter.formatAmount(animatedValue.toString(), currency)
                 inflatedView.tvCost.tag = animatedValue
-            })
+            }
             chartCoinPriceAnimation.start()
         }
     }

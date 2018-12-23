@@ -1,6 +1,7 @@
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
+import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.stories.BaseView
 
 /**
@@ -13,11 +14,15 @@ interface CoinDashboardContract {
         fun showOrHideLoadingIndicator(showLoading: Boolean = true)
         fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>)
         fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>)
+        fun onTopCoinsByTotalVolumeLoaded(topCoins: List<CoinPrice>)
+        fun onCoinNewsLoaded(coinNews: List<CryptoCompareNews>)
     }
 
     interface Presenter {
         fun loadWatchedCoinsAndTransactions()
         fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String)
         fun getAllSupportedExchanges()
+        fun getTopCoinsByTotalVolume24hours(toCurrencySymbol: String)
+        fun getLatestNewsFromCryptoCompare()
     }
 }

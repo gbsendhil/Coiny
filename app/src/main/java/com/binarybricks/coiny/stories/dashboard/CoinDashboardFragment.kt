@@ -8,19 +8,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.DashboardCoinModule
-import com.binarybricks.coiny.components.DashboardHeaderModule
-import com.binarybricks.coiny.components.GenericFooterModule
-import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
+import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
-import com.binarybricks.coiny.utils.dpToPx
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.HashMap
@@ -70,6 +67,18 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         lifecycle.addObserver(coinDashboardPresenter)
 
+        // empty existing list
+        coinDashboardList = ArrayList()
+        coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
+        coinDashboardList.add(1, DashboardNewsModule.DashboardNewsModuleData(null))
+
+        // get top coins
+        coinDashboardPresenter.getTopCoinsByTotalVolume24hours(PreferenceHelper.getDefaultCurrency(context))
+
+        // get news
+        coinDashboardPresenter.getLatestNewsFromCryptoCompare()
+
+        // get prices for watched coin
         coinDashboardPresenter.loadWatchedCoinsAndTransactions()
 
         // get list of all exchanges
@@ -98,16 +107,14 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
-        // empty existing list
-        coinDashboardList = ArrayList()
-
         // Add Dashboard Header with empty data
-        coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
+        //coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
         watchedCoinList.forEach { watchedCoin ->
             coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))
         }
 
+        coinDashboardList.add(DashboardAddNewCoinModule.DashboardAddNewCoinModuleData())
         coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
         showOrHideLoadingIndicator(false)
@@ -127,6 +134,32 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
             }
         }
         coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(context))
+    }
+
+    override fun onTopCoinsByTotalVolumeLoaded(topCoins: List<CoinPrice>) {
+
+        val topCardList = mutableListOf<TopCard.TopCardsModuleData>()
+        topCoins.forEach {
+            topCardList.add(TopCard.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
+                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0"))
+        }
+
+        coinDashboardAdapter?.let {
+            if (!it.coinDashboardList.isNullOrEmpty()) {
+                it.coinDashboardList[0] = CarousalModule.CarousalModuleData(topCardList)
+                coinDashboardAdapter?.notifyItemChanged(0)
+            }
+        }
+    }
+
+    override fun onCoinNewsLoaded(coinNews: List<CryptoCompareNews>) {
+
+        coinDashboardAdapter?.let {
+            if (!it.coinDashboardList.isNullOrEmpty() && it.coinDashboardList.size >= 1) {
+                it.coinDashboardList[1] = DashboardNewsModule.DashboardNewsModuleData(coinNews)
+                coinDashboardAdapter?.notifyItemChanged(1)
+            }
+        }
     }
 
     override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
@@ -153,7 +186,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         super.onCreateOptionsMenu(menu, inflater)
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

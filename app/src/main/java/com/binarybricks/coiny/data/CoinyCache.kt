@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.data
 
-import com.binarybricks.coiny.network.models.CCCoin
-import com.binarybricks.coiny.network.models.CoinPrice
-import com.binarybricks.coiny.network.models.CryptoPanicNews
-import com.binarybricks.coiny.network.models.ExchangePair
+import com.binarybricks.coiny.network.models.*
 
 /**
  * Created by Pragya Agrawal
@@ -16,9 +13,15 @@ object CoinyCache {
     // cache the news since we don't want to overload the server. 
     var newsMap: MutableMap<String, CryptoPanicNews> = hashMapOf()
 
+    // crypto compare news
+
+    var cyrptoCompareNews: List<CryptoCompareNews> = listOf()
+
     var coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
 
     var coinExchangeMap: HashMap<String, MutableList<ExchangePair>> = hashMapOf()
 
     var coinList: ArrayList<CCCoin> = ArrayList()
+
+    var topCoinsByTotalVolume24Hours: ArrayList<CoinPrice> = ArrayList()
 }

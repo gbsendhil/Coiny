@@ -20,6 +20,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.*
+import com.binarybricks.coiny.utils.ui.OnVerticalScrollListener
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.view.*

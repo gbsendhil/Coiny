@@ -14,7 +14,7 @@ import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.HomeActivity
-import com.binarybricks.coiny.utils.IntroPageTransformer
+import com.binarybricks.coiny.utils.ui.IntroPageTransformer
 import com.binarybricks.coiny.utils.defaultCurrency
 import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.activity_launch.*
@@ -35,6 +35,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_launch)
         setSupportActionBar(toolbar as Toolbar?)
 

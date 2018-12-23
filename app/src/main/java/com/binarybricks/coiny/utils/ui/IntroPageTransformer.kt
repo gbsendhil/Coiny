@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.utils
+package com.binarybricks.coiny.utils.ui
 
 import android.support.v4.view.ViewPager
 import android.view.View

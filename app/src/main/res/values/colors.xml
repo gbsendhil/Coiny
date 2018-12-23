@@ -1,10 +1,11 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
 
-    <color name="colorPrimary">#1e283c</color>
-    <color name="colorPrimaryLight">#253047</color>
+    <color name="colorPrimary">#28334a</color>
     <color name="colorAccent">#148bee</color>
-    <color name="colorPrimaryDark">#00001a</color>
+    <color name="colorPrimaryDark">#212b40</color>
+    <color name="colorPrimaryDusk">#3c4862</color>
+    <color name="colorPrimaryAlternate">#253047</color>
 
     <color name="colorSecondary">#f36531</color>
     <color name="colorSecondaryAccent">#ff965e</color>
@@ -22,7 +23,8 @@
     <!--<color name="backgroundLightColor">#363744</color>-->
     <!--<color name="backgroundDarkColor">#272834</color>-->
 
-    <color name="backgroundColor">@color/colorPrimary</color>
+    <!-- 75 transparency  https://stackoverflow.com/questions/15852122/hex-transparency-in-colors-->
+    <color name="backgroundColor">#BF1e283c</color>
     <color name="backgroundLightColor">#59595b</color>
     <color name="backgroundDarkColor">#212124</color>
 

@@ -12,4 +12,5 @@
     <dimen name="tab_width">300dp</dimen>
     <dimen name="cell_height">64dp</dimen>
     <dimen name="generic48dp">48dp</dimen>
+    <dimen name="generic14dp">14dp</dimen>
 </resources>

@@ -1,9 +1,11 @@
 package com.binarybricks.coiny.utils
 
 import com.binarybricks.coiny.network.DATA
+import com.binarybricks.coiny.network.DISPLAY
 import com.binarybricks.coiny.network.RAW
 import com.binarybricks.coiny.network.models.CCCoin
 import com.binarybricks.coiny.network.models.CoinPrice
+import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.models.ExchangePair
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -60,6 +62,36 @@ fun getCoinPricesFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
     return coinPriceList
 }
 
+fun getCoinPriceListFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
+    val coinPriceList: ArrayList<CoinPrice> = ArrayList()
+
+    if (jsonObject.has(DATA)) {
+        val dataCoinObject = jsonObject.getAsJsonArray(DATA)
+
+        dataCoinObject.forEach {
+            val jsonObject = it as JsonObject
+            if (jsonObject.has(RAW)) {
+                val rawCoinObject = jsonObject.getAsJsonObject(RAW)
+                val coins = rawCoinObject.keySet() // this will give us list of all the coins in raw like BTC, ETH
+                coins.forEach { coinName ->
+                    val coinJsonObject = rawCoinObject.getAsJsonObject(coinName) // this will give us list of prices for this coinSymbol in currencies we asked for
+                    val coin = Gson().fromJson(coinJsonObject, CoinPrice::class.java)
+
+                    if (jsonObject.has(DISPLAY)) {
+                        val displayCoinObject = jsonObject.getAsJsonObject(DISPLAY)
+                        val displayCoins = displayCoinObject.keySet() // this will give us list of all the coins in raw like BTC, ETH
+                        displayCoins.forEach { coinName ->
+                            coin.marketCap = displayCoinObject.getAsJsonObject(coinName).getAsJsonPrimitive("MKTCAP").asString
+                        }
+                    }
+                    coinPriceList.add(coin)
+                }
+            }
+        }
+    }
+    return coinPriceList
+}
+
 fun getCoinsFromJson(jsonObject: JsonObject): ArrayList<CCCoin> {
     val CCCoinList: ArrayList<CCCoin> = ArrayList()
 
@@ -99,4 +131,18 @@ fun getExchangeListFromJson(jsonObject: JsonObject): HashMap<String, MutableList
     }
 
     return coinExchangeSet
+}
+
+fun getCryptoNewsJson(jsonObject: JsonObject): List<CryptoCompareNews> {
+    val coinNewsList: MutableList<CryptoCompareNews> = mutableListOf()
+
+    if (jsonObject.has(DATA)) {
+        val dataCoinObject = jsonObject.getAsJsonArray(DATA)
+
+        dataCoinObject.forEach {
+            val coinNews = Gson().fromJson(it as JsonObject, CryptoCompareNews::class.java)
+            coinNewsList.add(coinNews)
+        }
+    }
+    return coinNewsList
 }
