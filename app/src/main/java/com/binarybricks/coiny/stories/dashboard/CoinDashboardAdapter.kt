@@ -36,7 +36,7 @@ class CoinDashboardAdapter(
         delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
         delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle))
         delegates.addDelegate(DASHBOARD_FOOTER, GenericFooterAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate())
+        delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate(toCurrency))
         delegates.addDelegate(DASHBOARD_News, DashboardNewsAdapterDelegate())
         delegates.addDelegate(DASHBOARD_Add_New, DashboardAddNewCoinAdapterDelegate())
     }

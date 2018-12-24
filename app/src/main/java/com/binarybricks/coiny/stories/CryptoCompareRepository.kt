@@ -193,7 +193,7 @@ class CryptoCompareRepository(
     /**
      * Get the top news article from crypto compare
      */
-    fun getTopNewsFromCryptoCompare(): Single<List<CryptoCompareNews>> {
+    fun getTopNewsFromCryptoCompare(): Single<MutableList<CryptoCompareNews>> {
         return if (CoinyCache.cyrptoCompareNews.isNotEmpty()) {
             Single.just(CoinyCache.cyrptoCompareNews)
         } else {

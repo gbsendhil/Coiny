@@ -13,10 +13,10 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class CarousalAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+class CarousalAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
 
     private val carousalModule by lazy {
-        CarousalModule()
+        CarousalModule(toCurrency)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

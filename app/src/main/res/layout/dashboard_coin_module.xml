@@ -17,29 +17,30 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="@string/cd_coin_image"
-        app:layout_constraintBottom_toBottomOf="@+id/tvCoinName"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCoinPercentChange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvCoinSymbol"
+        app:layout_constraintTop_toTopOf="@+id/tvCoinName"
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/tvCoinSymbol"
+        android:id="@+id/tvCoinName"
         style="@style/TextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic16dp"
         app:layout_constraintStart_toEndOf="@+id/ivCoin"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="BTC" />
+        tools:text="Bitcoin" />
 
     <TextView
-        android:id="@+id/tvCoinName"
-        style="@style/TextSubHeadSecondary"
+        android:id="@+id/tvCoinPercentChange"
+        style="@style/CoinyText.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic16dp"
+        android:layout_marginTop="@dimen/generic4dp"
         app:layout_constraintStart_toEndOf="@+id/ivCoin"
-        app:layout_constraintTop_toBottomOf="@id/tvCoinSymbol"
+        app:layout_constraintTop_toBottomOf="@id/tvCoinName"
         tools:text="BitCoin" />
 
     <TextView
@@ -48,10 +49,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="0"
-        app:layout_constraintBottom_toBottomOf="@id/ivCoin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivCoin"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="$100" />
+
+    <TextView
+        android:id="@+id/tvCoinMarketCap"
+        style="@style/CoinyText.TitleAlternate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/generic16dp"
+        android:layout_marginTop="@dimen/generic4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCost"
+        tools:text="BitCoin" />
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/pbLoading"
@@ -70,7 +81,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/generic8dp"
         android:background="@color/backgroundDarkColor"
-        app:layout_constraintTop_toBottomOf="@id/tvCoinName" />
+        app:layout_constraintTop_toBottomOf="@id/tvCoinPercentChange" />
 
 
     <TextView

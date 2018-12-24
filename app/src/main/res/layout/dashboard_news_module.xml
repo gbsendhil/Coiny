@@ -25,15 +25,17 @@
     <TextView
         android:id="@+id/tvNewsTitle"
         style="@style/CoinyText.Title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic8dp"
+        android:layout_marginEnd="@dimen/generic8dp"
         android:ellipsize="end"
         android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="@id/ivAnnouncement"
         app:layout_constraintStart_toEndOf="@id/ivAnnouncement"
         app:layout_constraintTop_toTopOf="@id/ivAnnouncement"
-        tools:text="Some random things" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Some random news, Some random news, Some random news" />
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/pbLoading"

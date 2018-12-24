@@ -126,14 +126,19 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="CoinyText.CaptionAlternate" parent="CoinyText">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="CoinyText.Title" parent="CoinyText">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="CoinyText.CaptionAlternate" parent="CoinyText">
+    <style name="CoinyText.TitleAlternate" parent="CoinyText">
         <item name="android:textColor">@color/secondaryTextColor</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="CoinyText.Body1" parent="CoinyText">
@@ -147,6 +152,11 @@
     </style>
 
     <style name="CoinyText.Body2" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CoinyText.Body3" parent="CoinyText">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">24sp</item>
     </style>

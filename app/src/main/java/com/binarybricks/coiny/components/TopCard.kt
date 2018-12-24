@@ -6,15 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.utils.CurrencyUtils
 import kotlinx.android.synthetic.main.top_card_module.view.*
 import timber.log.Timber
+import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by Pranay Airan
  *
  * Simple class wrapping UI for top card
  */
-class TopCard : Module() {
+class TopCard(private val toCurrency: String) : Module() {
+
+    private val currency by lazy {
+        Currency.getInstance(toCurrency)
+    }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.top_card_module, parent, false)
@@ -24,8 +31,8 @@ class TopCard : Module() {
 
         inflatedView.tvPair.text = topCardsModuleData.pair
         inflatedView.tvPrice.text = topCardsModuleData.price
-        inflatedView.tvPriceChange.text = ("%.2f".format(topCardsModuleData.priceChangePercentage.toDouble()))
-        inflatedView.tvMarketCap.text = "Mkt cap: ${topCardsModuleData.marketCap}"
+        inflatedView.tvPriceChange.text = "${("%.2f".format(topCardsModuleData.priceChangePercentage.toDouble()))}%"
+        inflatedView.tvMarketCap.text = "Mkt cap: ${CurrencyUtils.getNaturalTextForDisplay(BigDecimal(topCardsModuleData.marketCap), currency)}"
 
         try {
             if (topCardsModuleData.priceChangePercentage.toDouble() < 0) {

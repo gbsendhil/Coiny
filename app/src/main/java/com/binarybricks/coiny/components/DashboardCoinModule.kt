@@ -11,6 +11,7 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
+import com.binarybricks.coiny.utils.CurrencyUtils
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import com.binarybricks.coiny.utils.getTotalCost
@@ -60,14 +61,24 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
                 .transform(cropCircleTransformation)
                 .into(inflatedView.ivCoin)
 
-        inflatedView.tvCoinSymbol.text = coin.symbol
         inflatedView.tvCoinName.text = coin.coinName
 
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
 
+            if (coinPrice.changePercentageDay != null) {
+                inflatedView.tvCoinPercentChange.text = "${("%.2f".format(coinPrice.changePercentageDay.toDouble()))}%"
+                if (coinPrice.changePercentageDay.toDouble() < 0) {
+                    inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
+                } else {
+                    inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
+                }
+            }
+
             animateCoinPrice(inflatedView, coinPrice.price)
             val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity
+
+            inflatedView.tvCoinMarketCap.text = CurrencyUtils.getNaturalTextForDisplay(BigDecimal(coinPrice.marketCap), currency)
 
             // check if coin is purchased
             if (purchaseQuantity > BigDecimal.ZERO) {

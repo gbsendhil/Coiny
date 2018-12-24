@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.data.CoinyCache
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.dashboard_news_module.view.*
@@ -23,13 +24,19 @@ class DashboardNewsModule : Module() {
     }
 
     fun showNewsOnDashboard(inflatedView: View, dashboardNewsModuleData: DashboardNewsModuleData) {
+        var i = 0
 
         if (!dashboardNewsModuleData.coinNews.isNullOrEmpty()) {
             inflatedView.pbLoading.visibility = View.GONE
-            inflatedView.tvNewsTitle.text = dashboardNewsModuleData.coinNews[0].title
+            inflatedView.tvNewsTitle.text = dashboardNewsModuleData.coinNews[i].title
             inflatedView.clNewsArticleContainer.setOnClickListener {
-                dashboardNewsModuleData.coinNews[0].url?.let {
+                dashboardNewsModuleData.coinNews[i].url?.let {
                     openCustomTab(it, inflatedView.context)
+                    CoinyCache.updateCryptoCompareNews(dashboardNewsModuleData.coinNews[i])
+                    if (i < dashboardNewsModuleData.coinNews.size) {
+                        i++
+                        inflatedView.tvNewsTitle.text = dashboardNewsModuleData.coinNews[i].title
+                    }
                 }
             }
         }

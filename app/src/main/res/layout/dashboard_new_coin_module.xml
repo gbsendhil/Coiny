@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimaryDusk"
-        app:layout_constraintTop_toBottomOf="@id/tvCoinName" />
+        app:layout_constraintTop_toBottomOf="@id/tvCoinPercentChange" />
 
     <ImageView
         android:id="@+id/ivAddNew"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvCoinSymbol"
+        android:id="@+id/tvCoinName"
         style="@style/CoinyText.Body1Alternate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

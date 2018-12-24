@@ -13,7 +13,7 @@ import timber.log.Timber
  * Simple class that takes list of items and show them on in horizontal carousal.
  */
 
-class CarousalModule : Module() {
+class CarousalModule(private val toCurrency: String) : Module() {
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.carousal_module, parent, false)
@@ -25,7 +25,7 @@ class CarousalModule : Module() {
 
             dashboardEmptyCoinModuleData.carousalItems.forEach {
                 if (it is TopCard.TopCardsModuleData) {
-                    val topCard = TopCard()
+                    val topCard = TopCard(toCurrency)
                     val topCardInflatedView = topCard.init(layoutInflater, parent)
                     topCard.addTopCardModule(topCardInflatedView, it)
                     inflatedView.llCarousal.addView(topCardInflatedView)

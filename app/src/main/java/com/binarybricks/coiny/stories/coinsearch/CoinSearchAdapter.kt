@@ -100,8 +100,8 @@ class CoinSearchAdapter(var searchList: List<WatchedCoin>) : ListAdapter<Watched
     }
 
     inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvCoinName: TextView = view.findViewById(R.id.tvCoinName)
-        val tvCoinSymbol: TextView = view.findViewById(R.id.tvCoinSymbol)
+        val tvCoinName: TextView = view.findViewById(R.id.tvCoinPercentChange)
+        val tvCoinSymbol: TextView = view.findViewById(R.id.tvCoinName)
         val ivCoin: ImageView = view.findViewById(R.id.ivCoin)
         val cbWatched: CheckBox = view.findViewById(R.id.cbWatched)
         private val clCoinInfo: View = view.findViewById(R.id.clCoinInfo)

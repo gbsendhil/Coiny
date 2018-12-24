@@ -1,7 +1,6 @@
 package com.binarybricks.coiny.utils
 
 import com.binarybricks.coiny.network.DATA
-import com.binarybricks.coiny.network.DISPLAY
 import com.binarybricks.coiny.network.RAW
 import com.binarybricks.coiny.network.models.CCCoin
 import com.binarybricks.coiny.network.models.CoinPrice
@@ -76,14 +75,6 @@ fun getCoinPriceListFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
                 coins.forEach { coinName ->
                     val coinJsonObject = rawCoinObject.getAsJsonObject(coinName) // this will give us list of prices for this coinSymbol in currencies we asked for
                     val coin = Gson().fromJson(coinJsonObject, CoinPrice::class.java)
-
-                    if (jsonObject.has(DISPLAY)) {
-                        val displayCoinObject = jsonObject.getAsJsonObject(DISPLAY)
-                        val displayCoins = displayCoinObject.keySet() // this will give us list of all the coins in raw like BTC, ETH
-                        displayCoins.forEach { coinName ->
-                            coin.marketCap = displayCoinObject.getAsJsonObject(coinName).getAsJsonPrimitive("MKTCAP").asString
-                        }
-                    }
                     coinPriceList.add(coin)
                 }
             }
@@ -133,7 +124,7 @@ fun getExchangeListFromJson(jsonObject: JsonObject): HashMap<String, MutableList
     return coinExchangeSet
 }
 
-fun getCryptoNewsJson(jsonObject: JsonObject): List<CryptoCompareNews> {
+fun getCryptoNewsJson(jsonObject: JsonObject): MutableList<CryptoCompareNews> {
     val coinNewsList: MutableList<CryptoCompareNews> = mutableListOf()
 
     if (jsonObject.has(DATA)) {
