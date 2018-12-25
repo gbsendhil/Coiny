@@ -35,7 +35,7 @@
     <string name="more">More</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="portfolio_changed_percentage">(%1$s%%)</string>
-    <string name="search_hint">Search Coin</string>
+    <string name="search_hint">Coin name or Symbol</string>
     <string name="trading_pair">Trading Pair</string>
     <string name="buy_price">Buy Price</string>
     <string name="amount_bought">Amount Bought</string>

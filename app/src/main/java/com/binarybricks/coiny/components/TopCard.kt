@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.stories.coindetails.CoinDetailsActivity
 import com.binarybricks.coiny.utils.CurrencyUtils
 import kotlinx.android.synthetic.main.top_card_module.view.*
 import timber.log.Timber
@@ -34,6 +35,11 @@ class TopCard(private val toCurrency: String) : Module() {
         inflatedView.tvPriceChange.text = "${("%.2f".format(topCardsModuleData.priceChangePercentage.toDouble()))}%"
         inflatedView.tvMarketCap.text = "Mkt cap: ${CurrencyUtils.getNaturalTextForDisplay(BigDecimal(topCardsModuleData.marketCap), currency)}"
 
+        inflatedView.topCardContainer.setOnClickListener {
+            inflatedView.context.startActivity(CoinDetailsActivity.buildLaunchIntent(inflatedView.context,
+                   topCardsModuleData.coinSymbol))
+        }
+
         try {
             if (topCardsModuleData.priceChangePercentage.toDouble() < 0) {
                 inflatedView.tvPrice.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
@@ -48,6 +54,7 @@ class TopCard(private val toCurrency: String) : Module() {
         Timber.d("Clean up empty TopCard module")
     }
 
-    data class TopCardsModuleData(val pair: String, val price: String, val priceChangePercentage: String, val marketCap: String) : ModuleItem
+    data class TopCardsModuleData(val pair: String, val price: String, val priceChangePercentage: String,
+                                  val marketCap: String, val coinSymbol: String) : ModuleItem
 
 }

@@ -27,7 +27,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
     }
 
     private val allCoinDetailsRepository by lazy {
-        CoinDetailsRepository(schedulerProvider, CoinyApplication.database)
+        CoinDetailsPagerRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDetailPagerPresenter: CoinDetailPagerPresenter by lazy {

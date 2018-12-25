@@ -26,6 +26,9 @@ interface WatchedCoinDao {
     @Query("select * from WatchedCoin order by sortOrder")
     fun getAllCoins(): Flowable<List<WatchedCoin>>
 
+    @Query("select * from WatchedCoin where symbol = :symbol")
+    fun getSingleWatchedCoin(symbol: String): Single<List<WatchedCoin>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinListIntoWatchList(list: List<WatchedCoin>)
 

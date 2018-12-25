@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
+import kotlinx.android.synthetic.main.dashboard_new_coin_module.view.*
 import timber.log.Timber
 
 /**
@@ -15,7 +17,13 @@ import timber.log.Timber
 class DashboardAddNewCoinModule : Module() {
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
-        return layoutInflater.inflate(R.layout.dashboard_new_coin_module, parent, false)
+        val inflate = layoutInflater.inflate(R.layout.dashboard_new_coin_module, parent, false)
+
+        inflate.addCoinCard.setOnClickListener {
+            inflate.context.startActivity(CoinSearchActivity.buildLaunchIntent(inflate.context))
+        }
+
+        return inflate
     }
 
     override fun cleanUp() {

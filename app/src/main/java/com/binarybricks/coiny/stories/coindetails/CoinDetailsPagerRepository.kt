@@ -10,7 +10,7 @@ Created by Pranay Airan
  * Repository that interact with crypto api and database for getting data.
  */
 
-class CoinDetailsRepository(
+class CoinDetailsPagerRepository(
     private val baseSchedulerProvider: BaseSchedulerProvider,
     private val coinyDatabase: CoinyDatabase?
 ) {

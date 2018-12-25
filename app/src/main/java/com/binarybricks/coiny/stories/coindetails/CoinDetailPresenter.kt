@@ -1,6 +1,6 @@
-package com.binarybricks.coiny.stories.coinsearch
+package com.binarybricks.coiny.stories.coindetails
 
-import CoinSearchContract
+import CoinDetailsContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
@@ -13,35 +13,29 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinSearchPresenter(
+class CoinDetailPresenter(
         private val schedulerProvider: BaseSchedulerProvider,
         private val coinRepo: CryptoCompareRepository
-) : BasePresenter<CoinSearchContract.View>(),
-        CoinSearchContract.Presenter, LifecycleObserver {
+) : BasePresenter<CoinDetailsContract.View>(),
+        CoinDetailsContract.Presenter, LifecycleObserver {
 
-    override fun loadAllCoins() {
+    override fun getWatchedCoinFromSymbol(symbol: String) {
+
         currentView?.showOrHideLoadingIndicator(true)
 
-        coinRepo.getAllCoins()
+        coinRepo.getSingleCoin(symbol)
                 ?.observeOn(schedulerProvider.ui())
                 ?.subscribe({
-                    Timber.d("All Coins Loaded")
+                    Timber.d("watched coin loaded")
                     currentView?.showOrHideLoadingIndicator(false)
-                    currentView?.onCoinsLoaded(it)
+                    if (it != null) {
+                        currentView?.onWatchedCoinLoaded(it.first())
+                    } else {
+                        currentView?.onWatchedCoinLoaded(null)
+                    }
                 }, {
                     currentView?.onNetworkError(it.localizedMessage)
                 })?.let { compositeDisposable.add(it) }
-    }
-
-    override fun updateCoinWatchedStatus(watched: Boolean, coinID: String, coinSymbol: String) {
-        compositeDisposable.add(coinRepo.updateCoinWatchedStatus(watched, coinID)
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    Timber.d("Coin status updated")
-                    currentView?.onCoinWatchedStatusUpdated(watched, coinSymbol)
-                }, {
-                    currentView?.onNetworkError(it.localizedMessage)
-                }))
     }
 
     // cleanup

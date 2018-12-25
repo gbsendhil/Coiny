@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.stories.coindetails
+package com.binarybricks.coiny.stories.coin
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ Created by Pranay Airan 1/18/18.
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
 
-class CoinDetailsAdapter(
+class CoinAdapter(
     fromCurrency: String,
     toCurrency: String,
     coinName: String,

@@ -141,7 +141,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         val topCardList = mutableListOf<TopCard.TopCardsModuleData>()
         topCoins.forEach {
             topCardList.add(TopCard.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
-                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0"))
+                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0",
+                    it.fromSymbol ?: ""))
         }
 
         coinDashboardAdapter?.let {

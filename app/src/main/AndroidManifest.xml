@@ -52,6 +52,7 @@
         <activity
             android:name=".stories.coinsearch.CoinSearchActivity"
             android:label="@string/search_coin"
+            android:parentActivityName=".stories.HomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".stories.coindetails.CoinDetailsActivity"

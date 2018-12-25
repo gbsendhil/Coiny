@@ -261,6 +261,16 @@ class CryptoCompareRepository(
         }
         return null
     }
+
+    /**
+     * Get single coin based on coin name and symbol
+     */
+    fun getSingleCoin(symbol: String): Single<List<WatchedCoin>>? {
+        coinyDatabase?.let {
+            return it.watchedCoinDao().getSingleWatchedCoin(symbol).subscribeOn(baseSchedulerProvider.io())
+        }
+        return null
+    }
 }
 
 fun getTop5CoinsToWatch(): MutableList<String> {

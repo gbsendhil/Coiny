@@ -1,20 +1,25 @@
 package com.binarybricks.coiny.stories.coindetails
 
+import CoinDetailsContract
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
+import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.stories.CryptoCompareRepository
+import kotlinx.android.synthetic.main.activity_coin_details.*
 
-class CoinDetailsActivity : AppCompatActivity() {
-
-    private var watchedCoin: WatchedCoin? = null
+class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
 
     companion object {
         private const val WATCHED_COIN = "WATCHED_COIN"
+        private const val COIN_SYMBOL = "COIN_SYMBOL"
 
         @JvmStatic
         fun buildLaunchIntent(context: Context, watchedCoin: WatchedCoin): Intent {
@@ -22,6 +27,25 @@ class CoinDetailsActivity : AppCompatActivity() {
             intent.putExtra(WATCHED_COIN, watchedCoin)
             return intent
         }
+
+        @JvmStatic
+        fun buildLaunchIntent(context: Context, symbol: String): Intent {
+            val intent = Intent(context, CoinDetailsActivity::class.java)
+            intent.putExtra(COIN_SYMBOL, symbol)
+            return intent
+        }
+    }
+
+    private val schedulerProvider: SchedulerProvider by lazy {
+        SchedulerProvider.getInstance()
+    }
+
+    private val coinRepo by lazy {
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
+    }
+
+    private val coinDetailPresenter: CoinDetailPresenter by lazy {
+        CoinDetailPresenter(schedulerProvider, coinRepo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,16 +58,42 @@ class CoinDetailsActivity : AppCompatActivity() {
 
         toolbar.elevation = 0f
 
-        watchedCoin = intent.getParcelableExtra(WATCHED_COIN)
-        watchedCoin?.let {
-            val coinDetailsFragment = CoinDetailsFragment()
-            coinDetailsFragment.arguments = CoinDetailsFragment.getArgumentBundle(it)
+        coinDetailPresenter.attachView(this)
+
+        lifecycle.addObserver(coinDetailPresenter)
+
+        val watchedCoin: WatchedCoin? = intent.getParcelableExtra(WATCHED_COIN)
+
+        if (watchedCoin != null) {
+            onWatchedCoinLoaded(watchedCoin)
+        } else {
+            coinDetailPresenter.getWatchedCoinFromSymbol(intent.getStringExtra(COIN_SYMBOL))
+        }
+    }
+
+    override fun onWatchedCoinLoaded(coin: WatchedCoin?) {
+        if (coin != null) {
+            val coinDetailsFragment = CoinFragment()
+            coinDetailsFragment.arguments = CoinFragment.getArgumentBundle(coin)
 
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.flCoinDetails, coinDetailsFragment)
             fragmentTransaction.commit()
 
-            supportActionBar?.title = "${it.coin.coinName}(${it.coin.symbol})"
+            supportActionBar?.title = "${coin.coin.coinName}(${coin.coin.symbol})"
         }
+    }
+
+
+    override fun showOrHideLoadingIndicator(showLoading: Boolean) {
+        if (!showLoading) {
+            pbLoading.hide()
+        } else {
+            pbLoading.show()
+        }
+    }
+
+    override fun onNetworkError(errorMessage: String) {
+        Snackbar.make(flCoinDetails, errorMessage, Snackbar.LENGTH_LONG)
     }
 }
