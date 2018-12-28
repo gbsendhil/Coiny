@@ -60,17 +60,6 @@ class CoinDashboardPresenter(
                 .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
     }
 
-    override fun getAllSupportedExchanges() {
-        compositeDisposable.add(coinRepo.getAllSupportedExchanges()
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    Timber.d("All Exchange Loaded")
-                }, {
-                    Timber.e(it.localizedMessage)
-                })
-        )
-    }
-
     override fun getTopCoinsByTotalVolume24hours(toCurrencySymbol: String) {
         compositeDisposable.add(coinRepo.getTopCoinsByTotalVolume24hours(toCurrencySymbol)
                 .observeOn(schedulerProvider.ui())

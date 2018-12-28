@@ -21,7 +21,6 @@ interface CoinDashboardContract {
     interface Presenter {
         fun loadWatchedCoinsAndTransactions()
         fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String)
-        fun getAllSupportedExchanges()
         fun getTopCoinsByTotalVolume24hours(toCurrencySymbol: String)
         fun getLatestNewsFromCryptoCompare()
     }

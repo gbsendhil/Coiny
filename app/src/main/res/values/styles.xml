@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -108,7 +108,7 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
-    <style name="SearchSwitchTheme" >
+    <style name="SearchSwitchTheme">
         <item name="colorControlActivated">@color/switchColor</item>
     </style>
 

@@ -1,5 +1,6 @@
 package com.binarybricks.coiny.network.api
 
+import com.binarybricks.coiny.network.CRYPTO_COMPARE_API_KEY
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.google.gson.JsonObject
@@ -31,6 +32,9 @@ interface API {
     @GET("all/exchanges")
     fun getExchangeList(): Single<JsonObject>
 
+    @GET("exchanges/general")
+    fun getExchangesInfo(@Query("api_key") apiKey: String = CRYPTO_COMPARE_API_KEY): Single<JsonObject>
+
     @GET("https://cryptopanic.com/api/posts/?auth_token=cd529bae09d5c505248fe05618da96ffb35ecffc")
     fun getCryptoNewsForCurrency(
             @Query("currencies") coinSymbol: String,
@@ -49,6 +53,18 @@ interface API {
 
     @GET("top/totalvolfull")
     fun getTopCoinsByTotalVolume24hours(
+            @Query("tsym") toSymbol: String,
+            @Query("limit") limit: Int
+    ): Single<JsonObject>
+
+    @GET("top/mktcapfull")
+    fun getTopCoinsByTotalVolume(
+            @Query("tsym") toSymbol: String,
+            @Query("limit") limit: Int
+    ): Single<JsonObject>
+
+    @GET("top/volumes")
+    fun getTopPairsVolume(
             @Query("tsym") toSymbol: String,
             @Query("limit") limit: Int
     ): Single<JsonObject>

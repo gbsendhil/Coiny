@@ -1,11 +1,9 @@
 package com.binarybricks.coiny.utils
 
+import com.binarybricks.coiny.data.database.entities.Exchange
 import com.binarybricks.coiny.network.DATA
 import com.binarybricks.coiny.network.RAW
-import com.binarybricks.coiny.network.models.CCCoin
-import com.binarybricks.coiny.network.models.CoinPrice
-import com.binarybricks.coiny.network.models.CryptoCompareNews
-import com.binarybricks.coiny.network.models.ExchangePair
+import com.binarybricks.coiny.network.models.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
@@ -83,6 +81,21 @@ fun getCoinPriceListFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
     return coinPriceList
 }
 
+fun getTopPairsFromJson(jsonObject: JsonObject): ArrayList<CoinPair> {
+    val coinPairList: ArrayList<CoinPair> = ArrayList()
+
+    if (jsonObject.has(DATA)) {
+        val dataPairObject = jsonObject.getAsJsonArray(DATA)
+
+        dataPairObject.forEach {
+            val jsonObject = it as JsonObject
+            val coinPair = Gson().fromJson(jsonObject, CoinPair::class.java)
+            coinPairList.add(coinPair)
+        }
+    }
+    return coinPairList
+}
+
 fun getCoinsFromJson(jsonObject: JsonObject): ArrayList<CCCoin> {
     val CCCoinList: ArrayList<CCCoin> = ArrayList()
 
@@ -122,6 +135,33 @@ fun getExchangeListFromJson(jsonObject: JsonObject): HashMap<String, MutableList
     }
 
     return coinExchangeSet
+}
+
+fun getExchangeInfo(jsonObject: JsonObject): List<Exchange> {
+
+    val exchangeList: MutableList<Exchange> = mutableListOf()
+
+    if (jsonObject.has(DATA)) {
+        val rawExchangeObject = jsonObject.getAsJsonObject(DATA)
+        val exchanges = rawExchangeObject.keySet() // this will give us list of all the exchange in DATA like BTCChina
+        exchanges.forEach { exchangeName ->
+            val exchange = rawExchangeObject.getAsJsonObject(exchangeName)
+            exchangeList.add(Exchange(id = exchange.getAsJsonPrimitive("Id").asString,
+                    name = exchange.getAsJsonPrimitive("Name").asString,
+                    url = exchange.getAsJsonPrimitive("Url").asString,
+                    logoUrl = exchange.getAsJsonPrimitive("LogoUrl").asString,
+                    itemType = exchange.getAsJsonPrimitive("ItemType").asString,
+                    internalName = exchange.getAsJsonPrimitive("InternalName").asString,
+                    affiliateUrl = exchange.getAsJsonPrimitive("AffiliateUrl").asString,
+                    country = exchange.getAsJsonPrimitive("Country").asString,
+                    orderBook = exchange.getAsJsonPrimitive("OrderBook").asBoolean,
+                    trades = exchange.getAsJsonPrimitive("Trades").asBoolean,
+                    recommended = exchange.getAsJsonPrimitive("Recommended").asBoolean,
+                    sponsored = exchange.getAsJsonPrimitive("Sponsored").asBoolean))
+        }
+    }
+
+    return exchangeList
 }
 
 fun getCryptoNewsJson(jsonObject: JsonObject): MutableList<CryptoCompareNews> {

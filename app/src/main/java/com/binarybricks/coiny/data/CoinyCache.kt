@@ -21,7 +21,9 @@ object CoinyCache {
 
     var coinExchangeMap: HashMap<String, MutableList<ExchangePair>> = hashMapOf()
 
-    var coinList: ArrayList<CCCoin> = ArrayList()
+    var topCoinsByTotalVolume: ArrayList<CoinPrice> = ArrayList()
+
+    var topPairsByVolume: ArrayList<CoinPair> = ArrayList()
 
     var topCoinsByTotalVolume24Hours: ArrayList<CoinPrice> = ArrayList()
 

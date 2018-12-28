@@ -18,7 +18,7 @@ import java.util.*
  *
  * Simple class wrapping UI for top card
  */
-class TopCard(private val toCurrency: String) : Module() {
+class TopCardModule(private val toCurrency: String) : Module() {
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)
@@ -51,7 +51,7 @@ class TopCard(private val toCurrency: String) : Module() {
     }
 
     override fun cleanUp() {
-        Timber.d("Clean up empty TopCard module")
+        Timber.d("Clean up empty TopCardModule module")
     }
 
     data class TopCardsModuleData(val pair: String, val price: String, val priceChangePercentage: String,

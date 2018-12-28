@@ -24,7 +24,7 @@
     <!--<color name="backgroundDarkColor">#272834</color>-->
 
     <!-- 75 transparency  https://stackoverflow.com/questions/15852122/hex-transparency-in-colors-->
-    <color name="backgroundColor">#BF1e283c</color>
+    <color name="backgroundColor">#BF212b40</color>
     <color name="backgroundLightColor">#59595b</color>
     <color name="backgroundDarkColor">#212124</color>
 

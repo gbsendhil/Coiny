@@ -71,4 +71,5 @@
     <string name="choose_currency">Choose Currency</string>
     <string name="cdNewsArticle">News Article</string>
     <string name="add_new_currency">Add new currency</string>
+    <string name="cdNewsImage">News image</string>
 </resources>

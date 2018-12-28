@@ -23,8 +23,8 @@ interface WatchedCoinDao {
     @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
     fun getAllWatchedCoinsOnetime(watched: Boolean = true): Single<List<WatchedCoin>> // this method should be removed
 
-    @Query("select * from WatchedCoin order by sortOrder")
-    fun getAllCoins(): Flowable<List<WatchedCoin>>
+    @Query("select * from WatchedCoin where isTrading = :isTrue order by sortOrder")
+    fun getAllCoins(isTrue: Boolean = true): Flowable<List<WatchedCoin>>
 
     @Query("select * from WatchedCoin where symbol = :symbol")
     fun getSingleWatchedCoin(symbol: String): Single<List<WatchedCoin>>

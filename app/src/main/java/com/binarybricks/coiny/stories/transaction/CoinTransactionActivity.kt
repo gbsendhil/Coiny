@@ -27,30 +27,12 @@ import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
 import com.binarybricks.coiny.utils.dismissKeyboard
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.activity_coin_transaction.btnAddTransaction
-import kotlinx.android.synthetic.main.activity_coin_transaction.containerDate
-import kotlinx.android.synthetic.main.activity_coin_transaction.containerExchange
-import kotlinx.android.synthetic.main.activity_coin_transaction.containerPair
-import kotlinx.android.synthetic.main.activity_coin_transaction.etAmount
-import kotlinx.android.synthetic.main.activity_coin_transaction.etBuyPrice
-import kotlinx.android.synthetic.main.activity_coin_transaction.loading
-import kotlinx.android.synthetic.main.activity_coin_transaction.svContainer
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvBuyAmountLabel
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvBuyPriceLabel
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvDatetime
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvDatetimeLabel
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvExchange
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvExchangeLabel
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvPair
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvPairLabel
-import kotlinx.android.synthetic.main.activity_coin_transaction.tvTotalAmountInCurrencyLabel
+import kotlinx.android.synthetic.main.activity_coin_transaction.*
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.ArrayList
-import java.util.Calendar
-import java.util.HashMap
+import java.util.*
 
 class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -141,7 +123,7 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
             if (exchangeList != null) {
 
                 startActivityForResult(ExchangeSearchActivity.buildLaunchIntent(this, getExchangeNameList(exchangeList), getString(R.string.change_exchange)),
-                    EXCHANGE_REQUEST)
+                        EXCHANGE_REQUEST)
             }
         }
 
@@ -151,13 +133,13 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
             val exchangeList = exchangeCoinMap?.get(symbol?.toUpperCase())
             if (exchangeList != null && symbol != null && exchangeName.isNotEmpty()) {
                 startActivityForResult(PairSearchActivity.buildLaunchIntent(this, getTopPair(exchangeList), symbol),
-                    PAIR_REQUEST)
+                        PAIR_REQUEST)
             }
         }
 
         containerDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog.newInstance(this, transactionDate.get(Calendar.YEAR), transactionDate.get(Calendar.MONTH),
-                transactionDate.get(Calendar.DAY_OF_MONTH))
+                    transactionDate.get(Calendar.DAY_OF_MONTH))
 
             datePickerDialog.isThemeDark = true
             datePickerDialog.accentColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
@@ -248,9 +230,9 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
         coin?.let {
             if (pairName.isNotEmpty() && buyPrice > BigDecimal.ZERO && buyPriceInHomeCurrency > BigDecimal.ZERO &&
-                etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
+                    etAmount.text.isNotEmpty() && cost > BigDecimal.ZERO) {
                 return CoinTransaction(transactionType, it.symbol, pairName, buyPrice, buyPriceInHomeCurrency, BigDecimal(etAmount.text.toString()),
-                    transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
+                        transactionDate.timeInMillis.toString(), cost.toPlainString(), exchangeName, BigDecimal.ZERO)
             }
         }
         return null
@@ -283,7 +265,7 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         transactionDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
         val timePickerDialog = TimePickerDialog.newInstance(this, transactionDate.get(Calendar.HOUR_OF_DAY), transactionDate.get(Calendar.MINUTE),
-            transactionDate.get(Calendar.SECOND), false)
+                transactionDate.get(Calendar.SECOND), false)
 
         timePickerDialog.accentColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         timePickerDialog.isThemeDark = true
@@ -347,13 +329,13 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         }
 
         coinTransactionPresenter.getPriceForPair(coin?.symbol ?: "",
-            toCurrencies, exchangeName, (transactionDate.timeInMillis / 1000).toInt().toString())
+                toCurrencies, exchangeName, (transactionDate.timeInMillis / 1000).toInt().toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
-        // Respond to the action bar's Up/Home button
+            // Respond to the action bar's Up/Home button
             android.R.id.home -> {
                 // tell the calling activity/fragment that we're done deleting this transaction
                 onBackPressed()

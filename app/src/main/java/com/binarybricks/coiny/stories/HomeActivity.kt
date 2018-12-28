@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coiny.R
+import com.binarybricks.coiny.stories.coinsearch.CoinDiscoveryFragment
 import com.binarybricks.coiny.stories.dashboard.CoinDashboardFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -30,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 R.id.actionSearch -> {
-                    switchToSearch()
+                    switchToSearch(savedInstanceState)
                 }
 
                 R.id.actionSettings -> {
@@ -54,7 +55,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun switchToSearch() {
+    private fun switchToSearch(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            val coinDiscoveryFragment = CoinDiscoveryFragment()
+
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerLayout, coinDiscoveryFragment, CoinDiscoveryFragment.TAG)
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 
     private fun switchToSettings() {

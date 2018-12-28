@@ -24,11 +24,16 @@ class CarousalModule(private val toCurrency: String) : Module() {
             inflatedView.pbLoading.visibility = View.GONE
 
             dashboardEmptyCoinModuleData.carousalItems.forEach {
-                if (it is TopCard.TopCardsModuleData) {
-                    val topCard = TopCard(toCurrency)
+                if (it is TopCardModule.TopCardsModuleData) {
+                    val topCard = TopCardModule(toCurrency)
                     val topCardInflatedView = topCard.init(layoutInflater, parent)
                     topCard.addTopCardModule(topCardInflatedView, it)
                     inflatedView.llCarousal.addView(topCardInflatedView)
+                } else if (it is ChipGroupModule.ChipGroupModuleData) {
+                    val chipGroup = ChipGroupModule()
+                    val chipGroupInflateView = chipGroup.init(layoutInflater, parent)
+                    chipGroup.showAllChips(chipGroupInflateView, it)
+                    inflatedView.llCarousal.addView(chipGroupInflateView)
                 }
             }
         }

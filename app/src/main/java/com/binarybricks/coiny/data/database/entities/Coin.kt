@@ -28,8 +28,12 @@ data class Coin(
     @ColumnInfo(name = "totalCoinsFreeFloat") var totalCoinsFreeFloat: String?,
     @ColumnInfo(name = "sortOrder") var sortOrder: Int?,
     @ColumnInfo(name = "sponsored") var sponsored: Boolean = false,
+    @ColumnInfo(name = "isTrading") var isTrading: Boolean = false,
     @ColumnInfo(name = "description") var description: String?,
     @ColumnInfo(name = "twitter") var twitter: String?,
     @ColumnInfo(name = "website") var website: String?,
+    @ColumnInfo(name = "reddit") var reddit: String?,
+    @ColumnInfo(name = "forum") var forum: String?,
+    @ColumnInfo(name = "github") var github: String?,
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var idKey: Long = 0
 ) : Parcelable

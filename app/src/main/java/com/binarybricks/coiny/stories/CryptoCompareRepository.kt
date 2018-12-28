@@ -4,6 +4,7 @@ import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.data.CoinyCache
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
+import com.binarybricks.coiny.data.database.entities.Exchange
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.api.API
 import com.binarybricks.coiny.network.api.cryptoCompareRetrofit
@@ -35,20 +36,14 @@ class CryptoCompareRepository(
      */
     fun getAllCoinsFromAPI(): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
 
-        return if (CoinyCache.coinList.size > 0) {
-            val coinInfoMap = getCoinInfoMap()
-            Single.just(Pair(CoinyCache.coinList, coinInfoMap))
-        } else {
-            cryptoCompareRetrofit.create(API::class.java)
-                    .getCoinList()
-                    .subscribeOn(baseSchedulerProvider.io())
-                    .map {
-                        Timber.d("Coin fetched, parsing response")
-                        val coinsFromJson = getCoinsFromJson(it)
-                        CoinyCache.coinList = coinsFromJson
-                        Pair(coinsFromJson, mutableMapOf<String, CoinInfo>())
-                    }
-        }
+        return cryptoCompareRetrofit.create(API::class.java)
+                .getCoinList()
+                .subscribeOn(baseSchedulerProvider.io())
+                .map {
+                    Timber.d("Coin fetched, parsing response")
+                    val coinsFromJson = getCoinsFromJson(it)
+                    Pair(coinsFromJson, mutableMapOf<String, CoinInfo>())
+                }
     }
 
     private fun getCoinInfoMap(): Map<String, CoinInfo> {
@@ -149,26 +144,6 @@ class CryptoCompareRepository(
     }
 
     /**
-     * Get list of all supported exchanges coinSymbol pairs
-     */
-    fun getAllSupportedExchanges(): Single<HashMap<String, MutableList<ExchangePair>>> {
-
-        return if (CoinyCache.coinExchangeMap.size > 0) {
-            Single.just(CoinyCache.coinExchangeMap)
-        } else {
-            cryptoCompareRetrofit.create(API::class.java)
-                    .getExchangeList()
-                    .subscribeOn(baseSchedulerProvider.io())
-                    .map {
-                        Timber.d("Exchanges fetched, parsing response")
-                        val exchangeListFromJson = getExchangeListFromJson(it)
-                        CoinyCache.coinExchangeMap = exchangeListFromJson
-                        exchangeListFromJson
-                    }
-        }
-    }
-
-    /**
      * Get the top coins pair by total volume for last 24 hours
      */
     fun getTopCoinsByTotalVolume24hours(tsyms: String): Single<List<CoinPrice>> {
@@ -186,6 +161,50 @@ class CryptoCompareRepository(
 
                         }
                         coinPriceList
+                    }
+        }
+    }
+
+    /**
+     * Get the top coins pair by total volume
+     */
+    fun getTopCoinsByTotalVolume(tsyms: String): Single<List<CoinPrice>> {
+        return if (CoinyCache.topCoinsByTotalVolume.isNotEmpty()) {
+            Single.just(CoinyCache.topCoinsByTotalVolume)
+        } else {
+            cryptoCompareRetrofit.create(API::class.java)
+                    .getTopCoinsByTotalVolume24hours(tsyms, 20)
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .map {
+                        Timber.d("Coin price by total volume fetched, parsing response")
+                        val coinPriceList = getCoinPriceListFromJson(it)
+                        if (coinPriceList.size > 0) {
+                            CoinyCache.topCoinsByTotalVolume = coinPriceList
+
+                        }
+                        coinPriceList
+                    }
+        }
+    }
+
+    /**
+     * Get the top coins pair by total volume
+     */
+    fun getTopPairsByTotalVolume(tsyms: String): Single<List<CoinPair>> {
+        return if (CoinyCache.topPairsByVolume.isNotEmpty()) {
+            Single.just(CoinyCache.topPairsByVolume)
+        } else {
+            cryptoCompareRetrofit.create(API::class.java)
+                    .getTopPairsVolume(tsyms, 50)
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .map {
+                        Timber.d("top pair by total volume fetched, parsing response")
+                        val coinPairList = getTopPairsFromJson(it)
+                        if (coinPairList.size > 0) {
+                            CoinyCache.topPairsByVolume = coinPairList
+
+                        }
+                        coinPairList
                     }
         }
     }
@@ -271,6 +290,48 @@ class CryptoCompareRepository(
         }
         return null
     }
+
+
+    fun insertExchangeIntoList(exchangeList: List<Exchange>): Single<Unit?> {
+        return Single.fromCallable {
+            coinyDatabase?.exchangeDao()?.insertExchanges(exchangeList)
+        }.subscribeOn(baseSchedulerProvider.io())
+    }
+
+    /**
+     * Get list of all supported exchanges coinSymbol pairs
+     */
+    fun getAllSupportedExchanges(): Single<HashMap<String, MutableList<ExchangePair>>> {
+
+        return if (CoinyCache.coinExchangeMap.size > 0) {
+            Single.just(CoinyCache.coinExchangeMap)
+        } else {
+            cryptoCompareRetrofit.create(API::class.java)
+                    .getExchangeList()
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .map {
+                        Timber.d("Exchanges fetched, parsing response")
+                        val exchangeListFromJson = getExchangeListFromJson(it)
+                        CoinyCache.coinExchangeMap = exchangeListFromJson
+                        exchangeListFromJson
+                    }
+        }
+    }
+
+
+    /**
+     * Get exchange details and save in DB
+     */
+    fun getExchangeInfo(): Single<List<Exchange>> {
+        return cryptoCompareRetrofit.create(API::class.java)
+                .getExchangesInfo()
+                .subscribeOn(baseSchedulerProvider.io())
+                .map {
+                    Timber.d("Exchanges info fetched, parsing response")
+                    getExchangeInfo(it)
+                }
+    }
+
 }
 
 fun getTop5CoinsToWatch(): MutableList<String> {

@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/generic48dp"
         android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimaryDark"
         app:itemIconSize="24dp"
         app:itemIconTint="@color/bottom_nav_button_forg"
         app:labelVisibilityMode="unlabeled"

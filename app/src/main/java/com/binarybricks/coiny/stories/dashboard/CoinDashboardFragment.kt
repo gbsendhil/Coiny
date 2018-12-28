@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
@@ -17,7 +20,6 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.HashMap
@@ -81,9 +83,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         // get prices for watched coin
         coinDashboardPresenter.loadWatchedCoinsAndTransactions()
 
-        // get list of all exchanges
-        coinDashboardPresenter.getAllSupportedExchanges()
-
         return inflate
     }
 
@@ -138,9 +137,9 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     override fun onTopCoinsByTotalVolumeLoaded(topCoins: List<CoinPrice>) {
 
-        val topCardList = mutableListOf<TopCard.TopCardsModuleData>()
+        val topCardList = mutableListOf<TopCardModule.TopCardsModuleData>()
         topCoins.forEach {
-            topCardList.add(TopCard.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
+            topCardList.add(TopCardModule.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
                     ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0",
                     it.fromSymbol ?: ""))
         }
@@ -178,27 +177,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         }
 
         // update dashboard card
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.home_menu, menu)
-
-        nextMenuItem = menu?.findItem(R.id.action_search)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_search -> {
-                context?.let {
-                    startActivity(CoinSearchActivity.buildLaunchIntent(it))
-                }
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onNetworkError(errorMessage: String) {
