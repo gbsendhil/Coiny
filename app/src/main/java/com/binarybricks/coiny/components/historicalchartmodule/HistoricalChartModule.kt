@@ -2,6 +2,7 @@ package com.binarybricks.coiny.components.historicalchartmodule
 
 import HistoricalChartContract
 import android.animation.ValueAnimator
+import android.graphics.DashPathEffect
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
@@ -10,37 +11,27 @@ import android.widget.RadioButton
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.Module
 import com.binarybricks.coiny.components.ModuleItem
-import com.binarybricks.coiny.network.ALL
-import com.binarybricks.coiny.network.HOUR
-import com.binarybricks.coiny.network.HOURS24
-import com.binarybricks.coiny.network.MONTH
-import com.binarybricks.coiny.network.WEEK
-import com.binarybricks.coiny.network.YEAR
+import com.binarybricks.coiny.network.*
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.RxBus
-import com.binarybricks.coiny.utils.changeChildrenColor
 import com.binarybricks.coiny.utils.chartAnimationDuration
-import kotlinx.android.synthetic.main.historical_chart_module.view.historicalChartView
-import kotlinx.android.synthetic.main.historical_chart_module.view.pbChartLoading
-import kotlinx.android.synthetic.main.historical_chart_module.view.rgPeriodSelector
-import kotlinx.android.synthetic.main.historical_chart_module.view.tvChartCoinPrice
-import kotlinx.android.synthetic.main.historical_chart_module.view.tvPortfolioChangedPercentage
-import kotlinx.android.synthetic.main.historical_chart_module.view.tvPortfolioChangedValue
-import java.util.Currency
+import kotlinx.android.synthetic.main.historical_chart_module.view.*
+import java.util.*
+
 
 /**
 Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val resourceProvider: ResourceProvider,
-    private val fromCurrency: String,
-    private val toCurrency: String
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider,
+        private val fromCurrency: String,
+        private val toCurrency: String
 ) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
@@ -92,14 +83,13 @@ class HistoricalChartModule(
     }
 
     override fun onHistoricalDataLoaded(
-        period: String,
-        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+            period: String,
+            dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
     ) {
 
         historicalData = dataListPair.first
 
-        inflatedView.historicalChartView.adapter =
-                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.open)
+        setupChart(dataListPair)
 
         if (period != ALL) {
             showPercentageGainOrLoss(dataListPair.first)
@@ -110,16 +100,29 @@ class HistoricalChartModule(
         showChartPeriodText(period)
     }
 
+    private fun setupChart(dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>) {
+        inflatedView.historicalChartView.adapter =
+                HistoricalChartAdapter(dataListPair.first, dataListPair.second?.open)
+
+        //inflatedView.historicalChartView.fillType=SparkView.FillType.DOWN
+
+        val baseLinePaint = inflatedView.historicalChartView.baseLinePaint
+        val dashPathEffect = DashPathEffect(floatArrayOf(10.0f, 2.0f), 0f)
+        baseLinePaint.pathEffect = dashPathEffect
+    }
+
     private fun showPercentageGainOrLoss(historicalData: List<CryptoCompareHistoricalResponse.Data>?) {
         if (historicalData != null) {
-            val lastClosingPrice =
-                historicalData.first().close.toFloat() // we always get's oldest first in api
+            val lastClosingPrice = historicalData.first().close.toFloat() // we always get's oldest first in api
             val currentClosingPrice = historicalData.last().close.toFloat()
             val gain = currentClosingPrice - lastClosingPrice
             val percentageChange: Float = (gain / lastClosingPrice) * 100
+
             inflatedView.tvPortfolioChangedValue.text =
-                    resourceProvider.getString(R.string.gain,
-                        formatter.formatAmount(gain.toString(), currency), percentageChange)
+                    resourceProvider.getString(R.string.gain, formatter.formatAmount(gain.toString(), currency))
+            inflatedView.tvPortfolioChangedPercentage.text =
+                    resourceProvider.getString(R.string.gainPercentage, percentageChange)
+
             if (gain > 0) {
                 showPositiveGainColor()
                 RxBus.publish(HistoricalChartBusData(true, gain))
@@ -131,20 +134,19 @@ class HistoricalChartModule(
     }
 
     private fun showPositiveGainColor() {
-        inflatedView.tvPortfolioChangedValue.setTextColor(
-            resourceProvider.getColor(R.color.colorPrimary))
-        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorPrimary)
-        inflatedView.rgPeriodSelector.changeChildrenColor(
-            resourceProvider.getColor(R.color.colorPrimary))
+        inflatedView.tvPortfolioChangedPercentage.setTextColor(resourceProvider.getColor(R.color.colorGain))
+        inflatedView.tvPortfolioArrow.setTextColor(resourceProvider.getColor(R.color.colorGain))
+        inflatedView.tvPortfolioArrow.text = "▲"
+
+        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorGain)
     }
 
     private fun showNegativeGainColor() {
-        inflatedView.tvPortfolioChangedValue.setTextColor(
-            resourceProvider.getColor(R.color.colorSecondary))
-        inflatedView.historicalChartView.lineColor =
-                resourceProvider.getColor(R.color.colorSecondary)
-        inflatedView.rgPeriodSelector.changeChildrenColor(
-            resourceProvider.getColor(R.color.colorSecondary))
+        inflatedView.tvPortfolioChangedPercentage.setTextColor(resourceProvider.getColor(R.color.colorLoss))
+        inflatedView.tvPortfolioArrow.setTextColor(resourceProvider.getColor(R.color.colorLoss))
+        inflatedView.tvPortfolioArrow.text = "▼"
+
+        inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorLoss)
     }
 
     private fun showChartPeriodText(period: String) {
@@ -157,7 +159,7 @@ class HistoricalChartModule(
             ALL -> resourceProvider.getString(R.string.all_time)
             else -> resourceProvider.getString(R.string.past_hour)
         }
-        inflatedView.tvPortfolioChangedPercentage.text = periodText
+        inflatedView.tvPortfolioChangedDate.text = periodText
     }
 
     private fun addChartScrubListener() {
@@ -169,7 +171,7 @@ class HistoricalChartModule(
             } else {
                 val historicalData = value as CryptoCompareHistoricalResponse.Data
                 inflatedView.tvPortfolioChangedValue.text = ""
-                inflatedView.tvPortfolioChangedPercentage.text = formatter.formatDate(historicalData.time, 1000)
+                inflatedView.tvPortfolioChangedDate.text = formatter.formatDate(historicalData.time, 1000)
                 animateCoinPrice(historicalData.close)
             }
         }
@@ -179,33 +181,34 @@ class HistoricalChartModule(
         if (amount != null) {
             val chartCoinPriceAnimation = ValueAnimator.ofFloat(inflatedView.tvChartCoinPrice.tag.toString().toFloat(), amount.toFloat())
             chartCoinPriceAnimation.duration = chartAnimationDuration
-            chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
+            chartCoinPriceAnimation.addUpdateListener { updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
                 inflatedView.tvChartCoinPrice.text =
                         formatter.formatAmount(animatedValue.toString(), currency)
                 inflatedView.tvChartCoinPrice.tag = animatedValue
-            })
+            }
             chartCoinPriceAnimation.start()
         }
     }
 
     private fun addRangeSelectorListener() {
-        inflatedView.rgPeriodSelector.setOnCheckedChangeListener({ _, id ->
+        inflatedView.rgPeriodSelector.setOnCheckedChangeListener { _, id ->
             val period = when (id) {
-                R.id.rbPeriod1H -> HOUR
+                R.id.rbPeriod12H -> HOUR
                 R.id.rbPeriod1D -> HOURS24
                 R.id.rbPeriod1W -> WEEK
                 R.id.rbPeriod1M -> MONTH
+                R.id.rbPeriod3M -> MONTH3
                 R.id.rbPeriod1Y -> YEAR
                 R.id.rbPeriodAll -> ALL
                 else -> HOUR
             }
             inflatedView.findViewById<RadioButton>(id)
-                .setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
+                    .setTextColor(resourceProvider.getColor(R.color.primaryTextColor))
             selectedPeriod = period
 
             historicalChatPresenter.loadHistoricalData(period, fromCurrency, toCurrency)
-        })
+        }
     }
 
     override fun cleanUp() {

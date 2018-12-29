@@ -34,10 +34,11 @@ val HISTO_MINUTE = "histominute"
 val HISTO_HOUR = "histohour"
 val HISTO_DAY = "histoday"
 
-val HOUR = "1 hour"
+val HOUR = "12 hour"
 val HOURS24 = "1 day"
 val WEEK = "1 week"
 val MONTH = "1 month"
+val MONTH3 = "3 month"
 val YEAR = "1 year"
 val ALL = "All"
 

@@ -23,7 +23,7 @@
 
     <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 
@@ -144,6 +144,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="CoinyText.Body" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CoinyText.BodyTertiary" parent="CoinyText">
+        <item name="android:textColor">@color/tertiaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="CoinyText.Body1" parent="CoinyText">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">16sp</item>
@@ -162,6 +172,11 @@
     <style name="CoinyText.Body3" parent="CoinyText">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="CoinyText.Big" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">42sp</item>
     </style>
 
 </resources>

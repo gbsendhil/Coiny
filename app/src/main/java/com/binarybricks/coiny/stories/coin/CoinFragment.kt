@@ -4,7 +4,6 @@ import CoinContract
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.binarybricks.coiny.CoinyApplication
@@ -20,7 +19,10 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coin.CoinAdapter
-import com.binarybricks.coiny.utils.*
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
+import com.binarybricks.coiny.utils.defaultExchange
+import com.binarybricks.coiny.utils.dpToPx
 import com.binarybricks.coiny.utils.ui.OnVerticalScrollListener
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
@@ -80,7 +82,6 @@ class CoinFragment : Fragment(), CoinContract.View {
             lifecycle.addObserver(coinPresenter)
 
             inflate.rvCoinDetails.layoutManager = LinearLayoutManager(context)
-            inflate.rvCoinDetails.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
             val toolBarDefaultElevation = dpToPx(context, 12) // default elevation of toolbar
 
@@ -180,7 +181,7 @@ class CoinFragment : Fragment(), CoinContract.View {
             coinDetailList.add(CoinStatsticsModule.CoinStatisticsModuleData(coinPrice))
 
             coinDetailList.add(CoinInfoModule.CoinInfoModuleData(coinPrice.market
-                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType, watchedCoin.coin.website, watchedCoin.coin.twitter))
+                    ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
         }
 
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())

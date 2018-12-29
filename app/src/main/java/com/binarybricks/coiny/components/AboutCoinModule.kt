@@ -22,9 +22,9 @@ class AboutCoinModule : Module() {
     fun showAboutCoinText(inflatedView: View, aboutCoinModuleData: AboutCoinModuleData) {
 
         inflatedView.tvAboutCoin.text = aboutCoinModuleData.aboutCoin ?: inflatedView.context.getString(R.string.info_unavilable)
-        inflatedView.cvAboutCoin.setOnClickListener {
-            inflatedView.tvAboutCoin.maxLines = Int.MAX_VALUE
-        }
+//        inflatedView.cvAboutCoin.setOnClickListener {
+//            inflatedView.tvAboutCoin.maxLines = Int.MAX_VALUE
+//        }
     }
 
     override fun cleanUp() {

@@ -1,20 +1,22 @@
 <resources>
     <string name="app_name">Coiny</string>
 
-    <string name="period_1h">1H</string>
+    <string name="period_1h">12H</string>
     <string name="period_1day">1D</string>
     <string name="period_1week">1W</string>
     <string name="period_1month">1M</string>
+    <string name="period_3month">3M</string>
     <string name="period_1year">1Y</string>
     <string name="period_all">ALL</string>
 
-    <string name="gain">%1$s (%2$.2f%%)</string>
-    <string name="past_hour">past hour</string>
-    <string name="past_day">past day</string>
-    <string name="past_week">past week</string>
-    <string name="past_month">past month</string>
-    <string name="past_year">past year</string>
-    <string name="all_time">all time</string>
+    <string name="gain">%1$s</string>
+    <string name="gainPercentage">%1$.2f%%</string>
+    <string name="past_hour">Past Hour</string>
+    <string name="past_day">Past Day</string>
+    <string name="past_week">Past Week</string>
+    <string name="past_month">Past Month</string>
+    <string name="past_year">Past Year</string>
+    <string name="all_time">All Time</string>
     <string name="about">About</string>
     <string name="cd_coin_image">Coin Image</string>
     <string name="statistics">Statistics</string>
