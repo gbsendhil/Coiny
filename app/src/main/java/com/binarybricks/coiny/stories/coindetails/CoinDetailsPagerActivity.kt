@@ -18,8 +18,6 @@ import kotlinx.android.synthetic.main.fragment_coin_details.*
 
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
 
-    var toolBarTab: View? = null
-
     private var watchedCoin: WatchedCoin? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
@@ -49,13 +47,11 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pager_coin_details)
 
+        toolbar.elevation = 0f
+
         val toolbar = findViewById<View>(R.id.toolbar)
         setSupportActionBar(toolbar as Toolbar?)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.elevation = 0f
-
-        toolBarTab = findViewById(R.id.rtTab)
 
         watchedCoin = intent.getParcelableExtra(WATCHED_COIN)
 
@@ -74,8 +70,6 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         vpCoins.adapter = allCoinsPagerAdapter
 
         showOrHideLoadingIndicator(false)
-
-        rtTab.setUpWithViewPager(vpCoins)
 
         watchedCoinList?.forEachIndexed { index, watch ->
             if (watchedCoin?.coin?.name == watch.coin.name) {

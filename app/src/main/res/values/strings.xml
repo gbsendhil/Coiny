@@ -55,6 +55,8 @@
     <string name="search_coin">Search Coin</string>
     <string name="crypto_compare">Powered by Cryptocompare.com</string>
     <string name="crypto_compare_url">https://www.cryptocompare.com</string>
+    <string name="crypto_panic">Powered by Cryptopanic.com</string>
+    <string name="crypto_panic_url">https://www.cryptopanic.com</string>
     <string name="empty_holding">Track &amp; monitor your holdings></string>
     <string name="empty_watchlist">Monitor currency prices, gains and loss</string>
     <string name="empty_watchlist_cta">Add to Watchlist</string>
@@ -67,11 +69,15 @@
     <string name="coin_removed_to_watchlist">Stopped Watching %1$s</string>
     <string name="coin_already_purchased">Purchased coins can not be removed from watchlist</string>
     <string name="info_unavilable">Currency Info Unavailable</string>
-    <string name="twitterValue">\@%1$s</string>
-    <string name="twitter">Twitter</string>
     <string name="na">N/A</string>
     <string name="choose_currency">Choose Currency</string>
     <string name="cdNewsArticle">News Article</string>
     <string name="add_new_currency">Add new currency</string>
     <string name="cdNewsImage">News image</string>
+    <string name="website">Website</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitterValue">\@%1$s</string>
+    <string name="twitterUrl">https://twitter.com/%1$s</string>
+    <string name="reddit">Reddit</string>
+    <string name="github">Github</string>
 </resources>

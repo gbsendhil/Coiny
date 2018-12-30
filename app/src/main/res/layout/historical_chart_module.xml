@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPortfolioChangedValue"
+        app:layout_constraintTop_toBottomOf="@id/tvPortfolioArrow"
         tools:text="today" />
 
 

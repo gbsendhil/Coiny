@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/generic14dp"
     android:layout_marginEnd="@dimen/generic14dp"
+    android:stateListAnimator="@animator/card_down_animation"
     android:foreground="?attr/selectableItemBackground">
 
 

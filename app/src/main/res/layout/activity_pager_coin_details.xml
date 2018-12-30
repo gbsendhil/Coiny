@@ -13,19 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.nshmura.recyclertablayout.RecyclerTabLayout
-        android:id="@+id/rtTab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_height"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:rtl_tabIndicatorColor="@android:color/white"
-        app:rtl_tabIndicatorHeight="2dp"
-        app:rtl_tabOnScreenLimit="5"
-        app:rtl_tabSelectedTextColor="@android:color/white"
-        app:rtl_tabTextAppearance="@style/rtl_RecyclerTabLayout.Tab" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpCoins"
@@ -34,6 +21,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rtTab" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </android.support.constraint.ConstraintLayout>

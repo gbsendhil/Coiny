@@ -85,12 +85,11 @@ class CoinFragment : Fragment(), CoinContract.View {
 
             val toolBarDefaultElevation = dpToPx(context, 12) // default elevation of toolbar
 
+            //TODO revisit this
             inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
                 override fun onScrolled(offset: Int) {
                     super.onScrolled(offset)
                     (activity as? CoinDetailsPagerActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
-                    (activity as? CoinDetailsPagerActivity)?.toolBarTab?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
-
                     (activity as? CoinDetailsActivity)?.toolbar?.elevation = Math.min(toolBarDefaultElevation.toFloat(), offset.toFloat())
                 }
             })
@@ -186,7 +185,7 @@ class CoinFragment : Fragment(), CoinContract.View {
 
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
 
-        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(watchedCoin.coin.description))
+        coinDetailList.add(AboutCoinModule.AboutCoinModuleData(watchedCoin.coin))
         coinAdapter = CoinAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, coinDetailList, schedulerProvider, resourceProvider)
 
         view?.rvCoinDetails?.adapter = coinAdapter

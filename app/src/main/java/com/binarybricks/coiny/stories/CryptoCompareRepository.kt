@@ -42,7 +42,7 @@ class CryptoCompareRepository(
                 .map {
                     Timber.d("Coin fetched, parsing response")
                     val coinsFromJson = getCoinsFromJson(it)
-                    Pair(coinsFromJson, mutableMapOf<String, CoinInfo>())
+                    Pair(coinsFromJson, getCoinInfoMap())
                 }
     }
 

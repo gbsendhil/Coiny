@@ -122,6 +122,7 @@ class HistoricalChartModule(
                     resourceProvider.getString(R.string.gain, formatter.formatAmount(gain.toString(), currency))
             inflatedView.tvPortfolioChangedPercentage.text =
                     resourceProvider.getString(R.string.gainPercentage, percentageChange)
+            inflatedView.tvPortfolioChangedValue.visibility=View.VISIBLE
 
             if (gain > 0) {
                 showPositiveGainColor()
@@ -170,7 +171,7 @@ class HistoricalChartModule(
                 showChartPeriodText(selectedPeriod)
             } else {
                 val historicalData = value as CryptoCompareHistoricalResponse.Data
-                inflatedView.tvPortfolioChangedValue.text = ""
+                inflatedView.tvPortfolioChangedValue.visibility=View.GONE
                 inflatedView.tvPortfolioChangedDate.text = formatter.formatDate(historicalData.time, 1000)
                 animateCoinPrice(historicalData.close)
             }

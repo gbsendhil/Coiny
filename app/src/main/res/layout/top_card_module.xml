@@ -9,7 +9,8 @@
     android:layout_marginEnd="@dimen/generic8dp"
     android:background="@drawable/top_card_background"
     android:elevation="4dp"
-    android:padding="@dimen/generic16dp">
+    android:padding="@dimen/generic16dp"
+    android:stateListAnimator="@animator/card_down_animation">
 
     <TextView
         android:id="@+id/tvPair"

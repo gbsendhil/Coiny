@@ -9,7 +9,8 @@
     android:layout_marginStart="@dimen/generic14dp"
     android:layout_marginEnd="@dimen/generic14dp"
     android:background="@drawable/ripple_background"
-    android:padding="@dimen/generic16dp">
+    android:padding="@dimen/generic16dp"
+    android:stateListAnimator="@animator/card_down_animation">
 
 
     <ImageView

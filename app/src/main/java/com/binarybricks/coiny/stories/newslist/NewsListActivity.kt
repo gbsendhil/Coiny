@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.models.CryptoPanicNews
+import com.binarybricks.coiny.utils.getBrowserIntent
 import kotlinx.android.synthetic.main.activity_news_list.*
 
 /**
@@ -47,5 +48,9 @@ class NewsListActivity : AppCompatActivity() {
 
         val newsListAdapter = NewsListAdapter(cryptoPanicNews)
         rvNewsList.adapter = newsListAdapter
+
+        tvFooter.setOnClickListener {
+            startActivity(getBrowserIntent(getString(R.string.crypto_panic)))
+        }
     }
 }
