@@ -11,7 +11,6 @@ import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.news_item.view.*
 
-
 /**
 Created by Pranay Airan 1/18/18.
  *

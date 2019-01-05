@@ -8,9 +8,16 @@ import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.TRANSACTION_TYPE_SELL
-import kotlinx.android.synthetic.main.coin_transaction_module.view.*
+import kotlinx.android.synthetic.main.coin_transaction_module.view.clFirstTransaction
+import kotlinx.android.synthetic.main.coin_transaction_module.view.clSecondTransaction
+import kotlinx.android.synthetic.main.coin_transaction_module.view.clThirdTransaction
+import kotlinx.android.synthetic.main.coin_transaction_module.view.dividerView
+import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnCost
+import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnTimeAndExchange
+import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnTypeAndQuantity
+import kotlinx.android.synthetic.main.coin_transaction_module.view.tvMore
 import timber.log.Timber
-import java.util.*
+import java.util.Currency
 
 /**
  * Created by Pranay Airan
@@ -34,7 +41,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[0]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {
@@ -45,7 +52,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[1]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {
@@ -56,7 +63,7 @@ class CoinTransactionHistoryModule : Module() {
             val coinTransaction = coinTransactionList[2]
             var transactionType = "Buy"
             if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "${transactionType} (${coinTransaction.quantity})"
+            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
             inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
         } else {

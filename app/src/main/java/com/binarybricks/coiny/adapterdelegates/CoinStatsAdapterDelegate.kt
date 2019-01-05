@@ -9,7 +9,6 @@ import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
-
 /**
  * Created by Pragya Agrawal
  */

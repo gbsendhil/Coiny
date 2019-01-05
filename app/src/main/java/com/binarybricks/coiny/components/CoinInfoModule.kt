@@ -28,24 +28,11 @@ class CoinInfoModule : Module() {
         inflatedView.tvFirstTxnTimeAndExchange.text = exchange
         inflatedView.tvAlgorithmName.text = coinInfoModuleData.algorithm
         inflatedView.tvProofTypeName.text = coinInfoModuleData.proofType
-
-        if (coinInfoModuleData.twitter != null) {
-            inflatedView.tvTwitterName.text = inflatedView.context.getString(R.string.twitterValue, coinInfoModuleData.twitter)
-            inflatedView.tvTwitterName.setOnClickListener {
-                inflatedView.context.startActivity(getBrowserIntent("https://twitter.com/${coinInfoModuleData.twitter}"))
-            }
-        }
-
-        if (coinInfoModuleData.website != null) {
-            inflatedView.cvInfoCoin.setOnClickListener {
-                inflatedView.context.startActivity(getBrowserIntent(coinInfoModuleData.website))
-            }
-        }
     }
 
     override fun cleanUp() {
         Timber.d("Clean up coinSymbol info module")
     }
 
-    data class CoinInfoModuleData(val exchange: String, val algorithm: String?, val proofType: String?, val website: String?, val twitter: String?) : ModuleItem
+    data class CoinInfoModuleData(val exchange: String, val algorithm: String?, val proofType: String?) : ModuleItem
 }

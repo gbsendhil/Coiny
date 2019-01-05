@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,7 +11,7 @@
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
 
         <!-- color of the default background -->
-        <item name="android:windowBackground">@color/backgroundDarkColor</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
 
     </style>
 
@@ -23,7 +23,7 @@
 
     <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 
@@ -106,6 +106,82 @@
     <style name="CoinTransaction" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="SearchSwitchTheme">
+        <item name="colorControlActivated">@color/switchColor</item>
+    </style>
+
+    <!--- coiny text style -->
+
+    <style name="CoinyText" parent="Base.TextAppearance.AppCompat.Caption">
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
+
+    <style name="CoinyText.CaptionSmall" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="CoinyText.Caption" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CoinyText.CaptionAlternate" parent="CoinyText">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CoinyText.Title" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CoinyText.TitleAlternate" parent="CoinyText">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CoinyText.Body" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CoinyText.BodyAlternate" parent="CoinyText">
+        <item name="android:textColor">@color/tertiaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CoinyText.BodyTertiary" parent="CoinyText">
+        <item name="android:textColor">@color/tertiaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CoinyText.Body1" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CoinyText.Body1Alternate" parent="CoinyText">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CoinyText.Body2" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CoinyText.Body3" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="CoinyText.Big" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">42sp</item>
     </style>
 
 </resources>

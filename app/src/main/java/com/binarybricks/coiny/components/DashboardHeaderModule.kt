@@ -13,13 +13,15 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import com.binarybricks.coiny.utils.getTotalCost
-import kotlinx.android.synthetic.main.dashboard_header_module.view.*
+import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioChangedPercentage
+import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioChangedValue
+import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioValue
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Currency
+import java.util.HashMap
 
 /**
  * Created by Pranay Airan
@@ -85,7 +87,6 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
                 inflatedView.tvPortfolioChangedValue.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
                 inflatedView.tvPortfolioChangedPercentage.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
             }
-
         } else {
             // get the coins that are purchased
             dashboardHeaderModuleData.watchedCoinList.forEach {
@@ -113,6 +114,9 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
         }
     }
 
-    data class DashboardHeaderModuleData(var watchedCoinList: List<WatchedCoin>, var coinTransactionList: List<CoinTransaction>,
-                                         var coinPriceListMap: HashMap<String, CoinPrice>) : ModuleItem
+    data class DashboardHeaderModuleData(
+        var watchedCoinList: List<WatchedCoin>,
+        var coinTransactionList: List<CoinTransaction>,
+        var coinPriceListMap: HashMap<String, CoinPrice>
+    ) : ModuleItem
 }

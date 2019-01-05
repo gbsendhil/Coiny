@@ -1,23 +1,15 @@
 package com.binarybricks.coiny.components.historicalchartmodule
 
+import com.binarybricks.coiny.network.*
 import com.binarybricks.coiny.network.api.API
 import com.binarybricks.coiny.network.api.cryptoCompareRetrofit
 import com.binarybricks.coiny.network.models.CryptoCompareHistoricalResponse
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
-import com.binarybricks.coiny.network.ALL
-import com.binarybricks.coiny.network.HISTO_DAY
-import com.binarybricks.coiny.network.HISTO_HOUR
-import com.binarybricks.coiny.network.HISTO_MINUTE
-import com.binarybricks.coiny.network.HOUR
-import com.binarybricks.coiny.network.HOURS24
-import com.binarybricks.coiny.network.MONTH
-import com.binarybricks.coiny.network.WEEK
-import com.binarybricks.coiny.network.YEAR
 import io.reactivex.Single
 import timber.log.Timber
 
 /**
- Created by Pranay Airan
+Created by Pranay Airan
  * Repository that interact with crypto api to get charts.
  */
 
@@ -37,7 +29,7 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             HOUR -> {
                 histoPeriod = HISTO_MINUTE
                 limit = 60
-                aggregate = 1 // this pulls for 1 hour
+                aggregate = 12 // this pulls for 12 hour
             }
             HOURS24 -> {
                 histoPeriod = HISTO_HOUR
@@ -45,11 +37,15 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
             }
             WEEK -> {
                 histoPeriod = HISTO_HOUR
-                aggregate = 6 //1 week limit is 128 hours default that is
+                aggregate = 6 // 1 week limit is 128 hours default that is
             }
             MONTH -> {
                 histoPeriod = HISTO_DAY
                 limit = 30 // 30 days
+            }
+            MONTH3 -> {
+                histoPeriod = HISTO_DAY
+                limit = 90 // 90 days
             }
             YEAR -> {
                 histoPeriod = HISTO_DAY
@@ -75,5 +71,4 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
                     Pair(it.data, maxClosingValueFromHistoricalData)
                 }
     }
-
 }

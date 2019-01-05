@@ -1,15 +1,14 @@
 package com.binarybricks.coiny.utils
 
+import com.binarybricks.coiny.data.database.entities.Exchange
 import com.binarybricks.coiny.network.DATA
 import com.binarybricks.coiny.network.RAW
-import com.binarybricks.coiny.network.models.CCCoin
-import com.binarybricks.coiny.network.models.CoinPrice
-import com.binarybricks.coiny.network.models.ExchangePair
+import com.binarybricks.coiny.network.TICKERS
+import com.binarybricks.coiny.network.models.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.math.BigDecimal
-
 
 /**
 Created by Pranay Airan 1/15/18.
@@ -61,6 +60,43 @@ fun getCoinPricesFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
     return coinPriceList
 }
 
+fun getCoinPriceListFromJson(jsonObject: JsonObject): ArrayList<CoinPrice> {
+    val coinPriceList: ArrayList<CoinPrice> = ArrayList()
+
+    if (jsonObject.has(DATA)) {
+        val dataCoinObject = jsonObject.getAsJsonArray(DATA)
+
+        dataCoinObject.forEach {
+            val jsonObject = it as JsonObject
+            if (jsonObject.has(RAW)) {
+                val rawCoinObject = jsonObject.getAsJsonObject(RAW)
+                val coins = rawCoinObject.keySet() // this will give us list of all the coins in raw like BTC, ETH
+                coins.forEach { coinName ->
+                    val coinJsonObject = rawCoinObject.getAsJsonObject(coinName) // this will give us list of prices for this coinSymbol in currencies we asked for
+                    val coin = Gson().fromJson(coinJsonObject, CoinPrice::class.java)
+                    coinPriceList.add(coin)
+                }
+            }
+        }
+    }
+    return coinPriceList
+}
+
+fun getTopPairsFromJson(jsonObject: JsonObject): ArrayList<CoinPair> {
+    val coinPairList: ArrayList<CoinPair> = ArrayList()
+
+    if (jsonObject.has(DATA)) {
+        val dataPairObject = jsonObject.getAsJsonArray(DATA)
+
+        dataPairObject.forEach {
+            val jsonObject = it as JsonObject
+            val coinPair = Gson().fromJson(jsonObject, CoinPair::class.java)
+            coinPairList.add(coinPair)
+        }
+    }
+    return coinPairList
+}
+
 fun getCoinsFromJson(jsonObject: JsonObject): ArrayList<CCCoin> {
     val CCCoinList: ArrayList<CCCoin> = ArrayList()
 
@@ -100,4 +136,89 @@ fun getExchangeListFromJson(jsonObject: JsonObject): HashMap<String, MutableList
     }
 
     return coinExchangeSet
+}
+
+fun getExchangeInfo(jsonObject: JsonObject): List<Exchange> {
+
+    val exchangeList: MutableList<Exchange> = mutableListOf()
+
+    if (jsonObject.has(DATA)) {
+        val rawExchangeObject = jsonObject.getAsJsonObject(DATA)
+        val exchanges = rawExchangeObject.keySet() // this will give us list of all the exchange in DATA like BTCChina
+        exchanges.forEach { exchangeName ->
+            val exchange = rawExchangeObject.getAsJsonObject(exchangeName)
+            exchangeList.add(Exchange(id = exchange.getAsJsonPrimitive("Id").asString,
+                    name = exchange.getAsJsonPrimitive("Name").asString,
+                    url = exchange.getAsJsonPrimitive("Url").asString,
+                    logoUrl = exchange.getAsJsonPrimitive("LogoUrl").asString,
+                    itemType = exchange.getAsJsonPrimitive("ItemType").asString,
+                    internalName = exchange.getAsJsonPrimitive("InternalName").asString,
+                    affiliateUrl = exchange.getAsJsonPrimitive("AffiliateUrl").asString,
+                    country = exchange.getAsJsonPrimitive("Country").asString,
+                    orderBook = exchange.getAsJsonPrimitive("OrderBook").asBoolean,
+                    trades = exchange.getAsJsonPrimitive("Trades").asBoolean,
+                    recommended = exchange.getAsJsonPrimitive("Recommended").asBoolean,
+                    sponsored = exchange.getAsJsonPrimitive("Sponsored").asBoolean))
+        }
+    }
+
+    return exchangeList
+}
+
+fun getCryptoNewsJson(jsonObject: JsonObject): MutableList<CryptoCompareNews> {
+    val coinNewsList: MutableList<CryptoCompareNews> = mutableListOf()
+
+    if (jsonObject.has(DATA)) {
+        val dataCoinObject = jsonObject.getAsJsonArray(DATA)
+
+        dataCoinObject.forEach {
+            val coinNews = Gson().fromJson(it as JsonObject, CryptoCompareNews::class.java)
+            coinNewsList.add(coinNews)
+        }
+    }
+    return coinNewsList
+}
+
+fun getCoinTickerFromJson(jsonObject: JsonObject, exchanges: List<Exchange>?): List<CryptoTicker> {
+    val coinTicker: MutableList<CryptoTicker> = mutableListOf()
+
+    if (jsonObject.has(TICKERS)) {
+        val dataTickerObject = jsonObject.getAsJsonArray(TICKERS)
+
+        dataTickerObject.forEach {
+            val ticker = it as JsonObject
+
+            val target = ticker.getAsJsonPrimitive("target").asString
+            if (target.equals("USDT", true)) {
+                val identifier = ticker.getAsJsonObject("market").getAsJsonPrimitive("identifier").asString
+                var imageUrl = ""
+                var exchangeUrl = ""
+
+                run loop@{
+                    exchanges?.forEach { exchange ->
+                        if (exchange.name.equals(identifier, true)) {
+                            imageUrl = exchange.logoUrl ?: ""
+                            exchangeUrl = exchange.affiliateUrl ?: ""
+                            return@loop
+                        }
+                    }
+                }
+
+                coinTicker.add(CryptoTicker(
+                        base = ticker.getAsJsonPrimitive("base").asString,
+                        target = target,
+                        last = ticker.getAsJsonPrimitive("last").asString,
+                        volume = ticker.getAsJsonPrimitive("volume").asString,
+                        timestamp = ticker.getAsJsonPrimitive("timestamp").asString,
+                        marketName = ticker.getAsJsonObject("market").getAsJsonPrimitive("name").asString,
+                        marketIdentifier = identifier,
+                        convertedVolumeUSD = ticker.getAsJsonObject("converted_volume").getAsJsonPrimitive("usd").asString,
+                        convertedVolumeBTC = ticker.getAsJsonObject("converted_volume").getAsJsonPrimitive("btc").asString,
+                        imageUrl = imageUrl,
+                        exchangeUrl = exchangeUrl
+                ))
+            }
+        }
+    }
+    return coinTicker
 }

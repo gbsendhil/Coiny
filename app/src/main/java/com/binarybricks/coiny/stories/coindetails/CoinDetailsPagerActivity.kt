@@ -16,10 +16,7 @@ import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 
-
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
-
-    var toolBarTab: View? = null
 
     private var watchedCoin: WatchedCoin? = null
 
@@ -28,7 +25,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
     }
 
     private val allCoinDetailsRepository by lazy {
-        CoinDetailsRepository(schedulerProvider, CoinyApplication.database)
+        CoinDetailsPagerRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDetailPagerPresenter: CoinDetailPagerPresenter by lazy {
@@ -50,13 +47,11 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pager_coin_details)
 
+        toolbar.elevation = 0f
+
         val toolbar = findViewById<View>(R.id.toolbar)
         setSupportActionBar(toolbar as Toolbar?)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.elevation = 0f
-
-        toolBarTab = findViewById(R.id.rtTab)
 
         watchedCoin = intent.getParcelableExtra(WATCHED_COIN)
 
@@ -76,8 +71,6 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         showOrHideLoadingIndicator(false)
 
-        rtTab.setUpWithViewPager(vpCoins)
-
         watchedCoinList?.forEachIndexed { index, watch ->
             if (watchedCoin?.coin?.name == watch.coin.name) {
                 vpCoins.currentItem = index
@@ -86,17 +79,14 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         vpCoins.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
-
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
 
             override fun onPageSelected(position: Int) {
                 supportActionBar?.title = watchedCoinList?.get(position)?.coin?.coinName
             }
-
         })
     }
 

@@ -2,7 +2,7 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.network.models.ExchangePair
 import com.binarybricks.coiny.stories.BaseView
 import java.math.BigDecimal
-import java.util.*
+import java.util.HashMap
 
 /**
 Created by Pranay Airan 2/3/18.

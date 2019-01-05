@@ -10,12 +10,16 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
-import kotlinx.android.synthetic.main.coin_position_card_module.view.*
+import kotlinx.android.synthetic.main.coin_position_card_module.view.tvAvgCostValue
+import kotlinx.android.synthetic.main.coin_position_card_module.view.tvCoinLabel
+import kotlinx.android.synthetic.main.coin_position_card_module.view.tvCoinValue
+import kotlinx.android.synthetic.main.coin_position_card_module.view.tvNoOfCoins
+import kotlinx.android.synthetic.main.coin_position_card_module.view.tvTotalReturnValue
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.*
+import java.util.Currency
 
 /**
  * Created by Pragya Agrawal
@@ -60,8 +64,8 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
 
         if (totalReturnAmount != null && totalReturnPercentage != null) {
 
-            //TODO based on gain or loss do color change
-            inflatedView.tvTotalReturnValue.text = "${formatter.formatAmount(totalReturnAmount.toPlainString(), currency)} (${totalReturnPercentage}%)"
+            // TODO based on gain or loss do color change
+            inflatedView.tvTotalReturnValue.text = "${formatter.formatAmount(totalReturnAmount.toPlainString(), currency)} ($totalReturnPercentage%)"
         }
     }
 

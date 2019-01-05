@@ -19,11 +19,12 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                             private val dashboardRepository: DashboardRepository,
-                             private val coinRepo: CryptoCompareRepository) : BasePresenter<CoinDashboardContract.View>(),
-    CoinDashboardContract.Presenter, LifecycleObserver {
-
+class CoinDashboardPresenter(
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val dashboardRepository: DashboardRepository,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<CoinDashboardContract.View>(),
+        CoinDashboardContract.Presenter, LifecycleObserver {
 
     override fun loadWatchedCoinsAndTransactions() {
         val watchedCoins = dashboardRepository.loadWatchedCoins()
@@ -31,41 +32,55 @@ class CoinDashboardPresenter(private val schedulerProvider: BaseSchedulerProvide
 
         if (watchedCoins != null && transactions != null) {
 
-            watchedCoins.zipWith(transactions, BiFunction<List<WatchedCoin>, List<CoinTransaction>,
+            compositeDisposable.add(watchedCoins.zipWith(transactions, BiFunction<List<WatchedCoin>, List<CoinTransaction>,
                     Pair<List<WatchedCoin>, List<CoinTransaction>>> { watchedCoinList, transactionList ->
                 Pair(watchedCoinList, transactionList)
             }).observeOn(schedulerProvider.ui())
-                .subscribe({
-                    currentView?.onWatchedCoinsAndTransactionsLoaded(it.first, it.second)
-                }, {
-                    Timber.e(it.localizedMessage)
-                })
+                    .subscribe({
+                        currentView?.onWatchedCoinsAndTransactionsLoaded(it.first, it.second)
+                    }, {
+                        Timber.e(it.localizedMessage)
+                    })
+            )
         }
     }
 
     override fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String) {
         compositeDisposable.add(dashboardRepository.getCoinPriceFull(fromCurrencySymbol, toCurrencySymbol)
-            .filter { it.size > 0 }
-            .map { coinPriceList ->
-                val coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
-                coinPriceList.forEach { coinPrice ->
-                    coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
+                .filter { it.size > 0 }
+                .map { coinPriceList ->
+                    val coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
+                    coinPriceList.forEach { coinPrice ->
+                        coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
+                    }
+                    CoinyCache.coinPriceMap.putAll(coinPriceMap)
+                    coinPriceMap
                 }
-                CoinyCache.coinPriceMap.putAll(coinPriceMap)
-                coinPriceMap
-            }
-            .observeOn(schedulerProvider.ui())
-            .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
+                .observeOn(schedulerProvider.ui())
+                .subscribe({ currentView?.onCoinPricesLoaded(it) }, { Timber.e(it.localizedMessage) }))
     }
 
-    override fun getAllSupportedExchanges() {
-        compositeDisposable.add(coinRepo.getAllSupportedExchanges()
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("All Exchange Loaded")
-            }, {
-                Timber.e(it.localizedMessage)
-            })
+    override fun getTopCoinsByTotalVolume24hours(toCurrencySymbol: String) {
+        compositeDisposable.add(coinRepo.getTopCoinsByTotalVolume24hours(toCurrencySymbol)
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    currentView?.onTopCoinsByTotalVolumeLoaded(it)
+                    Timber.d("All Exchange Loaded")
+                }, {
+                    Timber.e(it.localizedMessage)
+                })
+        )
+    }
+
+    override fun getLatestNewsFromCryptoCompare() {
+        compositeDisposable.add(coinRepo.getTopNewsFromCryptoCompare()
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    currentView?.onCoinNewsLoaded(it)
+                    Timber.d("All news Loaded")
+                }, {
+                    Timber.e(it.localizedMessage)
+                })
         )
     }
 

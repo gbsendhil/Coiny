@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import java.math.BigDecimal
-
+import java.net.URI
 
 /**
 Created by Pranay Airan 1/15/18.
@@ -78,4 +78,10 @@ fun getTotalCost(coinTransactionList: List<CoinTransaction>, coinSymbol: String)
     }
 
     return totalCost
+}
+
+fun getUrlWithoutParameters(url: String): String {
+    val uri = URI(url)
+    return URI(uri.scheme, uri.authority, uri.path, null, // Ignore the query part of the input url
+            uri.fragment).toString()
 }

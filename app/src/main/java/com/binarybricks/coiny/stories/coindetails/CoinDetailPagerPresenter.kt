@@ -12,11 +12,11 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinDetailsRepository: CoinDetailsRepository) :
+class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinDetailsPagerRepository: CoinDetailsPagerRepository) :
     BasePresenter<CoinDetailsPagerContract.View>(), CoinDetailsPagerContract.Presenter, LifecycleObserver {
 
     override fun loadWatchedCoins() {
-        coinDetailsRepository.loadWatchedCoins()?.let {
+        coinDetailsPagerRepository.loadWatchedCoins()?.let {
             compositeDisposable.add(
                 it.filter { it.isNotEmpty() }
                     .observeOn(schedulerProvider.ui())
@@ -24,7 +24,6 @@ class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvi
             )
         }
     }
-
 
     // cleanup
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

@@ -29,16 +29,21 @@ val FROM = "from"
 val TO = "to"
 val DATA = "Data"
 val PRICE = "price"
+val TICKERS = "tickers"
 
 val HISTO_MINUTE = "histominute"
 val HISTO_HOUR = "histohour"
 val HISTO_DAY = "histoday"
 
-val HOUR = "1 hour"
+val HOUR = "12 hour"
 val HOURS24 = "1 day"
 val WEEK = "1 week"
 val MONTH = "1 month"
+val MONTH3 = "3 month"
 val YEAR = "1 year"
 val ALL = "All"
 
 val DEFAULT_DATE_FORMAT = "dd/MM/yyyy"
+
+
+val CRYPTO_COMPARE_API_KEY = "525fa1933d3246c3bbd6a8ec96207baf3104c80d12b95a4b4cf9196ece4d3728"

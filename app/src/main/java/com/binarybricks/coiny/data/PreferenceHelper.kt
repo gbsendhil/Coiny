@@ -30,7 +30,7 @@ object PreferenceHelper {
     /**
      * Helper method to retrieve a preference value from [SharedPreferences].
      *
-     * @param context      a [Context] object.
+     * @param context a [Context] object.
      * @param key key for finding the preference
      * @param defaultValue A default to return if the value could not be read.
      * @return The value from shared preferences, or the provided default.

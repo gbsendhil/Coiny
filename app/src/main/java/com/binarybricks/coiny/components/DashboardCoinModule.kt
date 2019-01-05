@@ -11,13 +11,12 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
+import com.binarybricks.coiny.utils.CurrencyUtils
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
-import com.binarybricks.coiny.utils.getDefaultExchangeText
 import com.binarybricks.coiny.utils.getTotalCost
 import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import jp.wasabeef.picasso.transformations.GrayscaleTransformation
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.dashboard_coin_module.view.*
 import timber.log.Timber
 import java.math.BigDecimal
@@ -40,11 +39,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
     }
 
     private val cropCircleTransformation by lazy {
-        CropCircleTransformation()
-    }
-
-    private val grayscaleTransformation by lazy {
-        GrayscaleTransformation()
+        RoundedCornersTransformation(15, 0)
     }
 
     private val mc by lazy {
@@ -55,7 +50,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         return layoutInflater.inflate(R.layout.dashboard_coin_module, parent, false)
     }
 
-    fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData) {
+    fun showCoinInfo(inflatedView: View, dashboardCoinModuleData: DashboardCoinModuleData, isTopCard: Boolean = false) {
 
         val coin = dashboardCoinModuleData.watchedCoin.coin
         val coinPrice = dashboardCoinModuleData.coinPrice
@@ -63,18 +58,27 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         val imageUrl = BASE_CRYPTOCOMPARE_IMAGE_URL + "${coin.imageUrl}?width=50"
 
         Picasso.get().load(imageUrl).error(R.mipmap.ic_launcher_round)
-            .transform(cropCircleTransformation)
-            .into(inflatedView.ivCoin)
+                .transform(cropCircleTransformation)
+                .into(inflatedView.ivCoin)
 
-        inflatedView.tvCoinSymbol.text = coin.symbol
         inflatedView.tvCoinName.text = coin.coinName
-        inflatedView.tvExchange.text = getDefaultExchangeText(dashboardCoinModuleData.watchedCoin.exchange, inflatedView.context)
 
         if (coinPrice != null) {
             inflatedView.pbLoading.hide()
 
+            if (coinPrice.changePercentageDay != null) {
+                inflatedView.tvCoinPercentChange.text = "${("%.2f".format(coinPrice.changePercentageDay.toDouble()))}%"
+                if (coinPrice.changePercentageDay.toDouble() < 0) {
+                    inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
+                } else {
+                    inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
+                }
+            }
+
             animateCoinPrice(inflatedView, coinPrice.price)
             val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity
+
+            inflatedView.tvCoinMarketCap.text = CurrencyUtils.getNaturalTextForDisplay(BigDecimal(coinPrice.marketCap), currency)
 
             // check if coin is purchased
             if (purchaseQuantity > BigDecimal.ZERO) {
@@ -88,7 +92,7 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
 
                 // do the profit or loss things here.
                 val totalReturnAmount = currentWorth?.subtract(totalCost)
-                //val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
+                // val totalReturnPercentage = (totalReturnAmount?.divide(totalCost, mc))?.multiply(BigDecimal(100), mc)
 
                 if (totalReturnAmount != null) {
                     inflatedView.tvProfitLoss.text = formatter.formatAmount(totalReturnAmount.toPlainString(), currency)
@@ -103,10 +107,13 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
                 inflatedView.purchaseItemsGroup.visibility = View.GONE
             }
 
-
             inflatedView.coinCard.setOnClickListener {
                 inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
             }
+        }
+
+        if (isTopCard) {
+            inflatedView.coinCard.background = inflatedView.context.getDrawable(R.drawable.ripple_background_rounded_top)
         }
     }
 
@@ -114,16 +121,15 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
         Timber.d("Clean up dashboard coinSymbol module")
     }
 
-
     private fun animateCoinPrice(inflatedView: View, amount: String?) {
         if (amount != null) {
             val chartCoinPriceAnimation = ValueAnimator.ofFloat(0f, amount.toFloat())
             chartCoinPriceAnimation.duration = chartAnimationDuration
-            chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
+            chartCoinPriceAnimation.addUpdateListener { updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
                 inflatedView.tvCost.text = formatter.formatAmount(animatedValue.toString(), currency)
                 inflatedView.tvCost.tag = animatedValue
-            })
+            }
             chartCoinPriceAnimation.start()
         }
     }

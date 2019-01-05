@@ -17,45 +17,56 @@ import timber.log.Timber
 Created by Pranay Airan
  */
 
-class LaunchPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                      private val coinRepo: CryptoCompareRepository) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
-
+class LaunchPresenter(
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
     override fun loadCoinsFromAPIInBackground() {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI().subscribe())
+        loadExchangeFromAPI()
+    }
+
+    private fun loadExchangeFromAPI() {
+        compositeDisposable.add(coinRepo.getExchangeInfo()
+                .map {
+                    compositeDisposable.add(coinRepo.insertExchangeIntoList(it).subscribe())
+                }
+                .subscribe())
     }
 
     override fun getAllSupportedCoins(defaultCurrency: String) {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI()
-            .filter { it.first.size > 0 }
-            .map {
-                val coinList: MutableList<WatchedCoin> = mutableListOf()
-                val ccCoinList = it.first
-                ccCoinList.forEach { ccCoin ->
-                    val coinInfo = it.second[ccCoin.symbol.toLowerCase()]
-                    coinList.add(getCoinFromCCCoin(ccCoin, defaultExchange, defaultCurrency, coinInfo))
+                .filter { it.first.size > 0 }
+                .map {
+                    val coinList: MutableList<WatchedCoin> = mutableListOf()
+                    val ccCoinList = it.first
+                    ccCoinList.forEach { ccCoin ->
+                        val coinInfo = it.second[ccCoin.symbol.toLowerCase()]
+                        coinList.add(getCoinFromCCCoin(ccCoin, defaultExchange, defaultCurrency, coinInfo))
+                    }
+
+                    // insert coins in db
+                    compositeDisposable.add(coinRepo.insertCoinsInWatchList(coinList)
+                            .subscribe { t1, t2 ->
+                                // add top 5 coins in watch list
+                                val top5CoinsToWatch = getTop5CoinsToWatch()
+
+                                top5CoinsToWatch.forEach {
+                                    compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
+                                            .subscribe())
+                                }
+                            })
+
+                    coinList
                 }
-
-                // insert coins in db
-                compositeDisposable.add(coinRepo.insertCoinsInWatchList(coinList)
-                    .subscribe({ t1, t2 ->
-                        // add top 5 coins in watch list
-                        val top5CoinsToWatch = getTop5CoinsToWatch()
-
-                        top5CoinsToWatch.forEach {
-                            compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
-                                .subscribe())
-                        }
-                    }))
-
-                coinList
-            }
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("Inserted all coins in db with size ${it.size}")
-            }, {
-                Timber.e(it.localizedMessage)
-            })
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    Timber.d("Inserted all coins in db with size ${it.size}")
+                    currentView?.onAllSupportedCoinsLoaded()
+                }, {
+                    Timber.e(it.localizedMessage)
+                })
         )
     }
 

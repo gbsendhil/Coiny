@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.binarybricks.coiny.data.database.entities.Exchange
-
+import io.reactivex.Single
 
 /**
  * Created by Pragya Agrawal
@@ -16,7 +16,7 @@ import com.binarybricks.coiny.data.database.entities.Exchange
 interface ExchangeDao {
 
     @Query("select * from exchange")
-    fun getAllExchanges(): List<Exchange>
+    fun getAllExchanges(): Single<List<Exchange>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertExchanges(list: List<Exchange>)

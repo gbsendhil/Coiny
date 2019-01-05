@@ -12,15 +12,16 @@ import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
-
 /**
  * Created by Pranay Airan
  */
 
-class HistoricalChartAdapterDelegate(private val fromCurrency: String,
-                                     private val toCurrency: String,
-                                     private val schedulerProvider: BaseSchedulerProvider,
-                                     private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+class HistoricalChartAdapterDelegate(
+        private val fromCurrency: String,
+        private val toCurrency: String,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
     private val historicalChartModule by lazy {
         HistoricalChartModule(schedulerProvider, resourceProvider, fromCurrency, toCurrency)
@@ -44,7 +45,7 @@ class HistoricalChartAdapterDelegate(private val fromCurrency: String,
         historicalChartViewHolder.addCoinAndAnimateCoinPrice(historicalChartModuleData.coinPriceWithCurrentPrice)
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
         historicalChartModule.cleanUp()
     }

@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.historicalchartmodule.CoinSearchPresenter
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
@@ -48,6 +48,10 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_search)
 
+        val toolbar = findViewById<View>(R.id.toolbar)
+        setSupportActionBar(toolbar as Toolbar?)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         rvSearchList.layoutManager = LinearLayoutManager(this)
 
         coinSearchPresenter.attachView(this)
@@ -55,10 +59,6 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         lifecycle.addObserver(coinSearchPresenter)
 
         coinSearchPresenter.loadAllCoins()
-
-        ivBackArrow.setOnClickListener {
-            finish()
-        }
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
@@ -79,18 +79,15 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
             coinSearchAdapter = CoinSearchAdapter(coinList)
             rvSearchList.adapter = coinSearchAdapter
 
-
             etSearchBar.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(filterText: Editable?) {
                     coinSearchAdapter?.filter?.filter(filterText.toString())
                 }
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
                 }
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
                 }
             })
 
@@ -128,7 +125,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
-        // Respond to the action bar's Up/Home button
+            // Respond to the action bar's Up/Home button
             android.R.id.home -> {
                 // tell the calling activity/fragment that we're done deleting this transaction
                 onBackPressed()

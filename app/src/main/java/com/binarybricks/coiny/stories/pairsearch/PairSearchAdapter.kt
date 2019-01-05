@@ -4,7 +4,6 @@ package com.binarybricks.coiny.stories.pairsearch
 Created by Pranay Airan 1/26/18.
  */
 
-
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import com.binarybricks.coiny.R
-import java.util.*
 
 class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: String) : RecyclerView.Adapter<PairSearchAdapter.ResultViewHolder>(), Filterable {
 
@@ -34,7 +32,6 @@ class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: Strin
     override fun getItemCount(): Int {
         return filterSearchList.size
     }
-
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -62,7 +59,6 @@ class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: Strin
                 return results
             }
 
-
             override fun publishResults(charSequence: CharSequence, results: Filter.FilterResults) {
                 filterSearchList = results.values as ArrayList<String>
                 notifyDataSetChanged()
@@ -88,5 +84,4 @@ class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: Strin
             }
         }
     }
-
 }

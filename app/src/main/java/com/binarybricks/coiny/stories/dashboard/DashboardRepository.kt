@@ -11,15 +11,16 @@ import com.binarybricks.coiny.utils.getCoinPricesFromJson
 import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
-import java.util.*
 
 /**
 Created by Pranay Airan
  * Repository that interact with crypto api and database for getting data.
  */
 
-class DashboardRepository(private val baseSchedulerProvider: BaseSchedulerProvider,
-                          private val coinyDatabase: CoinyDatabase?) {
+class DashboardRepository(
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase?
+) {
 
     /**
      * Get list of all coins that is added in watch list

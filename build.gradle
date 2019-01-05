@@ -1,14 +1,49 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
+
+    ext.versions = [
+            'compileSdk'          : 28,
+            'minSdk'              : 21,
+            'targetSdk'           : 28,
+            'kotlin'              : '1.3.11',
+            'supportLibrary'      : '28.0.0',
+            'archComponent'       : '1.1.1',
+            'constraintLayout'    : '1.1.3',
+            'okhttp'              : '3.11.0',
+            'retrofit'            : '2.4.0',
+            'retrofitRxAdapter'   : '2.4.0',
+            'glide'               : '4.8.0',
+            'rxAndroid'           : '2.1.0',
+            'rxjava'              : '2.2.2',
+            'timber'              : '4.7.1',
+            'gson'                : '2.8.2',
+            'spark'               : '1.2.0',
+            'adapterDelegates'    : '3.1.0',
+            'currencyPicker'      : '1.1.9',
+            'lottie'              : '2.6.1',
+            'recylerTab'          : '1.5.0',
+            'materialdate'        : '3.5.1',
+            'pageindicator'       : '1.0.1',
+            'picaso'              : '2.71828',
+            'picasoTransformation': '2.2.1',
+            'stetho'              : '1.5.0',
+            'coreKtx'             : '1.0.0-beta01',
+            'junit'               : '4.12',
+            'testRunner'          : '1.0.2',
+            'espresso'            : '3.0.2',
+            'kotlinter'           : '1.14.0'
+    ]
+
     repositories {
         google()
         jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "gradle.plugin.org.jmailen.gradle:kotlinter-gradle:${versions.kotlinter}"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

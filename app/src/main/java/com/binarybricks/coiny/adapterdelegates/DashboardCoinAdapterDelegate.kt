@@ -9,7 +9,6 @@ import com.binarybricks.coiny.components.ModuleItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
-
 /**
  * Created by Pranay Airan
  * Adapter delegate that takes care of coin row in dashboard.
@@ -31,13 +30,15 @@ class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDele
 
     override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val aboutCoinViewHolder = holder as DashboardCoinViewHolder
-        aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData)
+        aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData, position)
     }
 
     class DashboardCoinViewHolder(override val containerView: View, private val dashboardCoinModule: DashboardCoinModule)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData) {
-            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData)
+        fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData, position: Int) {
+            // since in order of adding the cards we add the coin modules after top and news we are checking for position 2
+            // in future if this order changes or we add new things, we need to change this.
+            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData, position == 2)
         }
     }
 }

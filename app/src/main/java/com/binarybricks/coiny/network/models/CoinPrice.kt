@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 /**
- Created by Pranay Airan 1/15/18.
+Created by Pranay Airan 1/15/18.
  */
 @Parcelize
 data class CoinPrice(
@@ -41,7 +41,7 @@ data class CoinPrice(
         val lastMarket: String? = null,
 
         @field:SerializedName("MKTCAP")
-        val marketCap: String? = null,
+        var marketCap: String? = null,
 
         @field:SerializedName("LASTUPDATE")
         val lastUpdateTime: Int? = null,
@@ -72,7 +72,6 @@ data class CoinPrice(
 
         @field:SerializedName("CHANGEPCTDAY")
         val changePercentageDay: String? = null,
-
 
         @field:SerializedName("LASTVOLUMETO")
         val lastVolumeTo: String? = null,

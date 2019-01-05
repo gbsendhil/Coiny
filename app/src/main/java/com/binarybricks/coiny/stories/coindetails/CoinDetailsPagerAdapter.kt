@@ -12,8 +12,8 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 class CoinDetailsPagerAdapter(val watchedCoinList: List<WatchedCoin>?, fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment? {
         if (watchedCoinList != null) {
-            val coinDetailsFragment = CoinDetailsFragment()
-            coinDetailsFragment.arguments = CoinDetailsFragment.getArgumentBundle(watchedCoinList[position])
+            val coinDetailsFragment = CoinFragment()
+            coinDetailsFragment.arguments = CoinFragment.getArgumentBundle(watchedCoinList[position])
             return coinDetailsFragment
         }
         return null
