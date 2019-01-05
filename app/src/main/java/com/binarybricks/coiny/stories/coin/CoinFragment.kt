@@ -9,6 +9,7 @@ import android.view.*
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
+import com.binarybricks.coiny.components.cointickermodule.CoinTickerModule
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
 import com.binarybricks.coiny.components.historicalchartmodule.CoinPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
@@ -183,10 +184,13 @@ class CoinFragment : Fragment(), CoinContract.View {
                     ?: defaultExchange, watchedCoin.coin.algorithm, watchedCoin.coin.proofType))
         }
 
+        coinDetailList.add(CoinTickerModule.CoinTickerModuleData())
+
         coinDetailList.add(CoinNewsModule.CoinNewsModuleData())
 
         coinDetailList.add(AboutCoinModule.AboutCoinModuleData(watchedCoin.coin))
-        coinAdapter = CoinAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.fullName, coinDetailList, schedulerProvider, resourceProvider)
+        coinAdapter = CoinAdapter(watchedCoin.coin.symbol, toCurrency, watchedCoin.coin.coinName,
+                coinDetailList, CoinyApplication.database, schedulerProvider, resourceProvider)
 
         view?.rvCoinDetails?.adapter = coinAdapter
         coinAdapter?.notifyDataSetChanged()

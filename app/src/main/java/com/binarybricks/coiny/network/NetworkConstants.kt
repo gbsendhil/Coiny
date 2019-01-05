@@ -29,6 +29,7 @@ val FROM = "from"
 val TO = "to"
 val DATA = "Data"
 val PRICE = "price"
+val TICKERS = "tickers"
 
 val HISTO_MINUTE = "histominute"
 val HISTO_HOUR = "histohour"

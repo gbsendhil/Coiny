@@ -2,16 +2,9 @@ package com.binarybricks.coiny.stories.coin
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.binarybricks.coiny.adapterdelegates.AboutCoinAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.AddCoinAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.CoinInfoAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.CoinNewsAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.CoinPositionAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.CoinStatsAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.CoinTransactionAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.GenericFooterAdapterDelegate
-import com.binarybricks.coiny.adapterdelegates.HistoricalChartAdapterDelegate
+import com.binarybricks.coiny.adapterdelegates.*
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
@@ -23,12 +16,13 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinAdapter(
-    fromCurrency: String,
-    toCurrency: String,
-    coinName: String,
-    var coinDetailList: List<ModuleItem>,
-    schedulerProvider: BaseSchedulerProvider,
-    resourceProvider: ResourceProvider
+        fromCurrency: String,
+        toCurrency: String,
+        coinName: String,
+        var coinDetailList: List<ModuleItem>,
+        coinyDatabase: CoinyDatabase?,
+        schedulerProvider: BaseSchedulerProvider,
+        resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
@@ -40,6 +34,7 @@ class CoinAdapter(
     private val ABOUT_COIN = 6
     private val COINT_TRANSACTION = 7
     private val FOOTER = 8
+    private val COIN_TICKER = 9
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
@@ -49,6 +44,7 @@ class CoinAdapter(
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate(resourceProvider))
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
         delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
+        delegates.addDelegate(COIN_TICKER, CoinTickerAdapterDelegate(coinName, schedulerProvider, coinyDatabase))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
         delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())

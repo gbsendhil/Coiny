@@ -74,4 +74,10 @@ interface API {
             @Query("lang") lang: String,
             @Query("sortOrder") sortOrder: String
     ): Single<JsonObject>
+
+
+    @GET("https://api.coingecko.com/api/v3/coins/{coinName}/tickers")
+    fun getCoinTicker(
+            @Path("coinName") coinName: String
+    ): Single<JsonObject>
 }

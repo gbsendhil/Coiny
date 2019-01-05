@@ -14,7 +14,6 @@ object CoinyCache {
     var newsMap: MutableMap<String, CryptoPanicNews> = hashMapOf()
 
     // crypto compare news
-
     var cyrptoCompareNews: MutableList<CryptoCompareNews> = ArrayList()
 
     var coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
@@ -26,6 +25,8 @@ object CoinyCache {
     var topPairsByVolume: ArrayList<CoinPair> = ArrayList()
 
     var topCoinsByTotalVolume24Hours: ArrayList<CoinPrice> = ArrayList()
+
+    var ticker: MutableMap<String, List<CryptoTicker>> = hashMapOf()
 
     fun updateCryptoCompareNews(cryptoNews: CryptoCompareNews) {
         cyrptoCompareNews.remove(cryptoNews)

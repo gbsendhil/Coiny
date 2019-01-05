@@ -149,6 +149,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="CoinyText.BodyAlternate" parent="CoinyText">
+        <item name="android:textColor">@color/tertiaryTextColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="CoinyText.BodyTertiary" parent="CoinyText">
         <item name="android:textColor">@color/tertiaryTextColor</item>
         <item name="android:textSize">18sp</item>
