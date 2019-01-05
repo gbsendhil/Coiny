@@ -14,7 +14,10 @@ import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coiny.stories.ticker.CoinTickerActivity
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.getUrlWithoutParameters
+import com.binarybricks.coiny.utils.openCustomTab
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.coin_ticker_module.view.*
@@ -86,12 +89,15 @@ class CoinTickerModule(
             inflatedView.tvFirstPrice.text = formatter.formatAmount(tickerData[0].last, currency, true)
             inflatedView.tvFirstExchange.text = tickerData[0].marketName
             inflatedView.tvFirstVolume.text = formatter.formatAmount(tickerData[0].convertedVolumeUSD, currency, true)
+            inflatedView.ivFirstExchange.visibility = View.VISIBLE
             Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[0].imageUrl}").error(R.mipmap.ic_launcher_round)
                     .transform(cropCircleTransformation)
                     .into(inflatedView.ivFirstExchange)
 
             inflatedView.clFirstMarket.setOnClickListener {
-                //openCustomTab(newsResult[2].url, inflatedView.context)
+                if (tickerData[0].exchangeUrl.isNotBlank()) {
+                    openCustomTab(getUrlWithoutParameters(tickerData[0].exchangeUrl), inflatedView.context)
+                }
             }
 
             if (tickerData.size > 1) {
@@ -101,9 +107,11 @@ class CoinTickerModule(
                 inflatedView.tvSecondExchange.text = tickerData[1].marketName
                 inflatedView.tvSecondVolume.text = formatter.formatAmount(tickerData[1].convertedVolumeUSD, currency, true)
                 inflatedView.clSecondMarket.setOnClickListener {
-                    //openCustomTab(newsResult[2].url, inflatedView.context)
+                    if (tickerData[1].exchangeUrl.isNotBlank()) {
+                        openCustomTab(getUrlWithoutParameters(tickerData[1].exchangeUrl), inflatedView.context)
+                    }
                 }
-
+                inflatedView.ivSecondExchange.visibility = View.VISIBLE
                 Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[1].imageUrl}").error(R.mipmap.ic_launcher_round)
                         .transform(cropCircleTransformation)
                         .into(inflatedView.ivSecondExchange)
@@ -116,16 +124,18 @@ class CoinTickerModule(
                 inflatedView.tvThirdExchange.text = tickerData[2].marketName
                 inflatedView.tvThirdVolume.text = formatter.formatAmount(tickerData[2].convertedVolumeUSD, currency, true)
                 inflatedView.clThirdMarket.setOnClickListener {
-                    //openCustomTab(newsResult[2].url, inflatedView.context)
+                    if (tickerData[2].exchangeUrl.isNotBlank()) {
+                        openCustomTab(getUrlWithoutParameters(tickerData[2].exchangeUrl), inflatedView.context)
+                    }
                 }
-
+                inflatedView.ivThirdExchange.visibility = View.VISIBLE
                 Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[2].imageUrl}").error(R.mipmap.ic_launcher_round)
                         .transform(cropCircleTransformation)
                         .into(inflatedView.ivThirdExchange)
             }
 
             inflatedView.tvMore.setOnClickListener {
-                //inflatedView.context.startActivity(NewsListActivity.buildLaunchIntent(inflatedView.context, coinName, cryptoPanicNews))
+                inflatedView.context.startActivity(CoinTickerActivity.buildLaunchIntent(inflatedView.context, coinName))
             }
         }
     }

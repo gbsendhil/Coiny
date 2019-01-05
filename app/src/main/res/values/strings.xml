@@ -57,6 +57,8 @@
     <string name="crypto_compare_url">https://www.cryptocompare.com</string>
     <string name="crypto_panic">Powered by Cryptopanic.com</string>
     <string name="crypto_panic_url">https://www.cryptopanic.com</string>
+    <string name="coin_gecko">Powered by CoinGecko.com</string>
+    <string name="coin_gecko_url">https://www.coingecko.com</string>
     <string name="empty_holding">Track &amp; monitor your holdings></string>
     <string name="empty_watchlist">Monitor currency prices, gains and loss</string>
     <string name="empty_watchlist_cta">Add to Watchlist</string>

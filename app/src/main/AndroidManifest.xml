@@ -59,6 +59,10 @@
             android:launchMode="singleTop"
             android:parentActivityName=".stories.coinsearch.CoinSearchActivity" />
 
+        <activity
+            android:name=".stories.ticker.CoinTickerActivity"
+            android:parentActivityName=".stories.coindetails.CoinDetailsPagerActivity" />
+
     </application>
 
 </manifest>

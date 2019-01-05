@@ -41,8 +41,10 @@
                 android:layout_width="@dimen/generic32dp"
                 android:layout_height="@dimen/generic32dp"
                 android:src="@mipmap/ic_launcher"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/tvFirstExchange"
-                app:layout_constraintTop_toTopOf="@id/tvFirstToPrice" />
+                app:layout_constraintTop_toTopOf="@id/tvFirstToPrice"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvFirstFromCoin"
@@ -112,8 +114,10 @@
                 android:layout_width="@dimen/generic32dp"
                 android:layout_height="@dimen/generic32dp"
                 android:src="@mipmap/ic_launcher"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/tvSecondExchange"
-                app:layout_constraintTop_toTopOf="@id/tvSecondToPrice" />
+                app:layout_constraintTop_toTopOf="@id/tvSecondToPrice"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvSecondFromCoin"
@@ -183,8 +187,10 @@
                 android:layout_width="@dimen/generic32dp"
                 android:layout_height="@dimen/generic32dp"
                 android:src="@mipmap/ic_launcher"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/tvThirdExchange"
-                app:layout_constraintTop_toTopOf="@id/tvThirdToPrice" />
+                app:layout_constraintTop_toTopOf="@id/tvThirdToPrice"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvThirdFromCoin"
