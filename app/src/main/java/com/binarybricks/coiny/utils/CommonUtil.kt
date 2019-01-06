@@ -13,6 +13,7 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import java.math.BigDecimal
 import java.net.URI
 
+
 /**
 Created by Pranay Airan 1/15/18.
  */
@@ -84,4 +85,38 @@ fun getUrlWithoutParameters(url: String): String {
     val uri = URI(url)
     return URI(uri.scheme, uri.authority, uri.path, null, // Ignore the query part of the input url
             uri.fragment).toString()
+}
+
+fun sendEmail(context: Context, email: String, subject: String, body: String) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:") // only email apps should handle this
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
+    }
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
+    }
+}
+
+fun shareCoiny(context: Context) {
+    val sendIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "Track 100's of crypto currencies on 150+ exchanges completely free, secure and offline. " +
+                "\n Download Coiny at: https://play.google.com/store/apps/details?id=com.binarybricks.coiny")
+        type = "text/plain"
+    }
+
+    if (sendIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(sendIntent)
+    }
+}
+
+fun rateCoiny(context: Context) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data = Uri.parse(
+                "https://play.google.com/store/apps/details?id=com.binarybricks.coiny")
+        setPackage("com.android.vending")
+    }
+    context.startActivity(intent)
 }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.generic_footer_module.view.*
 import timber.log.Timber
 
@@ -25,7 +25,7 @@ class GenericFooterModule : Module() {
 
         if (footerModuleData.footerUrlLink.isNotEmpty()) {
             inflatedView.tvFooter.setOnClickListener {
-                inflatedView.context.startActivity(getBrowserIntent(footerModuleData.footerUrlLink))
+                openCustomTab(footerModuleData.footerUrlLink, inflatedView.context)
             }
         } else {
             inflatedView.tvFooter.visibility = View.GONE

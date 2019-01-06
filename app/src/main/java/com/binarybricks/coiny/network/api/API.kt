@@ -11,6 +11,8 @@ import retrofit2.http.Query
 
 interface API {
 
+    //TODO need to pass api key and app name in all the request, break this file into 2 if possible and name it differently.
+
     @GET("all/coinlist")
     fun getCoinList(): Single<JsonObject>
 

@@ -14,7 +14,7 @@ import com.binarybricks.coiny.components.cryptonewsmodule.CryptoNewsPresenter
 import com.binarybricks.coiny.components.cryptonewsmodule.CryptoNewsRepository
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.activity_news_list.*
 
 /**
@@ -82,7 +82,7 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
         rvNewsList.adapter = newsListAdapter
 
         tvFooter.setOnClickListener {
-            startActivity(getBrowserIntent(getString(R.string.crypto_panic_url)))
+            openCustomTab(getString(R.string.crypto_panic_url), this)
         }
     }
 

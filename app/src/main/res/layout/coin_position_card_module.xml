@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/tvNoOfCoins"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/tvCoinValue"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -102,7 +102,7 @@
 
             <TextView
                 android:id="@+id/tvAvgCostValue"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -124,7 +124,7 @@
 
             <TextView
                 android:id="@+id/tvTotalReturnValue"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"

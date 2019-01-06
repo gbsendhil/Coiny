@@ -73,14 +73,15 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     }
 
     fun openCurrencyPicker() {
-        val picker = CurrencyPicker.newInstance("Select Currency") // dialog title
+        val picker = CurrencyPicker.newInstance(getString(R.string.select_currency)) // dialog title
 
         picker.setListener { name, code, _, _ ->
             Timber.d("Currency code selected $name,$code")
             PreferenceHelper.setPreference(this, PreferenceHelper.DEFAULT_CURRENCY, code)
 
             picker.dismiss() // Show currency that is picked.
-            val currency = PreferenceHelper.getPreference(this, code, defaultCurrency)
+
+            val currency = PreferenceHelper.getPreference(this, PreferenceHelper.DEFAULT_CURRENCY, defaultCurrency)
 
             // get list of all coins
             launchPresenter.getAllSupportedCoins(currency)

@@ -74,7 +74,7 @@
 
         <TextView
             android:id="@+id/tvWebsiteValue"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -91,7 +91,7 @@
 
         <TextView
             android:id="@+id/tvTwitterValue"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -107,7 +107,7 @@
 
         <TextView
             android:id="@+id/tvRedditValue"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -124,7 +124,7 @@
 
         <TextView
             android:id="@+id/tvGithubValue"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -153,7 +153,7 @@
 
         <TextView
             android:id="@+id/tvAboutCoin"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic14dp"

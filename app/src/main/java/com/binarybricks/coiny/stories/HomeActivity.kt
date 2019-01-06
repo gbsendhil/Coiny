@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.stories.coinsearch.CoinDiscoveryFragment
 import com.binarybricks.coiny.stories.dashboard.CoinDashboardFragment
+import com.binarybricks.coiny.stories.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -24,6 +25,10 @@ class HomeActivity : AppCompatActivity() {
 
         switchToDashboard(savedInstanceState)
 
+        // if fragment exist reuse it
+        // if not then add it
+
+
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.actionHome -> {
@@ -35,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 R.id.actionSettings -> {
-                    switchToSettings()
+                    switchToSettings(savedInstanceState)
                 }
             }
             return@setOnNavigationItemSelectedListener true
@@ -66,6 +71,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun switchToSettings() {
+    private fun switchToSettings(savedInstanceState: Bundle?) {
+
+        if (savedInstanceState == null) {
+            val settingsFragment = SettingsFragment()
+
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerLayout, settingsFragment, SettingsFragment.TAG)
+                    .addToBackStack(null)
+                    .commit()
+        }
     }
 }

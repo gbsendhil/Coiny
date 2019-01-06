@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tvOpenAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/tvTodaysHighAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"
@@ -69,7 +69,7 @@
 
         <TextView
             android:id="@+id/tvTodayLowAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"
@@ -89,7 +89,7 @@
 
         <TextView
             android:id="@+id/tvChangeTodayAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"
@@ -117,7 +117,7 @@
 
         <TextView
             android:id="@+id/tvVolumeQuantity"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/guideline"
@@ -137,7 +137,7 @@
 
         <TextView
             android:id="@+id/tvAvgVolumeAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"
@@ -159,7 +159,7 @@
 
         <TextView
             android:id="@+id/tvAvgMarketCapAmount"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"
@@ -181,7 +181,7 @@
 
         <TextView
             android:id="@+id/tvSupplyNumber"
-            style="@style/TextRegular"
+            style="@style/CoinyText.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"

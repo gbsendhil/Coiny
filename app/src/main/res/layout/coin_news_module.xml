@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tvFirstArticleTitle"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tvSecondArticleTitle"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -103,7 +103,7 @@
 
             <TextView
                 android:id="@+id/tvThirdArticleTitle"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

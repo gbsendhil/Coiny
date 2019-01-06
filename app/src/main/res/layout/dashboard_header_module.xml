@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/tvPortfolioChangedPercentage"
-        style="@style/TextRegular"
+        style="@style/CoinyText.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/generic8dp"

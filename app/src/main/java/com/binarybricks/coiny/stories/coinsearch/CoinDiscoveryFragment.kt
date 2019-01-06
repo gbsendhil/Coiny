@@ -14,7 +14,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import kotlinx.android.synthetic.main.activity_dashboard.view.*
+import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
 class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
@@ -41,7 +41,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val inflate = inflater.inflate(R.layout.activity_dashboard, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         val toolbar = inflate.toolbar
         toolbar?.title = "Discover"

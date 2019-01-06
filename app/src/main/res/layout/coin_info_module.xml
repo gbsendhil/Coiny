@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/tvFirstTxnTimeAndExchange"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvExchangeLabel"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tvAlgorithmName"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvAlgorithmLabel"
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/tvProofTypeName"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvProofTypeLabel"

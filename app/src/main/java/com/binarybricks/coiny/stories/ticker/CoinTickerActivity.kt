@@ -16,7 +16,7 @@ import com.binarybricks.coiny.components.cointickermodule.CoinTickerRepository
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
-import com.binarybricks.coiny.utils.getBrowserIntent
+import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.activity_coin_ticker_list.*
 import java.util.*
 
@@ -82,7 +82,7 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
         rvCoinTickerList.adapter = coinTickerAdapter
 
         tvFooter.setOnClickListener {
-            startActivity(getBrowserIntent(getString(R.string.coin_gecko_url)))
+            openCustomTab(getString(R.string.coin_gecko_url), this)
         }
     }
 
