@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/generic8dp"
     android:layout_marginStart="@dimen/generic8dp"
+    android:layout_marginEnd="@dimen/generic8dp"
     android:paddingTop="@dimen/generic16dp">
 
     <TextView
@@ -53,8 +53,8 @@
                     style="@style/TextSmallSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/generic8dp"
                     android:paddingTop="@dimen/generic4dp"
+                    android:paddingEnd="@dimen/generic8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvFirstTxnTypeAndQuantity"
@@ -97,8 +97,8 @@
                     style="@style/TextSmallSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/generic8dp"
                     android:paddingTop="@dimen/generic4dp"
+                    android:paddingEnd="@dimen/generic8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvSecondTxnTypeAndQuantity"
@@ -141,8 +141,8 @@
                     style="@style/TextSmallSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="@dimen/generic8dp"
                     android:paddingTop="@dimen/generic4dp"
+                    android:paddingEnd="@dimen/generic8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvThirdTxnTypeAndQuantity"
@@ -171,9 +171,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clThirdTransaction" />
 
-            <Button
+            <android.support.design.button.MaterialButton
                 android:id="@+id/tvMore"
-                style="@style/ButtonRegularNoBackground"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/more"

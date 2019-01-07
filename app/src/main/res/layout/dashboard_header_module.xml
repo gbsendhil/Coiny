@@ -30,15 +30,16 @@
         app:layout_constraintTop_toBottomOf="@id/tvPortfolioLabel"
         tools:text="$17,400.92" />
 
-    <Button
+
+    <android.support.design.button.MaterialButton
         android:id="@+id/btnLast24Hr"
-        style="@style/ButtonRegularNoBackground"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic4dp"
         android:text="@string/_24h_changes"
         android:textAllCaps="false"
-        android:textColor="@color/textColorSecondaryBlack"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintEnd_toEndOf="@id/tvPortfolioChangedPercentage"
         app:layout_constraintStart_toStartOf="@id/tvPortfolioChangedValue"
         app:layout_constraintTop_toBottomOf="@id/tvPortfolioValue" />
@@ -48,9 +49,9 @@
         style="@style/DisplayNumberTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/generic8dp"
-        android:paddingEnd="@dimen/generic8dp"
         android:paddingStart="@dimen/generic8dp"
+        android:paddingEnd="@dimen/generic8dp"
+        android:paddingBottom="@dimen/generic8dp"
         app:layout_constraintEnd_toStartOf="@+id/tvPortfolioChangedPercentage"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
