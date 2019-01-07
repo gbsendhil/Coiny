@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
@@ -36,7 +36,6 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_launch)
-        setSupportActionBar(toolbar as Toolbar?)
 
         launchPresenter.attachView(this)
         lifecycle.addObserver(launchPresenter)
@@ -45,7 +44,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
         if (!PreferenceHelper.getPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, false)) {
             initializeUI()
 
-            launchPresenter.loadCoinsFromAPIInBackground()
+            launchPresenter.loadAllCoins()
         } else {
             startActivity(HomeActivity.buildLaunchIntent(this))
             finish()
@@ -59,6 +58,11 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
         // Set a PageTransformer
         introPager.setPageTransformer(false, IntroPageTransformer())
+    }
+
+    override fun onCoinsLoaded() {
+        splashGroup.visibility = View.GONE
+        viewpagerGroup.visibility = View.VISIBLE
     }
 
     override fun onBackPressed() {

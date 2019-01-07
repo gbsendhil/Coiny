@@ -27,11 +27,14 @@ class LaunchPresenter(
     private var coinList: ArrayList<CCCoin>? = null
     private var coinInfoMap: Map<String, CoinInfo>? = null
 
-    override fun loadCoinsFromAPIInBackground() {
-        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList, coinInfoMap).subscribe({
-            coinList = it.first
-            coinInfoMap = it.second
-        }, { Timber.e(it) }))
+    override fun loadAllCoins() {
+        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList, coinInfoMap)
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    coinList = it.first
+                    coinInfoMap = it.second
+                    currentView?.onCoinsLoaded()
+                }, { Timber.e(it) }))
 
         loadExchangeFromAPI()
     }

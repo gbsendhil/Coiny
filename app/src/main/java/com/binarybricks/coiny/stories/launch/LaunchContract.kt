@@ -7,11 +7,12 @@ Created by Pranay Airan 2/3/18.
 interface LaunchContract {
 
     interface View : BaseView {
+        fun onCoinsLoaded()
         fun onAllSupportedCoinsLoaded()
     }
 
     interface Presenter {
-        fun loadCoinsFromAPIInBackground()
+        fun loadAllCoins()
         fun getAllSupportedCoins(defaultCurrency: String)
     }
 }
