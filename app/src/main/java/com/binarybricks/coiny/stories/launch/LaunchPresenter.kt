@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.components.historicalchartmodule
+package com.binarybricks.coiny.stories.launch
 
 import LaunchContract
 import android.arch.lifecycle.Lifecycle
@@ -6,6 +6,7 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CCCoin
+import com.binarybricks.coiny.network.models.CoinInfo
 import com.binarybricks.coiny.network.models.getCoinFromCCCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
@@ -19,14 +20,17 @@ Created by Pranay Airan
  */
 
 class LaunchPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
+
     private var coinList: ArrayList<CCCoin>? = null
+    private var coinInfoMap: Map<String, CoinInfo>? = null
 
     override fun loadCoinsFromAPIInBackground() {
-        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList).subscribe({
+        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList, coinInfoMap).subscribe({
             coinList = it.first
+            coinInfoMap = it.second
         }, { Timber.e(it) }))
 
         loadExchangeFromAPI()
@@ -41,7 +45,7 @@ class LaunchPresenter(
     }
 
     override fun getAllSupportedCoins(defaultCurrency: String) {
-        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList)
+        compositeDisposable.add(coinRepo.getAllCoinsFromAPI(coinList, coinInfoMap)
                 .flatMap {
                     val coinList: MutableList<WatchedCoin> = mutableListOf()
                     val ccCoinList = it.first

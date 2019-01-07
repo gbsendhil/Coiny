@@ -9,11 +9,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.historicalchartmodule.LaunchPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.HomeActivity
+import com.binarybricks.coiny.utils.CoinyExtendedCurrency
 import com.binarybricks.coiny.utils.ui.IntroPageTransformer
 import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.activity_launch.*
@@ -72,6 +72,8 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     fun openCurrencyPicker() {
 
         val picker = CurrencyPicker.newInstance(getString(R.string.select_currency)) // dialog title
+
+        picker.setCurrenciesList(CoinyExtendedCurrency.CURRENCIES)
 
         picker.setListener { name, code, _, _ ->
             Timber.d("Currency code selected $name,$code")

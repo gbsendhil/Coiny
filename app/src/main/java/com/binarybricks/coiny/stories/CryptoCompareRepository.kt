@@ -27,17 +27,21 @@ Repository that interact with crypto api to get any info on coins.
  */
 
 class CryptoCompareRepository(
-    private val baseSchedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase? = null
+        private val baseSchedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase? = null
 ) {
 
     /**
      * Get list of all coins from api
      */
-    fun getAllCoinsFromAPI(coinList: ArrayList<CCCoin>? = null): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
+    fun getAllCoinsFromAPI(coinList: ArrayList<CCCoin>? = null, coinInfoMap: Map<String, CoinInfo>? = null): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
 
         return if (coinList != null) {
-            Single.just(Pair(coinList, getCoinInfoMap()))
+            if (coinInfoMap != null) {
+                Single.just(Pair(coinList, coinInfoMap))
+            } else {
+                Single.just(Pair(coinList, getCoinInfoMap()))
+            }
         } else {
             cryptoCompareRetrofit.create(API::class.java)
                     .getCoinList()
