@@ -97,7 +97,7 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
             launchPresenter.getAllSupportedCoins(code)
 
             // FTU shown
-            // PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
+            PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
         }
 
         picker.show(supportFragmentManager, "CURRENCY_PICKER")
