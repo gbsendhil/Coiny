@@ -3,7 +3,6 @@ package com.binarybricks.coiny.components.historicalchartmodule
 import HistoricalChartContract
 import android.animation.ValueAnimator
 import android.graphics.DashPathEffect
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,10 +26,10 @@ Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val resourceProvider: ResourceProvider,
-    private val fromCurrency: String,
-    private val toCurrency: String
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider,
+        private val fromCurrency: String,
+        private val toCurrency: String
 ) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
@@ -78,12 +77,12 @@ class HistoricalChartModule(
     }
 
     override fun showOrHideChartLoadingIndicator(showLoading: Boolean) {
+        inflatedView.tvErrorGraph.visibility = View.GONE
         if (showLoading) inflatedView.pbChartLoading.show() else inflatedView.pbChartLoading.hide()
     }
 
-    override fun onHistoricalDataLoaded(
-        period: String,
-        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+    override fun onHistoricalDataLoaded(period: String,
+                                        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
     ) {
 
         historicalData = dataListPair.first
@@ -218,7 +217,8 @@ class HistoricalChartModule(
     }
 
     override fun onNetworkError(errorMessage: String) {
-        Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
+        inflatedView.pbChartLoading.visibility = View.GONE
+        inflatedView.tvErrorGraph.text = errorMessage
     }
 
     data class HistoricalChartModuleData(val coinPriceWithCurrentPrice: CoinPrice?) : ModuleItem

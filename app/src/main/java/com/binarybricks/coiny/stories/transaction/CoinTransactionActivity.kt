@@ -4,6 +4,7 @@ import CoinTransactionContract
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -28,7 +29,6 @@ import com.binarybricks.coiny.utils.dismissKeyboard
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_coin_transaction.*
-import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -347,6 +347,6 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
     }
 
     override fun onNetworkError(errorMessage: String) {
-        Timber.e(errorMessage)
+        Snackbar.make(svContainer, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 }

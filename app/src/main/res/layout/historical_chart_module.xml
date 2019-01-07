@@ -90,6 +90,18 @@
         app:layout_constraintStart_toStartOf="@id/historicalChartView"
         app:layout_constraintTop_toTopOf="@id/historicalChartView" />
 
+    <TextView
+        android:id="@+id/tvErrorGraph"
+        style="@style/CoinyText.Body1Alternate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/historicalChartView"
+        app:layout_constraintEnd_toEndOf="@id/historicalChartView"
+        app:layout_constraintStart_toStartOf="@id/historicalChartView"
+        app:layout_constraintTop_toTopOf="@id/historicalChartView"
+        tools:text="Some Error" />
+
     <RadioGroup
         android:id="@+id/rgPeriodSelector"
         android:layout_width="match_parent"

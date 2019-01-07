@@ -2,6 +2,7 @@ package com.binarybricks.coiny.stories.coinsearch
 
 import CoinDiscoveryContract
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
 class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
@@ -130,6 +132,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
     }
 
     override fun onNetworkError(errorMessage: String) {
+        Snackbar.make(rvDashboard, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

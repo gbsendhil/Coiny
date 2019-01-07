@@ -2,6 +2,7 @@ package com.binarybricks.coiny.stories.dashboard
 
 import CoinDashboardContract
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -180,6 +181,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     }
 
     override fun onNetworkError(errorMessage: String) {
+        Snackbar.make(rvDashboard, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
