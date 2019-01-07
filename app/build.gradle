@@ -80,7 +80,6 @@ dependencies {
     implementation "com.hannesdorfmann:adapterdelegates3:${versions.adapterDelegates}"
     implementation "com.github.midorikocak:currency-picker-android:${versions.currencyPicker}"
     implementation "com.airbnb.android:lottie:${versions.lottie}"
-    implementation "com.nshmura:recyclertablayout:${versions.recylerTab}" // TODO remove this
     implementation("com.wdullaer:materialdatetimepicker:${versions.materialdate}") {
         exclude module: 'support-v13'
     }
