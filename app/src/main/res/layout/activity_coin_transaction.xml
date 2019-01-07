@@ -17,8 +17,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingBottom="@dimen/generic8dp"
         android:paddingTop="@dimen/generic4dp"
+        android:paddingBottom="@dimen/generic8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btnAddTransaction"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,8 +48,8 @@
                     android:layout_marginEnd="@dimen/generic16dp"
                     android:buttonTint="@color/colorAccent"
                     android:checked="true"
-                    android:paddingEnd="@dimen/generic4dp"
                     android:paddingStart="@dimen/generic4dp"
+                    android:paddingEnd="@dimen/generic4dp"
                     android:text="@string/buy" />
 
 
@@ -58,9 +58,9 @@
                     style="@style/DisplayNumberLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorSecondaryAccent"
-                    android:paddingEnd="@dimen/generic4dp"
+                    android:buttonTint="@color/colorPrimaryDusk"
                     android:paddingStart="@dimen/generic4dp"
+                    android:paddingEnd="@dimen/generic4dp"
                     android:text="@string/sell" />
             </RadioGroup>
 
@@ -68,7 +68,7 @@
                 android:id="@+id/dividerBuySell"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rgBuySell" />
@@ -82,8 +82,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerBuySell">
@@ -126,7 +126,7 @@
                 android:id="@+id/dividerExchange"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/containerExchange" />
@@ -141,8 +141,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerExchange">
@@ -187,7 +187,7 @@
                 android:id="@+id/dividerPair"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/containerPair" />
@@ -201,8 +201,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerPair">
@@ -236,7 +236,7 @@
                 android:id="@+id/dividerDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/containerDate" />
@@ -249,8 +249,8 @@
                 android:background="@color/backgroundColor"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerDateTime">
@@ -288,7 +288,7 @@
                 android:id="@+id/dividerBuyPrice"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/containerBuyPrice" />
@@ -301,8 +301,8 @@
                 android:background="@color/backgroundColor"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dividerBuyPrice">
@@ -340,7 +340,7 @@
                 android:id="@+id/dividerAmount"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentOpaque"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/containerAmount" />
@@ -351,8 +351,8 @@
                 style="@style/TextSubHeadSecondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/generic4dp"
                 android:layout_marginTop="@dimen/generic4dp"
+                android:layout_marginBottom="@dimen/generic4dp"
                 android:padding="@dimen/generic8dp"
                 android:text="Additional Options"
                 app:layout_constraintStart_toStartOf="parent"
@@ -367,8 +367,8 @@
                 android:background="@color/backgroundColor"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingEnd="@dimen/generic16dp"
                 android:paddingStart="@dimen/generic16dp"
+                android:paddingEnd="@dimen/generic16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAdditionalOptionLabel">

@@ -99,9 +99,9 @@ class DashboardCoinModule(private val toCurrency: String) : Module() {
                 }
 
                 if (totalReturnAmount != null && totalReturnAmount < BigDecimal.ZERO) {
-                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
+                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
                 } else {
-                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorPrimary))
+                    inflatedView.tvProfitLoss.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
                 }
             } else {
                 inflatedView.purchaseItemsGroup.visibility = View.GONE

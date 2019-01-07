@@ -15,7 +15,6 @@ import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.HomeActivity
 import com.binarybricks.coiny.utils.ui.IntroPageTransformer
-import com.binarybricks.coiny.utils.defaultCurrency
 import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.activity_launch.*
 import timber.log.Timber
@@ -47,8 +46,6 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
             initializeUI()
 
             launchPresenter.loadCoinsFromAPIInBackground()
-            // FTU shown
-            PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
         } else {
             startActivity(HomeActivity.buildLaunchIntent(this))
             finish()
@@ -73,6 +70,8 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
     }
 
     fun openCurrencyPicker() {
+
+
         val picker = CurrencyPicker.newInstance(getString(R.string.select_currency)) // dialog title
 
         picker.setListener { name, code, _, _ ->
@@ -81,40 +80,64 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
             picker.dismiss() // Show currency that is picked.
 
-            val currency = PreferenceHelper.getPreference(this, PreferenceHelper.DEFAULT_CURRENCY, defaultCurrency)
+            // show loading screen
+            val currentFragment = (introPager.adapter as IntroAdapter).getCurrentFragment()
+            if (currentFragment != null && currentFragment is IntroFragment) {
+                currentFragment.showLoadingScreen()
+            }
+
+            introPager.beginFakeDrag()
 
             // get list of all coins
-            launchPresenter.getAllSupportedCoins(currency)
+            launchPresenter.getAllSupportedCoins(code)
+
+            // FTU shown
+            //PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
         }
 
         picker.show(supportFragmentManager, "CURRENCY_PICKER")
     }
 
-    // TODO add a progress dialog for this
     override fun onAllSupportedCoinsLoaded() {
         startActivity(HomeActivity.buildLaunchIntent(this))
         finish()
     }
 
-    inner class IntroAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    private inner class IntroAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        private var currentFragment: Fragment? = null
+
+        fun getCurrentFragment(): Fragment? {
+            return currentFragment
+        }
 
         override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> IntroFragment.newInstance(R.raw.smiley_stack, "5000 Coins",
-                    "Track more than 5000 coins, across 132 exchanges.", position, false) // 5000 curencies
+            when (position) {
+                0 -> {
+                    val newInstance = IntroFragment.newInstance(R.raw.smiley_stack, getString(R.string.intro_coin_title),
+                            getString(R.string.intro_coin_message), position, false) // 5000 curencies
+                    currentFragment = newInstance
+                    return newInstance
+                }
 
-                1 -> IntroFragment.newInstance(R.raw.graph, "Track Gains",
-                    "Add transactions, track profit and loss. All at 1 place.", position, false) // Track transactions
+                1 -> {
+                    val newInstance = IntroFragment.newInstance(R.raw.graph, getString(R.string.intro_track_title),
+                            getString(R.string.intro_track_message), position, false) // Track transactions
+                    currentFragment = newInstance
+                    return newInstance
+                }
 
-                2 -> IntroFragment.newInstance(R.raw.bell, "Price Alert",
-                    "Get price change alerts, for your favourite currencies.", position, true) // alert
-                else -> IntroFragment.newInstance(R.raw.lock, "Highly Secure",
-                    "Completely offline and secure. Your data never leaves the device.", position, true) // Secure
+                else -> {
+                    val newInstance = IntroFragment.newInstance(R.raw.lock, getString(R.string.intro_secure_title),
+                            getString(R.string.intro_secure_message), position, true) // Secure
+                    currentFragment = newInstance
+                    return newInstance
+                }
             }
         }
 
         override fun getCount(): Int {
-            return 4
+            return 3
         }
     }
 }

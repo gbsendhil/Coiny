@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.binarybricks.coiny.R
+import kotlinx.android.synthetic.main.intro_fragment_layout.*
 
 class IntroFragment : Fragment() {
     private var animationRes: Int = 0
@@ -74,5 +75,12 @@ class IntroFragment : Fragment() {
                 (activity as? LaunchActivity)?.openCurrencyPicker()
             }
         }
+    }
+
+    fun showLoadingScreen() {
+        contentGroup.visibility = View.GONE
+        btnChooseCurrency.visibility = View.GONE
+        pbLoading.visibility = View.VISIBLE
+        tvLoading.visibility = View.VISIBLE
     }
 }

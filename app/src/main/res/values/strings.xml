@@ -103,4 +103,11 @@
     <string name="share_app">Share App</string>
     <string name="feedback">Feedback</string>
     <string name="privacy_policy">Privacy policy</string>
+    <string name="intro_coin_title">5000 Coins</string>
+    <string name="intro_coin_message">Track more than 5000 coins, across 132 exchanges.</string>
+    <string name="intro_track_title">Track Gains</string>
+    <string name="intro_track_message">Add transactions, track profit and loss. All at 1 place.</string>
+    <string name="intro_secure_title">Highly Secure</string>
+    <string name="intro_secure_message">Completely offline and secure. Your data never leaves the device.</string>
+    <string name="loading_coins">Loading Coins and preparing the app..</string>
 </resources>

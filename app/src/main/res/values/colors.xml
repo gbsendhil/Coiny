@@ -7,22 +7,6 @@
     <color name="colorPrimaryDusk">#3c4862</color>
     <color name="colorPrimaryAlternate">#253047</color>
 
-    <color name="colorSecondary">#f36531</color>
-    <color name="colorSecondaryAccent">#ff965e</color>
-    <color name="colorSecondaryDark">#b93300</color>
-
-    <!--<color name="colorPrimary">#22c478</color>-->
-    <!--<color name="colorAccent">#66f8a7</color>-->
-    <!--<color name="colorPrimaryDark">#00924b</color>-->
-
-    <color name="colorPrimaryOpaque">#BF22c478</color>
-    <color name="colorSecondaryTextOpaque">#33757577</color>
-    <color name="colorAccentOpaque">#3366f8a7</color>
-
-    <!--<color name="backgroundColor">#353642</color>-->
-    <!--<color name="backgroundLightColor">#363744</color>-->
-    <!--<color name="backgroundDarkColor">#272834</color>-->
-
     <!-- 75 transparency  https://stackoverflow.com/questions/15852122/hex-transparency-in-colors-->
     <color name="backgroundColor">#BF212b40</color>
     <color name="backgroundLightColor">#59595b</color>
@@ -31,7 +15,7 @@
     <color name="textColorBlack">#212124</color>
     <color name="textColorSecondaryBlack">#373739</color>
 
-    <color name="tabTextColor">#dadadb</color>
+    <color name="tabTextColor">@color/primaryTextColor</color>
 
     <!-- new palete -->
 
@@ -47,7 +31,7 @@
     <color name="bottomNavUnSelected">#ffffff</color>
 
     <color name="switchColor">#ffaf12</color>
-    
+
     <color name="cerise">#da0e86</color>
     <color name="bubble_gum_pink">#ff5ba4</color>
 

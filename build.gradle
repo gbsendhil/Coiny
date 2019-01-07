@@ -20,7 +20,7 @@ buildscript {
             'gson'                : '2.8.2',
             'spark'               : '1.2.0',
             'adapterDelegates'    : '3.1.0',
-            'currencyPicker'      : '1.1.9',
+            'currencyPicker'      : '1.2.1',
             'lottie'              : '2.6.1',
             'recylerTab'          : '1.5.0',
             'materialdate'        : '3.5.1',

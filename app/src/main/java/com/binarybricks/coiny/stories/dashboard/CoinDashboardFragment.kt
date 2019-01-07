@@ -63,8 +63,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        initializeUI(inflate)
-
         coinDashboardPresenter.attachView(this)
 
         lifecycle.addObserver(coinDashboardPresenter)
@@ -73,6 +71,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         coinDashboardList = ArrayList()
         coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
         coinDashboardList.add(1, DashboardNewsModule.DashboardNewsModuleData(null))
+
+        initializeUI(inflate)
 
         // get top coins
         coinDashboardPresenter.getTopCoinsByTotalVolume24hours(PreferenceHelper.getDefaultCurrency(context))

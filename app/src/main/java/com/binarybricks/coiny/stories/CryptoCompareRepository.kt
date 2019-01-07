@@ -34,16 +34,20 @@ class CryptoCompareRepository(
     /**
      * Get list of all coins from api
      */
-    fun getAllCoinsFromAPI(): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
+    fun getAllCoinsFromAPI(coinList: ArrayList<CCCoin>? = null): Single<Pair<ArrayList<CCCoin>, Map<String, CoinInfo>>> {
 
-        return cryptoCompareRetrofit.create(API::class.java)
-                .getCoinList()
-                .subscribeOn(baseSchedulerProvider.io())
-                .map {
-                    Timber.d("Coin fetched, parsing response")
-                    val coinsFromJson = getCoinsFromJson(it)
-                    Pair(coinsFromJson, getCoinInfoMap())
-                }
+        return if (coinList != null) {
+            Single.just(Pair(coinList, getCoinInfoMap()))
+        } else {
+            cryptoCompareRetrofit.create(API::class.java)
+                    .getCoinList()
+                    .subscribeOn(baseSchedulerProvider.io())
+                    .map {
+                        Timber.d("Coin fetched, parsing response")
+                        val coinsFromJson = getCoinsFromJson(it)
+                        Pair(coinsFromJson, getCoinInfoMap())
+                    }
+        }
     }
 
     private fun getCoinInfoMap(): Map<String, CoinInfo> {
@@ -346,8 +350,8 @@ fun getTop5CoinsToWatch(): MutableList<String> {
     val ripple = "5031"
     watchedCoin.add(ripple)
 
-    val cardano = "321992"
-    watchedCoin.add(cardano)
+    val eos = "166503"
+    watchedCoin.add(eos)
 
     val litcoin = "3808"
     watchedCoin.add(litcoin)

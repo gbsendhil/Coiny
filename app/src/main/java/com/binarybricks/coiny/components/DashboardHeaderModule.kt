@@ -13,15 +13,18 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import com.binarybricks.coiny.utils.getTotalCost
-import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioChangedPercentage
-import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioChangedValue
-import kotlinx.android.synthetic.main.dashboard_header_module.view.tvPortfolioValue
+import kotlinx.android.synthetic.main.dashboard_header_module.view.*
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
 import java.util.Currency
 import java.util.HashMap
+import kotlin.collections.ArrayList
+import kotlin.collections.List
+import kotlin.collections.MutableList
+import kotlin.collections.forEach
+import kotlin.collections.isNotEmpty
 
 /**
  * Created by Pranay Airan
@@ -84,8 +87,11 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
             }
 
             if (totalReturnAmount != null && totalReturnAmount < BigDecimal.ZERO) {
-                inflatedView.tvPortfolioChangedValue.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
-                inflatedView.tvPortfolioChangedPercentage.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorSecondary))
+                inflatedView.tvPortfolioChangedValue.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
+                inflatedView.tvPortfolioChangedPercentage.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
+            } else {
+                inflatedView.tvPortfolioChangedValue.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
+                inflatedView.tvPortfolioChangedPercentage.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
             }
         } else {
             // get the coins that are purchased
@@ -115,8 +121,8 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
     }
 
     data class DashboardHeaderModuleData(
-        var watchedCoinList: List<WatchedCoin>,
-        var coinTransactionList: List<CoinTransaction>,
-        var coinPriceListMap: HashMap<String, CoinPrice>
+            var watchedCoinList: List<WatchedCoin>,
+            var coinTransactionList: List<CoinTransaction>,
+            var coinPriceListMap: HashMap<String, CoinPrice>
     ) : ModuleItem
 }
