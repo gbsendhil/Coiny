@@ -54,53 +54,49 @@ class HomeActivity : AppCompatActivity() {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 finish()
             } else if (!supportFragmentManager.fragments.isNullOrEmpty()) {
-                val fragment = supportFragmentManager.fragments[0]
-
-                if (fragment is CoinDashboardFragment) {
-                    bottomNavigation.menu.getItem(0).isChecked = true
-                } else if (fragment is CoinDiscoveryFragment) {
-                    bottomNavigation.menu.getItem(1).isChecked = true
-                } else if (fragment is SettingsFragment) {
-                    bottomNavigation.menu.getItem(2).isChecked = true
+                when (supportFragmentManager.fragments[0]) {
+                    is CoinDashboardFragment -> bottomNavigation.menu.getItem(0).isChecked = true
+                    is CoinDiscoveryFragment -> bottomNavigation.menu.getItem(1).isChecked = true
+                    is SettingsFragment -> bottomNavigation.menu.getItem(2).isChecked = true
                 }
             }
         }
     }
 
     private fun switchToDashboard(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val coinDashboardFragment = CoinDashboardFragment()
 
-            // if we switch to home clear everything
-            supportFragmentManager.popBackStack(FRAGMENT_OTHER, POP_BACK_STACK_INCLUSIVE)
 
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerLayout, coinDashboardFragment, CoinDashboardFragment.TAG)
-                    .addToBackStack(FRAGMENT_HOME)
-                    .commit()
-        }
+        val coinDashboardFragment = supportFragmentManager.findFragmentByTag(CoinDashboardFragment.TAG)
+                ?: CoinDashboardFragment()
+
+        // if we switch to home clear everything
+        supportFragmentManager.popBackStack(FRAGMENT_OTHER, POP_BACK_STACK_INCLUSIVE)
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.containerLayout, coinDashboardFragment, CoinDashboardFragment.TAG)
+                .addToBackStack(FRAGMENT_HOME)
+                .commit()
     }
 
     private fun switchToSearch(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val coinDiscoveryFragment = CoinDiscoveryFragment()
 
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerLayout, coinDiscoveryFragment, CoinDiscoveryFragment.TAG)
-                    .addToBackStack(FRAGMENT_OTHER)
-                    .commit()
-        }
+        val coinDiscoveryFragment = supportFragmentManager.findFragmentByTag(CoinDiscoveryFragment.TAG)
+                ?: CoinDiscoveryFragment()
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.containerLayout, coinDiscoveryFragment, CoinDiscoveryFragment.TAG)
+                .addToBackStack(FRAGMENT_OTHER)
+                .commit()
     }
 
     private fun switchToSettings(savedInstanceState: Bundle?) {
 
-        if (savedInstanceState == null) {
-            val settingsFragment = SettingsFragment()
+        val settingsFragment = supportFragmentManager.findFragmentByTag(SettingsFragment.TAG)
+                ?: SettingsFragment()
 
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerLayout, settingsFragment, SettingsFragment.TAG)
-                    .addToBackStack(FRAGMENT_OTHER)
-                    .commit()
-        }
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.containerLayout, settingsFragment, SettingsFragment.TAG)
+                .addToBackStack(FRAGMENT_OTHER)
+                .commit()
     }
 }
