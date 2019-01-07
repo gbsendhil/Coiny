@@ -3,6 +3,7 @@ package com.binarybricks.coiny.stories
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.support.v7.app.AppCompatActivity
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.stories.coinsearch.CoinDiscoveryFragment
@@ -17,6 +18,9 @@ class HomeActivity : AppCompatActivity() {
         fun buildLaunchIntent(context: Context): Intent {
             return Intent(context, HomeActivity::class.java)
         }
+
+        const val FRAGMENT_HOME = "FRAGMENT_HOME"
+        const val FRAGMENT_OTHER = "FRAGMENT_OTHER"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,16 +50,33 @@ class HomeActivity : AppCompatActivity() {
             return@setOnNavigationItemSelectedListener true
         }
 
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                finish()
+            } else if (!supportFragmentManager.fragments.isNullOrEmpty()) {
+                val fragment = supportFragmentManager.fragments[0]
 
+                if (fragment is CoinDashboardFragment) {
+                    bottomNavigation.menu.getItem(0).isChecked = true
+                } else if (fragment is CoinDiscoveryFragment) {
+                    bottomNavigation.menu.getItem(1).isChecked = true
+                } else if (fragment is SettingsFragment) {
+                    bottomNavigation.menu.getItem(2).isChecked = true
+                }
+            }
+        }
     }
 
     private fun switchToDashboard(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             val coinDashboardFragment = CoinDashboardFragment()
 
+            // if we switch to home clear everything
+            supportFragmentManager.popBackStack(FRAGMENT_OTHER, POP_BACK_STACK_INCLUSIVE)
+
             supportFragmentManager.beginTransaction()
                     .replace(R.id.containerLayout, coinDashboardFragment, CoinDashboardFragment.TAG)
-                    .addToBackStack(null)
+                    .addToBackStack(FRAGMENT_HOME)
                     .commit()
         }
     }
@@ -66,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
 
             supportFragmentManager.beginTransaction()
                     .replace(R.id.containerLayout, coinDiscoveryFragment, CoinDiscoveryFragment.TAG)
-                    .addToBackStack(null)
+                    .addToBackStack(FRAGMENT_OTHER)
                     .commit()
         }
     }
@@ -78,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
 
             supportFragmentManager.beginTransaction()
                     .replace(R.id.containerLayout, settingsFragment, SettingsFragment.TAG)
-                    .addToBackStack(null)
+                    .addToBackStack(FRAGMENT_OTHER)
                     .commit()
         }
     }

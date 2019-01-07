@@ -24,7 +24,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
     private var nextMenuItem: MenuItem? = null
 
-    private var coinDiscoveryList: MutableList<ModuleItem> = ArrayList()
+    private var coinDiscoveryList: ArrayList<ModuleItem> = ArrayList()
     private var coinDiscoveryAdapter: CoinDiscoveryAdapter? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
