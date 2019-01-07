@@ -121,8 +121,8 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
     }
 
     data class DashboardHeaderModuleData(
-            var watchedCoinList: List<WatchedCoin>,
-            var coinTransactionList: List<CoinTransaction>,
-            var coinPriceListMap: HashMap<String, CoinPrice>
+        var watchedCoinList: List<WatchedCoin>,
+        var coinTransactionList: List<CoinTransaction>,
+        var coinPriceListMap: HashMap<String, CoinPrice>
     ) : ModuleItem
 }

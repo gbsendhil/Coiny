@@ -15,8 +15,8 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDiscoveryAdapter(
-        toCurrency: String,
-        var coinDiscoverList: MutableList<ModuleItem>
+    toCurrency: String,
+    var coinDiscoverList: MutableList<ModuleItem>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DISCOVERY_CAROUSAL = 0
@@ -29,7 +29,6 @@ class CoinDiscoveryAdapter(
         delegates.addDelegate(DISCOVERY_CAROUSAL, CarousalAdapterDelegate(toCurrency))
         delegates.addDelegate(DISCOVERY_NEWS, DiscoveryNewsAdapterDelegate())
         delegates.addDelegate(LABEL, LabelCoinAdapterDelegate())
-
     }
 
     override fun getItemViewType(position: Int): Int {

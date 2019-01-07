@@ -17,8 +17,8 @@ Created by Pranay Airan
  */
 
 class SettingsPresenter(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinRepo: CryptoCompareRepository
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<SettingsContract.View>(),
         SettingsContract.Presenter, LifecycleObserver {
 

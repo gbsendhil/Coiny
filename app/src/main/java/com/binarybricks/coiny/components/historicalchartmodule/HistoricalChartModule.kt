@@ -22,16 +22,15 @@ import com.binarybricks.coiny.utils.chartAnimationDuration
 import kotlinx.android.synthetic.main.historical_chart_module.view.*
 import java.util.*
 
-
 /**
 Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val resourceProvider: ResourceProvider,
-        private val fromCurrency: String,
-        private val toCurrency: String
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val resourceProvider: ResourceProvider,
+    private val fromCurrency: String,
+    private val toCurrency: String
 ) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
@@ -83,8 +82,8 @@ class HistoricalChartModule(
     }
 
     override fun onHistoricalDataLoaded(
-            period: String,
-            dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+        period: String,
+        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
     ) {
 
         historicalData = dataListPair.first
@@ -104,7 +103,7 @@ class HistoricalChartModule(
         inflatedView.historicalChartView.adapter =
                 HistoricalChartAdapter(dataListPair.first, dataListPair.second?.open)
 
-        //inflatedView.historicalChartView.fillType=SparkView.FillType.DOWN
+        // inflatedView.historicalChartView.fillType=SparkView.FillType.DOWN
 
         val baseLinePaint = inflatedView.historicalChartView.baseLinePaint
         val dashPathEffect = DashPathEffect(floatArrayOf(10.0f, 2.0f), 0f)
@@ -122,7 +121,7 @@ class HistoricalChartModule(
                     resourceProvider.getString(R.string.gain, formatter.formatAmount(gain.toString(), currency))
             inflatedView.tvPortfolioChangedPercentage.text =
                     resourceProvider.getString(R.string.gainPercentage, percentageChange)
-            inflatedView.tvPortfolioChangedValue.visibility=View.VISIBLE
+            inflatedView.tvPortfolioChangedValue.visibility = View.VISIBLE
 
             if (gain > 0) {
                 showPositiveGainColor()
@@ -171,7 +170,7 @@ class HistoricalChartModule(
                 showChartPeriodText(selectedPeriod)
             } else {
                 val historicalData = value as CryptoCompareHistoricalResponse.Data
-                inflatedView.tvPortfolioChangedValue.visibility=View.GONE
+                inflatedView.tvPortfolioChangedValue.visibility = View.GONE
                 inflatedView.tvPortfolioChangedDate.text = formatter.formatDate(historicalData.time, 1000)
                 animateCoinPrice(historicalData.close)
             }

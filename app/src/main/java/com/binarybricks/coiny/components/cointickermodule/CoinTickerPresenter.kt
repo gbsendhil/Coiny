@@ -12,10 +12,11 @@ import timber.log.Timber
  * Created by Pranay Airan
  */
 
-class CoinTickerPresenter(private val schedulerProvider: BaseSchedulerProvider,
-                          private val coinTickerRepository: CoinTickerRepository)
+class CoinTickerPresenter(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinTickerRepository: CoinTickerRepository
+)
     : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
-
 
     /**
      * Load the crypto ticker from the crypto panic api

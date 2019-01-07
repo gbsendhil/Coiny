@@ -12,7 +12,6 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.discovery_news_module.view.*
 import timber.log.Timber
 
-
 /**
  * Created by Pranay Airan
  *

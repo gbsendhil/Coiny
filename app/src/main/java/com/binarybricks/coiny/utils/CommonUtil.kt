@@ -13,7 +13,6 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import java.math.BigDecimal
 import java.net.URI
 
-
 /**
 Created by Pranay Airan 1/15/18.
  */

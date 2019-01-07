@@ -84,7 +84,6 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
         }
     }
 
-
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
         if (!showLoading) {
             pbLoading.hide()

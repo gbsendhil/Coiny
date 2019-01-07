@@ -20,9 +20,9 @@ Created by Pranay Airan
  */
 
 class CoinDashboardPresenter(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val dashboardRepository: DashboardRepository,
-        private val coinRepo: CryptoCompareRepository
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val dashboardRepository: DashboardRepository,
+    private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDashboardContract.View>(),
         CoinDashboardContract.Presenter, LifecycleObserver {
 

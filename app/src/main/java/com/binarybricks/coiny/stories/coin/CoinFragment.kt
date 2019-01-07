@@ -86,7 +86,7 @@ class CoinFragment : Fragment(), CoinContract.View {
 
             val toolBarDefaultElevation = dpToPx(context, 12) // default elevation of toolbar
 
-            //TODO revisit this
+            // TODO revisit this
             inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
                 override fun onScrolled(offset: Int) {
                     super.onScrolled(offset)
@@ -175,7 +175,7 @@ class CoinFragment : Fragment(), CoinContract.View {
 
         coinDetailList.add(HistoricalChartModule.HistoricalChartModuleData(coinPrice))
 
-        //coinDetailList.add(AddCoinModule.AddCoinModuleData(watchedCoin.coin))
+        // coinDetailList.add(AddCoinModule.AddCoinModuleData(watchedCoin.coin))
 
         if (coinPrice != null) {
             coinDetailList.add(CoinStatsticsModule.CoinStatisticsModuleData(coinPrice))

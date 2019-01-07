@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.utils.getBrowserIntent
 import com.binarybricks.coiny.utils.getDefaultExchangeText
 import kotlinx.android.synthetic.main.coin_info_module.view.*
 import timber.log.Timber

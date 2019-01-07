@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.coin_news_module.view.*
  * A compound layout to see coin news
  */
 class CoinNewsModule(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinSymbol: String,
-        private val coinName: String
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinSymbol: String,
+    private val coinName: String
 ) : Module(), CryptoNewsContract.View {
 
     private lateinit var inflatedView: View

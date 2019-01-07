@@ -45,5 +45,4 @@ val ALL = "All"
 
 val DEFAULT_DATE_FORMAT = "dd/MM/yyyy"
 
-
 val CRYPTO_COMPARE_API_KEY = "525fa1933d3246c3bbd6a8ec96207baf3104c80d12b95a4b4cf9196ece4d3728"

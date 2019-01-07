@@ -27,8 +27,8 @@ Repository that interact with crypto api to get any info on coins.
  */
 
 class CryptoCompareRepository(
-        private val baseSchedulerProvider: BaseSchedulerProvider,
-        private val coinyDatabase: CoinyDatabase? = null
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase? = null
 ) {
 
     /**
@@ -162,7 +162,6 @@ class CryptoCompareRepository(
                         val coinPriceList = getCoinPriceListFromJson(it)
                         if (coinPriceList.size > 0) {
                             CoinyCache.topCoinsByTotalVolume24Hours = coinPriceList
-
                         }
                         coinPriceList
                     }
@@ -184,7 +183,6 @@ class CryptoCompareRepository(
                         val coinPriceList = getCoinPriceListFromJson(it)
                         if (coinPriceList.size > 0) {
                             CoinyCache.topCoinsByTotalVolume = coinPriceList
-
                         }
                         coinPriceList
                     }
@@ -206,7 +204,6 @@ class CryptoCompareRepository(
                         val coinPairList = getTopPairsFromJson(it)
                         if (coinPairList.size > 0) {
                             CoinyCache.topPairsByVolume = coinPairList
-
                         }
                         coinPairList
                     }
@@ -295,7 +292,6 @@ class CryptoCompareRepository(
         return null
     }
 
-
     fun insertExchangeIntoList(exchangeList: List<Exchange>): Single<Unit?> {
         return Single.fromCallable {
             coinyDatabase?.exchangeDao()?.insertExchanges(exchangeList)
@@ -322,7 +318,6 @@ class CryptoCompareRepository(
         }
     }
 
-
     /**
      * Get exchange details and save in DB
      */
@@ -335,7 +330,6 @@ class CryptoCompareRepository(
                     getExchangeInfo(it)
                 }
     }
-
 }
 
 fun getTop5CoinsToWatch(): MutableList<String> {

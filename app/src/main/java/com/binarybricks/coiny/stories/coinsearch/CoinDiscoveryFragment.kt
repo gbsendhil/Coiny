@@ -65,7 +65,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
         coinDiscoveryList.add(LabelModule.LabelModuleData("Recent News"))
 
-        //coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
+        // coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
 
         coinDiscoveryAdapter?.coinDiscoverList = coinDiscoveryList
         coinDiscoveryAdapter?.notifyDataSetChanged()
@@ -129,7 +129,6 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
         }
     }
 
-
     override fun onNetworkError(errorMessage: String) {
     }
 
@@ -140,7 +139,6 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
         super.onCreateOptionsMenu(menu, inflater)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {

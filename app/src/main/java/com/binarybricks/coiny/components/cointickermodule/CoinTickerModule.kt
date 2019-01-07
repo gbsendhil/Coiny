@@ -29,9 +29,9 @@ import java.util.*
  * A compound layout to see coin ticker
  */
 class CoinTickerModule(
-        private val coinyDatabase: CoinyDatabase?,
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinName: String
+    private val coinyDatabase: CoinyDatabase?,
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinName: String
 ) : Module(), CoinTickerContract.View {
 
     private lateinit var inflatedView: View

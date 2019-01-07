@@ -17,8 +17,10 @@ import io.reactivex.functions.BiFunction
  * Repository that interact with coin gecko api to get ticker info.
  */
 
-class CoinTickerRepository(private val baseSchedulerProvider: BaseSchedulerProvider,
-                           private val coinyDatabase: CoinyDatabase?) {
+class CoinTickerRepository(
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase?
+) {
 
     /**
      * Get the top news for specific coin from cryptopanic

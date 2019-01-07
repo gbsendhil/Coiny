@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
         // if fragment exist reuse it
         // if not then add it
 
-
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.actionHome -> {
@@ -64,7 +63,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun switchToDashboard(savedInstanceState: Bundle?) {
-
 
         val coinDashboardFragment = supportFragmentManager.findFragmentByTag(CoinDashboardFragment.TAG)
                 ?: CoinDashboardFragment()

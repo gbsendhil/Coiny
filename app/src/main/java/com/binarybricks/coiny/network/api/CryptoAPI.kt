@@ -13,7 +13,7 @@ Created by Pranay Airan
  * api provider for crypto compare and others.
  */
 
-//TODO add API key in header api_key=
+// TODO add API key in header api_key=
 val cryptoCompareRetrofit: Retrofit by lazy {
     Retrofit.Builder()
             .baseUrl(BASE_CRYPTOCOMPARE_URL)

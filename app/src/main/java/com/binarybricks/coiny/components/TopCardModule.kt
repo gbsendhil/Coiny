@@ -1,6 +1,5 @@
 package com.binarybricks.coiny.components
 
-
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +53,11 @@ class TopCardModule(private val toCurrency: String) : Module() {
         Timber.d("Clean up empty TopCardModule module")
     }
 
-    data class TopCardsModuleData(val pair: String, val price: String, val priceChangePercentage: String,
-                                  val marketCap: String, val coinSymbol: String) : ModuleItem
-
+    data class TopCardsModuleData(
+        val pair: String,
+        val price: String,
+        val priceChangePercentage: String,
+        val marketCap: String,
+        val coinSymbol: String
+    ) : ModuleItem
 }

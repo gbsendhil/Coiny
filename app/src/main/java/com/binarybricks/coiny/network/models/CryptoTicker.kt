@@ -11,26 +11,26 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CryptoTicker(
-        val base: String = "",
+    val base: String = "",
 
-        val target: String = "",
+    val target: String = "",
 
-        val marketName: String = "",
+    val marketName: String = "",
 
-        val marketIdentifier: String = "",
+    val marketIdentifier: String = "",
 
-        val last: String = "",
+    val last: String = "",
 
-        val volume: String = "",
+    val volume: String = "",
 
-        val convertedVolumeUSD: String = "",
+    val convertedVolumeUSD: String = "",
 
-        val convertedVolumeBTC: String = "",
+    val convertedVolumeBTC: String = "",
 
-        val timestamp: String = "",
+    val timestamp: String = "",
 
-        val imageUrl: String = "",
+    val imageUrl: String = "",
 
-        val exchangeUrl: String = ""
+    val exchangeUrl: String = ""
 
 ) : Parcelable

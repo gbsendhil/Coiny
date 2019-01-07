@@ -10,7 +10,6 @@ import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.dashboard_news_module.view.*
 import timber.log.Timber
 
-
 /**
  * Created by Pranay Airan
  *

@@ -1,6 +1,5 @@
 package com.binarybricks.coiny.components
 
-
 import android.content.Context
 import android.support.design.chip.Chip
 import android.support.v4.content.ContextCompat
@@ -19,7 +18,6 @@ import timber.log.Timber
  * Simple class wrapping UI for top card
  */
 class ChipGroupModule : Module() {
-
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.chip_group_module, parent, false)
@@ -65,5 +63,4 @@ class ChipGroupModule : Module() {
     }
 
     data class ChipGroupModuleData(val data: List<CoinPair>) : ModuleItem
-
 }

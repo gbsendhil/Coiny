@@ -4,9 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jmailen.kotlinter"
 
-configurations {
-    ktlint
-}
 
 android {
     compileSdkVersion versions.compileSdk

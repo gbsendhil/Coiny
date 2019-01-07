@@ -14,8 +14,8 @@ Created by Pranay Airan
  */
 
 class CoinDiscoveryPresenter(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinRepo: CryptoCompareRepository
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDiscoveryContract.View>(),
         CoinDiscoveryContract.Presenter, LifecycleObserver {
 

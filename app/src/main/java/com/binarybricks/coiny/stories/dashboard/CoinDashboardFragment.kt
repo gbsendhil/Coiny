@@ -107,7 +107,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
         // Add Dashboard Header with empty data
-        //coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
+        // coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
         watchedCoinList.forEach { watchedCoin ->
             coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))

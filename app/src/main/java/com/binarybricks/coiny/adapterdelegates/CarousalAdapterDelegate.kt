@@ -34,8 +34,12 @@ class CarousalAdapterDelegate(private val toCurrency: String) : AdapterDelegate<
         carousalModuleViewHolder.loadCarousalData(items[position] as CarousalModule.CarousalModuleData)
     }
 
-    class CarousalModuleViewHolder(override val containerView: View, private val carousalModule: CarousalModule,
-                                   private val layoutInflater: LayoutInflater, private val parent: ViewGroup?)
+    class CarousalModuleViewHolder(
+        override val containerView: View,
+        private val carousalModule: CarousalModule,
+        private val layoutInflater: LayoutInflater,
+        private val parent: ViewGroup?
+    )
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun loadCarousalData(carousalModuleData: CarousalModule.CarousalModuleData) {
