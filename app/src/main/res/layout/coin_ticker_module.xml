@@ -251,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/generic16dp"
-            android:background="@color/secondaryTextColor" />
+            android:background="@color/colorPrimaryDusk" />
 
         <android.support.design.button.MaterialButton
             android:id="@+id/tvMore"

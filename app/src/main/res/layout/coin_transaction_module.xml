@@ -167,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/generic12dp"
-                android:background="@color/secondaryTextColor"
+                android:background="@color/colorPrimaryDusk"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clThirdTransaction" />
 
