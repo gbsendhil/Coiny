@@ -15,11 +15,6 @@
 
     </style>
 
-    <style name="ButtonRegular" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">@drawable/button_back</item>
-    </style>
-
 
     <style name="ButtonRegularNoBackground" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textColor">@color/primaryTextColor</item>
@@ -107,6 +102,7 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
+
 
     <style name="SearchSwitchTheme">
         <item name="colorControlActivated">@color/switchColor</item>
