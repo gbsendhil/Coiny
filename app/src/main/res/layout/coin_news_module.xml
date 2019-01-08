@@ -148,16 +148,16 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loadingAnimation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/pbLoadingCurrencyList"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/generic24dp"
+        android:layout_height="@dimen/generic24dp"
+        android:indeterminate="true"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_fileName="hourglass.json"
-        app:lottie_loop="true" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

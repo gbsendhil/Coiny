@@ -13,19 +13,24 @@ import timber.log.Timber
  */
 
 class CoinTickerPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinTickerRepository: CoinTickerRepository
-)
-    : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinTickerRepository: CoinTickerRepository
+) : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
 
     /**
      * Load the crypto ticker from the crypto panic api
      */
     override fun getCryptoTickers(coinName: String) {
 
+        var updatedCoinName = coinName
+
+        if (coinName.equals("XRP", true)) {
+            updatedCoinName = "ripple"
+        }
+
         currentView?.showOrHideLoadingIndicator(true)
 
-        compositeDisposable.add(coinTickerRepository.getCryptoTickers(coinName)
+        compositeDisposable.add(coinTickerRepository.getCryptoTickers(updatedCoinName)
                 .filter { it.isNotEmpty() }
                 .observeOn(schedulerProvider.ui())
                 .doAfterTerminate { currentView?.showOrHideLoadingIndicator(false) }
