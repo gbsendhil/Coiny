@@ -139,16 +139,22 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     }
 
     private fun getAllWatchedCoinsPrice() {
-        // we have all the watched coins now get price for all the coins
-        var fromSymbol = ""
-        watchedCoinList.forEachIndexed { index, watchedCoin ->
-            if (index != watchedCoinList.size - 1) {
-                fromSymbol = fromSymbol + watchedCoin.coin.symbol + ","
-            } else {
-                fromSymbol += watchedCoin.coin.symbol
+        // cryptocompare support only 100 coins in 1 shot. For safety we will support 95 and paginate
+        val chunkedWatchedList = watchedCoinList.chunked(95)
+
+        chunkedWatchedList.forEach {
+
+            // we have all the watched coins now get price for all the coins
+            var fromSymbol = ""
+            it.forEachIndexed { index, watchedCoin ->
+                if (index != it.size - 1) {
+                    fromSymbol = fromSymbol + watchedCoin.coin.symbol + ","
+                } else {
+                    fromSymbol += watchedCoin.coin.symbol
+                }
             }
+            coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(context))
         }
-        coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(context))
     }
 
     override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
