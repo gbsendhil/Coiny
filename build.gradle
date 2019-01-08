@@ -20,7 +20,7 @@ buildscript {
             'spark'               : '1.2.0',
             'adapterDelegates'    : '3.1.0',
             'currencyPicker'      : '1.2.1',
-            'lottie'              : '2.7.0',
+            'lottie'              : '2.7.0', // don't change this unless migrated to android x
             'materialdate'        : '3.6.4',
             'pageindicator'       : '1.0.1',
             'picaso'              : '2.71828',
@@ -35,14 +35,18 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jmailen.gradle:kotlinter-gradle:${versions.kotlinter}"
-        classpath 'com.google.gms:google-services:4.0.1'
+        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'io.fabric.tools:gradle:1.27.0'
     }
 }
 
