@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import android.util.Log
 import com.binarybricks.coiny.data.database.CoinyDatabase
+import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -50,16 +51,11 @@ class CoinyApplication : Application() {
                 return
             }
 
-            // TODO remove or enable this.
-//            FakeCrashLibrary.log(priority, tag, message)
-//
-//            if (t != null) {
-//                if (priority == Log.ERROR) {
-//                    FakeCrashLibrary.logError(t)
-//                } else if (priority == Log.WARN) {
-//                    FakeCrashLibrary.logWarning(t)
-//                }
-//            }
+            if (priority == Log.ERROR) {
+                Crashlytics.log(Log.ERROR, tag, message)
+            } else if (priority == Log.WARN) {
+                Crashlytics.log(Log.WARN, tag, message)
+            }
         }
     }
 }
