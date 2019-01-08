@@ -89,7 +89,6 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
     private fun initializeUI(inflatedView: View) {
 
         inflatedView.rvDashboard.layoutManager = LinearLayoutManager(context)
-        inflatedView.loadingAnimation.visibility = View.GONE
 
         coinDiscoveryAdapter = CoinDiscoveryAdapter(PreferenceHelper.getDefaultCurrency(context), coinDiscoveryList)
         inflatedView.rvDashboard.adapter = coinDiscoveryAdapter

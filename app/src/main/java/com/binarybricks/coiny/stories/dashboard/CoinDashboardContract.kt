@@ -11,7 +11,6 @@ Created by Pranay Airan
 interface CoinDashboardContract {
 
     interface View : BaseView {
-        fun showOrHideLoadingIndicator(showLoading: Boolean = true)
         fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>)
         fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>)
         fun onTopCoinsByTotalVolumeLoaded(topCoins: List<CoinPrice>)

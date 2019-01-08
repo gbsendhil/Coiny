@@ -10,10 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
 Created by Pranay Airan
- * api provider for crypto compare and others.
+api provider for crypto compare and others.
  */
 
-// TODO add API key in header api_key=
 val cryptoCompareRetrofit: Retrofit by lazy {
     Retrofit.Builder()
             .baseUrl(BASE_CRYPTOCOMPARE_URL)

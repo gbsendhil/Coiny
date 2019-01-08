@@ -2,47 +2,31 @@
 
 package com.binarybricks.coiny.network
 
-val BASE_CRYPTOCOMPARE_URL = "https://min-api.cryptocompare.com/data/"
-val COINS_LIST_URL = "https://www.cryptocompare.com/api/data/coinlist/"
-val BASE_CRYPTOCOMPARE_IMAGE_URL = "https://www.cryptocompare.com"
+const val BASE_CRYPTOCOMPARE_URL = "https://min-api.cryptocompare.com/data/"
+const val BASE_CRYPTOCOMPARE_IMAGE_URL = "https://www.cryptocompare.com"
 
-val COIN_MARKET_CAP_URL_TICKER = "https://api.coinmarketcap.com/v1/ticker"
+const val RAW = "RAW"
 
-val CRYPTOMOON_PREFS = "cryptoMoonPrefs"
-val DATABASE_NAME = "cryptoMoonDb"
-val TABLE_DISPLAY_COINS = "displayCoins"
+const val USD = "USD"
+const val BTC = "BTC"
+const val ETH = "ETH"
+const val SNT = "SNT"
 
-val RAW = "RAW"
+const val TO = "to"
+const val DATA = "Data"
+const val TICKERS = "tickers"
 
-val DISPLAY = "DISPLAY"
-val FSYMS = "fsyms"
-val TSYMS = "tsyms"
-val USD = "USD"
-val BTC = "BTC"
-val ETH = "ETH"
-val SNT = "SNT"
+const val HISTO_MINUTE = "histominute"
+const val HISTO_HOUR = "histohour"
+const val HISTO_DAY = "histoday"
 
-val COINS_FRAGMENT_PAGE_POSITION = 0
-val TOP_COINS_FRAGMENT_PAGE_POSITION = 1
-val NAME = "name"
-val FROM = "from"
-val TO = "to"
-val DATA = "Data"
-val PRICE = "price"
-val TICKERS = "tickers"
+const val HOUR = "12 hour"
+const val HOURS24 = "1 day"
+const val WEEK = "1 week"
+const val MONTH = "1 month"
+const val MONTH3 = "3 month"
+const val YEAR = "1 year"
+const val ALL = "All"
 
-val HISTO_MINUTE = "histominute"
-val HISTO_HOUR = "histohour"
-val HISTO_DAY = "histoday"
-
-val HOUR = "12 hour"
-val HOURS24 = "1 day"
-val WEEK = "1 week"
-val MONTH = "1 month"
-val MONTH3 = "3 month"
-val YEAR = "1 year"
-val ALL = "All"
-
-val DEFAULT_DATE_FORMAT = "dd/MM/yyyy"
-
-val CRYPTO_COMPARE_API_KEY = "525fa1933d3246c3bbd6a8ec96207baf3104c80d12b95a4b4cf9196ece4d3728"
+const val APP_NAME = "Coiny"
+const val API_KEY = "authorization: Apikey 525fa1933d3246c3bbd6a8ec96207baf3104c80d12b95a4b4cf9196ece4d3728"

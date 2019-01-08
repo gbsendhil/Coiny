@@ -93,6 +93,11 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(context), coinDashboardList, inflatedView.toolbarTitle)
         inflatedView.rvDashboard.adapter = coinDashboardAdapter
+
+        inflatedView.swipeContainer.setOnRefreshListener {
+            getAllWatchedCoinsPrice()
+            inflatedView.swipeContainer.isRefreshing = false
+        }
     }
 
     override fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
@@ -117,8 +122,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         coinDashboardList.add(DashboardAddNewCoinModule.DashboardAddNewCoinModuleData())
         coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
-        showOrHideLoadingIndicator(false)
-
         coinDashboardAdapter?.coinDashboardList = coinDashboardList
         coinDashboardAdapter?.notifyDataSetChanged()
     }
@@ -134,6 +137,23 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
             }
         }
         coinDashboardPresenter.loadCoinsPrices(fromSymbol, PreferenceHelper.getDefaultCurrency(context))
+    }
+
+    override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
+
+        val adapterDashboardList = coinDashboardAdapter?.coinDashboardList
+
+        adapterDashboardList?.forEachIndexed { index, item ->
+            if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
+                item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
+                coinDashboardAdapter?.notifyItemChanged(index)
+            } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
+                item.coinPriceListMap = coinPriceListMap
+                coinDashboardAdapter?.notifyItemChanged(index)
+            }
+        }
+
+        // update dashboard card
     }
 
     override fun onTopCoinsByTotalVolumeLoaded(topCoins: List<CoinPrice>) {
@@ -163,34 +183,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         }
     }
 
-    override fun onCoinPricesLoaded(coinPriceListMap: HashMap<String, CoinPrice>) {
-
-        val adapterDashboardList = coinDashboardAdapter?.coinDashboardList
-
-        adapterDashboardList?.forEachIndexed { index, item ->
-            if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
-                item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
-                coinDashboardAdapter?.notifyItemChanged(index)
-            } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
-                item.coinPriceListMap = coinPriceListMap
-                coinDashboardAdapter?.notifyItemChanged(index)
-            }
-        }
-
-        // update dashboard card
-    }
-
     override fun onNetworkError(errorMessage: String) {
         Snackbar.make(rvDashboard, errorMessage, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun showOrHideLoadingIndicator(showLoading: Boolean) {
-        if (!showLoading) {
-            loadingAnimation.cancelAnimation()
-            loadingAnimation.visibility = View.GONE
-        } else {
-            loadingAnimation.visibility = View.VISIBLE
-            loadingAnimation.playAnimation()
-        }
     }
 }
