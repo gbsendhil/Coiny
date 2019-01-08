@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jmailen.kotlinter"
+apply plugin: 'com.google.gms.google-services'
 
 
 android {
@@ -94,6 +95,8 @@ dependencies {
     implementation "com.facebook.stetho:stetho-js-rhino:${versions.stetho}"
 
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+
+    implementation 'com.google.firebase:firebase-core:16.0.1'
 }
 
 kotlinter {
