@@ -28,8 +28,14 @@ class DashboardAddNewCoinAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
     }
 
     override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+        val dashboardAddNewCoinViewHolder = holder as DashboardAddNewCoinViewHolder
+        dashboardAddNewCoinViewHolder.addNewCoinListener((items[position] as DashboardAddNewCoinModule.DashboardAddNewCoinModuleData))
     }
 
     class DashboardAddNewCoinViewHolder(override val containerView: View, private val dashboardAddNewCoinModule: DashboardAddNewCoinModule)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun addNewCoinListener(dashboardAddNewCoinModuleData: DashboardAddNewCoinModule.DashboardAddNewCoinModuleData) {
+            dashboardAddNewCoinModule.addNewCoinListener(containerView, dashboardAddNewCoinModuleData)
+        }
+    }
 }

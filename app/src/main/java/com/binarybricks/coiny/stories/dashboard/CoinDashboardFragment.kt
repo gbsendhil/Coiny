@@ -1,13 +1,14 @@
 package com.binarybricks.coiny.stories.dashboard
 
 import CoinDashboardContract
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.CoinyApplication
@@ -21,6 +22,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.util.HashMap
@@ -29,10 +31,10 @@ import kotlin.collections.ArrayList
 class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     companion object {
-        val TAG = "CoinDashboardFragment"
+        const val TAG = "CoinDashboardFragment"
+        private const val COIN_SEARCH_CODE = 100
     }
 
-    private var nextMenuItem: MenuItem? = null
 
     private var coinDashboardList: MutableList<ModuleItem> = ArrayList()
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
@@ -112,6 +114,11 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     private fun setupDashBoardAdapter(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
 
+        // when we are refreshing the data we need to clear the coinDashboardList
+        if (coinDashboardList.size > 2) {
+            coinDashboardList = coinDashboardList.subList(0, 2)
+        }
+
         // Add Dashboard Header with empty data
         // coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
@@ -119,7 +126,12 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
             coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))
         }
 
-        coinDashboardList.add(DashboardAddNewCoinModule.DashboardAddNewCoinModuleData())
+        coinDashboardList.add(DashboardAddNewCoinModule.DashboardAddNewCoinModuleData(object : DashboardAddNewCoinModule.OnAddItemClickListener {
+            override fun onAddNewCoinClicked() {
+                startActivityForResult(CoinSearchActivity.buildLaunchIntent(requireContext()), COIN_SEARCH_CODE)
+            }
+        }))
+
         coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
         coinDashboardAdapter?.coinDashboardList = coinDashboardList
@@ -185,5 +197,16 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     override fun onNetworkError(errorMessage: String) {
         Snackbar.make(rvDashboard, errorMessage, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (COIN_SEARCH_CODE == requestCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

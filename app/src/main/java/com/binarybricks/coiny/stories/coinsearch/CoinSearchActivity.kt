@@ -1,6 +1,7 @@
 package com.binarybricks.coiny.stories.coinsearch
 
 import CoinSearchContract
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_coin_search.*
 class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
 
     private var coinSearchAdapter: CoinSearchAdapter? = null
+    private var isCoinInfoChanged = false
 
     companion object {
         @JvmStatic
@@ -94,6 +96,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
             coinSearchAdapter?.setOnSearchItemClickListener(object : CoinSearchAdapter.OnSearchItemClickListener {
                 override fun onItemWatchedTicked(view: View, position: Int, watchedCoin: WatchedCoin, watched: Boolean) {
                     coinSearchPresenter.updateCoinWatchedStatus(watched, watchedCoin.coin.id, watchedCoin.coin.symbol)
+                    isCoinInfoChanged = true
                 }
 
                 override fun showPurchasedItemRemovedMessage() {
@@ -133,5 +136,13 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (isCoinInfoChanged) {
+            setResult(Activity.RESULT_OK)
+        }
+
+        finish()
     }
 }

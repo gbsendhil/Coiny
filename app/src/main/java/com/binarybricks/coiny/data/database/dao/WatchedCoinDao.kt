@@ -17,10 +17,10 @@ import java.math.BigDecimal
 @Dao
 interface WatchedCoinDao {
 
-    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
+    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by sortOrder")
     fun getAllWatchedCoins(watched: Boolean = true): Flowable<List<WatchedCoin>>
 
-    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by purchaseQuantity DESC")
+    @Query("select * from WatchedCoin where purchaseQuantity > 0 OR watched = :watched order by sortOrder")
     fun getAllWatchedCoinsOnetime(watched: Boolean = true): Single<List<WatchedCoin>> // this method should be removed
 
     @Query("select * from WatchedCoin where isTrading = :isTrue order by sortOrder")
