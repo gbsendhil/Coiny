@@ -8,7 +8,6 @@ Created by Pranay Airan
 interface CoinDetailsPagerContract {
 
     interface View : BaseView {
-        fun showOrHideLoadingIndicator(showLoading: Boolean = true)
         fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?)
     }
 

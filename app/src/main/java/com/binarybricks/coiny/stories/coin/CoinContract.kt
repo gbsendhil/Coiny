@@ -10,7 +10,6 @@ Created by Pranay Airan
 interface CoinContract {
 
     interface View : BaseView {
-        fun showOrHideLoadingIndicator(showLoading: Boolean = true)
         fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin)
         fun onRecentTransactionLoaded(coinTransactionList: List<CoinTransaction>)
         fun onCoinWatchedStatusUpdated(watched: Boolean, coinSymbol: String)

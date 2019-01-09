@@ -180,7 +180,8 @@ fun getCryptoNewsJson(jsonObject: JsonObject): MutableList<CryptoCompareNews> {
 }
 
 fun getCoinTickerFromJson(jsonObject: JsonObject, exchanges: List<Exchange>?): List<CryptoTicker> {
-    val coinTicker: MutableList<CryptoTicker> = mutableListOf()
+    val coinTickerUSDT: MutableList<CryptoTicker> = mutableListOf()
+    val coinTickerOther: MutableList<CryptoTicker> = mutableListOf()
 
     if (jsonObject.has(TICKERS)) {
         val dataTickerObject = jsonObject.getAsJsonArray(TICKERS)
@@ -189,22 +190,37 @@ fun getCoinTickerFromJson(jsonObject: JsonObject, exchanges: List<Exchange>?): L
             val ticker = it as JsonObject
 
             val target = ticker.getAsJsonPrimitive("target").asString
-            if (target.equals("USDT", true)) {
-                val identifier = ticker.getAsJsonObject("market").getAsJsonPrimitive("identifier").asString
-                var imageUrl = ""
-                var exchangeUrl = ""
 
-                run loop@{
-                    exchanges?.forEach { exchange ->
-                        if (exchange.name.equals(identifier, true)) {
-                            imageUrl = exchange.logoUrl ?: ""
-                            exchangeUrl = exchange.affiliateUrl ?: ""
-                            return@loop
-                        }
+            val identifier = ticker.getAsJsonObject("market").getAsJsonPrimitive("identifier").asString
+            var imageUrl = ""
+            var exchangeUrl = ""
+
+            run loop@{
+                exchanges?.forEach { exchange ->
+                    if (exchange.name.equals(identifier, true)) {
+                        imageUrl = exchange.logoUrl ?: ""
+                        exchangeUrl = exchange.affiliateUrl ?: ""
+                        return@loop
                     }
                 }
+            }
 
-                coinTicker.add(CryptoTicker(
+            if (target.equals("USDT", true)) {
+                coinTickerUSDT.add(CryptoTicker(
+                        base = ticker.getAsJsonPrimitive("base").asString,
+                        target = target,
+                        last = ticker.getAsJsonPrimitive("last").asString,
+                        volume = ticker.getAsJsonPrimitive("volume").asString,
+                        timestamp = ticker.getAsJsonPrimitive("timestamp").asString,
+                        marketName = ticker.getAsJsonObject("market").getAsJsonPrimitive("name").asString,
+                        marketIdentifier = identifier,
+                        convertedVolumeUSD = ticker.getAsJsonObject("converted_volume").getAsJsonPrimitive("usd").asString,
+                        convertedVolumeBTC = ticker.getAsJsonObject("converted_volume").getAsJsonPrimitive("btc").asString,
+                        imageUrl = imageUrl,
+                        exchangeUrl = exchangeUrl
+                ))
+            } else {
+                coinTickerOther.add(CryptoTicker(
                         base = ticker.getAsJsonPrimitive("base").asString,
                         target = target,
                         last = ticker.getAsJsonPrimitive("last").asString,
@@ -220,5 +236,10 @@ fun getCoinTickerFromJson(jsonObject: JsonObject, exchanges: List<Exchange>?): L
             }
         }
     }
-    return coinTicker
+
+    if (coinTickerUSDT.isNotEmpty()) {
+        return coinTickerUSDT
+    }
+
+    return coinTickerOther
 }

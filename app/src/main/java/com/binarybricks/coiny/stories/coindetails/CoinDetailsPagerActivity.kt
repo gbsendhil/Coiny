@@ -59,6 +59,8 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         lifecycle.addObserver(coinDetailPagerPresenter)
 
+        showOrHideLoadingIndicator(true)
+
         coinDetailPagerPresenter.loadWatchedCoins()
     }
 
@@ -94,6 +96,11 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         Snackbar.make(rvCoinDetails, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun showOrHideLoadingIndicator(showLoading: Boolean) {
+    private fun showOrHideLoadingIndicator(showLoading: Boolean) {
+        if (showLoading) {
+            pbLoading.visibility = View.VISIBLE
+        } else {
+            pbLoading.visibility = View.GONE
+        }
     }
 }

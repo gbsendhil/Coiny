@@ -18,12 +18,12 @@ import io.reactivex.functions.BiFunction
  */
 
 class CoinTickerRepository(
-    private val baseSchedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase?
+        private val baseSchedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase?
 ) {
 
     /**
-     * Get the top news for specific coin from cryptopanic
+     * Get the ticker info from coin gecko
      */
     fun getCryptoTickers(coinName: String): Single<List<CryptoTicker>> {
 
@@ -37,15 +37,17 @@ class CoinTickerRepository(
             }).map { getCoinTickerFromJson(it.first, it.second) }
                     .subscribeOn(baseSchedulerProvider.io())
                     .doOnSuccess {
-                        CoinyCache.ticker[coinName] = it
+                        if (it.isNotEmpty()) {
+                            CoinyCache.ticker[coinName] = it
+                        }
                     }
         }
     }
 
     /**
-     * Get list of all exchanges
+     * Get list of all exchanges, this is needed for logo
      */
-    fun loadExchangeList(): Single<List<Exchange>>? {
+    private fun loadExchangeList(): Single<List<Exchange>>? {
         coinyDatabase?.let {
             return it.exchangeDao().getAllExchanges()
                     .subscribeOn(baseSchedulerProvider.io())

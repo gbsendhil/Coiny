@@ -31,7 +31,6 @@ class CoinTickerPresenter(
         currentView?.showOrHideLoadingIndicator(true)
 
         compositeDisposable.add(coinTickerRepository.getCryptoTickers(updatedCoinName)
-                .filter { it.isNotEmpty() }
                 .observeOn(schedulerProvider.ui())
                 .doAfterTerminate { currentView?.showOrHideLoadingIndicator(false) }
                 .subscribe({ currentView?.onPriceTickersLoaded(it) }, {

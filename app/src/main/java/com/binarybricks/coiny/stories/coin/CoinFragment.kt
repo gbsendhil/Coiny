@@ -95,8 +95,6 @@ class CoinFragment : Fragment(), CoinContract.View {
                 }
             })
 
-            showOrHideLoadingIndicator(true)
-
             // load data
             coinPresenter.loadCurrentCoinPrice(it, toCurrency)
 
@@ -164,9 +162,6 @@ class CoinFragment : Fragment(), CoinContract.View {
 
     override fun onNetworkError(errorMessage: String) {
         Snackbar.make(rvCoinDetails, errorMessage, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun showOrHideLoadingIndicator(showLoading: Boolean) {
     }
 
     override fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin) {

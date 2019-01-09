@@ -21,7 +21,6 @@ import com.binarybricks.coiny.utils.openCustomTab
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.coin_ticker_module.view.*
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -29,9 +28,9 @@ import java.util.*
  * A compound layout to see coin ticker
  */
 class CoinTickerModule(
-    private val coinyDatabase: CoinyDatabase?,
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinName: String
+        private val coinyDatabase: CoinyDatabase?,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinName: String
 ) : Module(), CoinTickerContract.View {
 
     private lateinit var inflatedView: View
@@ -137,11 +136,15 @@ class CoinTickerModule(
             inflatedView.tvMore.setOnClickListener {
                 inflatedView.context.startActivity(CoinTickerActivity.buildLaunchIntent(inflatedView.context, coinName))
             }
+        } else {
+            inflatedView.tvTickerError.visibility = View.VISIBLE
+            inflatedView.tickerContentGroup.visibility = View.GONE
         }
     }
 
     override fun onNetworkError(errorMessage: String) {
-        Timber.e(errorMessage)
+        inflatedView.tvTickerError.visibility = View.VISIBLE
+        inflatedView.tickerContentGroup.visibility = View.GONE
     }
 
     override fun cleanUp() {
