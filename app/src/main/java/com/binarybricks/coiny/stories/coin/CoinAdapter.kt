@@ -16,13 +16,13 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinAdapter(
-    fromCurrency: String,
-    toCurrency: String,
-    coinName: String,
-    var coinDetailList: List<ModuleItem>,
-    coinyDatabase: CoinyDatabase?,
-    schedulerProvider: BaseSchedulerProvider,
-    resourceProvider: ResourceProvider
+        fromCurrency: String,
+        toCurrency: String,
+        coinName: String,
+        var coinDetailList: List<ModuleItem>,
+        coinyDatabase: CoinyDatabase?,
+        schedulerProvider: BaseSchedulerProvider,
+        resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
@@ -44,7 +44,7 @@ class CoinAdapter(
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate(resourceProvider))
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
         delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
-        delegates.addDelegate(COIN_TICKER, CoinTickerAdapterDelegate(coinName, schedulerProvider, coinyDatabase))
+        delegates.addDelegate(COIN_TICKER, CoinTickerAdapterDelegate(coinName, schedulerProvider, coinyDatabase, resourceProvider))
         delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
         delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())

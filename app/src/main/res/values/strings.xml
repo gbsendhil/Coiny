@@ -113,4 +113,8 @@
     <string name="ticker_error">No Ticker Info Available</string>
     <string name="news_error">No Recent News Available</string>
     <string name="error_ticker">Error loading ticker</string>
+    <string name="additional_options">Additional Options</string>
+    <string name="deduct_from_usd_holdings">Deduct from USD holdings</string>
+    <string name="search">Search</string>
+    <string name="average_cost">Average Cost</string>
 </resources>

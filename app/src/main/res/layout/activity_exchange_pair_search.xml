@@ -23,7 +23,7 @@
         android:background="@color/backgroundColor"
         android:drawablePadding="@dimen/generic8dp"
         android:drawableStart="@android:drawable/ic_menu_search"
-        android:hint="Search"
+        android:hint="@string/search"
         android:padding="@dimen/generic8dp"
         android:textColor="@color/primaryTextColor"
         android:textColorHint="@color/secondaryTextColor"

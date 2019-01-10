@@ -16,6 +16,7 @@ import com.binarybricks.coiny.components.cointickermodule.CoinTickerRepository
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.activity_coin_ticker_list.*
 import java.util.*
@@ -44,8 +45,13 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
     private val coinTickerRepository by lazy {
         CoinTickerRepository(schedulerProvider, CoinyApplication.database)
     }
+
+    private val resourceProvider by lazy {
+        ResourceProviderImpl(this)
+    }
+
     private val coinTickerPresenter: CoinTickerPresenter by lazy {
-        CoinTickerPresenter(schedulerProvider, coinTickerRepository)
+        CoinTickerPresenter(schedulerProvider, coinTickerRepository, resourceProvider)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

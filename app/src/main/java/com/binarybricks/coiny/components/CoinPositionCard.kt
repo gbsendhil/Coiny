@@ -49,7 +49,7 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
         val noOfCoins = noOfCoinsAndTotalCost.first
         val totalCost = noOfCoinsAndTotalCost.second
 
-        inflatedView.tvNoOfCoins.text = noOfCoins.toString()
+        inflatedView.tvNoOfCoins.text = noOfCoins.toPlainString()
         inflatedView.tvCoinLabel.text = coinPrice.fromSymbol
 
         val totalCurrentValue = coinPrice.price?.toBigDecimal()?.multiply(noOfCoins)

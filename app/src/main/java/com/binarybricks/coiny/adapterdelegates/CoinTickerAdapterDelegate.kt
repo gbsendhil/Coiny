@@ -8,6 +8,7 @@ import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.cointickermodule.CoinTickerModule
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -16,13 +17,14 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinTickerAdapterDelegate(
-    private val coinName: String,
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase?
+        private val coinName: String,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase?,
+        private val resourceProvider: ResourceProvider
 ) : AdapterDelegate<List<ModuleItem>>() {
 
     private val coinTickerModule by lazy {
-        CoinTickerModule(coinyDatabase, schedulerProvider, coinName)
+        CoinTickerModule(coinyDatabase, schedulerProvider, resourceProvider, coinName)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

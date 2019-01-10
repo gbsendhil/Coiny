@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
                 android:layout_marginTop="@dimen/generic24dp"
-                android:text="Average Cost"
+                android:text="@string/average_cost"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider" />
 

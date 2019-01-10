@@ -16,6 +16,7 @@ import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.ticker.CoinTickerActivity
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.getUrlWithoutParameters
 import com.binarybricks.coiny.utils.openCustomTab
 import com.squareup.picasso.Picasso
@@ -30,6 +31,7 @@ import java.util.*
 class CoinTickerModule(
         private val coinyDatabase: CoinyDatabase?,
         private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider,
         private val coinName: String
 ) : Module(), CoinTickerContract.View {
 
@@ -39,7 +41,7 @@ class CoinTickerModule(
         CoinTickerRepository(schedulerProvider, coinyDatabase)
     }
     private val coinTickerPresenter: CoinTickerPresenter by lazy {
-        CoinTickerPresenter(schedulerProvider, coinTickerRepository)
+        CoinTickerPresenter(schedulerProvider, coinTickerRepository, resourceProvider)
     }
 
     private val formatter: Formatters by lazy {
@@ -49,6 +51,7 @@ class CoinTickerModule(
     private val cropCircleTransformation by lazy {
         CropCircleTransformation()
     }
+
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 
