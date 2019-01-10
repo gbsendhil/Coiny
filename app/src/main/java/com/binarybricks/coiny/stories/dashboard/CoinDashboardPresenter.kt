@@ -47,13 +47,14 @@ class CoinDashboardPresenter(
 
     override fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String) {
         compositeDisposable.add(dashboardRepository.getCoinPriceFull(fromCurrencySymbol, toCurrencySymbol)
-                .filter { it.size > 0 }
                 .map { coinPriceList ->
                     val coinPriceMap: HashMap<String, CoinPrice> = hashMapOf()
                     coinPriceList.forEach { coinPrice ->
                         coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
                     }
-                    CoinyCache.coinPriceMap.putAll(coinPriceMap)
+                    if(coinPriceMap.isNotEmpty()) {
+                        CoinyCache.coinPriceMap.putAll(coinPriceMap)
+                    }
                     coinPriceMap
                 }
                 .observeOn(schedulerProvider.ui())

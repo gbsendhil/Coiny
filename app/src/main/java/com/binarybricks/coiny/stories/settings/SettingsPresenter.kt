@@ -24,7 +24,6 @@ class SettingsPresenter(
 
     override fun refreshCoinList(defaultCurrency: String) {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI()
-                .filter { it.first.size > 0 }
                 .map {
                     val coinList: MutableList<WatchedCoin> = mutableListOf()
                     val ccCoinList = it.first

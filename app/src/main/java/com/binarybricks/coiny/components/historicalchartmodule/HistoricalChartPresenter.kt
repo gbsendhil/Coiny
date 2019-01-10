@@ -19,13 +19,12 @@ class HistoricalChartPresenter(private val schedulerProvider: BaseSchedulerProvi
         currentView?.showOrHideChartLoadingIndicator(true)
 
         compositeDisposable.add(chartRepo.getCryptoHistoricalData(period, fromCurrency, toCurrency)
-            .filter { it.first.isNotEmpty() }
-            .observeOn(schedulerProvider.ui())
-            .doAfterTerminate { currentView?.showOrHideChartLoadingIndicator(false) }
+                .observeOn(schedulerProvider.ui())
+                .doAfterTerminate { currentView?.showOrHideChartLoadingIndicator(false) }
                 .subscribe({
-                currentView?.onHistoricalDataLoaded(period, it)
-            }, {
-                Timber.e(it.localizedMessage)
-            }))
+                    currentView?.onHistoricalDataLoaded(period, it)
+                }, {
+                    Timber.e(it.localizedMessage)
+                }))
     }
 }

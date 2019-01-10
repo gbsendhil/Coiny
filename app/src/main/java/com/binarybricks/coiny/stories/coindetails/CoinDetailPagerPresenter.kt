@@ -13,12 +13,11 @@ Created by Pranay Airan
  */
 
 class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvider, private val coinDetailsPagerRepository: CoinDetailsPagerRepository) :
-    BasePresenter<CoinDetailsPagerContract.View>(), CoinDetailsPagerContract.Presenter, LifecycleObserver {
+        BasePresenter<CoinDetailsPagerContract.View>(), CoinDetailsPagerContract.Presenter, LifecycleObserver {
 
     override fun loadWatchedCoins() {
         coinDetailsPagerRepository.loadWatchedCoins()?.let {
-            compositeDisposable.add(
-                it.filter { it.isNotEmpty() }
+            compositeDisposable.add(it
                     .observeOn(schedulerProvider.ui())
                     .subscribe({ currentView?.onWatchedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
             )
