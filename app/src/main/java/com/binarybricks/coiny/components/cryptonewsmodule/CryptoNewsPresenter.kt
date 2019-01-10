@@ -23,10 +23,9 @@ class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider, 
         currentView?.showOrHideLoadingIndicator(true)
 
         compositeDisposable.add(cryptoNewsRepository.getCryptoPanicNews(coinSymbol)
-            .filter { it.results?.isNotEmpty() == true }
-            .observeOn(schedulerProvider.ui())
-            .doAfterTerminate({ currentView?.showOrHideLoadingIndicator(false) })
-            .subscribe({ currentView?.onNewsLoaded(it) }, { Timber.e(it.localizedMessage) }))
+                .observeOn(schedulerProvider.ui())
+                .doAfterTerminate { currentView?.showOrHideLoadingIndicator(false) }
+                .subscribe({ currentView?.onNewsLoaded(it) }, { Timber.e(it.localizedMessage) }))
     }
 
     // cleanup

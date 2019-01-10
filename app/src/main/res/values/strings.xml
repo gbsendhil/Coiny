@@ -111,4 +111,5 @@
     <string name="intro_secure_message">Completely offline and secure. Your data never leaves the device.</string>
     <string name="loading_coins">Loading Coins and preparing the app..</string>
     <string name="ticker_error">No Ticker Info Available</string>
+    <string name="news_error">No Recent News Available</string>
 </resources>

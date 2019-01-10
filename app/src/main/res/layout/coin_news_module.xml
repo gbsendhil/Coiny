@@ -129,8 +129,8 @@
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/generic16dp"
             android:background="@color/colorPrimaryDusk"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clThirdArticle" />
 
         <android.support.design.button.MaterialButton
@@ -144,6 +144,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dividerView" />
 
+        <TextView
+            android:id="@+id/tvNewsError"
+            style="@style/CoinyText.Body1Alternate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generic24dp"
+            android:layout_marginBottom="@dimen/generic24dp"
+            android:text="@string/news_error"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Group
+            android:id="@+id/newsContentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="clFirstArticle,clSecondArticle,clThirdArticle,dividerView,tvMore" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -155,9 +174,9 @@
         android:layout_height="@dimen/generic24dp"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

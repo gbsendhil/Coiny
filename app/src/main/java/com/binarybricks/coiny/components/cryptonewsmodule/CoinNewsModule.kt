@@ -3,7 +3,6 @@ package com.binarybricks.coiny.components.cryptonewsmodule
 import CryptoNewsContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,11 +99,15 @@ class CoinNewsModule(
             inflatedView.tvMore.setOnClickListener {
                 inflatedView.context.startActivity(NewsListActivity.buildLaunchIntent(inflatedView.context, coinName, coinSymbol))
             }
+        } else {
+            inflatedView.tvNewsError.visibility = View.VISIBLE
+            inflatedView.newsContentGroup.visibility = View.GONE
         }
     }
 
     override fun onNetworkError(errorMessage: String) {
-        Snackbar.make(inflatedView, errorMessage, Snackbar.LENGTH_LONG).show()
+        inflatedView.tvNewsError.visibility = View.VISIBLE
+        inflatedView.newsContentGroup.visibility = View.GONE
     }
 
     override fun cleanUp() {
