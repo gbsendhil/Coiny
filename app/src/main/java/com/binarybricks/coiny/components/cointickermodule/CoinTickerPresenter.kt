@@ -4,8 +4,10 @@ import CoinTickerContract
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
+import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
+import com.binarybricks.coiny.utils.ResourceProvider
 import timber.log.Timber
 
 /**
@@ -14,7 +16,8 @@ import timber.log.Timber
 
 class CoinTickerPresenter(
         private val schedulerProvider: BaseSchedulerProvider,
-        private val coinTickerRepository: CoinTickerRepository
+        private val coinTickerRepository: CoinTickerRepository,
+        private val resourceProvider: ResourceProvider
 ) : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
 
     /**
@@ -35,7 +38,7 @@ class CoinTickerPresenter(
                 .doAfterTerminate { currentView?.showOrHideLoadingIndicator(false) }
                 .subscribe({ currentView?.onPriceTickersLoaded(it) }, {
                     Timber.e(it.localizedMessage)
-                    currentView?.onNetworkError("Error loading ticker")
+                    currentView?.onNetworkError(resourceProvider.getString(R.string.error_ticker))
                 }))
     }
 

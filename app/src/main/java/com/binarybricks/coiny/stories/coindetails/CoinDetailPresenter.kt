@@ -14,8 +14,8 @@ Created by Pranay Airan
  */
 
 class CoinDetailPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDetailsContract.View>(),
         CoinDetailsContract.Presenter, LifecycleObserver {
 
@@ -34,6 +34,7 @@ class CoinDetailPresenter(
                         currentView?.onWatchedCoinLoaded(null)
                     }
                 }, {
+                    Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 })?.let { compositeDisposable.add(it) }
     }

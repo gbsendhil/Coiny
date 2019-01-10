@@ -29,6 +29,7 @@ class CoinSearchPresenter(
                     currentView?.showOrHideLoadingIndicator(false)
                     currentView?.onCoinsLoaded(it)
                 }, {
+                    Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 })?.let { compositeDisposable.add(it) }
     }
@@ -40,6 +41,7 @@ class CoinSearchPresenter(
                     Timber.d("Coin status updated")
                     currentView?.onCoinWatchedStatusUpdated(watched, coinSymbol)
                 }, {
+                    Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 }))
     }

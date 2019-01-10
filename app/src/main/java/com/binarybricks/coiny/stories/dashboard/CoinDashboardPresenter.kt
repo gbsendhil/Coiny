@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.components.historicalchartmodule
+package com.binarybricks.coiny.stories.dashboard
 
 import CoinDashboardContract
 import android.arch.lifecycle.Lifecycle
@@ -11,7 +11,6 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import com.binarybricks.coiny.stories.dashboard.DashboardRepository
 import io.reactivex.functions.BiFunction
 import timber.log.Timber
 

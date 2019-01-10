@@ -11,7 +11,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.cointickermodule.CoinTickerModule
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
-import com.binarybricks.coiny.components.historicalchartmodule.CoinPresenter
+import com.binarybricks.coiny.stories.coin.CoinPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction

@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.components.historicalchartmodule
+package com.binarybricks.coiny.stories.transaction
 
 import CoinTransactionContract
 import android.arch.lifecycle.Lifecycle
@@ -15,47 +15,47 @@ Created by Pranay Airan
  */
 
 class CoinTransactionPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) :
-    BasePresenter<CoinTransactionContract.View>(), CoinTransactionContract.Presenter, LifecycleObserver {
+        BasePresenter<CoinTransactionContract.View>(), CoinTransactionContract.Presenter, LifecycleObserver {
 
     override fun getAllSupportedExchanges() {
         compositeDisposable.add(coinRepo.getAllSupportedExchanges()
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("All Exchange Loaded")
-                currentView?.onAllSupportedExchangesLoaded(it)
-            }, {
-                Timber.e(it.localizedMessage)
-            })
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    Timber.d("All Exchange Loaded")
+                    currentView?.onAllSupportedExchangesLoaded(it)
+                }, {
+                    Timber.e(it.localizedMessage)
+                })
         )
     }
 
     // to coins is , separated multiple coin list.
-    override fun getPriceForPair(fromCoin: String, toCoins: String, exchange: String, timeStamp: String) {
+    override fun getPriceForPair(fromCoin: String, toCoin: String, exchange: String, timeStamp: String) {
         if (exchange.isNotEmpty()) {
-            compositeDisposable.add(coinRepo.getCoinPriceForTimeStamp(fromCoin, toCoins, exchange, timeStamp)
-                .observeOn(schedulerProvider.ui())
-                .subscribe({
-                    Timber.d("Coin price Loaded")
-                    currentView?.onCoinPriceLoaded(it)
-                }, {
-                    Timber.e(it.localizedMessage)
-                })
+            compositeDisposable.add(coinRepo.getCoinPriceForTimeStamp(fromCoin, toCoin, exchange, timeStamp)
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe({
+                        Timber.d("Coin price Loaded")
+                        currentView?.onCoinPriceLoaded(it)
+                    }, {
+                        Timber.e(it.localizedMessage)
+                    })
             )
         }
     }
 
     override fun addTransaction(transaction: CoinTransaction) {
-        coinRepo.insertTransaction(transaction)
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("Coin Transaction Added")
-                currentView?.onTransactionAdded()
-            }, {
-                Timber.e(it.localizedMessage)
-            })
+        compositeDisposable.add(coinRepo.insertTransaction(transaction)
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    Timber.d("Coin Transaction Added")
+                    currentView?.onTransactionAdded()
+                }, {
+                    Timber.e(it.localizedMessage)
+                }))
     }
 
     // cleanup

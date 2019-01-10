@@ -44,7 +44,11 @@ class LaunchPresenter(
                 .map {
                     compositeDisposable.add(coinRepo.insertExchangeIntoList(it).subscribe())
                 }
-                .subscribe())
+                .subscribe { _, t2 ->
+                    if (t2 != null) {
+                        Timber.e(t2)
+                    }
+                })
     }
 
     override fun getAllSupportedCoins(defaultCurrency: String) {

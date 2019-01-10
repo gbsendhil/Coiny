@@ -14,7 +14,6 @@ import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
-import com.binarybricks.coiny.components.historicalchartmodule.CoinTransactionPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.Coin
 import com.binarybricks.coiny.data.database.entities.CoinTransaction

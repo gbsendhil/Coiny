@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.components.historicalchartmodule
+package com.binarybricks.coiny.stories.coin
 
 import CoinContract
 import android.arch.lifecycle.Lifecycle
@@ -15,8 +15,8 @@ Created by Pranay Airan
  */
 
 class CoinPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinContract.View>(), CoinContract.Presenter, LifecycleObserver {
 
     /**
@@ -24,33 +24,34 @@ class CoinPresenter(
      */
     override fun loadCurrentCoinPrice(watchedCoin: WatchedCoin, toCurrency: String) {
         compositeDisposable.add(coinRepo.getCoinPriceFull(watchedCoin.coin.symbol, toCurrency)
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                currentView?.onCoinPriceLoaded(it, watchedCoin)
-            }, { Timber.e(it.localizedMessage) }))
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    currentView?.onCoinPriceLoaded(it, watchedCoin)
+                }, { Timber.e(it.localizedMessage) }))
     }
 
     override fun loadRecentTransaction(symbol: String) {
         coinRepo.getRecentTransaction(symbol)
-            ?.observeOn(schedulerProvider.ui())
-            ?.subscribe({ coinTransactionsList ->
-                coinTransactionsList?.let {
-                    currentView?.onRecentTransactionLoaded(it)
-                }
-            }, {
-                Timber.e(it.localizedMessage)
-            })?.let { compositeDisposable.add(it) }
+                ?.observeOn(schedulerProvider.ui())
+                ?.subscribe({ coinTransactionsList ->
+                    coinTransactionsList?.let {
+                        currentView?.onRecentTransactionLoaded(it)
+                    }
+                }, {
+                    Timber.e(it.localizedMessage)
+                })?.let { compositeDisposable.add(it) }
     }
 
     override fun updateCoinWatchedStatus(watched: Boolean, coinID: String, coinSymbol: String) {
         compositeDisposable.add(coinRepo.updateCoinWatchedStatus(watched, coinID)
-            .observeOn(schedulerProvider.ui())
-            .subscribe({
-                Timber.d("Coin status updated")
-                currentView?.onCoinWatchedStatusUpdated(watched, coinSymbol)
-            }, {
-                currentView?.onNetworkError(it.localizedMessage)
-            }))
+                .observeOn(schedulerProvider.ui())
+                .subscribe({
+                    Timber.d("Coin status updated")
+                    currentView?.onCoinWatchedStatusUpdated(watched, coinSymbol)
+                }, {
+                    Timber.e(it)
+                    currentView?.onNetworkError(it.localizedMessage)
+                }))
     }
 
     // cleanup

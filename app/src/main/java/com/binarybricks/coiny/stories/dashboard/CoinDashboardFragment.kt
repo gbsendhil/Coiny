@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
-import com.binarybricks.coiny.components.historicalchartmodule.CoinDashboardPresenter
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
