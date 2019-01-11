@@ -5,7 +5,6 @@ package com.binarybricks.coiny.utils.ui
  * All Rights Reserved.
  */
 
-
 import android.support.v7.widget.RecyclerView
 
 abstract class OnVerticalScrollListener : RecyclerView.OnScrollListener() {
@@ -42,6 +41,5 @@ abstract class OnVerticalScrollListener : RecyclerView.OnScrollListener() {
     fun onScrolledToBottom() {}
 
     open fun onScrolled(offset: Int) {
-
     }
 }

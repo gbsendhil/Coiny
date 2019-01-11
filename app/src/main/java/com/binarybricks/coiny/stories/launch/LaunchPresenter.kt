@@ -20,8 +20,8 @@ Created by Pranay Airan
  */
 
 class LaunchPresenter(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinRepo: CryptoCompareRepository
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
     private var coinList: ArrayList<CCCoin>? = null

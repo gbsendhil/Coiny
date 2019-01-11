@@ -37,9 +37,9 @@ object PreferenceHelper {
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     fun <T : Any> getPreference(
-            context: Context,
-            key: String,
-            defaultValue: T
+        context: Context,
+        key: String,
+        defaultValue: T
     ): T {
         return try {
             when (defaultValue::class) {
@@ -75,9 +75,9 @@ object PreferenceHelper {
      */
     @JvmStatic
     fun setPreference(
-            context: Context,
-            key: String,
-            value: Any?
+        context: Context,
+        key: String,
+        value: Any?
     ) {
 
         if (value == null) {
@@ -96,8 +96,8 @@ object PreferenceHelper {
 
     // https://stackoverflow.com/questions/44471284/when-to-use-an-inline-function-in-kotlin
     private inline fun edit(
-            context: Context,
-            operation: (SharedPreferences.Editor) -> Unit
+        context: Context,
+        operation: (SharedPreferences.Editor) -> Unit
     ) {
         val editor = PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()

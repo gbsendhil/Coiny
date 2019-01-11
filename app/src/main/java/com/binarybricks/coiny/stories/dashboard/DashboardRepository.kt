@@ -18,8 +18,8 @@ Created by Pranay Airan
  */
 
 class DashboardRepository(
-        private val baseSchedulerProvider: BaseSchedulerProvider,
-        private val coinyDatabase: CoinyDatabase?
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase?
 ) {
 
     /**

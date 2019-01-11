@@ -19,8 +19,8 @@ Created by Pranay Airan 1/18/18.
  */
 
 class NewsListAdapter(
-        private val cryptoPanicNews: CryptoPanicNews,
-        private val resourceProvider: ResourceProvider
+    private val cryptoPanicNews: CryptoPanicNews,
+    private val resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {

@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Provides different types of schedulers.
  */
-class SchedulerProvider// Prevent direct instantiation.
+class SchedulerProvider // Prevent direct instantiation.
 private constructor() : BaseSchedulerProvider {
 
     override fun computation(): Scheduler {
