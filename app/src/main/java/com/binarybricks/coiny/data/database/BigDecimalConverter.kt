@@ -4,7 +4,7 @@ import android.arch.persistence.room.TypeConverter
 import java.math.BigDecimal
 
 /**
- * Created by pairan on 3/13/18.
+ * Created by Pranay Airan
  */
 class BigDecimalConverter {
     @TypeConverter

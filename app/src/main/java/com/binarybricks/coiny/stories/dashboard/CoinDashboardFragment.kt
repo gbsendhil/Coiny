@@ -42,7 +42,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     private var coinTransactionList: List<CoinTransaction> = emptyList()
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val resourceProvider: ResourceProvider by lazy {

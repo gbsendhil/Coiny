@@ -10,6 +10,7 @@
     android:padding="@dimen/generic16dp">
 
     <ImageView
+        android:contentDescription="@string/cdExchange"
         android:id="@+id/ivExchange"
         android:layout_width="@dimen/generic32dp"
         android:layout_height="@dimen/generic32dp"

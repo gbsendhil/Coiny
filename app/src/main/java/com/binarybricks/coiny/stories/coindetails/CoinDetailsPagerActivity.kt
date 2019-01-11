@@ -21,7 +21,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
     private var watchedCoin: WatchedCoin? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val allCoinDetailsRepository by lazy {

@@ -32,7 +32,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
     private var coinDiscoveryAdapter: CoinDiscoveryAdapter? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val resourceProvider: ResourceProvider by lazy {

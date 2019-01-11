@@ -35,7 +35,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val coinRepo by lazy {

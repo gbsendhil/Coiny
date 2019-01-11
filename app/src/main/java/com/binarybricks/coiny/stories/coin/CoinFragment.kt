@@ -41,7 +41,7 @@ class CoinFragment : Fragment(), CoinContract.View {
     private var watchedCoin: WatchedCoin? = null
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val coinRepo by lazy {

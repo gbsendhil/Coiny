@@ -39,7 +39,7 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val coinTickerRepository by lazy {

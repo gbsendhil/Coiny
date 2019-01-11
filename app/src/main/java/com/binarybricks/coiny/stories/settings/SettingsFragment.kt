@@ -26,7 +26,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val coinRepo by lazy {

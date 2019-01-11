@@ -39,7 +39,7 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
 
     private val cryptoNewsRepository by lazy {

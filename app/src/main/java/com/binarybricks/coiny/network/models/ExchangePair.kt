@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * Created by pairan on 2/18/18.
+ * Created by Pranay Airan
  */
 
 @Parcelize

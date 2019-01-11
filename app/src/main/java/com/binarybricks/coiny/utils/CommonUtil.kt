@@ -60,7 +60,7 @@ fun dismissKeyboard(activity: Activity) {
     val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     val focusedView = activity.currentFocus
     if (focusedView != null) {
-        imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
+        imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
     }
 }
 

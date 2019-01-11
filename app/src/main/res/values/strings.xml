@@ -138,4 +138,9 @@
     <string name="market">Market</string>
     <string name="discover">Discover</string>
     <string name="settings">Settings</string>
+    <string name="cdLogo">Coiny logo</string>
+    <string name="cdFirstExchange">First Exchange</string>
+    <string name="cdSecondExchange">Second Exchange</string>
+    <string name="cdThirdExchange">Third Exchange</string>
+    <string name="cdExchange">Exchange</string>
 </resources>

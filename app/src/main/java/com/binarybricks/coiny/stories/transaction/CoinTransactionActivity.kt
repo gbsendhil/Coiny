@@ -54,7 +54,7 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
-        SchedulerProvider.getInstance()
+        SchedulerProvider.instance
     }
     private val coinRepo by lazy {
         CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
