@@ -19,7 +19,8 @@ class CoinDetailPagerPresenter(private val schedulerProvider: BaseSchedulerProvi
         coinDetailsPagerRepository.loadWatchedCoins()?.let {
             compositeDisposable.add(it
                     .observeOn(schedulerProvider.ui())
-                    .subscribe({ currentView?.onWatchedCoinsLoaded(it) }, { Timber.e(it.localizedMessage) })
+                    .subscribe({ watchedCoins -> currentView?.onWatchedCoinsLoaded(watchedCoins) },
+                            { t -> Timber.e(t.localizedMessage) })
             )
         }
     }

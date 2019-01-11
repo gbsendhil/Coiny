@@ -18,11 +18,11 @@ class IntroFragment : Fragment() {
     private var page: Int = 0
 
     companion object {
-        private val TITLE = "title"
-        private val SUB_TITLE = "subtitle"
-        private val ANIMATION = "animation"
-        private val SHOW_BUTTON = "showbutton"
-        private val PAGE = "page"
+        private const val TITLE = "title"
+        private const val SUB_TITLE = "subtitle"
+        private const val ANIMATION = "animation"
+        private const val SHOW_BUTTON = "showbutton"
+        private const val PAGE = "page"
 
         fun newInstance(animation: Int, headerTitle: String, headerSubtitle: String, page: Int, showbutton: Boolean): IntroFragment {
             val frag = IntroFragment()

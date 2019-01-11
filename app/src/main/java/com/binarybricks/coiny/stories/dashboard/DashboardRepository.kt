@@ -18,8 +18,8 @@ Created by Pranay Airan
  */
 
 class DashboardRepository(
-    private val baseSchedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase?
+        private val baseSchedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase?
 ) {
 
     /**
@@ -28,7 +28,7 @@ class DashboardRepository(
     fun loadWatchedCoins(): Flowable<List<WatchedCoin>>? {
         coinyDatabase?.let {
             return it.watchedCoinDao().getAllWatchedCoins()
-                .subscribeOn(baseSchedulerProvider.io())
+                    .subscribeOn(baseSchedulerProvider.io())
         }
         return null
     }
@@ -40,24 +40,24 @@ class DashboardRepository(
 
         coinyDatabase?.let {
             return it.coinTransactionDao().getAllCoinTransaction()
-                .subscribeOn(baseSchedulerProvider.io())
+                    .subscribeOn(baseSchedulerProvider.io())
         }
         return null
     }
 
     /**
-     * Get the historical data for specific crypto currencies. [period] specifies what time period you
-     * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.[toCurrencySymbol]
-     * is which currency you want data in for like USD
+     * Get the price of a coin from the API
+     * want data from. [fromCurrencySymbol] specifies what currencies data you want for example bitcoin.
+     * [toCurrencySymbol] is which currency you want data in for like USD
      */
     fun getCoinPriceFull(fromCurrencySymbol: String, toCurrencySymbol: String): Single<ArrayList<CoinPrice>> {
 
         return cryptoCompareRetrofit.create(API::class.java)
-            .getPricesFull(fromCurrencySymbol, toCurrencySymbol)
-            .subscribeOn(baseSchedulerProvider.io())
-            .map {
-                Timber.d("Coin prices fetched, parsing response")
-                getCoinPricesFromJson(it)
-            }
+                .getPricesFull(fromCurrencySymbol, toCurrencySymbol)
+                .subscribeOn(baseSchedulerProvider.io())
+                .map {
+                    Timber.d("Coin prices fetched, parsing response")
+                    getCoinPricesFromJson(it)
+                }
     }
 }

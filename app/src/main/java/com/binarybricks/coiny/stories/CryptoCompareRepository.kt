@@ -27,8 +27,8 @@ Repository that interact with crypto api to get any info on coins.
  */
 
 class CryptoCompareRepository(
-    private val baseSchedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase? = null
+        private val baseSchedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase? = null
 ) {
 
     /**
@@ -180,7 +180,7 @@ class CryptoCompareRepository(
             Single.just(CoinyCache.topCoinsByTotalVolume)
         } else {
             cryptoCompareRetrofit.create(API::class.java)
-                    .getTopCoinsByTotalVolume24hours(tsyms, 20)
+                    .getTopCoinsByTotalVolume(tsyms, 20)
                     .subscribeOn(baseSchedulerProvider.io())
                     .map {
                         Timber.d("Coin price by total volume fetched, parsing response")

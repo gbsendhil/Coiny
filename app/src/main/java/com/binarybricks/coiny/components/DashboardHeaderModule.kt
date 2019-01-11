@@ -77,7 +77,7 @@ class DashboardHeaderModule(
 
             // do the profit or loss things here.
             val totalReturnAmount = portfolioValue.subtract(totalPortfolioCost)
-            var totalReturnPercentage = BigDecimal.ZERO
+            val totalReturnPercentage = BigDecimal.ZERO
             if (totalReturnAmount > BigDecimal.ZERO) {
                 (totalReturnAmount.divide(totalPortfolioCost, mc))?.multiply(BigDecimal(100), mc)
             }
@@ -112,11 +112,11 @@ class DashboardHeaderModule(
         if (amount != null) {
             val chartCoinPriceAnimation = ValueAnimator.ofFloat(inflatedView.tvPortfolioValue.tag.toString().toFloat(), amount.toFloat())
             chartCoinPriceAnimation.duration = chartAnimationDuration
-            chartCoinPriceAnimation.addUpdateListener({ updatedAnimation ->
+            chartCoinPriceAnimation.addUpdateListener { updatedAnimation ->
                 val animatedValue = updatedAnimation.animatedValue as Float
                 inflatedView.tvPortfolioValue.text = formatter.formatAmount(animatedValue.toString(), currency)
                 inflatedView.tvPortfolioValue.tag = animatedValue
-            })
+            }
             chartCoinPriceAnimation.start()
         }
     }

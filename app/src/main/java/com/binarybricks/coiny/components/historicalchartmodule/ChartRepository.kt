@@ -65,10 +65,10 @@ class ChartRepository(private val baseSchedulerProvider: BaseSchedulerProvider) 
         return cryptoCompareRetrofit.create(API::class.java)
                 .getCryptoHistoricalData(histoPeriod, fromCurrencySymbol, toCurrencySymbol, limit, aggregate)
                 .subscribeOn(baseSchedulerProvider.io())
-                .map {
-                    Timber.d("Size of response " + it.data.size)
-                    val maxClosingValueFromHistoricalData = it.data.maxBy { it.close.toFloat() }
-                    Pair(it.data, maxClosingValueFromHistoricalData)
+                .map { responseData ->
+                    Timber.d("Size of response " + responseData.data.size)
+                    val maxClosingValueFromHistoricalData = responseData.data.maxBy { it.close.toFloat() }
+                    Pair(responseData.data, maxClosingValueFromHistoricalData)
                 }
     }
 }

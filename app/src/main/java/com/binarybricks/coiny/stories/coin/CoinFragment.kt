@@ -1,4 +1,4 @@
-package com.binarybricks.coiny.stories.coindetails
+package com.binarybricks.coiny.stories.coin
 
 import CoinContract
 import android.os.Bundle
@@ -18,8 +18,8 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
-import com.binarybricks.coiny.stories.coin.CoinAdapter
-import com.binarybricks.coiny.stories.coin.CoinPresenter
+import com.binarybricks.coiny.stories.coindetails.CoinDetailsActivity
+import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.defaultExchange
@@ -72,7 +72,7 @@ class CoinFragment : Fragment(), CoinContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(R.layout.fragment_coin_details, container, false)
 
-        watchedCoin = arguments?.getParcelable<WatchedCoin>(WATCHED_COIN)
+        watchedCoin = arguments?.getParcelable(WATCHED_COIN)
 
         setHasOptionsMenu(true)
 

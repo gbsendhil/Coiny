@@ -91,7 +91,7 @@ class CoinTickerModule(
             inflatedView.tvFirstExchange.text = tickerData[0].marketName
             inflatedView.tvFirstVolume.text = formatter.formatAmount(tickerData[0].convertedVolumeUSD, currency, true)
             inflatedView.ivFirstExchange.visibility = View.VISIBLE
-            Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[0].imageUrl}").error(R.mipmap.ic_launcher_round)
+            Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + tickerData[0].imageUrl).error(R.mipmap.ic_launcher_round)
                     .transform(cropCircleTransformation)
                     .into(inflatedView.ivFirstExchange)
 
@@ -113,7 +113,7 @@ class CoinTickerModule(
                     }
                 }
                 inflatedView.ivSecondExchange.visibility = View.VISIBLE
-                Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[1].imageUrl}").error(R.mipmap.ic_launcher_round)
+                Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + tickerData[1].imageUrl).error(R.mipmap.ic_launcher_round)
                         .transform(cropCircleTransformation)
                         .into(inflatedView.ivSecondExchange)
             }
@@ -130,7 +130,7 @@ class CoinTickerModule(
                     }
                 }
                 inflatedView.ivThirdExchange.visibility = View.VISIBLE
-                Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[2].imageUrl}").error(R.mipmap.ic_launcher_round)
+                Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + tickerData[2].imageUrl).error(R.mipmap.ic_launcher_round)
                         .transform(cropCircleTransformation)
                         .into(inflatedView.ivThirdExchange)
             }

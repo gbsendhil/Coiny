@@ -67,7 +67,7 @@ class AboutCoinModule : Module() {
 
     private fun getCleanedUpDescription(description: String?): String? {
         if (description != null) {
-            return description.replace(Regex("\\<.*?>"), "")
+            return description.replace(Regex("<.*?>"), "")
         }
         return description
     }

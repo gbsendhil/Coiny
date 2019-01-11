@@ -29,8 +29,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     companion object {
         @JvmStatic
         fun buildLaunchIntent(context: Context): Intent {
-            val intent = Intent(context, CoinSearchActivity::class.java)
-            return intent
+            return Intent(context, CoinSearchActivity::class.java)
         }
     }
 

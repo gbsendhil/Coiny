@@ -19,8 +19,8 @@ Created by Pranay Airan 1/18/18.
  */
 
 class NewsListAdapter(
-    private val cryptoPanicNews: CryptoPanicNews,
-    private val resourceProvider: ResourceProvider
+        private val cryptoPanicNews: CryptoPanicNews,
+        private val resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {
@@ -33,12 +33,12 @@ class NewsListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: NewsViewHolder, position: Int) {
-        val newsresult = cryptoPanicNews.results?.get(position)
-        newsresult?.let {
-            viewHolder.title?.text = newsresult.title
-            viewHolder.date?.text = formatter.parseAndFormatIsoDate(newsresult.created_at, true)
+        val newsResult = cryptoPanicNews.results?.get(position)
+        newsResult?.let { result ->
+            viewHolder.title?.text = result.title
+            viewHolder.date?.text = formatter.parseAndFormatIsoDate(result.created_at, true)
             viewHolder.clArticle?.setOnClickListener {
-                openCustomTab(newsresult.url, it.context)
+                openCustomTab(result.url, it.context)
             }
         }
     }

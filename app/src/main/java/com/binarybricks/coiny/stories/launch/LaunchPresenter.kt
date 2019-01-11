@@ -20,8 +20,8 @@ Created by Pranay Airan
  */
 
 class LaunchPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
 
     private var coinList: ArrayList<CCCoin>? = null
@@ -65,8 +65,8 @@ class LaunchPresenter(
                     // add top 5 coins in watch list
                     val top5CoinsToWatch = getTop5CoinsToWatch()
 
-                    top5CoinsToWatch.forEach {
-                        compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, it)
+                    top5CoinsToWatch.forEach { coinId ->
+                        compositeDisposable.add(coinRepo.updateCoinWatchedStatus(true, coinId)
                                 .subscribe())
                     }
                 }

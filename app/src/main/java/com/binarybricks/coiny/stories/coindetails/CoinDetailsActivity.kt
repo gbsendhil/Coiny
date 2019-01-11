@@ -13,6 +13,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coin.CoinFragment
 import kotlinx.android.synthetic.main.activity_coin_details.*
 
 class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {

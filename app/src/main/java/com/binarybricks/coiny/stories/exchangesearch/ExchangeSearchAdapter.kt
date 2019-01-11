@@ -81,9 +81,7 @@ class ExchangeSearchAdapter(val searchList: ArrayList<String>) : RecyclerView.Ad
         init {
             // add second text
             view.setOnClickListener {
-                mListener?.let { searchListner ->
-                    searchListner.onSearchItemClick(it, layoutPosition, tvSearchItemName.text.toString())
-                }
+                mListener?.onSearchItemClick(it, layoutPosition, tvSearchItemName.text.toString())
             }
         }
     }
