@@ -30,7 +30,10 @@ buildscript {
             'junit'               : '4.12',
             'testRunner'          : '1.0.2',
             'espresso'            : '3.0.2',
-            'kotlinter'           : '1.20.1'
+            'kotlinter'           : '1.20.1',
+            'bottomNav'           : '1.2.4',
+            'firebaseCore'        : '16.0.6',
+            'crashlytics'         : '2.9.8'
     ]
 
     repositories {
