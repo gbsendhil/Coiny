@@ -11,7 +11,6 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.components.cointickermodule.CoinTickerModule
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
-import com.binarybricks.coiny.stories.coin.CoinPresenter
 import com.binarybricks.coiny.components.historicalchartmodule.HistoricalChartModule
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
@@ -20,6 +19,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coin.CoinAdapter
+import com.binarybricks.coiny.stories.coin.CoinPresenter
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.defaultExchange
@@ -53,7 +53,7 @@ class CoinFragment : Fragment(), CoinContract.View {
     }
 
     val resourceProvider: ResourceProvider by lazy {
-        ResourceProviderImpl(activity)
+        ResourceProviderImpl(requireContext())
     }
     val toCurrency: String by lazy {
         PreferenceHelper.getDefaultCurrency(context?.applicationContext)

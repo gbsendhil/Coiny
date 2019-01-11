@@ -50,7 +50,7 @@ class CoinStatsticsModule(private val resourceProvider: ResourceProvider) : Modu
                 ?: "0", currency, false)
 
         inflatedView.tvSupplyNumber.text = resourceProvider.getString(R.string.twoTextWithSpace,
-                formatter.formatNumber(coinPrice.supply ?: 0), coinPrice.fromSymbol)
+                formatter.formatNumber(coinPrice.supply ?: 0) ?: "", coinPrice.fromSymbol ?: "")
     }
 
     override fun cleanUp() {
