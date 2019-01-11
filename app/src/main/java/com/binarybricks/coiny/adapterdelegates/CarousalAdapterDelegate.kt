@@ -14,8 +14,10 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class CarousalAdapterDelegate(private val toCurrency: String,
-                              private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+class CarousalAdapterDelegate(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
     private val carousalModule by lazy {
         CarousalModule(toCurrency, resourceProvider)
@@ -37,10 +39,10 @@ class CarousalAdapterDelegate(private val toCurrency: String,
     }
 
     class CarousalModuleViewHolder(
-            override val containerView: View,
-            private val carousalModule: CarousalModule,
-            private val layoutInflater: LayoutInflater,
-            private val parent: ViewGroup?
+        override val containerView: View,
+        private val carousalModule: CarousalModule,
+        private val layoutInflater: LayoutInflater,
+        private val parent: ViewGroup?
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun loadCarousalData(carousalModuleData: CarousalModule.CarousalModuleData) {

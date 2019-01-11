@@ -23,8 +23,10 @@ import java.util.*
  * Created by Pranay Airan
  */
 
-class DashboardCoinModule(private val toCurrency: String,
-                          private val resourceProvider: ResourceProvider) : Module() {
+class DashboardCoinModule(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : Module() {
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)

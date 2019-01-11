@@ -26,10 +26,10 @@ Created by Pranay Airan 1/10/18.
  * A compound layout to see historical charts.
  */
 class HistoricalChartModule(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val resourceProvider: ResourceProvider,
-        private val fromCurrency: String,
-        private val toCurrency: String
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val resourceProvider: ResourceProvider,
+    private val fromCurrency: String,
+    private val toCurrency: String
 ) : Module(), HistoricalChartContract.View {
 
     private lateinit var inflatedView: View
@@ -81,8 +81,9 @@ class HistoricalChartModule(
         if (showLoading) inflatedView.pbChartLoading.show() else inflatedView.pbChartLoading.hide()
     }
 
-    override fun onHistoricalDataLoaded(period: String,
-                                        historicalDataPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+    override fun onHistoricalDataLoaded(
+        period: String,
+        historicalDataPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
     ) {
 
         historicalData = historicalDataPair.first

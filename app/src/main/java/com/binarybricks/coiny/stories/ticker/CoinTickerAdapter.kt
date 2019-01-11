@@ -24,8 +24,11 @@ Created by Pranay Airan 1/18/18.
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
 
-class CoinTickerAdapter(private val tickerData: List<CryptoTicker>,
-                        val currency: Currency, private val resourceProvider: ResourceProvider) : RecyclerView.Adapter<CoinTickerAdapter.NewsViewHolder>() {
+class CoinTickerAdapter(
+    private val tickerData: List<CryptoTicker>,
+    val currency: Currency,
+    private val resourceProvider: ResourceProvider
+) : RecyclerView.Adapter<CoinTickerAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {
         Formatters(resourceProvider)

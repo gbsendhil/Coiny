@@ -18,8 +18,10 @@ import java.util.*
  *
  * Simple class wrapping UI for top card
  */
-class TopCardModule(private val toCurrency: String,
-                    private val resourceProvider: ResourceProvider) : Module() {
+class TopCardModule(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : Module() {
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)
@@ -59,10 +61,10 @@ class TopCardModule(private val toCurrency: String,
     }
 
     data class TopCardsModuleData(
-            val pair: String,
-            val price: String,
-            val priceChangePercentage: String,
-            val marketCap: String,
-            val coinSymbol: String
+        val pair: String,
+        val price: String,
+        val priceChangePercentage: String,
+        val marketCap: String,
+        val coinSymbol: String
     ) : ModuleItem
 }

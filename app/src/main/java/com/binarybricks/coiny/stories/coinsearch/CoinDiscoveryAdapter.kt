@@ -16,9 +16,9 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDiscoveryAdapter(
-        toCurrency: String,
-        resourceProvider: ResourceProvider,
-        var coinDiscoverList: MutableList<ModuleItem>
+    toCurrency: String,
+    resourceProvider: ResourceProvider,
+    var coinDiscoverList: MutableList<ModuleItem>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DISCOVERY_CAROUSAL = 0

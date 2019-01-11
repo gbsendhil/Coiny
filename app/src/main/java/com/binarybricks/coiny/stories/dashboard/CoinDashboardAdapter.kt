@@ -15,10 +15,10 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDashboardAdapter(
-        toCurrency: String,
-        resourceProvider: ResourceProvider,
-        var coinDashboardList: MutableList<ModuleItem>,
-        toolbarTitle: TextView
+    toCurrency: String,
+    resourceProvider: ResourceProvider,
+    var coinDashboardList: MutableList<ModuleItem>,
+    toolbarTitle: TextView
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DASHBOARD_COIN_List_HEADER = 0

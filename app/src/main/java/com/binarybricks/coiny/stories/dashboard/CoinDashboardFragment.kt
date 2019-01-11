@@ -36,7 +36,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         private const val COIN_SEARCH_CODE = 100
     }
 
-
     private var coinDashboardList: MutableList<ModuleItem> = ArrayList()
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
     private var watchedCoinList: List<WatchedCoin> = emptyList()

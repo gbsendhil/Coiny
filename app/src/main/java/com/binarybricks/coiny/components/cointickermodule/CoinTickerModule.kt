@@ -29,10 +29,10 @@ import java.util.*
  * A compound layout to see coin ticker
  */
 class CoinTickerModule(
-        private val coinyDatabase: CoinyDatabase?,
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val resourceProvider: ResourceProvider,
-        private val coinName: String
+    private val coinyDatabase: CoinyDatabase?,
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val resourceProvider: ResourceProvider,
+    private val coinName: String
 ) : Module(), CoinTickerContract.View {
 
     private lateinit var inflatedView: View
@@ -51,7 +51,6 @@ class CoinTickerModule(
     private val cropCircleTransformation by lazy {
         CropCircleTransformation()
     }
-
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
 

@@ -16,10 +16,10 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinNewsAdapterDelegate(
-        private val coinSymbol: String,
-        private val coinName: String,
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val resourceProvider: ResourceProvider
+    private val coinSymbol: String,
+    private val coinName: String,
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val resourceProvider: ResourceProvider
 ) : AdapterDelegate<List<ModuleItem>>() {
 
     private val coinNewsModule by lazy {

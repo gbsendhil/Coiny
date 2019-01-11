@@ -15,8 +15,10 @@ import kotlinx.android.extensions.LayoutContainer
  * Adapter delegate that takes care of coin row in dashboard.
  */
 
-class DashboardCoinAdapterDelegate(private val toCurrency: String,
-                                   private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+class DashboardCoinAdapterDelegate(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
     private val dashboardCoinModule by lazy {
         DashboardCoinModule(toCurrency, resourceProvider)

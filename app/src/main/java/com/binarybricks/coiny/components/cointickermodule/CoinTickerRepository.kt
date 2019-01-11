@@ -18,8 +18,8 @@ import io.reactivex.functions.BiFunction
  */
 
 class CoinTickerRepository(
-        private val baseSchedulerProvider: BaseSchedulerProvider,
-        private val coinyDatabase: CoinyDatabase?
+    private val baseSchedulerProvider: BaseSchedulerProvider,
+    private val coinyDatabase: CoinyDatabase?
 ) {
 
     /**

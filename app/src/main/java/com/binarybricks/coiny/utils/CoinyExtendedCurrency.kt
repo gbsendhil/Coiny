@@ -3,7 +3,6 @@ package com.binarybricks.coiny.utils
 import com.mynameismidori.currencypicker.ExtendedCurrency
 import com.mynameismidori.currencypicker.R
 
-
 class CoinyExtendedCurrency {
 
     companion object {

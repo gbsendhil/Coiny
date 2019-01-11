@@ -15,9 +15,9 @@ import timber.log.Timber
  */
 
 class CoinTickerPresenter(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val coinTickerRepository: CoinTickerRepository,
-        private val resourceProvider: ResourceProvider
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val coinTickerRepository: CoinTickerRepository,
+    private val resourceProvider: ResourceProvider
 ) : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
 
     /**

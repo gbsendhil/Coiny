@@ -14,8 +14,10 @@ import timber.log.Timber
  * Simple class that takes list of items and show them on in horizontal carousal.
  */
 
-class CarousalModule(private val toCurrency: String,
-                     private val resourceProvider: ResourceProvider) : Module() {
+class CarousalModule(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : Module() {
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.carousal_module, parent, false)

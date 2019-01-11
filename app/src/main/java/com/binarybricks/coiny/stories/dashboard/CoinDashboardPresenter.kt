@@ -51,7 +51,7 @@ class CoinDashboardPresenter(
                     coinPriceList.forEach { coinPrice ->
                         coinPrice.fromSymbol?.let { fromCurrencySymbol -> coinPriceMap.put(fromCurrencySymbol.toUpperCase(), coinPrice) }
                     }
-                    if(coinPriceMap.isNotEmpty()) {
+                    if (coinPriceMap.isNotEmpty()) {
                         CoinyCache.coinPriceMap.putAll(coinPriceMap)
                     }
                     coinPriceMap

@@ -29,9 +29,11 @@ import kotlin.collections.ArrayList
  * Simple class that wraps all logic related to showing header on dashboard
  */
 
-class DashboardHeaderModule(private val toCurrency: String,
-                            private val toolbarTitle: TextView,
-                            private val resourceProvider: ResourceProvider) : Module() {
+class DashboardHeaderModule(
+    private val toCurrency: String,
+    private val toolbarTitle: TextView,
+    private val resourceProvider: ResourceProvider
+) : Module() {
 
     private lateinit var inflatedView: View
     private val purchasedCoinList: MutableList<WatchedCoin> = ArrayList()
@@ -120,8 +122,8 @@ class DashboardHeaderModule(private val toCurrency: String,
     }
 
     data class DashboardHeaderModuleData(
-            var watchedCoinList: List<WatchedCoin>,
-            var coinTransactionList: List<CoinTransaction>,
-            var coinPriceListMap: HashMap<String, CoinPrice>
+        var watchedCoinList: List<WatchedCoin>,
+        var coinTransactionList: List<CoinTransaction>,
+        var coinPriceListMap: HashMap<String, CoinPrice>
     ) : ModuleItem
 }

@@ -15,9 +15,11 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class DashboardHeaderAdapterDelegate(private val toCurrency: String,
-                                     private val toolbarTitle: TextView,
-                                     private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+class DashboardHeaderAdapterDelegate(
+    private val toCurrency: String,
+    private val toolbarTitle: TextView,
+    private val resourceProvider: ResourceProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
     private val dashboardHeaderModule by lazy {
         DashboardHeaderModule(toCurrency, toolbarTitle, resourceProvider)

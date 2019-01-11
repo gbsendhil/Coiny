@@ -16,13 +16,13 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinAdapter(
-        fromCurrency: String,
-        toCurrency: String,
-        coinName: String,
-        var coinDetailList: List<ModuleItem>,
-        coinyDatabase: CoinyDatabase?,
-        schedulerProvider: BaseSchedulerProvider,
-        resourceProvider: ResourceProvider
+    fromCurrency: String,
+    toCurrency: String,
+    coinName: String,
+    var coinDetailList: List<ModuleItem>,
+    coinyDatabase: CoinyDatabase?,
+    schedulerProvider: BaseSchedulerProvider,
+    resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val HISTORICAL_CHART = 0
