@@ -15,13 +15,15 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
 class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
     companion object {
-        val TAG = "CoinDiscoveryFragment"
+        const val TAG = "CoinDiscoveryFragment"
     }
 
     private var nextMenuItem: MenuItem? = null
@@ -31,6 +33,10 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.getInstance()
+    }
+
+    private val resourceProvider: ResourceProvider by lazy {
+        ResourceProviderImpl(requireContext())
     }
 
     private val coinRepo by lazy {
@@ -46,7 +52,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
         val inflate = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         val toolbar = inflate.toolbar
-        toolbar?.title = "Discover"
+        toolbar?.title = getString(R.string.discover)
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
@@ -90,7 +96,9 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
 
         inflatedView.rvDashboard.layoutManager = LinearLayoutManager(context)
 
-        coinDiscoveryAdapter = CoinDiscoveryAdapter(PreferenceHelper.getDefaultCurrency(context), coinDiscoveryList)
+        coinDiscoveryAdapter = CoinDiscoveryAdapter(PreferenceHelper.getDefaultCurrency(context), resourceProvider,
+                coinDiscoveryList)
+
         inflatedView.rvDashboard.adapter = coinDiscoveryAdapter
     }
 

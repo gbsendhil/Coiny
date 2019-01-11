@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.binarybricks.coiny.adapterdelegates.*
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 /**
@@ -14,9 +15,10 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDashboardAdapter(
-    toCurrency: String,
-    var coinDashboardList: MutableList<ModuleItem>,
-    toolbarTitle: TextView
+        toCurrency: String,
+        resourceProvider: ResourceProvider,
+        var coinDashboardList: MutableList<ModuleItem>,
+        toolbarTitle: TextView
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DASHBOARD_COIN_List_HEADER = 0
@@ -32,11 +34,11 @@ class CoinDashboardAdapter(
 
     init {
         delegates.addDelegate(DASHBOARD_COIN_List_HEADER, DashboardCoinListHeaderAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_COIN, DashboardCoinAdapterDelegate(toCurrency))
+        delegates.addDelegate(DASHBOARD_COIN, DashboardCoinAdapterDelegate(toCurrency, resourceProvider))
         delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle))
+        delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle, resourceProvider))
         delegates.addDelegate(DASHBOARD_FOOTER, GenericFooterAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate(toCurrency))
+        delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate(toCurrency, resourceProvider))
         delegates.addDelegate(DASHBOARD_News, DashboardNewsAdapterDelegate())
         delegates.addDelegate(DASHBOARD_Add_New, DashboardAddNewCoinAdapterDelegate())
     }

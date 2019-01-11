@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.openCustomTab
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
@@ -18,7 +19,7 @@ import timber.log.Timber
  * Simple class that wraps all logic related to showing news on discovery feed.
  */
 
-class DiscoveryNewsModule : Module() {
+class DiscoveryNewsModule(private val resourceProvider: ResourceProvider) : Module() {
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.discovery_news_module, parent, false)
@@ -29,7 +30,7 @@ class DiscoveryNewsModule : Module() {
         inflatedView.tvSource.text = discoveryNewsModuleData.coinNews.source
         inflatedView.tvHeadlines.text = discoveryNewsModuleData.coinNews.title
         if (discoveryNewsModuleData.coinNews.published_on != null) {
-            inflatedView.tvTimePeriod.text = Formatters().formatTransactionDate(discoveryNewsModuleData.coinNews.published_on)
+            inflatedView.tvTimePeriod.text = Formatters(resourceProvider).formatTransactionDate(discoveryNewsModuleData.coinNews.published_on)
         }
 
         Picasso.get().load(discoveryNewsModuleData.coinNews.imageurl)

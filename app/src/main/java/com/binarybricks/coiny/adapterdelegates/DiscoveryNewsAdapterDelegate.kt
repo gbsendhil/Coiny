@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DiscoveryNewsModule
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -13,10 +14,10 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class DiscoveryNewsAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+class DiscoveryNewsAdapterDelegate(private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
 
     private val discoveryNewsModule by lazy {
-        DiscoveryNewsModule()
+        DiscoveryNewsModule(resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

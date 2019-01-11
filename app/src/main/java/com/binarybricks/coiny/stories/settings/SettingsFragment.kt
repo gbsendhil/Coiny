@@ -22,7 +22,7 @@ import timber.log.Timber
 class SettingsFragment : Fragment(), SettingsContract.View {
 
     companion object {
-        val TAG = "SettingsFragment"
+        const val TAG = "SettingsFragment"
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
@@ -42,7 +42,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         val inflate = inflater.inflate(R.layout.fragment_settings, container, false)
 
         val toolbar = inflate.toolbar
-        toolbar?.title = "Settings"
+        toolbar?.title = getString(R.string.settings)
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 

@@ -80,7 +80,8 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
             fragmentTransaction.replace(R.id.flCoinDetails, coinDetailsFragment)
             fragmentTransaction.commit()
 
-            supportActionBar?.title = "${coin.coin.coinName}(${coin.coin.symbol})"
+            supportActionBar?.title = getString(R.string.transactionTypeWithQuantity,
+                    coin.coin.coinName, coin.coin.symbol)
         }
     }
 

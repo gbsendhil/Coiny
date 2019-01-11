@@ -64,7 +64,7 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
 
         val coinName = intent.getStringExtra(COIN_NAME).trim()
 
-        supportActionBar?.title = "$coinName Markets"
+        supportActionBar?.title = getString(R.string.tickerActivityTitle, coinName)
 
         rvCoinTickerList.layoutManager = LinearLayoutManager(this)
 
@@ -84,7 +84,9 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
     }
 
     override fun onPriceTickersLoaded(tickerData: List<CryptoTicker>) {
-        val coinTickerAdapter = CoinTickerAdapter(tickerData, Currency.getInstance(PreferenceHelper.getDefaultCurrency(this)))
+        val coinTickerAdapter = CoinTickerAdapter(tickerData,
+                Currency.getInstance(PreferenceHelper.getDefaultCurrency(this)), resourceProvider)
+
         rvCoinTickerList.adapter = coinTickerAdapter
 
         tvFooter.setOnClickListener {

@@ -7,26 +7,20 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.TRANSACTION_TYPE_SELL
-import kotlinx.android.synthetic.main.coin_transaction_module.view.clFirstTransaction
-import kotlinx.android.synthetic.main.coin_transaction_module.view.clSecondTransaction
-import kotlinx.android.synthetic.main.coin_transaction_module.view.clThirdTransaction
-import kotlinx.android.synthetic.main.coin_transaction_module.view.dividerView
-import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnCost
-import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnTimeAndExchange
-import kotlinx.android.synthetic.main.coin_transaction_module.view.tvFirstTxnTypeAndQuantity
-import kotlinx.android.synthetic.main.coin_transaction_module.view.tvMore
+import kotlinx.android.synthetic.main.coin_transaction_module.view.*
 import timber.log.Timber
-import java.util.Currency
+import java.util.*
 
 /**
  * Created by Pranay Airan
  * A compound layout to see coinSymbol transaction history
  */
-class CoinTransactionHistoryModule : Module() {
+class CoinTransactionHistoryModule(private val resourceProvider: ResourceProvider) : Module() {
 
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
@@ -37,35 +31,55 @@ class CoinTransactionHistoryModule : Module() {
         val coinTransactionList = coinTransactionHistoryModuleData.coinTransactionList
         val currency = Currency.getInstance(PreferenceHelper.getDefaultCurrency(inflatedView.context))
 
-        if (coinTransactionList.size > 0) {
+        var transactionType = resourceProvider.getString(R.string.buy)
+
+        if (coinTransactionList.isNotEmpty()) {
             val coinTransaction = coinTransactionList[0]
-            var transactionType = "Buy"
-            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
+
+            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) {
+                transactionType = resourceProvider.getString(R.string.sell)
+            }
+
+            inflatedView.tvFirstTxnTypeAndQuantity.text = resourceProvider.getString(R.string.transactionTypeWithQuantity,
+                    transactionType, coinTransaction.quantity.toPlainString())
+
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
-            inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
+
+            inflatedView.tvFirstTxnTimeAndExchange.text = resourceProvider.getString(R.string.transactionTimeWithExchange,
+                    formatter.formatTransactionDate(coinTransaction.transactionTime), coinTransaction.exchange)
         } else {
             inflatedView.clFirstTransaction.visibility = View.GONE
         }
 
         if (coinTransactionList.size > 1) {
             val coinTransaction = coinTransactionList[1]
-            var transactionType = "Buy"
-            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
+
+            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) {
+                transactionType = resourceProvider.getString(R.string.sell)
+            }
+
+            inflatedView.tvFirstTxnTypeAndQuantity.text = resourceProvider.getString(R.string.transactionTypeWithQuantity,
+                    transactionType, coinTransaction.quantity.toPlainString())
+
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
-            inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
+            inflatedView.tvFirstTxnTimeAndExchange.text = resourceProvider.getString(R.string.transactionTimeWithExchange,
+                    formatter.formatTransactionDate(coinTransaction.transactionTime), coinTransaction.exchange)
         } else {
             inflatedView.clSecondTransaction.visibility = View.GONE
         }
 
         if (coinTransactionList.size > 2) {
             val coinTransaction = coinTransactionList[2]
-            var transactionType = "Buy"
-            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) transactionType = "Sell"
-            inflatedView.tvFirstTxnTypeAndQuantity.text = "$transactionType (${coinTransaction.quantity})"
+
+            if (coinTransaction.transactionType == TRANSACTION_TYPE_SELL) {
+                transactionType = resourceProvider.getString(R.string.sell)
+            }
+
+            inflatedView.tvFirstTxnTypeAndQuantity.text = resourceProvider.getString(R.string.transactionTypeWithQuantity,
+                    transactionType, coinTransaction.quantity.toPlainString())
             inflatedView.tvFirstTxnCost.text = formatter.formatAmount(coinTransaction.cost, currency, false)
-            inflatedView.tvFirstTxnTimeAndExchange.text = "${formatter.formatTransactionDate(coinTransaction.transactionTime)} via ${coinTransaction.exchange}"
+            inflatedView.tvFirstTxnTimeAndExchange.text = resourceProvider.getString(R.string.transactionTimeWithExchange,
+                    formatter.formatTransactionDate(coinTransaction.transactionTime), coinTransaction.exchange)
         } else {
             inflatedView.clThirdTransaction.visibility = View.GONE
         }

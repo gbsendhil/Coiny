@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.news_item.view.*
 
@@ -17,10 +18,11 @@ Created by Pranay Airan 1/18/18.
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
 
-class NewsListAdapter(private val cryptoPanicNews: CryptoPanicNews) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
+class NewsListAdapter(private val cryptoPanicNews: CryptoPanicNews,
+                      private val resourceProvider: ResourceProvider) : RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {

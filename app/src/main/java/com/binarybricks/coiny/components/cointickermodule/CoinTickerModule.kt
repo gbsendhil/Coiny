@@ -45,7 +45,7 @@ class CoinTickerModule(
     }
 
     private val formatter: Formatters by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     private val cropCircleTransformation by lazy {

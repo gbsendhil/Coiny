@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.stories.coindetails.CoinDetailsActivity
 import com.binarybricks.coiny.utils.CurrencyUtils
+import com.binarybricks.coiny.utils.ResourceProvider
 import kotlinx.android.synthetic.main.top_card_module.view.*
 import timber.log.Timber
 import java.math.BigDecimal
@@ -17,7 +18,8 @@ import java.util.*
  *
  * Simple class wrapping UI for top card
  */
-class TopCardModule(private val toCurrency: String) : Module() {
+class TopCardModule(private val toCurrency: String,
+                    private val resourceProvider: ResourceProvider) : Module() {
 
     private val currency by lazy {
         Currency.getInstance(toCurrency)
@@ -31,12 +33,15 @@ class TopCardModule(private val toCurrency: String) : Module() {
 
         inflatedView.tvPair.text = topCardsModuleData.pair
         inflatedView.tvPrice.text = topCardsModuleData.price
-        inflatedView.tvPriceChange.text = "${("%.2f".format(topCardsModuleData.priceChangePercentage.toDouble()))}%"
-        inflatedView.tvMarketCap.text = "Mkt cap: ${CurrencyUtils.getNaturalTextForDisplay(BigDecimal(topCardsModuleData.marketCap), currency)}"
+        inflatedView.tvPriceChange.text = resourceProvider.getString(R.string.coinDayChanges,
+                topCardsModuleData.priceChangePercentage.toDouble())
+
+        inflatedView.tvMarketCap.text = resourceProvider.getString(R.string.marketCap,
+                CurrencyUtils.getNaturalTextForDisplay(BigDecimal(topCardsModuleData.marketCap), currency))
 
         inflatedView.topCardContainer.setOnClickListener {
             inflatedView.context.startActivity(CoinDetailsActivity.buildLaunchIntent(inflatedView.context,
-                   topCardsModuleData.coinSymbol))
+                    topCardsModuleData.coinSymbol))
         }
 
         try {
@@ -54,10 +59,10 @@ class TopCardModule(private val toCurrency: String) : Module() {
     }
 
     data class TopCardsModuleData(
-        val pair: String,
-        val price: String,
-        val priceChangePercentage: String,
-        val marketCap: String,
-        val coinSymbol: String
+            val pair: String,
+            val price: String,
+            val priceChangePercentage: String,
+            val marketCap: String,
+            val coinSymbol: String
     ) : ModuleItem
 }

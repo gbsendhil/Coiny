@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.binarybricks.coiny.components.ModuleItem
 import com.binarybricks.coiny.components.cryptonewsmodule.CoinNewsModule
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -15,13 +16,14 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinNewsAdapterDelegate(
-    private val coinSymbol: String,
-    private val coinName: String,
-    private val schedulerProvider: BaseSchedulerProvider
+        private val coinSymbol: String,
+        private val coinName: String,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider
 ) : AdapterDelegate<List<ModuleItem>>() {
 
     private val coinNewsModule by lazy {
-        CoinNewsModule(schedulerProvider, coinSymbol, coinName)
+        CoinNewsModule(schedulerProvider, coinSymbol, coinName, resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

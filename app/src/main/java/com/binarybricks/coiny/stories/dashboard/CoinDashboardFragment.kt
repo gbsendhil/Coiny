@@ -22,6 +22,8 @@ import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.util.HashMap
@@ -44,6 +46,10 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         SchedulerProvider.getInstance()
     }
 
+    private val resourceProvider: ResourceProvider by lazy {
+        ResourceProviderImpl(requireContext())
+    }
+
     private val dashboardRepository by lazy {
         DashboardRepository(schedulerProvider, CoinyApplication.database)
     }
@@ -61,7 +67,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         val inflate = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         val toolbar = inflate.toolbar
-        toolbar?.title = "Market"
+        toolbar?.title = getString(R.string.market)
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
@@ -92,7 +98,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         inflatedView.rvDashboard.layoutManager = LinearLayoutManager(context)
 
-        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(context), coinDashboardList, inflatedView.toolbarTitle)
+        coinDashboardAdapter = CoinDashboardAdapter(PreferenceHelper.getDefaultCurrency(context), resourceProvider,
+                coinDashboardList, inflatedView.toolbarTitle)
         inflatedView.rvDashboard.adapter = coinDashboardAdapter
 
         inflatedView.swipeContainer.setOnRefreshListener {

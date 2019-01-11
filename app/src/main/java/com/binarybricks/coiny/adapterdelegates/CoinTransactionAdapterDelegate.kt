@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.CoinTransactionHistoryModule
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -13,9 +14,10 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class CoinTransactionAdapterDelegate : AdapterDelegate<List<ModuleItem>>() {
+class CoinTransactionAdapterDelegate(private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+
     private val coinTransactionHistoryModule by lazy {
-        CoinTransactionHistoryModule()
+        CoinTransactionHistoryModule(resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

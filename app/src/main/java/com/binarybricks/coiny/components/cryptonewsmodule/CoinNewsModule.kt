@@ -13,6 +13,7 @@ import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.newslist.NewsListActivity
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.coin_news_module.view.*
 
@@ -23,7 +24,8 @@ import kotlinx.android.synthetic.main.coin_news_module.view.*
 class CoinNewsModule(
         private val schedulerProvider: BaseSchedulerProvider,
         private val coinSymbol: String,
-        private val coinName: String
+        private val coinName: String,
+        private val resourceProvider: ResourceProvider
 ) : Module(), CryptoNewsContract.View {
 
     private lateinit var inflatedView: View
@@ -38,7 +40,7 @@ class CoinNewsModule(
     }
 
     private val formatters: Formatters by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {

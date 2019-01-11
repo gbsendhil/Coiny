@@ -11,6 +11,7 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.chartAnimationDuration
 import com.binarybricks.coiny.utils.getTotalCost
 import kotlinx.android.synthetic.main.dashboard_header_module.view.*
@@ -21,10 +22,6 @@ import java.math.RoundingMode
 import java.util.Currency
 import java.util.HashMap
 import kotlin.collections.ArrayList
-import kotlin.collections.List
-import kotlin.collections.MutableList
-import kotlin.collections.forEach
-import kotlin.collections.isNotEmpty
 
 /**
  * Created by Pranay Airan
@@ -32,7 +29,9 @@ import kotlin.collections.isNotEmpty
  * Simple class that wraps all logic related to showing header on dashboard
  */
 
-class DashboardHeaderModule(private val toCurrency: String, private val toolbarTitle: TextView) : Module() {
+class DashboardHeaderModule(private val toCurrency: String,
+                            private val toolbarTitle: TextView,
+                            private val resourceProvider: ResourceProvider) : Module() {
 
     private lateinit var inflatedView: View
     private val purchasedCoinList: MutableList<WatchedCoin> = ArrayList()
@@ -42,7 +41,7 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
     }
 
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     private val mc by lazy {
@@ -121,8 +120,8 @@ class DashboardHeaderModule(private val toCurrency: String, private val toolbarT
     }
 
     data class DashboardHeaderModuleData(
-        var watchedCoinList: List<WatchedCoin>,
-        var coinTransactionList: List<CoinTransaction>,
-        var coinPriceListMap: HashMap<String, CoinPrice>
+            var watchedCoinList: List<WatchedCoin>,
+            var coinTransactionList: List<CoinTransaction>,
+            var coinPriceListMap: HashMap<String, CoinPrice>
     ) : ModuleItem
 }

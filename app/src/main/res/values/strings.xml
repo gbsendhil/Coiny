@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">Coiny</string>
 
+    <!-- formatted strings -->
+    <string name="amountWithChangePercentage">%1$s (%2$s%%)</string>
+    <string name="transactionTypeWithQuantity">%1$s (%2$s)</string>
+    <string name="transactionTimeWithExchange">%1$s via %2$s</string>
+    <string name="twoTextWithSpace">%1$s %2$s</string>
+    <string name="transactionCost">This transactions is worth %1$s %2$s</string>
+    <string name="coinPair">%1$s/%2$s</string>
+    <string name="buyPriceHint">Buy Price %1$s</string>
+    <string name="coinDayChanges">%1$.2f%%</string>
+    <string name="marketCap">Mkt cap: %1$s</string>
+    <string name="tickerActivityTitle">%1$s Markets</string>
+    <string name="newsActivityTitle">%1$s News</string>
+
+    <string name="amountMillion">%1$s Million</string>
+    <string name="amountBillion">%1$s Billion</string>
+
     <string name="period_1h">12H</string>
     <string name="period_1day">1D</string>
     <string name="period_1week">1W</string>
@@ -117,4 +133,9 @@
     <string name="deduct_from_usd_holdings">Deduct from USD holdings</string>
     <string name="search">Search</string>
     <string name="average_cost">Average Cost</string>
+    <string name="portfolio_down">▼</string>
+    <string name="portfolio_up">▲</string>
+    <string name="market">Market</string>
+    <string name="discover">Discover</string>
+    <string name="settings">Settings</string>
 </resources>

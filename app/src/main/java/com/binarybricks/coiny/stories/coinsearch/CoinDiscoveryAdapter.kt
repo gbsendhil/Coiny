@@ -6,6 +6,7 @@ import com.binarybricks.coiny.adapterdelegates.CarousalAdapterDelegate
 import com.binarybricks.coiny.adapterdelegates.DiscoveryNewsAdapterDelegate
 import com.binarybricks.coiny.adapterdelegates.LabelCoinAdapterDelegate
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager
 
 /**
@@ -15,8 +16,9 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDiscoveryAdapter(
-    toCurrency: String,
-    var coinDiscoverList: MutableList<ModuleItem>
+        toCurrency: String,
+        resourceProvider: ResourceProvider,
+        var coinDiscoverList: MutableList<ModuleItem>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DISCOVERY_CAROUSAL = 0
@@ -26,8 +28,8 @@ class CoinDiscoveryAdapter(
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
     init {
-        delegates.addDelegate(DISCOVERY_CAROUSAL, CarousalAdapterDelegate(toCurrency))
-        delegates.addDelegate(DISCOVERY_NEWS, DiscoveryNewsAdapterDelegate())
+        delegates.addDelegate(DISCOVERY_CAROUSAL, CarousalAdapterDelegate(toCurrency, resourceProvider))
+        delegates.addDelegate(DISCOVERY_NEWS, DiscoveryNewsAdapterDelegate(resourceProvider))
         delegates.addDelegate(LABEL, LabelCoinAdapterDelegate())
     }
 

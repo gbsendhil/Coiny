@@ -44,7 +44,7 @@ class HistoricalChartModule(
     }
 
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     private val chartRepo by lazy {
@@ -82,15 +82,15 @@ class HistoricalChartModule(
     }
 
     override fun onHistoricalDataLoaded(period: String,
-                                        dataListPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
+                                        historicalDataPair: Pair<List<CryptoCompareHistoricalResponse.Data>, CryptoCompareHistoricalResponse.Data?>
     ) {
 
-        historicalData = dataListPair.first
+        historicalData = historicalDataPair.first
 
-        setupChart(dataListPair)
+        setupChart(historicalDataPair)
 
         if (period != ALL) {
-            showPercentageGainOrLoss(dataListPair.first)
+            showPercentageGainOrLoss(historicalDataPair.first)
         } else {
             inflatedView.tvPortfolioChangedValue.text = ""
             showPositiveGainColor()
@@ -135,7 +135,7 @@ class HistoricalChartModule(
     private fun showPositiveGainColor() {
         inflatedView.tvPortfolioChangedPercentage.setTextColor(resourceProvider.getColor(R.color.colorGain))
         inflatedView.tvPortfolioArrow.setTextColor(resourceProvider.getColor(R.color.colorGain))
-        inflatedView.tvPortfolioArrow.text = "▲"
+        inflatedView.tvPortfolioArrow.text = resourceProvider.getString(R.string.portfolio_up)
 
         inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorGain)
     }
@@ -143,7 +143,7 @@ class HistoricalChartModule(
     private fun showNegativeGainColor() {
         inflatedView.tvPortfolioChangedPercentage.setTextColor(resourceProvider.getColor(R.color.colorLoss))
         inflatedView.tvPortfolioArrow.setTextColor(resourceProvider.getColor(R.color.colorLoss))
-        inflatedView.tvPortfolioArrow.text = "▼"
+        inflatedView.tvPortfolioArrow.text = resourceProvider.getString(R.string.portfolio_down)
 
         inflatedView.historicalChartView.lineColor = resourceProvider.getColor(R.color.colorLoss)
     }

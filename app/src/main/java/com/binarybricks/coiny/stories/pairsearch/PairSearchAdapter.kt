@@ -26,7 +26,8 @@ class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: Strin
     }
 
     override fun onBindViewHolder(viewHolder: ResultViewHolder, position: Int) {
-        viewHolder.tvSearchItemName.text = "${coinSymbol.toUpperCase()}/${filterSearchList[position]}"
+        viewHolder.tvSearchItemName.text = viewHolder.tvSearchItemName.context.getString(R.string.coinPair
+                , coinSymbol.toUpperCase(), filterSearchList[position])
     }
 
     override fun getItemCount(): Int {
@@ -47,11 +48,11 @@ class PairSearchAdapter(val searchList: ArrayList<String>, val coinSymbol: Strin
                 val filteredList = ArrayList<String>(count)
 
                 (0 until count)
-                    .filter {
-                        // Filter on the name
-                        list[it].contains(filterString, true)
-                    }
-                    .mapTo(filteredList) { list[it] }
+                        .filter {
+                            // Filter on the name
+                            list[it].contains(filterString, true)
+                        }
+                        .mapTo(filteredList) { list[it] }
 
                 results.values = filteredList
                 results.count = filteredList.size

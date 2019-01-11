@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DashboardCoinModule
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -14,9 +15,11 @@ import kotlinx.android.extensions.LayoutContainer
  * Adapter delegate that takes care of coin row in dashboard.
  */
 
-class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
+class DashboardCoinAdapterDelegate(private val toCurrency: String,
+                                   private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
+
     private val dashboardCoinModule by lazy {
-        DashboardCoinModule(toCurrency)
+        DashboardCoinModule(toCurrency, resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

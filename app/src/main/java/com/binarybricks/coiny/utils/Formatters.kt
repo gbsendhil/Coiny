@@ -1,6 +1,7 @@
 package com.binarybricks.coiny.utils
 
 import android.text.format.DateFormat
+import com.binarybricks.coiny.R
 import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
@@ -8,10 +9,7 @@ import java.math.RoundingMode
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Currency
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 /**
 Created by Pranay Airan 1/13/18.
@@ -21,7 +19,7 @@ Created by Pranay Airan 1/13/18.
  * Use to format quantity that we get it from api
  */
 
-class Formatters {
+class Formatters(private val resourceProvider: ResourceProvider) {
 
     private val million = BigDecimal(1000000)
     private val thousand = BigDecimal(1000)
@@ -61,7 +59,7 @@ class Formatters {
 
     // this is ISO 8601 format for api
     private val simpleDateFormatIso: SimpleDateFormat by lazy {
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
     }
 
     // formats the quantity based on the currency code
@@ -79,25 +77,25 @@ class Formatters {
         } else {
             val remainder = amountNumber.divide(million, mathContext) // divide this number by million
             if (remainder <= thousand) {
-                "${formatter.format(remainder)} Million"
+                resourceProvider.getString(R.string.amountMillion, formatter.format(remainder))
             } else {
-                "${formatter.format(remainder.divide(thousand, mathContext))} Billion"
+                resourceProvider.getString(R.string.amountBillion, formatter.format(remainder.divide(thousand, mathContext)))
             }
         }
     }
 
-    fun formatNumber(number: Int): String? {
+    fun formatNumber(num: Int): String? {
 
-        val number = BigDecimal(number)
+        val number = BigDecimal(num)
 
         return if (number < million) {
             formatterNumber.format(number)
         } else {
             val remainder = number.divide(million, mathContext) // divide this number by million
             if (remainder <= thousand) {
-                "${formatterNumber.format(remainder)} Million"
+                resourceProvider.getString(R.string.amountMillion, formatter.format(remainder))
             } else {
-                "${formatterNumber.format(remainder.divide(thousand, mathContext))} Billion"
+                resourceProvider.getString(R.string.amountBillion, formatter.format(remainder.divide(thousand, mathContext)))
             }
         }
     }

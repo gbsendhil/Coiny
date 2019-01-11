@@ -43,11 +43,11 @@ class CoinAdapter(
         delegates.addDelegate(ADD_COIN, AddCoinAdapterDelegate())
         delegates.addDelegate(COIN_POSITION, CoinPositionAdapterDelegate(resourceProvider))
         delegates.addDelegate(COIN_INFO, CoinInfoAdapterDelegate())
-        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider))
+        delegates.addDelegate(COIN_NEWS, CoinNewsAdapterDelegate(fromCurrency, coinName, schedulerProvider, resourceProvider))
         delegates.addDelegate(COIN_TICKER, CoinTickerAdapterDelegate(coinName, schedulerProvider, coinyDatabase, resourceProvider))
-        delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate())
+        delegates.addDelegate(COIN_STATS, CoinStatsAdapterDelegate(resourceProvider))
         delegates.addDelegate(ABOUT_COIN, AboutCoinAdapterDelegate())
-        delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate())
+        delegates.addDelegate(COINT_TRANSACTION, CoinTransactionAdapterDelegate(resourceProvider))
         delegates.addDelegate(FOOTER, GenericFooterAdapterDelegate())
     }
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.CarousalModule
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -13,10 +14,11 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class CarousalAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<ModuleItem>>() {
+class CarousalAdapterDelegate(private val toCurrency: String,
+                              private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
 
     private val carousalModule by lazy {
-        CarousalModule(toCurrency)
+        CarousalModule(toCurrency, resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
@@ -35,12 +37,11 @@ class CarousalAdapterDelegate(private val toCurrency: String) : AdapterDelegate<
     }
 
     class CarousalModuleViewHolder(
-        override val containerView: View,
-        private val carousalModule: CarousalModule,
-        private val layoutInflater: LayoutInflater,
-        private val parent: ViewGroup?
-    )
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+            override val containerView: View,
+            private val carousalModule: CarousalModule,
+            private val layoutInflater: LayoutInflater,
+            private val parent: ViewGroup?
+    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun loadCarousalData(carousalModuleData: CarousalModule.CarousalModuleData) {
             carousalModule.addCarousalModule(layoutInflater, parent, itemView, carousalModuleData)

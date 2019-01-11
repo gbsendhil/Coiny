@@ -14,6 +14,8 @@ import com.binarybricks.coiny.components.cryptonewsmodule.CryptoNewsPresenter
 import com.binarybricks.coiny.components.cryptonewsmodule.CryptoNewsRepository
 import com.binarybricks.coiny.network.models.CryptoPanicNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.binarybricks.coiny.utils.ResourceProvider
+import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.openCustomTab
 import kotlinx.android.synthetic.main.activity_news_list.*
 
@@ -47,6 +49,10 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
         CryptoNewsPresenter(schedulerProvider, cryptoNewsRepository)
     }
 
+    private val resourceProvider: ResourceProvider by lazy {
+        ResourceProviderImpl(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_list)
@@ -58,7 +64,7 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
         val coinFullName = intent.getStringExtra(COIN_FULL_NAME).trim()
         val coinSymbol = intent.getStringExtra(COIN_SYMBOL).trim()
 
-        supportActionBar?.title = "$coinFullName News"
+        supportActionBar?.title = getString(R.string.newsActivityTitle, coinFullName)
 
         rvNewsList.layoutManager = LinearLayoutManager(this)
 
@@ -78,7 +84,7 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
     }
 
     override fun onNewsLoaded(cryptoPanicNews: CryptoPanicNews) {
-        val newsListAdapter = NewsListAdapter(cryptoPanicNews)
+        val newsListAdapter = NewsListAdapter(cryptoPanicNews, resourceProvider)
         rvNewsList.adapter = newsListAdapter
 
         tvFooter.setOnClickListener {

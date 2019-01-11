@@ -23,6 +23,7 @@ import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.exchangesearch.ExchangeSearchActivity
 import com.binarybricks.coiny.stories.pairsearch.PairSearchActivity
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
 import com.binarybricks.coiny.utils.dismissKeyboard
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -45,8 +46,11 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         Calendar.getInstance()
     }
 
+    private val resourceProvider by lazy {
+        ResourceProviderImpl(this)
+    }
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     private val schedulerProvider: SchedulerProvider by lazy {
@@ -216,10 +220,10 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
                 // cal cost
                 cost = buyPriceInHomeCurrency.multiply(BigDecimal(etAmount.text.toString()), mc)
-                tvTotalAmountInCurrencyLabel.text = "This transactions is worth $cost ${defaultCurrency.toUpperCase()}"
+                tvTotalAmountInCurrencyLabel.text = getString(R.string.transactionCost, cost, defaultCurrency.toUpperCase())
             } else {
                 cost = buyPrice.multiply(BigDecimal(etAmount.text.toString()), mc)
-                tvTotalAmountInCurrencyLabel.text = "This transactions is worth $cost $pairName"
+                tvTotalAmountInCurrencyLabel.text = getString(R.string.transactionCost, cost, pairName)
             }
         }
     }
@@ -303,13 +307,14 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
                     tvPairLabel.visibility = View.VISIBLE
 
                     if (coin != null) {
-                        tvPair.text = coin?.symbol + "/" + pairName.toUpperCase()
+                        tvPair.text = getString(R.string.coinPair,
+                                coin?.symbol, pairName.toUpperCase())
 
                         getCoinPrice()
                     }
 
-                    tvBuyPriceLabel.text = "Buy Price " + pairName
-                    etBuyPrice.hint = "Buy Price " + pairName
+                    tvBuyPriceLabel.text = getString(R.string.buyPriceHint, pairName)
+                    etBuyPrice.hint = getString(R.string.buyPriceHint, pairName)
                     etAmount.setText("")
                     tvTotalAmountInCurrencyLabel.text = ""
                 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.binarybricks.coiny.components.DashboardHeaderModule
 import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 
@@ -14,10 +15,12 @@ import kotlinx.android.extensions.LayoutContainer
  * Created by Pranay Airan
  */
 
-class DashboardHeaderAdapterDelegate(private val toCurrency: String, private val toolbarTitle: TextView) : AdapterDelegate<List<ModuleItem>>() {
+class DashboardHeaderAdapterDelegate(private val toCurrency: String,
+                                     private val toolbarTitle: TextView,
+                                     private val resourceProvider: ResourceProvider) : AdapterDelegate<List<ModuleItem>>() {
 
     private val dashboardHeaderModule by lazy {
-        DashboardHeaderModule(toCurrency, toolbarTitle)
+        DashboardHeaderModule(toCurrency, toolbarTitle, resourceProvider)
     }
 
     override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {

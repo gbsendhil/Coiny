@@ -7,16 +7,10 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvAvgMarketCapAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvAvgVolumeAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvChangeTodayAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvOpenAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvSupplyNumber
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvTodayLowAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvTodaysHighAmount
-import kotlinx.android.synthetic.main.coin_statistic_module.view.tvVolumeQuantity
+import com.binarybricks.coiny.utils.ResourceProvider
+import kotlinx.android.synthetic.main.coin_statistic_module.view.*
 import timber.log.Timber
-import java.util.Currency
+import java.util.*
 
 /**
  * Created by Pragya Agrawal
@@ -24,10 +18,10 @@ import java.util.Currency
  * Simple class that wraps all logic related to Coin stats
  */
 
-class CoinStatsticsModule : Module() {
+class CoinStatsticsModule(private val resourceProvider: ResourceProvider) : Module() {
 
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
@@ -55,8 +49,8 @@ class CoinStatsticsModule : Module() {
         inflatedView.tvAvgMarketCapAmount.text = formatter.formatAmount(coinPrice.marketCap
                 ?: "0", currency, false)
 
-        inflatedView.tvSupplyNumber.text = "${formatter.formatNumber(coinPrice.supply
-                ?: 0)} ${coinPrice.fromSymbol}"
+        inflatedView.tvSupplyNumber.text = resourceProvider.getString(R.string.twoTextWithSpace,
+                formatter.formatNumber(coinPrice.supply ?: 0), coinPrice.fromSymbol)
     }
 
     override fun cleanUp() {

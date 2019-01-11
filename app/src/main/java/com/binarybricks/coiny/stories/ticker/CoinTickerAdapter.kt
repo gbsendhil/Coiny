@@ -10,6 +10,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.getUrlWithoutParameters
 import com.binarybricks.coiny.utils.openCustomTab
 import com.squareup.picasso.Picasso
@@ -23,10 +24,11 @@ Created by Pranay Airan 1/18/18.
  * based on http://hannesdorfmann.com/android/adapter-delegates
  */
 
-class CoinTickerAdapter(private val tickerData: List<CryptoTicker>, val currency: Currency) : RecyclerView.Adapter<CoinTickerAdapter.NewsViewHolder>() {
+class CoinTickerAdapter(private val tickerData: List<CryptoTicker>,
+                        val currency: Currency, private val resourceProvider: ResourceProvider) : RecyclerView.Adapter<CoinTickerAdapter.NewsViewHolder>() {
 
     private val formatter: Formatters by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
     private val cropCircleTransformation by lazy {
@@ -45,13 +47,13 @@ class CoinTickerAdapter(private val tickerData: List<CryptoTicker>, val currency
         viewHolder.tvPrice?.text = formatter.formatAmount(tickerData[position].last, currency, true)
         viewHolder.tvExchange?.text = tickerData[position].marketName
         viewHolder.tvVolume?.text = formatter.formatAmount(tickerData[position].convertedVolumeUSD, currency, true)
-        Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + "${tickerData[position].imageUrl}").error(R.mipmap.ic_launcher_round)
+        Picasso.get().load(BASE_CRYPTOCOMPARE_IMAGE_URL + tickerData[position].imageUrl).error(R.mipmap.ic_launcher_round)
                 .transform(cropCircleTransformation)
                 .into(viewHolder.ivExchange)
         viewHolder.clMarket?.setOnClickListener {
             if (tickerData[position].exchangeUrl.isNotBlank()) {
-                viewHolder.clMarket?.context?.let {
-                    openCustomTab(getUrlWithoutParameters(tickerData[position].exchangeUrl), it)
+                viewHolder.clMarket?.context?.let { context ->
+                    openCustomTab(getUrlWithoutParameters(tickerData[position].exchangeUrl), context)
                 }
             }
         }
