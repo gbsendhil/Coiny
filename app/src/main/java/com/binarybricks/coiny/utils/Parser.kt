@@ -98,7 +98,7 @@ fun getTopPairsFromJson(jsonObject: JsonObject): ArrayList<CoinPair> {
 }
 
 fun getCoinsFromJson(jsonObject: JsonObject): ArrayList<CCCoin> {
-    val CCCoinList: ArrayList<CCCoin> = ArrayList()
+    val ccCoinList: ArrayList<CCCoin> = ArrayList()
 
     if (jsonObject.has(DATA)) {
         val rawCoinObject = jsonObject.getAsJsonObject(DATA)
@@ -106,11 +106,11 @@ fun getCoinsFromJson(jsonObject: JsonObject): ArrayList<CCCoin> {
         coins.forEach { coinName ->
             val toCurrencies = rawCoinObject.getAsJsonObject(coinName)
             val coin = Gson().fromJson(toCurrencies, CCCoin::class.java)
-            CCCoinList.add(coin)
+            ccCoinList.add(coin)
         }
     }
 
-    return CCCoinList
+    return ccCoinList
 }
 
 fun getExchangeListFromJson(jsonObject: JsonObject): HashMap<String, MutableList<ExchangePair>> {

@@ -16,14 +16,16 @@ Created by Pranay Airan 1/18/18.
  */
 
 class CoinDiscoveryAdapter(
-    toCurrency: String,
-    resourceProvider: ResourceProvider,
-    var coinDiscoverList: MutableList<ModuleItem>
+        toCurrency: String,
+        resourceProvider: ResourceProvider,
+        var coinDiscoverList: MutableList<ModuleItem>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val DISCOVERY_CAROUSAL = 0
-    private val DISCOVERY_NEWS = 1
-    private val LABEL = 2
+    companion object {
+        private const val DISCOVERY_CAROUSAL = 0
+        private const val DISCOVERY_NEWS = 1
+        private const val LABEL = 2
+    }
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 

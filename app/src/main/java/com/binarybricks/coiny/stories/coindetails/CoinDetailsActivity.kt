@@ -55,6 +55,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
 
         val toolbar = findViewById<View>(R.id.toolbar)
         setSupportActionBar(toolbar as Toolbar?)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         toolbar.elevation = 0f

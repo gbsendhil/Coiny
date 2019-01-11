@@ -21,14 +21,16 @@ class CoinDashboardAdapter(
     toolbarTitle: TextView
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val DASHBOARD_COIN_List_HEADER = 0
-    private val DASHBOARD_COIN = 1
-    private val DASHBOARD_EMPTY_CARD = 2
-    private val DASHBOARD_HEADER = 3
-    private val DASHBOARD_FOOTER = 4
-    private val DASHBOARD_TOP_CAROUSAL = 5
-    private val DASHBOARD_News = 6
-    private val DASHBOARD_Add_New = 7
+    companion object {
+        private const val DASHBOARD_COIN_List_HEADER = 0
+        private const val DASHBOARD_COIN = 1
+        private const val DASHBOARD_EMPTY_CARD = 2
+        private const val DASHBOARD_HEADER = 3
+        private const val DASHBOARD_FOOTER = 4
+        private const val DASHBOARD_TOP_CAROUSAL = 5
+        private const val DASHBOARD_News = 6
+        private const val DASHBOARD_Add_New = 7
+    }
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 

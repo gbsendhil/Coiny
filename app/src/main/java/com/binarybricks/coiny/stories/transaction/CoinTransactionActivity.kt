@@ -36,9 +36,6 @@ import java.util.*
 
 class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private val EXCHANGE_REQUEST = 100
-    private val PAIR_REQUEST = 101
-
     private var exchangeName = ""
     private var pairName = ""
 
@@ -84,6 +81,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
     companion object {
         private const val COIN = "COIN"
+        private const val EXCHANGE_REQUEST = 100
+        private const val PAIR_REQUEST = 101
 
         @JvmStatic
         fun buildLaunchIntent(context: Context, coin: Coin): Intent {

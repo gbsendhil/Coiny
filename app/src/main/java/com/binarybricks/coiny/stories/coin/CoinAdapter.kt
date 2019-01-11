@@ -25,16 +25,18 @@ class CoinAdapter(
     resourceProvider: ResourceProvider
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val HISTORICAL_CHART = 0
-    private val ADD_COIN = 1
-    private val COIN_POSITION = 2
-    private val COIN_INFO = 3
-    private val COIN_NEWS = 4
-    private val COIN_STATS = 5
-    private val ABOUT_COIN = 6
-    private val COINT_TRANSACTION = 7
-    private val FOOTER = 8
-    private val COIN_TICKER = 9
+    companion object {
+        private const val HISTORICAL_CHART = 0
+        private const val ADD_COIN = 1
+        private const val COIN_POSITION = 2
+        private const val COIN_INFO = 3
+        private const val COIN_NEWS = 4
+        private const val COIN_STATS = 5
+        private const val ABOUT_COIN = 6
+        private const val COINT_TRANSACTION = 7
+        private const val FOOTER = 8
+        private const val COIN_TICKER = 9
+    }
 
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 

@@ -16,11 +16,11 @@ Created by Pranay Airan
 
 class CoinyApplication : Application() {
 
-    private val DATABASE_NAME = "coiny.db"
-
     companion object {
-        private lateinit var appContext: Context
 
+        private const val DATABASE_NAME = "coiny.db"
+
+        private lateinit var appContext: Context
         var database: CoinyDatabase? = null
 
         @JvmStatic

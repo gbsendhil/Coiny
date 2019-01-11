@@ -15,18 +15,6 @@
 
     </style>
 
-
-    <style name="ButtonSecondarySelected" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">@drawable/button_secondary_back</item>
-    </style>
-
-    <style name="ButtonSecondaryUnSelected" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:background">@drawable/button_back_unselected</item>
-    </style>
-
-
     <style name="DisplayNumberHuge" parent="TextAppearance.AppCompat.Display1">
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
@@ -43,10 +31,6 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
-    <style name="TextRegular" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
     <style name="TextRegularSecondary" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
@@ -60,32 +44,12 @@
     </style>
 
 
-    <style name="TextSubHead" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
     <style name="TextSubHeadSecondary" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
 
-    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
     <style name="TextSmallSecondary" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-
-
-    <style name="TextInputLabel" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/secondaryTextColor</item>
-        <!-- Hint color and label color in FALSE state -->
-        <item name="android:textColorHint">@color/secondaryTextColor</item>
-    </style>
-
-    <style name="CoinTransaction" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
 

@@ -23,7 +23,7 @@ class AboutCoinModule : Module() {
 
     fun showAboutCoinText(inflatedView: View, aboutCoinModuleData: AboutCoinModuleData) {
 
-        inflatedView.tvAboutCoin.text = getCleanedUpDescription(aboutCoinModuleData.coin.description) ?: inflatedView.context.getString(R.string.info_unavilable)
+        inflatedView.tvAboutCoin.text = getCleanedUpDescription(aboutCoinModuleData.coin.description) ?: inflatedView.context.getString(R.string.info_unavailable)
 
         aboutCoinModuleData.coin.website?.let { url ->
             inflatedView.tvWebsiteValue.text = getCleanUrl(url)
