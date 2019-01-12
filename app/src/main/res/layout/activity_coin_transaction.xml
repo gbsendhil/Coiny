@@ -90,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/tvExchangeLabel"
-                    style="@style/TextSmallSecondary"
+                    style="@style/CoinyText.TitleAlternate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/generic4dp"
@@ -149,7 +149,7 @@
 
                 <TextView
                     android:id="@+id/tvPairLabel"
-                    style="@style/TextSmallSecondary"
+                    style="@style/CoinyText.TitleAlternate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/generic4dp"
@@ -209,7 +209,7 @@
 
                 <TextView
                     android:id="@+id/tvDatetimeLabel"
-                    style="@style/TextSmallSecondary"
+                    style="@style/CoinyText.TitleAlternate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/generic4dp"
@@ -257,7 +257,7 @@
 
                 <TextView
                     android:id="@+id/tvBuyPriceLabel"
-                    style="@style/TextSmallSecondary"
+                    style="@style/CoinyText.TitleAlternate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@id/etBuyPrice"
@@ -310,7 +310,7 @@
 
                 <TextView
                     android:id="@+id/tvBuyAmountLabel"
-                    style="@style/TextSmallSecondary"
+                    style="@style/CoinyText.TitleAlternate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:labelFor="@id/etBuyPrice"

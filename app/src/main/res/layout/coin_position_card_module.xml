@@ -48,7 +48,7 @@
 
             <TextView
                 android:id="@+id/tvCoinLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -70,7 +70,7 @@
 
             <TextView
                 android:id="@+id/tvVolumeLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -91,7 +91,7 @@
 
             <TextView
                 android:id="@+id/tvAvgCostLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"
@@ -113,7 +113,7 @@
 
             <TextView
                 android:id="@+id/tvTotalReturnLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/generic16dp"

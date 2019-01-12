@@ -117,7 +117,7 @@
 
     <TextView
         android:id="@+id/tvProfitLossLabel"
-        style="@style/TextSmallSecondary"
+        style="@style/CoinyText.TitleAlternate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic4dp"

@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/tvOpenLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/tvTodaysHighLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -79,7 +79,7 @@
 
         <TextView
             android:id="@+id/tvTodayLowLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -99,7 +99,7 @@
 
         <TextView
             android:id="@+id/tvChangeTodayLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -126,7 +126,7 @@
 
         <TextView
             android:id="@+id/tvVolumeLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -148,7 +148,7 @@
 
         <TextView
             android:id="@+id/tvAvgVolumeLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -170,7 +170,7 @@
 
         <TextView
             android:id="@+id/tvAvgMarketCapLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"
@@ -191,7 +191,7 @@
 
         <TextView
             android:id="@+id/tvSupplyLabel"
-            style="@style/TextSmallSecondary"
+            style="@style/CoinyText.TitleAlternate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic4dp"

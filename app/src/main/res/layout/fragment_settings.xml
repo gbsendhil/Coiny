@@ -53,7 +53,7 @@
 
                     <TextView
                         android:id="@+id/tvCurrencyLabel"
-                        style="@style/TextSmallSecondary"
+                        style="@style/CoinyText.TitleAlternate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/currency"
@@ -273,7 +273,7 @@
 
                     <TextView
                         android:id="@+id/tvAppVersionLabel"
-                        style="@style/TextSmallSecondary"
+                        style="@style/CoinyText.TitleAlternate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_version"

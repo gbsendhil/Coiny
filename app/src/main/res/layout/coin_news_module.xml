@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/tvFirstArticleTime"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic4dp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tvSecondArticleTime"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic4dp"
@@ -114,7 +114,7 @@
 
             <TextView
                 android:id="@+id/tvThirdArticleTime"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic4dp"
