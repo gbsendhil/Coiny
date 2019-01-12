@@ -42,7 +42,7 @@
 
                 <RadioButton
                     android:id="@+id/rbBuy"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/generic16dp"
@@ -55,7 +55,7 @@
 
                 <RadioButton
                     android:id="@+id/rbSell"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorPrimaryDusk"
@@ -104,7 +104,7 @@
 
                 <TextView
                     android:id="@+id/tvExchange"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/exchange"
@@ -113,7 +113,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvExchangeLabel" />
 
                 <TextView
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/arrow"
@@ -163,7 +163,7 @@
 
                 <TextView
                     android:id="@+id/tvPair"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/trading_pair"
@@ -173,7 +173,7 @@
 
                 <TextView
                     android:id="@+id/tvArrow"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/arrow"
@@ -223,7 +223,7 @@
 
                 <TextView
                     android:id="@+id/tvDatetime"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/date_time"
@@ -272,7 +272,7 @@
 
                 <EditText
                     android:id="@+id/etBuyPrice"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -325,7 +325,7 @@
 
                 <EditText
                     android:id="@+id/etAmount"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -378,7 +378,7 @@
 
                 <TextView
                     android:id="@+id/tvDeductionLabel"
-                    style="@style/DisplayNumberMedium"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/deduct_from_usd_holdings"

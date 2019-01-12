@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tvPortfolioValue"
-        style="@style/DisplayNumberHuge"
+        style="@style/CoinyText.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="0"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/tvPortfolioChangedValue"
-        style="@style/DisplayNumberTitle"
+        style="@style/CoinyText.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/generic8dp"

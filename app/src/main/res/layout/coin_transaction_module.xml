@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/tvAboutCoinLabel"
-        style="@style/TextRegularSecondary"
+        style="@style/CoinyText.Body1Alternate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/generic8dp"
@@ -62,7 +62,7 @@
 
                 <TextView
                     android:id="@+id/tvFirstTxnCost"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="0"
@@ -106,7 +106,7 @@
 
                 <TextView
                     android:id="@+id/tvSecondTxnCost"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="0"
@@ -150,7 +150,7 @@
 
                 <TextView
                     android:id="@+id/tvThirdTxnCost"
-                    style="@style/DisplayNumberLarge"
+                    style="@style/CoinyText.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="0"

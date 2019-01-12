@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tvSearchItemName"
-        style="@style/DisplayNumberMedium"
+        style="@style/CoinyText.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exchange"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        style="@style/DisplayNumberLarge"
+        style="@style/CoinyText.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/arrow"

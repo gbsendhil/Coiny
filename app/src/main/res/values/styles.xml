@@ -15,31 +15,6 @@
 
     </style>
 
-    <style name="DisplayNumberHuge" parent="TextAppearance.AppCompat.Display1">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
-    <style name="DisplayNumberLarge" parent="TextAppearance.AppCompat.Large">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
-    <style name="DisplayNumberMedium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
-    <style name="DisplayNumberTitle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@color/primaryTextColor</item>
-    </style>
-
-    <style name="TextRegularSecondary" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-
-
-    <style name="SearchSwitchTheme">
-        <item name="colorControlActivated">@color/switchColor</item>
-    </style>
-
     <!--- coiny text style -->
 
     <style name="CoinyText" parent="Base.TextAppearance.AppCompat.Caption">
@@ -109,7 +84,16 @@
 
     <style name="CoinyText.Big" parent="CoinyText">
         <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="CoinyText.Huge" parent="CoinyText">
+        <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textSize">42sp</item>
+    </style>
+
+    <style name="SearchSwitchTheme">
+        <item name="colorControlActivated">@color/switchColor</item>
     </style>
 
 </resources>

@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/tvCoinName"
-            style="@style/DisplayNumberMedium"
+            style="@style/CoinyText.Body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/generic16dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tvCoinPercentChange"
-            style="@style/TextRegularSecondary"
+            style="@style/CoinyText.Body1Alternate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/generic16dp"
