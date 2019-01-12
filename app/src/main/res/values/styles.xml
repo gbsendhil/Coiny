@@ -39,16 +39,6 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
-    <style name="TextTitleSecondary" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-
-
-    <style name="TextSubHeadSecondary" parent="TextAppearance.AppCompat.Subhead">
-        <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-
-
     <style name="SearchSwitchTheme">
         <item name="colorControlActivated">@color/switchColor</item>
     </style>

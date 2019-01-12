@@ -350,7 +350,7 @@
 
             <TextView
                 android:id="@+id/tvAdditionalOptionLabel"
-                style="@style/TextSubHeadSecondary"
+                style="@style/CoinyText.Body1Alternate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic4dp"
@@ -398,7 +398,7 @@
 
             <TextView
                 android:id="@+id/tvTotalAmountInCurrencyLabel"
-                style="@style/TextSubHeadSecondary"
+                style="@style/CoinyText.Body1Alternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic8dp"
