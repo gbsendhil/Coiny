@@ -1,6 +1,7 @@
 package com.binarybricks.coiny.stories.coindetails
 
 import CoinDetailsPagerContract
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_coin_details.*
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
 
     private var watchedCoin: WatchedCoin? = null
+    var isCoinInfoChanged = false
 
     private val schedulerProvider: SchedulerProvider by lazy {
         SchedulerProvider.instance
@@ -66,7 +69,8 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
     override fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?) {
 
-        supportActionBar?.title = watchedCoin?.coin?.coinName
+        supportActionBar?.title = getString(R.string.transactionTypeWithQuantity,
+                watchedCoin?.coin?.coinName, watchedCoin?.coin?.symbol)
 
         val allCoinsPagerAdapter = CoinDetailsPagerAdapter(watchedCoinList, supportFragmentManager)
         vpCoins.adapter = allCoinsPagerAdapter
@@ -102,5 +106,24 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         } else {
             pbLoading.visibility = View.GONE
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (isCoinInfoChanged) {
+            setResult(Activity.RESULT_OK)
+        }
+
+        finish()
     }
 }

@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.components.cryptonewsmodule
 
 import CryptoNewsContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import timber.log.Timber
@@ -13,7 +10,7 @@ import timber.log.Timber
  */
 
 class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider, private val cryptoNewsRepository: CryptoNewsRepository)
-    : BasePresenter<CryptoNewsContract.View>(), CryptoNewsContract.Presenter, LifecycleObserver {
+    : BasePresenter<CryptoNewsContract.View>(), CryptoNewsContract.Presenter {
 
     /**
      * Load the crypto news from the crypto panic api
@@ -26,11 +23,5 @@ class CryptoNewsPresenter(private val schedulerProvider: BaseSchedulerProvider, 
                 .observeOn(schedulerProvider.ui())
                 .doAfterTerminate { currentView?.showOrHideLoadingIndicator(false) }
                 .subscribe({ currentView?.onNewsLoaded(it) }, { Timber.e(it.localizedMessage) }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

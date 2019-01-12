@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.coinsearch
 
 import CoinDiscoveryContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import com.binarybricks.coiny.stories.CryptoCompareRepository
@@ -14,10 +11,10 @@ Created by Pranay Airan
  */
 
 class CoinDiscoveryPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDiscoveryContract.View>(),
-        CoinDiscoveryContract.Presenter, LifecycleObserver {
+        CoinDiscoveryContract.Presenter {
 
     override fun getTopCoinListByMarketCap(toCurrencySymbol: String) {
         compositeDisposable.add(coinRepo.getTopCoinsByTotalVolume(toCurrencySymbol)
@@ -53,11 +50,5 @@ class CoinDiscoveryPresenter(
                     Timber.e(it.localizedMessage)
                 })
         )
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

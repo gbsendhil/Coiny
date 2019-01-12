@@ -17,7 +17,7 @@ class CoinSearchPresenter(
     private val schedulerProvider: BaseSchedulerProvider,
     private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinSearchContract.View>(),
-        CoinSearchContract.Presenter, LifecycleObserver {
+        CoinSearchContract.Presenter {
 
     override fun loadAllCoins() {
         currentView?.showOrHideLoadingIndicator(true)
@@ -44,11 +44,5 @@ class CoinSearchPresenter(
                     Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

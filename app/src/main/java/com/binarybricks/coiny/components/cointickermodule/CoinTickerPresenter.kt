@@ -18,7 +18,7 @@ class CoinTickerPresenter(
     private val schedulerProvider: BaseSchedulerProvider,
     private val coinTickerRepository: CoinTickerRepository,
     private val resourceProvider: ResourceProvider
-) : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter, LifecycleObserver {
+) : BasePresenter<CoinTickerContract.View>(), CoinTickerContract.Presenter {
 
     /**
      * Load the crypto ticker from the crypto panic api
@@ -40,11 +40,5 @@ class CoinTickerPresenter(
                     Timber.e(it.localizedMessage)
                     currentView?.onNetworkError(resourceProvider.getString(R.string.error_ticker))
                 }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.coin
 
 import CoinContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
@@ -15,9 +12,9 @@ Created by Pranay Airan
  */
 
 class CoinPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
-) : BasePresenter<CoinContract.View>(), CoinContract.Presenter, LifecycleObserver {
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<CoinContract.View>(), CoinContract.Presenter {
 
     /**
      * Get the current price of a coinSymbol say btc or eth
@@ -52,11 +49,5 @@ class CoinPresenter(
                     Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

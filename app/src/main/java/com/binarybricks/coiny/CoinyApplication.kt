@@ -7,6 +7,7 @@ import android.util.Log
 import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.squareup.leakcanary.LeakCanary
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -31,6 +32,13 @@ class CoinyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this)
 
         appContext = applicationContext
 

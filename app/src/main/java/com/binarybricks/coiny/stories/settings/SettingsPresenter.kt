@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.settings
 
 import SettingsContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.getCoinFromCCCoin
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
@@ -17,10 +14,9 @@ Created by Pranay Airan
  */
 
 class SettingsPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
-) : BasePresenter<SettingsContract.View>(),
-        SettingsContract.Presenter, LifecycleObserver {
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<SettingsContract.View>(), SettingsContract.Presenter {
 
     override fun refreshCoinList(defaultCurrency: String) {
         compositeDisposable.add(coinRepo.getAllCoinsFromAPI()
@@ -56,11 +52,5 @@ class SettingsPresenter(
                     Timber.e(it.localizedMessage)
                     currentView?.onNetworkError(it.localizedMessage)
                 }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

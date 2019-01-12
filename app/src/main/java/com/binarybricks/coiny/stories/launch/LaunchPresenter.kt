@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.launch
 
 import LaunchContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.models.CCCoin
 import com.binarybricks.coiny.network.models.CoinInfo
@@ -20,9 +17,9 @@ Created by Pranay Airan
  */
 
 class LaunchPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
-) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter, LifecycleObserver {
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<LaunchContract.View>(), LaunchContract.Presenter {
 
     private var coinList: ArrayList<CCCoin>? = null
     private var coinInfoMap: Map<String, CoinInfo>? = null
@@ -78,11 +75,5 @@ class LaunchPresenter(
                     Timber.e(it.localizedMessage)
                 }
                 ))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

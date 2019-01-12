@@ -21,6 +21,7 @@ import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.network.models.CryptoCompareNews
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
+import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
@@ -34,6 +35,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     companion object {
         const val TAG = "CoinDashboardFragment"
         private const val COIN_SEARCH_CODE = 100
+        private const val COIN_DETAILS_CODE = 101
     }
 
     private var coinDashboardList: MutableList<ModuleItem> = ArrayList()
@@ -128,7 +130,13 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         // coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
         watchedCoinList.forEach { watchedCoin ->
-            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null, coinTransactionList))
+            coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null,
+                    coinTransactionList, object : DashboardCoinModule.OnCoinItemClickListener {
+                override fun onCoinClicked(watchedCoin: WatchedCoin) {
+                    startActivityForResult(CoinDetailsPagerActivity.buildLaunchIntent(requireContext(), watchedCoin)
+                            , COIN_DETAILS_CODE)
+                }
+            }))
         }
 
         coinDashboardList.add(DashboardAddNewCoinModule.DashboardAddNewCoinModuleData(object : DashboardAddNewCoinModule.OnAddItemClickListener {
@@ -212,7 +220,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (COIN_SEARCH_CODE == requestCode) {
+        if (COIN_SEARCH_CODE == requestCode || COIN_DETAILS_CODE == requestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 coinDashboardPresenter.loadWatchedCoinsAndTransactions()
             }

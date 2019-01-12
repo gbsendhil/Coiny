@@ -101,7 +101,7 @@
     <string name="markets">Markets</string>
     <string name="greater_than"><![CDATA[>]]></string>
     <string name="app_version">App Version</string>
-    <string name="api_provider">API Provider</string>
+    <string name="api_provider">Powered by</string>
 
     <string name="privacyPolicyUrl">https://github.com/pranayairan/Coiny/blob/master/coiny_privacy_policy.md</string>
     <string name="email_address">pranay.airan@iiitb.net</string>

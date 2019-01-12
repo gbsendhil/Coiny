@@ -58,7 +58,6 @@ class CoinNewsModule(
     }
 
     // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun cleanYourSelf() {
         cryptoNewsPresenter.detachView()
         cryptoPanicNews = null

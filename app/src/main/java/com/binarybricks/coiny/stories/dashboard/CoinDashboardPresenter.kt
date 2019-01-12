@@ -23,7 +23,7 @@ class CoinDashboardPresenter(
     private val dashboardRepository: DashboardRepository,
     private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDashboardContract.View>(),
-        CoinDashboardContract.Presenter, LifecycleObserver {
+        CoinDashboardContract.Presenter {
 
     override fun loadWatchedCoinsAndTransactions() {
         val watchedCoins = dashboardRepository.loadWatchedCoins()
@@ -82,11 +82,5 @@ class CoinDashboardPresenter(
                     Timber.e(it.localizedMessage)
                 })
         )
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

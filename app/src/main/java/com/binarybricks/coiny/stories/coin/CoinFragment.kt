@@ -134,6 +134,8 @@ class CoinFragment : Fragment(), CoinContract.View {
     private fun changeCoinWatchedStatus(isCoinWatched: Boolean) {
         watchedCoin?.let {
             coinPresenter.updateCoinWatchedStatus(isCoinWatched, it.coin.id, it.coin.symbol)
+
+            (activity as? CoinDetailsPagerActivity)?.isCoinInfoChanged = true
         }
     }
 
@@ -209,5 +211,10 @@ class CoinFragment : Fragment(), CoinContract.View {
             coinAdapter?.coinDetailList = coinDetailList
             coinAdapter?.notifyItemChanged(4)
         }
+    }
+
+    override fun onDestroy() {
+        coinAdapter?.cleanup()
+        super.onDestroy()
     }
 }

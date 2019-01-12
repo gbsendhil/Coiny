@@ -7,7 +7,7 @@
     <!-- (100 is the orderInCategory value associated with the menu items inflated by the main activity -->
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/search_icon"
         android:orderInCategory="10"
         android:title="@string/search"
         app:showAsAction="always" />

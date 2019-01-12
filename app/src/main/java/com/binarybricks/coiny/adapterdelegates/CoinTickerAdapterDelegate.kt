@@ -17,10 +17,10 @@ import kotlinx.android.extensions.LayoutContainer
  */
 
 class CoinTickerAdapterDelegate(
-    private val coinName: String,
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase?,
-    private val resourceProvider: ResourceProvider
+        private val coinName: String,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase?,
+        private val resourceProvider: ResourceProvider
 ) : AdapterDelegate<List<ModuleItem>>() {
 
     private val coinTickerModule by lazy {
@@ -42,15 +42,14 @@ class CoinTickerAdapterDelegate(
         coinTickerViewHolder.loadTickerData()
     }
 
-    override fun onViewRecycled(viewHolder: RecyclerView.ViewHolder) {
-        super.onViewRecycled(viewHolder)
-        coinTickerModule.cleanYourSelf()
-    }
-
     class CoinTickerViewHolder(override val containerView: View, private val coinTickerModule: CoinTickerModule)
         : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun loadTickerData() {
             coinTickerModule.loadTickerData(containerView)
         }
+    }
+
+    fun cleanup() {
+        coinTickerModule.cleanUp()
     }
 }

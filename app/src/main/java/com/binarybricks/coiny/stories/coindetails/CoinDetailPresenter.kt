@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.coindetails
 
 import CoinDetailsContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
 import com.binarybricks.coiny.stories.CryptoCompareRepository
@@ -14,10 +11,10 @@ Created by Pranay Airan
  */
 
 class CoinDetailPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
 ) : BasePresenter<CoinDetailsContract.View>(),
-        CoinDetailsContract.Presenter, LifecycleObserver {
+        CoinDetailsContract.Presenter {
 
     override fun getWatchedCoinFromSymbol(symbol: String) {
 
@@ -37,11 +34,5 @@ class CoinDetailPresenter(
                     Timber.e(it)
                     currentView?.onNetworkError(it.localizedMessage)
                 })?.let { compositeDisposable.add(it) }
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }

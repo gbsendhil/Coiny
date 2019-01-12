@@ -10,7 +10,6 @@ import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coiny.network.models.CoinPrice
-import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.utils.*
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
@@ -24,8 +23,8 @@ import java.util.*
  */
 
 class DashboardCoinModule(
-    private val toCurrency: String,
-    private val resourceProvider: ResourceProvider
+        private val toCurrency: String,
+        private val resourceProvider: ResourceProvider
 ) : Module() {
 
     private val currency by lazy {
@@ -38,6 +37,10 @@ class DashboardCoinModule(
 
     private val cropCircleTransformation by lazy {
         RoundedCornersTransformation(15, 0)
+    }
+
+    interface OnCoinItemClickListener {
+        fun onCoinClicked(watchedCoin: WatchedCoin)
     }
 
     override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
@@ -104,7 +107,7 @@ class DashboardCoinModule(
             }
 
             inflatedView.coinCard.setOnClickListener {
-                inflatedView.context.startActivity(CoinDetailsPagerActivity.buildLaunchIntent(inflatedView.context, dashboardCoinModuleData.watchedCoin))
+                dashboardCoinModuleData.onCoinItemClickListener.onCoinClicked(dashboardCoinModuleData.watchedCoin)
             }
         }
 
@@ -130,5 +133,6 @@ class DashboardCoinModule(
         }
     }
 
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?, val coinTransactionList: List<CoinTransaction>) : ModuleItem
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?,
+                                       val coinTransactionList: List<CoinTransaction>, val onCoinItemClickListener: OnCoinItemClickListener) : ModuleItem
 }

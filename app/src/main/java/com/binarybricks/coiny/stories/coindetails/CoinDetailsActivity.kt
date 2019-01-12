@@ -75,6 +75,8 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
 
     override fun onWatchedCoinLoaded(coin: WatchedCoin?) {
         if (coin != null) {
+            showOrHideLoadingIndicator(false)
+
             val coinDetailsFragment = CoinFragment()
             coinDetailsFragment.arguments = CoinFragment.getArgumentBundle(coin)
 

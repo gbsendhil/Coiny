@@ -1,8 +1,6 @@
 package com.binarybricks.coiny.components.cointickermodule
 
 import CoinTickerContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,10 +27,10 @@ import java.util.*
  * A compound layout to see coin ticker
  */
 class CoinTickerModule(
-    private val coinyDatabase: CoinyDatabase?,
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val resourceProvider: ResourceProvider,
-    private val coinName: String
+        private val coinyDatabase: CoinyDatabase?,
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val resourceProvider: ResourceProvider,
+        private val coinName: String
 ) : Module(), CoinTickerContract.View {
 
     private lateinit var inflatedView: View
@@ -64,12 +62,6 @@ class CoinTickerModule(
     fun loadTickerData(inflatedView: View) {
         this.inflatedView = inflatedView
         coinTickerPresenter.getCryptoTickers(coinName.toLowerCase())
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        coinTickerPresenter.detachView()
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

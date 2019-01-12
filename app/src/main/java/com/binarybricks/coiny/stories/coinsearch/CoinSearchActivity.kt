@@ -127,9 +127,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
-            // Respond to the action bar's Up/Home button
             android.R.id.home -> {
-                // tell the calling activity/fragment that we're done deleting this transaction
                 onBackPressed()
                 return true
             }

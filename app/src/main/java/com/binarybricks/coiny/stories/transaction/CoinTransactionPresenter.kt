@@ -1,9 +1,6 @@
 package com.binarybricks.coiny.stories.transaction
 
 import CoinTransactionContract
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import com.binarybricks.coiny.data.database.entities.CoinTransaction
 import com.binarybricks.coiny.network.schedulers.BaseSchedulerProvider
 import com.binarybricks.coiny.stories.BasePresenter
@@ -15,10 +12,9 @@ Created by Pranay Airan
  */
 
 class CoinTransactionPresenter(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val coinRepo: CryptoCompareRepository
-) :
-        BasePresenter<CoinTransactionContract.View>(), CoinTransactionContract.Presenter, LifecycleObserver {
+        private val schedulerProvider: BaseSchedulerProvider,
+        private val coinRepo: CryptoCompareRepository
+) : BasePresenter<CoinTransactionContract.View>(), CoinTransactionContract.Presenter {
 
     override fun getAllSupportedExchanges() {
         compositeDisposable.add(coinRepo.getAllSupportedExchanges()
@@ -56,11 +52,5 @@ class CoinTransactionPresenter(
                 }, {
                     Timber.e(it.localizedMessage)
                 }))
-    }
-
-    // cleanup
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanYourSelf() {
-        detachView()
     }
 }
