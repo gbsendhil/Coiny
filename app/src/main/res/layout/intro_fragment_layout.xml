@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/tvSubTitle"
-        style="@style/TextTitle"
+        style="@style/CoinyText.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic16dp"
@@ -76,7 +76,7 @@
 
     <TextView
         android:id="@+id/tvLoading"
-        style="@style/TextTitle"
+        style="@style/CoinyText.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/generic16dp"

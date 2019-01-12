@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/tvEmptyMessage"
-            style="@style/TextTitle"
+            style="@style/CoinyText.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/generic16dp"

@@ -40,7 +40,7 @@
 
                 <TextView
                     android:id="@+id/tvFirstTxnTypeAndQuantity"
-                    style="@style/TextTitle"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toTopOf="@id/tvFirstTxnTimeAndExchange"
@@ -84,7 +84,7 @@
 
                 <TextView
                     android:id="@+id/tvSecondTxnTypeAndQuantity"
-                    style="@style/TextTitle"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toTopOf="@id/tvSecondTxnTimeAndExchange"
@@ -128,7 +128,7 @@
 
                 <TextView
                     android:id="@+id/tvThirdTxnTypeAndQuantity"
-                    style="@style/TextTitle"
+                    style="@style/CoinyText.Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toTopOf="@id/tvThirdTxnTimeAndExchange"
