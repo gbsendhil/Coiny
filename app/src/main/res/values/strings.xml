@@ -82,6 +82,7 @@
     <string name="your_total_balance">Your total balance</string>
     <string name="_24h_changes">24h Changes</string>
     <string name="add_to_watchlist">Add to watchlist</string>
+    <string name="remove_to_watchlist">Remove from watchlist</string>
 
     <string name="coin_added_to_watchlist">Started Watching %1$s</string>
     <string name="coin_removed_to_watchlist">Stopped Watching %1$s</string>
@@ -102,7 +103,7 @@
     <string name="greater_than"><![CDATA[>]]></string>
     <string name="app_version">App Version</string>
     <string name="api_provider">Powered by</string>
-
+    <string name="attributionUrl">https://github.com/pranayairan/Coiny/blob/master/attribution.md</string>
     <string name="privacyPolicyUrl">https://github.com/pranayairan/Coiny/blob/master/coiny_privacy_policy.md</string>
     <string name="email_address">pranay.airan@iiitb.net</string>
     <string name="feedback_coiny">Feedback for Coiny</string>
@@ -140,4 +141,5 @@
     <string name="cdSecondExchange">Second Exchange</string>
     <string name="cdThirdExchange">Third Exchange</string>
     <string name="cdExchange">Exchange</string>
+    <string name="attribution">Attribution</string>
 </resources>

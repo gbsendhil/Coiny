@@ -86,7 +86,6 @@ class CoinFragment : Fragment(), CoinContract.View {
 
             val toolBarDefaultElevation = dpToPx(context, 12) // default elevation of toolbar
 
-            // TODO revisit this
             inflate.rvCoinDetails.addOnScrollListener(object : OnVerticalScrollListener() {
                 override fun onScrolled(offset: Int) {
                     super.onScrolled(offset)
@@ -142,9 +141,11 @@ class CoinFragment : Fragment(), CoinContract.View {
     private fun changeCoinMenu(isCoinWatched: Boolean, isCoinPurchased: Boolean) {
         if (!isCoinPurchased) {
             if (isCoinWatched) {
-                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_check_box_white_24dp)
+                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_watching)
+                watchedMenuItem?.title = context?.getString(R.string.remove_to_watchlist)
             } else {
-                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_add_white_24dp)
+                watchedMenuItem?.icon = context?.getDrawable(R.drawable.ic_watch)
+                watchedMenuItem?.title = context?.getString(R.string.add_to_watchlist)
             }
         } else {
             watchedMenuItem?.isVisible = false

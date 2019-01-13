@@ -104,15 +104,6 @@ dependencies {
     implementation "com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}"
     implementation "com.google.firebase:firebase-perf:${versions.firebasePerf}"
 
-//    implementation 'com.uber.autodispose:autodispose:1.1.0'
-//    implementation 'com.uber.autodispose:autodispose-android:1.1.0'
-//    implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
-//    implementation 'com.uber.autodispose:autodispose-ktx:1.1.0'
-//    implementation 'com.uber.autodispose:autodispose-android-ktx:1.1.0'
-//    implementation 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0'
-//
-//    implementation "android.arch.lifecycle:extensions:1.1.1"
-
 }
 
 kotlinter {

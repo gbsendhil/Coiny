@@ -303,6 +303,28 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <android.support.constraint.ConstraintLayout
+                    android:id="@+id/clAttribution"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/generic8dp"
+                    android:background="@drawable/background_rounded_all"
+                    android:padding="@dimen/generic14dp"
+                    android:stateListAnimator="@animator/card_down_animation">
+
+
+                    <TextView
+                        style="@style/CoinyText.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/generic4dp"
+                        android:text="@string/attribution"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
                     android:id="@+id/clCryptoCompare"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -32,7 +32,6 @@ interface WatchedCoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinListIntoWatchList(list: List<WatchedCoin>)
 
-    // TODO have an option to update coin list when app opens up or in search screen.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoinIntoWatchList(watchedCoin: WatchedCoin)
 

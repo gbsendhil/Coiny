@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_watch"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_watch"
         android:orderInCategory="10"
         android:title="@string/add_to_watchlist"
         app:showAsAction="always" />

@@ -60,9 +60,14 @@ class CoinPositionCard(private val resourceProvider: ResourceProvider) : Module(
 
         if (totalReturnAmount != null && totalReturnPercentage != null) {
 
-            // TODO based on gain or loss do color change
             inflatedView.tvTotalReturnValue.text = resourceProvider.getString(R.string.amountWithChangePercentage,
                     formatter.formatAmount(totalReturnAmount.toPlainString(), currency), totalReturnPercentage)
+
+            if (totalReturnPercentage < BigDecimal.ZERO) {
+                inflatedView.tvTotalReturnValue.setTextColor(resourceProvider.getColor(R.color.colorLoss))
+            } else {
+                inflatedView.tvTotalReturnValue.setTextColor(resourceProvider.getColor(R.color.colorGain))
+            }
         }
     }
 

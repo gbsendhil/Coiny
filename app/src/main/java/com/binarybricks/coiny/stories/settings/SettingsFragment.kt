@@ -95,6 +95,10 @@ class SettingsFragment : Fragment(), SettingsContract.View {
 
         inflatedView.tvAppVersionValue.text = BuildConfig.VERSION_NAME
 
+        inflatedView.clAttribution.setOnClickListener {
+            openCustomTab(getString(R.string.attributionUrl), requireContext())
+        }
+
         inflatedView.clCryptoCompare.setOnClickListener {
             openCustomTab(getString(R.string.crypto_compare_url), requireContext())
         }
