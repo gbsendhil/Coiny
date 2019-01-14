@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "447574888185",
+    "firebase_url": "https://coiny-356ea.firebaseio.com",
+    "project_id": "coiny-356ea",
+    "storage_bucket": "coiny-356ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447574888185:android:69787d01070011fe",
+        "android_client_info": {
+          "package_name": "com.binarybricks.coiny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447574888185-cmr4ej1ml2gqht05vd2poojt2vu79fae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-R6tOP6doHLedZtd47XGsRxGcH6ZViCA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
