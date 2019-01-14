@@ -47,3 +47,5 @@ Awesome App Icon Designed by [Pravesh Airan](https://twitter.com/PraveshAiran)
 * [KtLint](https://github.com/shyiko/ktlint) from Stanley Shyiko
 * [Kotlinter](https://github.com/jeremymailen/kotlinter-gradle) from Jeremy Mailen
 
+## AppStore
+* Appstore Screenshots from awesome [ShotBot](https://app.shotbot.io)
