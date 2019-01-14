@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/pranayairan/Coiny.svg?style=svg)](https://circleci.com/gh/pranayairan/Coiny)
+
 # Coiny
 Coiny is a beautiful cryptocurreny app, completely opensourced and 100% in kotlin. It supports following features
 
