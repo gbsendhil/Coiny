@@ -34,7 +34,8 @@ buildscript {
             'bottomNav'           : '1.2.4',
             'firebaseCore'        : '16.0.6',
             'firebasePerf'        : '16.2.3',
-            'crashlytics'         : '2.9.8'
+            'crashlytics'         : '2.9.8',
+            'leakcanary'          : '1.6.3'
     ]
 
     repositories {
