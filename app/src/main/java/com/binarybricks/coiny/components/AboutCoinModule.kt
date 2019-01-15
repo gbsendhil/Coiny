@@ -26,31 +26,47 @@ class AboutCoinModule : Module() {
         inflatedView.tvAboutCoin.text = getCleanedUpDescription(aboutCoinModuleData.coin.description) ?: inflatedView.context.getString(R.string.info_unavailable)
 
         aboutCoinModuleData.coin.website?.let { url ->
-            inflatedView.tvWebsiteValue.text = getCleanUrl(url)
-            inflatedView.tvWebsiteValue.setOnClickListener {
-                openCustomTab(url, inflatedView.context)
+            if (url.isNotEmpty()) {
+                inflatedView.tvWebsiteValue.text = getCleanUrl(url)
+                inflatedView.tvWebsiteValue.setOnClickListener {
+                    openCustomTab(url, inflatedView.context)
+                }
+            } else {
+                inflatedView.tvWebsiteValue.text = inflatedView.context.getString(R.string.na)
             }
         }
 
-        aboutCoinModuleData.coin.twitter?.let { url ->
-            inflatedView.tvTwitterValue.text = inflatedView.context.getString(R.string.twitterValue, aboutCoinModuleData.coin.twitter)
-            inflatedView.tvTwitterValue.setOnClickListener {
-                openCustomTab(inflatedView.context.getString(R.string.twitterUrl, aboutCoinModuleData.coin.twitter)
-                        ?: "", inflatedView.context)
+        aboutCoinModuleData.coin.twitter?.let { twt ->
+            if (twt.isNotEmpty()) {
+                inflatedView.tvTwitterValue.text = inflatedView.context.getString(R.string.twitterValue, twt)
+                inflatedView.tvTwitterValue.setOnClickListener {
+                    openCustomTab(inflatedView.context.getString(R.string.twitterUrl, twt)
+                            ?: "", inflatedView.context)
+                }
+            } else {
+                inflatedView.tvTwitterValue.text = inflatedView.context.getString(R.string.na)
             }
         }
 
-        aboutCoinModuleData.coin.reddit?.let { url ->
-            inflatedView.tvRedditValue.text = getCleanUrl(url)
-            inflatedView.tvRedditValue.setOnClickListener {
-                openCustomTab(url, inflatedView.context)
+        aboutCoinModuleData.coin.reddit?.let { reddit ->
+            if (reddit.isNotEmpty()) {
+                inflatedView.tvRedditValue.text = getCleanUrl(reddit)
+                inflatedView.tvRedditValue.setOnClickListener {
+                    openCustomTab(reddit, inflatedView.context)
+                }
+            } else {
+                inflatedView.tvRedditValue.text = inflatedView.context.getString(R.string.na)
             }
         }
 
-        aboutCoinModuleData.coin.github?.let { url ->
-            inflatedView.tvGithubValue.text = getCleanUrl(url)
-            inflatedView.tvGithubValue.setOnClickListener {
-                openCustomTab(url, inflatedView.context)
+        aboutCoinModuleData.coin.github?.let { git ->
+            if (git.isNotEmpty()) {
+                inflatedView.tvGithubValue.text = getCleanUrl(git)
+                inflatedView.tvGithubValue.setOnClickListener {
+                    openCustomTab(git, inflatedView.context)
+                }
+            } else {
+                inflatedView.tvGithubValue.text = inflatedView.context.getString(R.string.na)
             }
         }
 
@@ -66,10 +82,10 @@ class AboutCoinModule : Module() {
     data class AboutCoinModuleData(val coin: Coin) : ModuleItem
 
     private fun getCleanedUpDescription(description: String?): String? {
-        if (description != null) {
+        if (!description.isNullOrBlank()) {
             return description.replace(Regex("<.*?>"), "")
         }
-        return description
+        return null
     }
 
     private fun getCleanUrl(url: String): String {

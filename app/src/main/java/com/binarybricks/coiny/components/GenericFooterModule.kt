@@ -24,7 +24,7 @@ class GenericFooterModule : Module() {
         inflatedView.tvFooter.text = footerModuleData.footerText
 
         if (footerModuleData.footerUrlLink.isNotEmpty()) {
-            inflatedView.tvFooter.setOnClickListener {
+            inflatedView.clFooter.setOnClickListener {
                 openCustomTab(footerModuleData.footerUrlLink, inflatedView.context)
             }
         } else {
