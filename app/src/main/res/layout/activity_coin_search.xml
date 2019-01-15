@@ -18,7 +18,7 @@
     <EditText
         android:id="@+id/etSearchBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="@dimen/generic14dp"
         android:layout_marginTop="@dimen/generic14dp"
         android:layout_marginEnd="@dimen/generic14dp"
@@ -26,7 +26,8 @@
         android:hint="@string/search_hint"
         android:importantForAutofill="no"
         android:inputType="text"
-        android:padding="@dimen/generic8dp"
+        android:paddingStart="@dimen/generic8dp"
+        android:paddingEnd="@dimen/generic8dp"
         android:textColor="@color/primaryTextColor"
         android:textColorHint="@color/secondaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
