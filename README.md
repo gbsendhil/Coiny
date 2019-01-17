@@ -22,6 +22,15 @@ App available on Google Play: https://play.google.com/store/apps/details?id=com.
 
 # App Architecture
 
+Currently the app is using MVP with a repository. We have 2 data source, Room and in memory cache. Data flow is like this 
+
+Fragments/Activities -> Presenter -> Repo -> Network/Cache (room/in memory)
+
+In coming days I would like to remove inmemory cache and make everything come from Room. Network will keep the Room cache updated. This will give app some offline abilities. 
+
+I am also using a ton of recycler view with [Adapter Delegate Pattern](http://hannesdorfmann.com/android/adapter-delegates). This enables me to plug and play the screens like Lego blocks. I am thinking to replace this with Epoxy in coming days. 
+
+
 # Screenshots
 <a href="https://raw.githubusercontent.com/pranayairan/Coiny/master/screenshots/variant_2/0.jpg"><img src="https://raw.githubusercontent.com/pranayairan/Coiny/master/screenshots/variant_2/0.jpg" height="480" width="240" ></a>
   <a href="https://raw.githubusercontent.com/pranayairan/Coiny/master/screenshots/variant_2/1.jpg"><img src="https://raw.githubusercontent.com/pranayairan/Coiny/master/screenshots/variant_2/1.jpg" height="480" width="240" ></a>
