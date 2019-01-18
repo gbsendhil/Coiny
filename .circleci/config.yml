@@ -9,7 +9,9 @@ jobs:
       - run:
           name: Download Waldo CLI
           command: |
-            curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > .circleci/
+            ls -lh .circleci
+            whoami
+            curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > .circleci/waldo
       - checkout
       - run:
           name: Configure Android Licences
