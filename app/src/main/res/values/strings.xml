@@ -87,7 +87,7 @@
     <string name="coin_added_to_watchlist">Started Watching %1$s</string>
     <string name="coin_removed_to_watchlist">Stopped Watching %1$s</string>
     <string name="coin_already_purchased">Purchased coins can not be removed from watchlist</string>
-    <string name="info_unavailable">Currency Info Unavailable</string>
+    <string name="info_unavailable">Currency info unavailable</string>
     <string name="na">N/A</string>
     <string name="choose_currency">Choose Currency</string>
     <string name="cdNewsArticle">News Article</string>
