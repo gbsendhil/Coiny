@@ -11,8 +11,6 @@ jobs:
           command: |
             pwd
             ls
-            ls -lh waldo
-            whoami
             curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > waldo/waldo
       - checkout
       - run:
