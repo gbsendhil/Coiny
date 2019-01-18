@@ -10,9 +10,7 @@ jobs:
       - run:
           name: Download Waldo CLI
           command: |
-            pwd
-            ls
-            curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > waldo/waldo
+            curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > .circleci/waldo
       - run:
           name: Configure Android Licences
           command: |
@@ -41,7 +39,7 @@ jobs:
           path: app/build/test-results
       - run:
           name: Upload build to Waldo
-          command: waldo/waldo "$WALDO_BUILD_PATH"
+          command: .circleci/waldo "$WALDO_BUILD_PATH"
           environment:
             WALDO_UPLOAD_TOKEN: 7a7e9756f753bc9feeab80a15b9ea201
             WALDO_BUILD_PATH: app/build/outputs/apk/debug/app-debug.apk
