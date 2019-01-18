@@ -6,6 +6,10 @@ jobs:
     docker:
       - image: circleci/android:api-28-alpha
     steps:
+      - run:
+          name: Download Waldo CLI
+          command: |
+            curl -fLs https://github.com/waldoapp/waldo-cli/releases/download/1.1.0/waldo > .circleci/waldo
       - checkout
       - run:
           name: Configure Android Licences
@@ -33,3 +37,9 @@ jobs:
           destination: outputs
       - store_test_results:
           path: app/build/test-results
+      - run:
+        name: Upload build to Waldo
+        command: .circleci/waldo "$WALDO_BUILD_PATH"
+        environment:
+          WALDO_UPLOAD_TOKEN: 7a7e9756f753bc9feeab80a15b9ea201
+          WALDO_BUILD_PATH: app/build/outputs/apk/debug/app-debug.apk
