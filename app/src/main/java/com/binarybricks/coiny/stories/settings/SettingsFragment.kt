@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.BuildConfig
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
@@ -30,7 +31,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     }
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val settingsPresenter: SettingsPresenter by lazy {

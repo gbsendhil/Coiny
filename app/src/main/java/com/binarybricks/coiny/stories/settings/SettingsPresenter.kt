@@ -42,9 +42,10 @@ class SettingsPresenter(
 
     override fun refreshExchangeList() {
         compositeDisposable.add(coinRepo.getExchangeInfo()
-                .map {
-                    compositeDisposable.add(coinRepo.insertExchangeIntoList(it).subscribe())
+                .flatMap {
+                    coinRepo.insertExchangeIntoList(it)
                 }
+                .observeOn(schedulerProvider.ui())
                 .subscribe({
                     Timber.d("all exchanges loaded and inserted into db")
                     currentView?.onExchangeListRefreshed()

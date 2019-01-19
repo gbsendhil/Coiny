@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.components.*
 import com.binarybricks.coiny.data.PreferenceHelper
@@ -40,7 +41,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
     }
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDiscoveryPresenter: CoinDiscoveryPresenter by lazy {

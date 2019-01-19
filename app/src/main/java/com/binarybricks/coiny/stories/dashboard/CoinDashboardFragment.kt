@@ -56,7 +56,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     }
 
     private val coinRepo by lazy {
-        CryptoCompareRepository(schedulerProvider)
+        CryptoCompareRepository(schedulerProvider, CoinyApplication.database)
     }
 
     private val coinDashboardPresenter: CoinDashboardPresenter by lazy {

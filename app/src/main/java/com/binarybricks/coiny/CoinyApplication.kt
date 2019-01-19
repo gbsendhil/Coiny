@@ -8,6 +8,7 @@ import com.binarybricks.coiny.data.database.CoinyDatabase
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
+import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -50,6 +51,9 @@ class CoinyApplication : Application() {
         }
 
         database = Room.databaseBuilder(this, CoinyDatabase::class.java, DATABASE_NAME).build()
+
+        // Logs all uncaught exceptions from RxJava usage and prevents default thread handling
+        RxJavaPlugins.setErrorHandler { throwable -> Timber.e(throwable) }
     }
 
     /** A tree which logs important information for crash reporting.  */

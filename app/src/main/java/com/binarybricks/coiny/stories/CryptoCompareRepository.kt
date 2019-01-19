@@ -27,8 +27,8 @@ Repository that interact with crypto api to get any info on coins.
  */
 
 class CryptoCompareRepository(
-    private val baseSchedulerProvider: BaseSchedulerProvider,
-    private val coinyDatabase: CoinyDatabase? = null
+        private val baseSchedulerProvider: BaseSchedulerProvider,
+        private val coinyDatabase: CoinyDatabase?
 ) {
 
     /**
