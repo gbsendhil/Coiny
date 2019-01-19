@@ -25,6 +25,7 @@ import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.defaultExchange
 import com.binarybricks.coiny.utils.dpToPx
 import com.binarybricks.coiny.utils.ui.OnVerticalScrollListener
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.view.*
@@ -104,6 +105,8 @@ class CoinFragment : Fragment(), CoinContract.View {
                 isCoinWatched = true
             }
         }
+
+        Crashlytics.log("CoinFragment")
 
         return inflate
     }

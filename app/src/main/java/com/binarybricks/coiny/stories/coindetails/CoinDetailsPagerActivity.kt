@@ -15,6 +15,7 @@ import com.binarybricks.coiny.CoinyApplication
 import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
 
@@ -65,6 +66,8 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
         showOrHideLoadingIndicator(true)
 
         coinDetailPagerPresenter.loadWatchedCoins()
+
+        Crashlytics.log("CoinDetailsPagerActivity")
     }
 
     override fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?) {

@@ -76,32 +76,36 @@ class LaunchActivity : AppCompatActivity(), LaunchContract.View {
 
     fun openCurrencyPicker() {
 
-        val picker = CurrencyPicker.newInstance(getString(R.string.select_currency)) // dialog title
+        try {
+            val picker = CurrencyPicker.newInstance(getString(R.string.select_currency)) // dialog title
 
-        picker.setCurrenciesList(CoinyExtendedCurrency.CURRENCIES)
+            picker.setCurrenciesList(CoinyExtendedCurrency.CURRENCIES)
 
-        picker.setListener { name, code, _, _ ->
-            Timber.d("Currency code selected $name,$code")
-            PreferenceHelper.setPreference(this, PreferenceHelper.DEFAULT_CURRENCY, code)
+            picker.setListener { name, code, _, _ ->
+                Timber.d("Currency code selected $name,$code")
+                PreferenceHelper.setPreference(this, PreferenceHelper.DEFAULT_CURRENCY, code)
 
-            picker.dismiss() // Show currency that is picked.
+                picker.dismiss() // Show currency that is picked.
 
-            // show loading screen
-            val currentFragment = (introPager.adapter as IntroAdapter).getCurrentFragment()
-            if (currentFragment != null && currentFragment is IntroFragment) {
-                currentFragment.showLoadingScreen()
+                // show loading screen
+                val currentFragment = (introPager.adapter as IntroAdapter).getCurrentFragment()
+                if (currentFragment != null && currentFragment is IntroFragment) {
+                    currentFragment.showLoadingScreen()
+                }
+
+                introPager.beginFakeDrag()
+
+                // get list of all coins
+                launchPresenter.getAllSupportedCoins(code)
+
+                // FTU shown
+                PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
             }
 
-            introPager.beginFakeDrag()
-
-            // get list of all coins
-            launchPresenter.getAllSupportedCoins(code)
-
-            // FTU shown
-            PreferenceHelper.setPreference(this, PreferenceHelper.IS_LAUNCH_FTU_SHOWN, true)
+            picker.show(supportFragmentManager, "CURRENCY_PICKER")
+        } catch (ex: Exception) {
+            Timber.e(ex)
         }
-
-        picker.show(supportFragmentManager, "CURRENCY_PICKER")
     }
 
     override fun onAllSupportedCoinsLoaded() {

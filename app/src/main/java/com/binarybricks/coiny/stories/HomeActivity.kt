@@ -9,6 +9,7 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.stories.coinsearch.CoinDiscoveryFragment
 import com.binarybricks.coiny.stories.dashboard.CoinDashboardFragment
 import com.binarybricks.coiny.stories.settings.SettingsFragment
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -60,6 +61,8 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+
+        Crashlytics.log("HomeScreen")
     }
 
     private fun switchToDashboard(savedInstanceState: Bundle?) {

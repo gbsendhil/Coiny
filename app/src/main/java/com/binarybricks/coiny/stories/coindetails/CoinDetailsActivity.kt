@@ -14,6 +14,7 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coin.CoinFragment
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_coin_details.*
 
 class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
@@ -71,6 +72,8 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
         } else {
             coinDetailPresenter.getWatchedCoinFromSymbol(intent.getStringExtra(COIN_SYMBOL))
         }
+
+        Crashlytics.log("CoinDetailsActivity")
     }
 
     override fun onWatchedCoinLoaded(coin: WatchedCoin?) {

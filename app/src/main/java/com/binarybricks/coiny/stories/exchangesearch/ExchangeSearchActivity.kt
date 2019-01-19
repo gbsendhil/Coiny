@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coiny.R
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_exchange_pair_search.*
 
 class ExchangeSearchActivity : AppCompatActivity() {
@@ -80,12 +81,14 @@ class ExchangeSearchActivity : AppCompatActivity() {
                 finish()
             }
         })
+
+        Crashlytics.log("ExchangeSearchActivity")
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
-        // Respond to the action bar's Up/Home button
+            // Respond to the action bar's Up/Home button
             android.R.id.home -> {
                 // tell the calling activity/fragment that we're done deleting this transaction
                 onBackPressed()

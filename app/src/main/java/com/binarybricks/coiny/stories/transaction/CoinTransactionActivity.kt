@@ -26,6 +26,7 @@ import com.binarybricks.coiny.utils.Formatters
 import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.TRANSACTION_TYPE_BUY
 import com.binarybricks.coiny.utils.dismissKeyboard
+import com.crashlytics.android.Crashlytics
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_coin_transaction.*
@@ -112,6 +113,8 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
         initializeUI()
 
         coinTransactionPresenter.getAllSupportedExchanges()
+
+        Crashlytics.log("CoinTransactionActivity")
     }
 
     private fun initializeUI() {

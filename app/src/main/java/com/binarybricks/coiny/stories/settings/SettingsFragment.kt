@@ -15,6 +15,7 @@ import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.*
+import com.crashlytics.android.Crashlytics
 import com.mynameismidori.currencypicker.CurrencyPicker
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.view.*
@@ -52,6 +53,8 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         lifecycle.addObserver(settingsPresenter)
 
         initializeUI(inflate)
+
+        Crashlytics.log("SettingsFragment")
 
         return inflate
     }

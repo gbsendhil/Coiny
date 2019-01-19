@@ -19,6 +19,7 @@ import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.stories.coindetails.CoinDetailsActivity
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_coin_search.*
 
 class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
@@ -60,6 +61,8 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
         lifecycle.addObserver(coinSearchPresenter)
 
         coinSearchPresenter.loadAllCoins()
+
+        Crashlytics.log("CoinSearchActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

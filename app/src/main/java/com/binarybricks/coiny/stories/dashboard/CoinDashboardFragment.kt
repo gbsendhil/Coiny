@@ -25,6 +25,7 @@ import com.binarybricks.coiny.stories.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coiny.stories.coinsearch.CoinSearchActivity
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.util.HashMap
@@ -91,6 +92,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         // get prices for watched coin
         coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+
+        Crashlytics.log("CoinDashboardFragment")
 
         return inflate
     }

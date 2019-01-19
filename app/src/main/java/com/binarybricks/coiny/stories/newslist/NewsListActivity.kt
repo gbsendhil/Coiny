@@ -17,6 +17,7 @@ import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.openCustomTab
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_news_list.*
 
 /**
@@ -73,6 +74,8 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
         lifecycle.addObserver(cryptoNewsPresenter)
 
         cryptoNewsPresenter.getCryptoNews(coinSymbol)
+
+        Crashlytics.log("NewsListActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

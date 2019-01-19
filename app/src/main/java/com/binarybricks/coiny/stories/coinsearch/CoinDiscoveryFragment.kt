@@ -18,6 +18,7 @@ import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.stories.CryptoCompareRepository
 import com.binarybricks.coiny.utils.ResourceProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -89,6 +90,8 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
         coinDiscoveryPresenter.getCryptoCurrencyNews()
 
         setHasOptionsMenu(true)
+
+        Crashlytics.log("CoinDiscoveryFragment")
 
         return inflate
     }

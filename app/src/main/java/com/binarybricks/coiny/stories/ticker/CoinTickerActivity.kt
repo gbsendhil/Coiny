@@ -18,6 +18,7 @@ import com.binarybricks.coiny.network.models.CryptoTicker
 import com.binarybricks.coiny.network.schedulers.SchedulerProvider
 import com.binarybricks.coiny.utils.ResourceProviderImpl
 import com.binarybricks.coiny.utils.openCustomTab
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_coin_ticker_list.*
 import java.util.*
 
@@ -73,6 +74,8 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
         lifecycle.addObserver(coinTickerPresenter)
 
         coinTickerPresenter.getCryptoTickers(coinName.toLowerCase())
+
+        Crashlytics.log("CoinTickerActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {
