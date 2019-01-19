@@ -63,6 +63,9 @@ class IntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.apply {
             findViewById<LottieAnimationView>(R.id.animationView).setAnimation(animationRes)
+            if (page == 1) {
+                findViewById<LottieAnimationView>(R.id.animationView).speed = 1.5f
+            }
             findViewById<TextView>(R.id.tvTitle).text = headerTitle
             findViewById<TextView>(R.id.tvSubTitle).text = headerSubtitle
             if (showbutton) {

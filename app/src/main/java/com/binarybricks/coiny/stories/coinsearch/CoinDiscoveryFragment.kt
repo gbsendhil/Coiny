@@ -67,13 +67,13 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
         // empty existing list
         coinDiscoveryList = ArrayList()
 
-        coinDiscoveryList.add(LabelModule.LabelModuleData("Top Coins"))
+        coinDiscoveryList.add(LabelModule.LabelModuleData(getString(R.string.top_volume)))
         coinDiscoveryList.add(CarousalModule.CarousalModuleData(null))
 
-        coinDiscoveryList.add(LabelModule.LabelModuleData("Top Pair"))
+        coinDiscoveryList.add(LabelModule.LabelModuleData(getString(R.string.top_pair)))
         coinDiscoveryList.add(CarousalModule.CarousalModuleData(null))
 
-        coinDiscoveryList.add(LabelModule.LabelModuleData("Recent News"))
+        coinDiscoveryList.add(LabelModule.LabelModuleData(getString(R.string.recent_news)))
 
         // coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
 

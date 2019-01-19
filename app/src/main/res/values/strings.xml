@@ -118,7 +118,7 @@
     <string name="feedback">Feedback</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="intro_coin_title">5000 Coins</string>
-    <string name="intro_coin_message">Track more than 5000 coins, across 132 exchanges.</string>
+    <string name="intro_coin_message">Track 4000+ coins, across 100+ exchanges.</string>
     <string name="intro_track_title">Track Gains</string>
     <string name="intro_track_message">Add transactions, track profit and loss. All at 1 place.</string>
     <string name="intro_secure_title">Highly Secure</string>
@@ -142,4 +142,6 @@
     <string name="cdThirdExchange">Third Exchange</string>
     <string name="cdExchange">Exchange</string>
     <string name="attribution">Attribution</string>
+    <string name="top_volume">Top Volume Coins</string>
+    <string name="top_pair">Top Volume Pair</string>
 </resources>
